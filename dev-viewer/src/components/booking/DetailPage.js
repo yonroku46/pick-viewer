@@ -1,6 +1,6 @@
 import { useEffect, useState, useReducer } from "react";
 import { useParams, Link } from "react-router-dom";
-import { Dimmer, Button, Item, Grid, Segment, Image, Icon, Loader, Modal, Header } from 'semantic-ui-react'
+import { Dimmer, Button, Item, Grid, Segment, Image, Icon, Loader, Modal, Header, Statistic } from 'semantic-ui-react'
 import BookingCalendar from "./BookingCalendar";
 import BookingTimeTable from "./BookingTimeTable";
 import * as api from '../../rest/server'
@@ -288,6 +288,13 @@ export default function DetailPage(props) {
         .catch(error => reject(error.response))
     }).then(data => {
       setIsFavorite(data);
+      if (data) {
+        shop.favorite_num = shop.favorite_num + 1;
+        setShop(shop)
+      } else {
+        shop.favorite_num = shop.favorite_num - 1;
+        setShop(shop)
+      }
       getFavorite(user_cd);
       }
     )
@@ -470,6 +477,12 @@ export default function DetailPage(props) {
 
   return (
     <div className='detailpage'>
+      {shop.length === 0 &&
+        <Dimmer active inverted>
+          <Loader size='large'/>
+        </Dimmer>
+      }
+
       {/* 샵 이미지 탭 */}
       <Segment className="detailpage-main-image" placeholder>
         <Slider {...settings}>
@@ -479,70 +492,66 @@ export default function DetailPage(props) {
         </Slider>
       </Segment>
 
-      {/* 아이콘 탭 */}
-      {shop.length !== 0
-      ? 
-      <Grid columns={3} divided className='detailpage-icon-menu'>
-        <Grid.Row>
-          <Grid.Column>
-            <Icon name='heart' size='large' className={isFavorite ? 'detailpage-icon favorite-icon' :'detailpage-icon'} onClick={favorite}/>
-          </Grid.Column>
-          <Grid.Column>
-            <a className='detailpage-tel' href={`tel:${shop.shop_tel}`}>
-            <Icon name='call' size='large' className='detailpage-icon'/>
-            </a>
-          </Grid.Column>
-          <Grid.Column>
-            <Icon name='location arrow' size='large' onClick={mapToogle} className='detailpage-icon'/>
-          </Grid.Column>
-        </Grid.Row>
-      </Grid>
-      :
-      <div style={{minHeight:'15vh'}}>
-        <Dimmer active inverted>
-          <Loader size='large'/>
-        </Dimmer>
-      </div>
-      }
-
       {/* 샵 정보 탭 */}
       <Segment className='detailpage-main'>
         <p className='detailpage-name'>{shop.shop_name}
-          <span className='shopmodal-rating'><Icon name='star'/>{shop.ratings_ave}</span></p>
-        <p className='detailpage-time'><Icon name='clock outline'/>{shop.shop_open} ~ {shop.shop_close}</p>
-        <p className='detailpage-location'><Icon name='map outline'/>{shop.shop_location}</p>
+          <span className='shopmodal-rating'>
+            <Link to={`/review/${category}/${shop_cd}`}>
+              <Button className='detailpage-link-btn' inverted color='violet'>댓글보기 <Icon name='angle double right'/></Button>
+            </Link>
+          </span>
+        </p>
+        <p className='detailpage-call'><Icon name='paper plane outline'/>
+          <a href={`tel:${shop.shop_tel}`}>{shop.shop_tel}</a>
+          <span className='detailpage-time'>( {shop.shop_open}~{shop.shop_close} )</span>
+        </p>
+        <p className='detailpage-info'><Icon name='bell outline'/>{shop.shop_info}</p>
+        <p className='detailpage-location'><Icon name='map outline'/>{shop.shop_location} <Icon className='detailpage-icon' onClick={mapToogle} name={mapOpen ? 'angle up' : 'angle down'}/></p>
         {mapOpen && <MapContainer location={shop.shop_location}/>}
-        <p className={mapOpen ? 'detailpage-info-mapload' : 'detailpage-info'}><Icon name='bell outline'/>{shop.shop_info}</p>
-        <div className='detailpage-additonal'>
+
+        {/* <div className='detailpage-additonal'>
           <Button className='detailpage-coupon' inverted color='purple' onClick={() => setShowCoupon(!showCoupon)}>
             <Icon name='tags'/>{couponList === null ? '0' : couponList.length}
           </Button>
           {showCoupon && couponList !== null ?
-          couponList.length === 0
-          ? 
-          <Button
-            icon='remove'
-            label='쿠폰없음'
-            labelPosition='left'
-            onClick={() => setShowCoupon(!showCoupon)}
-            className='detailpage-coupon-list'/>
-          :
-          couponList.map(coupon =>
-          <Button
-            icon={useCouponList.indexOf(coupon.coupon_cd) !== -1 ? 'checkmark' : 'none'}
-            label={{content: useCouponList.indexOf(coupon.coupon_cd) !== -1 ? comma(coupon.coupon_discount) + '원 할인' : coupon.coupon_name}}
-            labelPosition='left'
-            onClick={() => CouponClick(coupon.coupon_cd)}
-            className={useCouponList.indexOf(coupon.coupon_cd) !== -1  ? 'detailpage-coupon-list coupon-checked' : 'detailpage-coupon-list'}/>
-          )
-          :
-          <Link to={`/review/${category}/${shop.shop_cd}`}>
-            <Button className='detailpage-comment' inverted color='violet'>
-              <Icon name='commenting'/>{shop.review_num === undefined ? 0 : comma(shop.review_num)}
-            </Button>
-          </Link>
+            couponList.length === 0
+            ? 
+            <Button
+              icon='remove'
+              label='쿠폰없음'
+              labelPosition='left'
+              onClick={() => setShowCoupon(!showCoupon)}
+              className='detailpage-coupon-list'/>
+            :
+            couponList.map(coupon =>
+            <Button
+              icon={useCouponList.indexOf(coupon.coupon_cd) !== -1 ? 'checkmark' : 'none'}
+              label={{content: useCouponList.indexOf(coupon.coupon_cd) !== -1 ? comma(coupon.coupon_discount) + '원 할인' : coupon.coupon_name}}
+              labelPosition='left'
+              onClick={() => CouponClick(coupon.coupon_cd)}
+              className={useCouponList.indexOf(coupon.coupon_cd) !== -1  ? 'detailpage-coupon-list coupon-checked' : 'detailpage-coupon-list'}/>
+            )
+          :<></>
           }
-        </div>
+        </div> */}
+      </Segment>
+
+      {/* 리뷰 정보 탭*/}
+      <Segment className='review-info'>
+        <Statistic.Group size='mini' widths='three' inverted>
+          <Statistic>
+            <Statistic.Value className='review-favorite' onClick={favorite}><Icon name={isFavorite ? 'like' : 'like outline'}/> {shop.favorite_num === undefined ? 0 : comma(shop.favorite_num)}</Statistic.Value>
+            <Statistic.Label>즐겨찾기</Statistic.Label>
+          </Statistic>
+          <Statistic>
+            <Statistic.Value><Icon name='comments outline'/> {shop.review_num === undefined ? 0 : comma(shop.review_num)}</Statistic.Value>
+            <Statistic.Label>총 리뷰수</Statistic.Label>
+          </Statistic>
+          <Statistic>
+            <Statistic.Value><Icon name='star outline'/> {shop.ratings_ave}</Statistic.Value>
+            <Statistic.Label>만족도</Statistic.Label>
+          </Statistic>
+        </Statistic.Group>
       </Segment>
 
       {/* 메뉴 탭 */}

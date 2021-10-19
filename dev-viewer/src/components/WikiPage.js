@@ -10,13 +10,13 @@ export default function WikiPage() {
             <List.Item>
                 <List.Content>
                 <div className="wiki-header"><List.Header><Icon inverted color='grey' name='box'/> 테스트환경</List.Header></div>
-                <div className="wiki-content"><a href="http://3.36.69.67/" target="_blank" rel="noreferrer">바로가기</a></div>
+                <div className="wiki-content"><a href="http://3.36.69.67/" target="_blank" rel="noreferrer">페이지 바로가기</a></div>
                 </List.Content>
             </List.Item>
             <List.Item>
                 <List.Content>
                 <div className="wiki-header"><List.Header><Icon inverted color='grey' name='gitlab'/> 소스관리</List.Header></div>
-                <div className="wiki-content"><a href="https://gitlab.com/t930" target="_blank" rel="noreferrer">https://gitlab.com/t930</a></div>
+                <div className="wiki-content"><a href="https://github.com/yonroku46/pickProject" target="_blank" rel="noreferrer">https://github.com/yonroku46/pickProject</a></div>
                 </List.Content>
             </List.Item>
             <List.Item>
@@ -42,7 +42,8 @@ export default function WikiPage() {
                 <div className="wiki-header"><List.Header><Icon inverted color='grey' name='bullhorn'/> 기타 참고사항</List.Header></div>
                 <div className="wiki-content">
                     <div>
-                        # API기동<br/><div className="code"><p>cd /home/dev-service/api<br/>python3 app.py</p></div></div>
+                        # 2021.10.19<br/>
+                        <div className="code"><p>현재 없음</p></div></div>
                     </div>
                 </List.Content>
             </List.Item>

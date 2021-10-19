@@ -1,6 +1,7 @@
 import { useEffect, useState, useReducer } from "react";
 import { useParams, Link } from "react-router-dom";
 import { Dimmer, Button, Comment, Label, Segment, Image, Icon, Loader, Form, Statistic, Rating, Modal } from 'semantic-ui-react'
+import MapContainer from "../booking/MapContainer";
 import * as api from '../../rest/server'
 import Slider from "react-slick";
 import axios from 'axios';
@@ -9,6 +10,7 @@ export default function ShopPage(props) {
   const isAuthorized = sessionStorage.getItem("isAuthorized");
 
   const userInfo = JSON.parse(sessionStorage.getItem('userInfo'));
+  const favorites = JSON.parse(sessionStorage.getItem('favorites'));
   const user_cd = userInfo ? userInfo.user_cd : null;
 
   // 공통 default
@@ -29,7 +31,14 @@ export default function ShopPage(props) {
   const [sendLoading, setSendLoading] = useState(false);
   const [reviewLoading, setReviewLoading] = useState(false);
 
+  const [isFavorite, setIsFavorite] = useState(false);
+  const [clickFavorite, setClickFavorite] = useState(false);
+  const [mapOpen, setMapOpen] = useState(false)
+
   useEffect(() => {
+    if (favorites) {
+      favoriteJudge();
+    }
     const params = { 
       'shop_cd': shop_cd
     };
@@ -189,6 +198,10 @@ export default function ShopPage(props) {
     setTargetReview(targetId);
   }
 
+  function mapToogle() {
+    setMapOpen(!mapOpen);
+  }
+
   const [state, dispatch] = useReducer(deleteModal, {
     open: false,
     size: undefined,
@@ -204,6 +217,64 @@ export default function ShopPage(props) {
       default:
         throw new Error('Unsupported action')
     }
+  }
+
+  function favorite() {
+    if (clickFavorite === true) {
+      return;
+    }
+    if (user_cd === null) {
+      alert('로그인이 필요합니다');
+      return;
+    }
+    setClickFavorite(true);
+    const params = { 
+      'user_cd': user_cd,
+      'shop_cd': shop_cd,
+      'isFavorite': isFavorite
+    };
+    return new Promise(function(resolve, reject) {
+      axios
+        .post(api.favorite, params)
+        .then(response => resolve(response.data))
+        .catch(error => reject(error.response))
+    }).then(data => {
+      setIsFavorite(data);
+      if (data) {
+        shop.favorite_num = shop.favorite_num + 1;
+        setShop(shop)
+      } else {
+        shop.favorite_num = shop.favorite_num - 1;
+        setShop(shop)
+      }
+      getFavorite(user_cd);
+      }
+    )
+  }
+
+  function getFavorite(user_cd) {
+    const params = { 
+      'user_cd': user_cd
+    };
+    return new Promise(function(resolve, reject) {
+      axios
+        .post(api.getFavorite, params)
+        .then(response => resolve(response.data))
+        .catch(error => reject(error.response))
+    }).then(data => {
+      sessionStorage.setItem('favorites', JSON.stringify(data));
+      setClickFavorite(false);
+      }
+    )
+  }
+
+  function favoriteJudge() {
+    favorites.map(favorite => {
+      if (shop_cd === String(favorite.shop_cd)) {
+        setIsFavorite(true);
+        return;
+      }
+    })
   }
 
   function timeForToday(value) {
@@ -262,10 +333,16 @@ export default function ShopPage(props) {
   return (
     <div className='detailpage'>
       {reviewLoading  &&
-      <Dimmer active inverted>
-        <Loader size='large'/>
-      </Dimmer>
+        <Dimmer active inverted>
+          <Loader size='large'/>
+        </Dimmer>
       }
+      {shop.length === 0 &&
+        <Dimmer active inverted>
+          <Loader size='large'/>
+        </Dimmer>
+      }
+
       {/* 샵 이미지 탭 */}
       <Segment className="review-main-image" placeholder>
         <Slider {...settings}>
@@ -275,33 +352,29 @@ export default function ShopPage(props) {
         </Slider>
       </Segment>
 
-      {shop.length === 0 &&
-      <div style={{minHeight:'15vh'}}>
-        <Dimmer active inverted>
-          <Loader size='large'/>
-        </Dimmer>
-      </div>
-      }
-
       {/* 샵 정보 탭 */}
       <Segment className='detailpage-main'>
         <p className='detailpage-name'>{shop.shop_name}
           <span className='shopmodal-rating'>
             <Link to={`/booking/${category}/${shop_cd}`}>
-              <Button inverted color='violet'>예약하기 <Icon name='angle double right'/></Button>
+              <Button className='detailpage-link-btn' color='violet'>예약하기 <Icon name='angle double right'/></Button>
             </Link>
           </span>
         </p>
-        <p className='detailpage-time'><Icon name='clock outline'/>{shop.shop_open} ~ {shop.shop_close}</p>
-        <p className='detailpage-location'><Icon name='map outline'/>{shop.shop_location}</p>
+        <p className='detailpage-call'><Icon name='paper plane outline'/>
+          <a href={`tel:${shop.shop_tel}`}>{shop.shop_tel}</a>
+          <span className='detailpage-time'>( {shop.shop_open}~{shop.shop_close} )</span>
+        </p>
         <p className='detailpage-info'><Icon name='bell outline'/>{shop.shop_info}</p>
+        <p className='detailpage-location'><Icon name='map outline'/>{shop.shop_location} <Icon className='detailpage-icon' onClick={mapToogle} name={mapOpen ? 'angle up' : 'angle down'}/></p>
+        {mapOpen && <MapContainer location={shop.shop_location}/>}
       </Segment>
 
       {/* 리뷰 정보 탭*/}
       <Segment className='review-info'>
         <Statistic.Group size='mini' widths='three' inverted>
           <Statistic>
-            <Statistic.Value><Icon name='like outline'/> {shop.favorite_num === undefined ? 0 : comma(shop.favorite_num)}</Statistic.Value>
+            <Statistic.Value className='review-favorite' onClick={favorite}><Icon name={isFavorite ? 'like' : 'like outline'}/> {shop.favorite_num === undefined ? 0 : comma(shop.favorite_num)}</Statistic.Value>
             <Statistic.Label>즐겨찾기</Statistic.Label>
           </Statistic>
           <Statistic>

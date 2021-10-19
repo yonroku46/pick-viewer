@@ -52,16 +52,9 @@ h1, h2, h3, h4, h5, div, a, button {
 .map-container {
   margin-right: auto;
   margin-left: auto;
-  width: 92% !important;
+  width: 100% !important;
   height: 240px !important;
   background-color: gray;
-}
-
-/* sp */
-@media only screen and (max-width: 767px) {
-  .map-container {
-    width: 100% !important;
-  }
 }
 
 .body-segment {
@@ -999,6 +992,7 @@ hr {
 }
 .detailpage-main-image {
   padding: 0px !important;
+  margin-bottom: 0px !important;
 }
 .segment.detailpage-main {
   display: flow-root;
@@ -1013,18 +1007,23 @@ hr {
   border-top: rgb(0, 0, 0, 0.1) 1px solid !important;
   border-bottom: rgb(0, 0, 0, 0.1) 1px solid !important;
 }
+.detailpage-link-btn {
+  margin-right: 0px !important;
+}
 .detailpage-name {
   font-weight: bold;
   font-size: 1.4em;
   margin-bottom: 0px;
 }
 .detailpage-time {
+  margin-left: 5px;
+  color: rgba(0, 0, 0, 0.4);
+}
+.detailpage-call {
   margin: 5px;
 }
-.detailpage-info-mapload {
-  margin-top: 14px;
-  margin-left: 5px;
-  margin-bottom: 5px;
+.detailpage-call a, .detailpage-call:hover a {
+  color: #000000DE;
 }
 .detailpage-location {
   margin: 5px;
@@ -1218,6 +1217,10 @@ a.detailpage-tel:hover {
   padding-left: 20vw;
   padding-right: 20vw;
   min-height: calc(100vh - 81px);
+}
+.review-favorite:hover {
+  cursor: pointer;
+  opacity: 0.75;
 }
 .review-main-image {
   padding: 0px !important;
