@@ -8,18 +8,24 @@ In the project directory, you can run:
 
 ### `api start`
 
-**Local**
+**+Local**
 
+```
 python app.py
+```
 
-**Server**
+**+Server**
 
+```
 nohup python3 app.py > output.log
+```
 
 ### `api stop`
 
+```
 ps x | grep python3
 kill PID (*check to PID) 
+```
 
 ## Note
 
