@@ -98,7 +98,7 @@ export default function BookingCalendar(props) {
     <>
     <Grid.Column>
         <Button className={isSelected ? 'detailpage-menu-btn-bg' :'detailpage-menu-btn-sub'} onClick={calendarToogle}>
-            <Icon name={isSelected ? 'check circle' : 'circle outline'}/>
+            <Icon name={isSelected ? 'chevron right' : 'chevron down'}/>
             {isSelected ? today.format('MM월 DD일') : '예약일자를 선택하세요' }
         </Button>
     </Grid.Column>

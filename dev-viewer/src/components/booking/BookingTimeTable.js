@@ -46,7 +46,7 @@ export default function TimeTable(props) {
         result = result.concat(
         <Grid.Column>
             <Button className={isSelected ? 'detailpage-menu-btn-bg' :'detailpage-menu-btn-sub'} onClick={bookingTimeToggle}>
-                <Icon name={isSelected ? 'check circle' : 'circle outline'}/>
+                <Icon name={isSelected ? 'chevron right' : 'chevron down'}/>
                 {menuName}
             </Button>
             <div className='timetable-btn-area'>

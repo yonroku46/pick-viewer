@@ -1,6 +1,6 @@
 import { useEffect, useState, useReducer } from "react";
 import { useParams, Link } from "react-router-dom";
-import { Dimmer, Button, Item, Grid, Segment, Image, Icon, Loader, Modal, Header, Statistic } from 'semantic-ui-react'
+import { Dimmer, Button, Item, Grid, Segment, Image, Icon, Loader, Modal, Header, Statistic, Card } from 'semantic-ui-react'
 import BookingCalendar from "./BookingCalendar";
 import BookingTimeTable from "./BookingTimeTable";
 import * as api from '../../rest/server'
@@ -428,8 +428,8 @@ export default function DetailPage(props) {
     return (
       <Grid.Column>
       <Button onClick={designerToggle} className={designerSelected ? 'detailpage-menu-btn-bg' :'detailpage-menu-btn-sub'}>
-        <Icon name={designer === null ? 'circle outline' : 'check circle'}/>
-        {designer === null ? designerTitle : designer}
+        <Icon name={designer === null ? 'chevron down' : 'chevron right'}/>
+        {designer === null ? designerTitle : '디자이너 : ' + designer}
       </Button>
       {visibleDesigner}
       {designerError && errorMessege}
@@ -441,8 +441,8 @@ export default function DetailPage(props) {
     return (
       <Grid.Column>
       <Button onClick={customersToggle} className={customersSelected ? 'detailpage-menu-btn-bg' :'detailpage-menu-btn-sub'}>
-        <Icon name={customers === null ? 'circle outline' : 'check circle'}/>
-        {customers === null ? shopCustomersTitle : customers }
+        <Icon name={customers === null ? 'chevron down' : 'chevron right'}/>
+        {customers === null ? shopCustomersTitle : '방문인원 : ' + customers }
       </Button>
       {visibleCustomers}
       {customersError && errorMessege}
@@ -454,11 +454,55 @@ export default function DetailPage(props) {
     return (
       <Grid.Column>
       <Button onClick={shopMenuToggle} className={shopMenuSelected ? 'detailpage-menu-btn-bg' :'detailpage-menu-btn-sub'}>
-        <Icon name={shopMenu === null ? 'circle outline' : 'check circle'}/>
+        <Icon name={shopMenu === null ? 'chevron down' : 'chevron right'}/>
         {shopMenu === null ? (category === 'hairshop' ? hairShopMenuTitle : shopMenuTitle) : shopMenu}
       </Button>
       {category === 'hairshop' ? visibleHairShopMenu : visibleMenu}
       {shopMenuError && errorMessege}
+      </Grid.Column>
+    );
+  }
+
+  function discountPrice() {
+    var result = 0;
+    for (var target in useCouponList) {
+      const coupon = couponList.find(coupon => coupon.coupon_cd === useCouponList[target]);
+      result += coupon.coupon_discount;
+    }
+    return result;
+  }
+
+  function couponContent() {
+    return (
+      <Grid.Column>
+        <Button onClick={() => setShowCoupon(!showCoupon)} className={useCouponList.length !== 0 ? 'detailpage-menu-btn-bg' :'detailpage-menu-btn-sub'}>
+          <Icon name={useCouponList.length === 0 ? 'chevron down' : 'chevron right'}/>
+          {useCouponList.length === 0 ?
+            '보유쿠폰 : ' + couponList.length + '개'
+          :
+            comma(discountPrice()) + '원 할인'
+          }
+        </Button>
+        {showCoupon && couponList !== null ?
+          couponList.length === 0
+          ?
+          <>
+          <Card.Group className='detailpage-coupon-list' itemsPerRow={1}>
+            <Card color='violet' onClick={() => setShowCoupon(!showCoupon)} header='쿠폰없음'/>
+          </Card.Group>
+          </>
+          :
+          <Card.Group className='detailpage-coupon-list' itemsPerRow={2}>
+            {couponList.map(coupon =>
+              <Card color='violet'
+                onClick={() => CouponClick(coupon.coupon_cd)}
+                header={{content: useCouponList.indexOf(coupon.coupon_cd) !== -1 ? comma(coupon.coupon_discount) + '원 할인' : coupon.coupon_name}}
+                meta={useCouponList.indexOf(coupon.coupon_cd) !== -1 ? <Icon name='checkmark'/> : comma(coupon.coupon_discount) + '원'}
+                className={useCouponList.indexOf(coupon.coupon_cd) !== -1  && 'coupon-checked'}/>
+            )}
+          </Card.Group>
+        :<></>
+        }
       </Grid.Column>
     );
   }
@@ -508,32 +552,6 @@ export default function DetailPage(props) {
         <p className='detailpage-info'><Icon name='list alternate outline'/>{shop.shop_info}</p>
         <p className='detailpage-location'><Icon name='map outline'/>{shop.shop_location} <Icon className='detailpage-icon' onClick={mapToogle} name={mapOpen ? 'angle up' : 'angle down'}/></p>
         {mapOpen && <MapContainer location={shop.shop_location}/>}
-
-        {/* <div className='detailpage-additonal'>
-          <Button className='detailpage-coupon' inverted color='purple' onClick={() => setShowCoupon(!showCoupon)}>
-            <Icon name='tags'/>{couponList === null ? '0' : couponList.length}
-          </Button>
-          {showCoupon && couponList !== null ?
-            couponList.length === 0
-            ? 
-            <Button
-              icon='remove'
-              label='쿠폰없음'
-              labelPosition='left'
-              onClick={() => setShowCoupon(!showCoupon)}
-              className='detailpage-coupon-list'/>
-            :
-            couponList.map(coupon =>
-            <Button
-              icon={useCouponList.indexOf(coupon.coupon_cd) !== -1 ? 'checkmark' : 'none'}
-              label={{content: useCouponList.indexOf(coupon.coupon_cd) !== -1 ? comma(coupon.coupon_discount) + '원 할인' : coupon.coupon_name}}
-              labelPosition='left'
-              onClick={() => CouponClick(coupon.coupon_cd)}
-              className={useCouponList.indexOf(coupon.coupon_cd) !== -1  ? 'detailpage-coupon-list coupon-checked' : 'detailpage-coupon-list'}/>
-            )
-          :<></>
-          }
-        </div> */}
       </Segment>
 
       {/* 리뷰 정보 탭*/}
@@ -557,6 +575,8 @@ export default function DetailPage(props) {
       {/* 메뉴 탭 */}
       <Grid columns={1} className='detailpage-menu-btn'>
         <Grid.Row>
+          
+          {couponContent()}
 
           {category === 'hairshop' && designerContent()}
           {category === 'restaurant' && customersContent()}
