@@ -999,8 +999,8 @@ hr {
   height: auto;
   text-align: left;
   margin-top: 0px !important;
-  padding-top: 13px !important;
-  padding-bottom: 13px !important;
+  padding-top: 1.5em !important;
+  padding-bottom: 1.5em !important;
   padding-left: 8px !important;
   padding-right: 8px !important;
   border-radius: 0px !important;
@@ -1016,14 +1016,16 @@ hr {
   margin-bottom: 0px;
 }
 .detailpage-time {
-  margin-left: 5px;
-  color: rgba(0, 0, 0, 0.4);
-}
-.detailpage-call {
   margin: 5px;
 }
-.detailpage-call a, .detailpage-call:hover a {
+.detailpage-call a {
+  margin: 5px;
   color: #000000DE;
+  opacity: 0.3;
+}
+.detailpage-call:hover a {
+  color: #000000DE;
+  opacity: 1;
 }
 .detailpage-location {
   margin: 5px;

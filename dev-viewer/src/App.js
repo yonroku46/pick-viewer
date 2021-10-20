@@ -6,7 +6,6 @@ import HomePage from './components/home/HomePage'
 import BookingPage from './components/booking/BookingPage'
 import DetailPage from './components/booking/DetailPage';
 import ReviewPage from './components/review/ReviewPage';
-import ShopPage from './components/review/ShopPage';
 import StylesPage from './components/styles/StylesPage'
 import ContactPage from './components/contact/ContactPage'
 import LoginPage from './components/login/LoginPage'
@@ -179,11 +178,9 @@ function App() {
                     <Route path="/booking/hairshop/:shop_cd" component={DetailPage}/>
                     <Route path="/booking/restaurant/:shop_cd" component={DetailPage}/>
                     <Route path="/booking/cafe/:shop_cd" component={DetailPage}/>
-                <Route exact path="/review/" component={ReviewPage} />
-                  <Route exact path="/review/:category" component={ReviewPage} />
-                    <Route path="/review/hairshop/:shop_cd" component={ShopPage}/>
-                    <Route path="/review/restaurant/:shop_cd" component={ShopPage}/>
-                    <Route path="/review/cafe/:shop_cd" component={ShopPage}/>
+                    <Route path="/review/hairshop/:shop_cd" component={ReviewPage}/>
+                    <Route path="/review/restaurant/:shop_cd" component={ReviewPage}/>
+                    <Route path="/review/cafe/:shop_cd" component={ReviewPage}/>
                 <Route exact path="/styles" component={StylesPage} />
                 <Route exact path="/contact" component={ContactPage} />
                 <Route exact path="/login" component={LoginPage} />

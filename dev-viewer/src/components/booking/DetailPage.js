@@ -495,17 +495,17 @@ export default function DetailPage(props) {
       {/* 샵 정보 탭 */}
       <Segment className='detailpage-main'>
         <p className='detailpage-name'>{shop.shop_name}
+          <span className='detailpage-call'>
+            <a href={`tel:${shop.shop_tel}`}><Icon name='phone square'/></a>
+          </span>
           <span className='shopmodal-rating'>
             <Link to={`/review/${category}/${shop_cd}`}>
               <Button className='detailpage-link-btn' inverted color='violet'>댓글보기 <Icon name='angle double right'/></Button>
             </Link>
           </span>
         </p>
-        <p className='detailpage-call'><Icon name='paper plane outline'/>
-          <a href={`tel:${shop.shop_tel}`}>{shop.shop_tel}</a>
-          <span className='detailpage-time'>( {shop.shop_open}~{shop.shop_close} )</span>
-        </p>
-        <p className='detailpage-info'><Icon name='bell outline'/>{shop.shop_info}</p>
+        <p className='detailpage-time'><Icon name='clock outline'/>{shop.shop_open}~{shop.shop_close}</p>
+        <p className='detailpage-info'><Icon name='list alternate outline'/>{shop.shop_info}</p>
         <p className='detailpage-location'><Icon name='map outline'/>{shop.shop_location} <Icon className='detailpage-icon' onClick={mapToogle} name={mapOpen ? 'angle up' : 'angle down'}/></p>
         {mapOpen && <MapContainer location={shop.shop_location}/>}
 
