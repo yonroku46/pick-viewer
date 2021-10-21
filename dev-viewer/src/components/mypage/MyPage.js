@@ -1,5 +1,5 @@
 import React, { useState, useRef, useEffect } from 'react'
-import { Item, Icon, Modal, Container, Popup, Menu, Button, Input, Label, Message, Transition } from 'semantic-ui-react'
+import { Item, Icon, Modal, Container, Menu, Button, Input, Label, Message, Transition } from 'semantic-ui-react'
 import { Redirect, Link } from 'react-router-dom'
 import Calendar from "./Calendar";
 import Quick from "./Quick";
@@ -29,6 +29,29 @@ export default function MyPage(props) {
 
   const [activeItem, setActiveItem] = useState('schdule');
   const [newInfo, setNewInfo] = useState(info);
+
+  const [bookingList, setBookingList] = useState([]);
+
+  useEffect(() => {
+    const params = { 
+        'user_cd': user_cd
+      };
+      return new Promise(function(resolve, reject) {
+        axios
+          .post(api.bookingList, params)
+          .then(response => resolve(response.data))
+          .catch(error => reject(error.response))
+      })
+      .then(res => {
+        if (res !== null) {
+            setBookingList(res);
+        }
+      })
+      .catch(err => {
+        alert("현재 서버와의 연결이 원활하지 않습니다. 관리자에게 문의해주세요.");
+      })
+  }, []); 
+
   function newInfoInput(e) {
     setNewInfo(e.target.value);
   }
@@ -181,19 +204,19 @@ export default function MyPage(props) {
         <Item>
           <input hidden type='file' ref={inputRef} accept=".png, .jpg, .jpeg" onChange={imgUpload}/>
           <img src={api.imgRender(icon)} alt="" className="mypage-user-icon" onClick={setImg}/>
-          <Popup content='예약온도를 관리해보세요' position='right center'
-            trigger={
-              <span className='mypage-popup-btn'><Icon name='tint'/>36.5</span>
-            }
-          />
           <Item.Content className="mypage-user-info">
             <Item.Header>
               {userName}
             </Item.Header>
+            <Menu floated='right' className='mypage-setting-icon' onClick={() => dispatch({ type: 'open' })}>
+              <Menu.Item as='a' icon>
+                  <Icon name='cog'/>
+              </Menu.Item>
+            </Menu>
             <Item.Meta className='mypage-user-mail'>
               <span>{email}</span>
             </Item.Meta>
-            <Item.Description className='mypage-edit-btn' onClick={() => dispatch({ type: 'open' })}>
+            <Item.Description className='mypage-user-intro'>
               {info}
             </Item.Description>
 
@@ -234,6 +257,7 @@ export default function MyPage(props) {
         </Item>
       </Item.Group>
     </Container>
+
     <Menu pointing secondary className='mypage-menu'>
       <Menu.Item
         name='schdule'
@@ -254,16 +278,17 @@ export default function MyPage(props) {
         <Icon name='heart' size='large' className='mypage-icon-sp'/><span className='mypage-menu-sp'>즐겨찾기</span>
       </Menu.Item>
     </Menu>
+
     <Container className="mypage-content-table">
       {
       activeItem === 'schdule'?
-        <Calendar user_cd={user_cd}/>
+        <Calendar bookingList={bookingList}/>
       :
       activeItem === 'quick'?
         <Quick/>
       :
       activeItem === 'favorite'?
-        <Favorite/>
+        <Favorite user_cd={user_cd}/>
       :
       <></>
       }

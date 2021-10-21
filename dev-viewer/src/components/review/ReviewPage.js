@@ -2,10 +2,10 @@ import { useEffect, useState, useReducer } from "react";
 import { useParams, Link } from "react-router-dom";
 import { Dimmer, Button, Comment, Label, Segment, Image, Icon, Loader, Form, Statistic, Rating, Modal } from 'semantic-ui-react'
 import MapContainer from "../booking/MapContainer";
-import * as api from '../../rest/server'
+import * as api from '../../rest/server';
+import axios from 'axios';
 import Slider from "react-slick";
 import { Link as Scroll } from "react-scroll";
-import axios from 'axios';
 
 export default function ShopPage(props) {
   const isAuthorized = sessionStorage.getItem("isAuthorized");

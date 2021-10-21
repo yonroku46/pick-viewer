@@ -1,5 +1,5 @@
 import {useState} from 'react';
-import { Icon, Table, Menu, Label } from 'semantic-ui-react'
+import { Icon, Table, Menu, Button } from 'semantic-ui-react'
 import moment from 'moment';
 import TimeTable from './TimeTable';
 
@@ -9,7 +9,7 @@ export default function Calendar(props) {
     const [calendarActive, setCalendarActive] = useState(false);
 
     const today = getMoment;
-    const user_cd = props.user_cd;
+    const bookingList = props.bookingList;
 
     const firstWeek = today.clone().startOf('month').week();
     const lastWeek = today.clone().endOf('month').week() === 1 ? 53 : today.clone().endOf('month').week();
@@ -44,21 +44,33 @@ export default function Calendar(props) {
                 let days = today.clone().startOf('year').week(week).startOf('week').add(index, 'day');
 
                 if (getMoment.format('YYYYMMDD') === days.format('YYYYMMDD')) {
+                    // 오늘날짜
                     return(
                         <Table.Cell onClick={dayClick} className='mypage-table-active table-today' key={index}>
                             <span>{days.format('D')}</span>
+                            {bookingList.filter(booking => booking.booking_time.substr(0,8) === days.format('YYYYMMDD')).length !== 0 &&
+                                <Button disabled className='mypage-booking-date' size='mini' icon='star'/>
+                            }
                         </Table.Cell>
                     );
                 } else if (days.format('MM') !== today.format('MM')) {
+                    // 다른달 날짜
                     return(
                         <Table.Cell key={index} className='table-other-month'>
                             <span>{days.format('D')}</span>
+                            {bookingList.filter(booking => booking.booking_time.substr(0,8) === days.format('YYYYMMDD')).length !== 0 &&
+                                <Button disabled className='mypage-booking-date-other' size='mini' icon='star'/>
+                            }
                         </Table.Cell>
                     );
                 } else {
+                    // 이번달 오늘제외 날짜
                     return(
                         <Table.Cell onClick={dayClick} className='mypage-table-active' key={index}>
-                            <span>{days.format('D')} <Label circular color='teal' size='tiny' empty/></span>
+                            <span>{days.format('D')}</span>
+                            {bookingList.filter(booking => booking.booking_time.substr(0,8) === days.format('YYYYMMDD')).length !== 0 &&
+                                <Button disabled className='mypage-booking-date' size='mini' icon='star'/>
+                            }
                         </Table.Cell>
                     );
                 }
@@ -84,7 +96,7 @@ export default function Calendar(props) {
                 }
             </Menu.Item>
         </Menu>
-        <Menu floated='right' onClick={()=>{ console.log("history") }}>
+        <Menu floated='right' onClick={() => setMoment(moment())}>
             <Menu.Item as='a' icon>
                 <Icon name='history'/>
             </Menu.Item>
@@ -115,7 +127,7 @@ export default function Calendar(props) {
     </Table>
     </>
     }
-    <TimeTable today={today.format('YYYYMMDD')} user_cd={user_cd}/>
+    <TimeTable today={today.format('YYYYMMDD')} bookingList={bookingList}/>
     </>
   );
 }

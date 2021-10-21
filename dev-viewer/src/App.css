@@ -36,7 +36,7 @@ h1, h2, h3, h4, h5, div, a, button {
   margin-bottom: -24px;
 }
 .quick-card {
-  margin-top: 40px !important;
+  margin-top: 30px !important;
 }
 .menubar {
   top: 51px !important;
@@ -368,6 +368,24 @@ hr {
 .mypage-main {
   min-height: calc(100vh - 81px);
 }
+.mypage-booking-date {
+  position: absolute;
+  background-color: #ffffff00 !important;
+  color: #A291FB !important;
+  padding: 1px !important;
+  padding-right: 2px !important;
+  padding-bottom: 2px !important;
+  transform: translateY(-25%)
+}
+.mypage-booking-date-other {
+  position: absolute;
+  background-color: #ffffff00 !important;
+  color: #a0a0a0 !important;
+  padding: 1px !important;
+  padding-right: 2px !important;
+  padding-bottom: 2px !important;
+  transform: translateY(-25%)
+}
 .mypage-msg:hover {
   cursor: pointer;
 }
@@ -375,10 +393,8 @@ hr {
   margin-left: 3px !important;
   margin-top: -2px !important;
 }
-.mypage-edit-btn:hover {
-  cursor: pointer;
-  font-weight: bolder;
-  opacity: 0.8;
+.mypage-user-intro {
+  margin-bottom: 20px;
 }
 .mypage-content-user {
   text-align: left;
@@ -407,16 +423,19 @@ hr {
 .mypage-table-active:hover {
   cursor: pointer;
   font-weight: bold !important;
-  background-color: rgb(51, 153, 204, 0.3) !important;
-  border: 20px !important;
+  color: #A291FB;
+  background-color: rgba(161, 51, 204, 0.05);
+  width: calc(100% / 7);
 }
 .table-today {
-  background-color: rgb(51, 153, 204, 0.1);
+  background-color: rgba(161, 51, 204, 0.05);
   font-weight: bold;
+  width: calc(100% / 7);
 }
 .table-other-month {
   background-color: rgb(125, 125, 125, 0.1);
   color: rgb(125, 125, 125, 0.15);
+  width: calc(100% / 7);
 }
 .mypage-table-month {
   background-color: #fff !important;
@@ -426,23 +445,13 @@ hr {
 .mypage-table-btn {
   margin-bottom: 14px !important;
 }
-.mypage-popup-btn {
-  cursor: pointer;
-  font-size: large;
-  font-weight: bolder;
-  color: rgb(0, 0, 0, 0.4);
-  width: 80px;
-  height: 28px;
-  margin-left: -51px !important;
-  margin-right: 10px !important;
-  margin-top: 82px !important;
-  z-index: 200;
-}
 .mypage-history {
   border: none !important;
   background-color: rgb(0, 0, 0, 0) !important;
 }
-
+.mypage-setting-icon {
+  margin-right: 5px !important;
+}
 .mypage-user-icon {
   width: 115px;
   height: 110px;
@@ -456,21 +465,26 @@ hr {
   cursor: pointer;
   opacity: 0.8;
 }
+.mypage-favorite-label {
+  margin-top: 1em !important;
+  margin-bottom: -0.5em !important;
+}
 
+.mypage-tt-icon {
+  margin-left: -0.5em !important;
+  margin-right: -0.5em !important;
+  transform: translateY(-0.5em);
+  opacity: 0.1 !important;
+}
 .mypage-tt-time {
   width: 160px !important;
+  font-weight: bold;
   border-right: rgb(80, 80, 80, 0.1) 1px solid;
 }
 .mypage-tt-header {
   width: 160px !important;
   text-align: center !important;
   border-right: rgb(80, 80, 80, 0.1) 1px solid !important;
-}
-.tt-target {
-  font-weight: bold;
-}
-.tt-target:hover {
-  color: rgb(51, 153, 204);
 }
 .mypage-content-table {
   width: 70vw !important;
@@ -493,9 +507,14 @@ hr {
   margin-top: 2px !important;
   border-bottom: 0px !important;
 }
-.mypage-tt-info{
+.mypage-tt-info {
   float: right;
   cursor: pointer;
+}
+.mypage-tt-info:hover {
+  margin-right: 2px;
+  opacity: 0.8;
+  transition-duration: 0.3s;
 }
 .mypage-bottom {
   margin-top: 10px !important;
@@ -536,12 +555,6 @@ hr {
     margin-left: auto;
     margin-right: auto;
   }
-  .mypage-popup-btn {
-    margin-top: -22px !important;
-    margin-bottom: -10px !important;
-    margin-left: auto !important;
-    margin-right: 14px !important;
-  }
   .mypage-tt-time {
     width: 80px !important;
   }
@@ -556,6 +569,9 @@ hr {
   }
   .mypage-icon-sp {
     margin: 0px !important;
+  }
+  .mypage-setting-icon {
+    margin-right: -14px !important;
   }
 }
 

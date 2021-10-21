@@ -40,3 +40,4 @@ export const reviewList = "/api/reviewList";
 export const infoUpdate = "/api/infoUpdate";
 export const bookingList = "/api/bookingList";
 export const submitEmployment = "/api/submitEmployment";
+export const favoriteList = "/api/favoriteList";

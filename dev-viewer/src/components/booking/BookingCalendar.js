@@ -62,20 +62,20 @@ export default function BookingCalendar(props) {
 
                 if (getMoment.format('YYYYMMDD') === days.format('YYYYMMDD')) {
                     return(
-                        <Table.Cell onClick={dayClick} className='mypage-table-active' style={{backgroundColor:'rgb(51, 153, 204, 0.1)', fontWeight:'bold'}} >
+                        <Table.Cell onClick={dayClick} className='mypage-table-active table-today'>
                             <span>{days.format('D')}</span>
                         </Table.Cell>
                     );
                 } else if (days.format('MM') !== today.format('MM')) {
                     return(
-                        <Table.Cell style={{backgroundColor:'rgb(125, 125, 125, 0.1)', color:'rgb(125, 125, 125, 0.2)'}}>
+                        <Table.Cell className='table-other-month'>
                             <span>{days.format('D')}</span>
                         </Table.Cell>
                     );
                 } else {
                     if ( (parseInt(days.format('MM')) <= originMonth) && (parseInt(days.format('D')) < originDay) ) {
                         return(
-                            <Table.Cell style={{backgroundColor:'rgb(125, 125, 125, 0.1)', color:'rgb(125, 125, 125, 0.2)'}}>
+                            <Table.Cell className='table-other-month'>
                                 <span>{days.format('D')}</span>
                             </Table.Cell>
                         );

@@ -1,8 +1,6 @@
 import { useEffect, useState } from 'react';
 import { Icon, Table } from 'semantic-ui-react'
 import moment from 'moment';
-import * as api from '../../rest/server';
-import axios from 'axios';
 
 export default function TimeTable(props) {
     const [getMoment, setMoment] = useState(moment());
@@ -11,33 +9,13 @@ export default function TimeTable(props) {
     // const remainder = 60 - (getMoment.minute() % 30);
     // const thisHour = parseInt(getMoment.format('HH'));
     
-    const user_cd = props.user_cd;
     const categoryList = ['hairshop', 'restaurant', 'cafe'];
-
-    useEffect(() => {
-        const params = { 
-            'user_cd': user_cd
-          };
-          return new Promise(function(resolve, reject) {
-            axios
-              .post(api.bookingList, params)
-              .then(response => resolve(response.data))
-              .catch(error => reject(error.response))
-          })
-          .then(res => {
-            if (res !== null) {
-                setBookingList(res);
-            }
-          })
-          .catch(err => {
-            alert("현재 서버와의 연결이 원활하지 않습니다. 관리자에게 문의해주세요.");
-          })
-    }, []); 
-
-    // const tmpEndList = [getMoment.clone().add("1", "h"), getMoment.clone().add("25", "h")];
-    // const [bookingEndList, setBookingEndList] = useState(tmpEndList);
+    const bookingList = props.bookingList;
     
-    const [bookingList, setBookingList] = useState([]);
+    function bookingInfo(targetId) {
+        const target = bookingList.filter(booking => booking.booking_cd === targetId);
+        console.log(target);
+    }
 
     const timeArr = [];
     new Array(24).fill().forEach((acc, index) => {
@@ -61,9 +39,6 @@ export default function TimeTable(props) {
         const target = bookingList.filter(booking => booking.booking_time.match(props.today));
         let cnt = target.length;
 
-        console.log(props.today)
-        console.log(target)
-
         if (cnt !== 0) {
             for (let i = 0; i < cnt; i++) {
                 result = result.concat(
@@ -71,29 +46,29 @@ export default function TimeTable(props) {
                     <Table.Row className='center'>
                         {target[i].booking_time.substr(9).split(":")[0] ===  time.split(":")[0] &&
                         <>
-                        <Table.Cell className='mypage-tt-time tt-target'>
+                        <Table.Cell className='mypage-tt-time'>
                             <span>{time}</span>
                         </Table.Cell>
                         <Table.Cell style={{fontWeight:'bold', textAlign:'left'}}>
                             {target[i].booking_category === categoryList[0] &&
                             <span>
-                                <Icon name='cut'/>
+                                <Icon className='mypage-tt-icon' name='cut'/>
                                 {target[i].shop_name}
                             </span>
                             }
                             {target[i].booking_category === categoryList[1] &&
                             <span>
-                                <Icon name='food'/>
+                                <Icon className='mypage-tt-icon' name='food'/>
                                 {target[i].shop_name} ({target[i].customers}명)
                             </span>
                             }
                             {target[i].booking_category === categoryList[2] &&
                             <span>
-                                <Icon name='coffee'/>
+                                <Icon className='mypage-tt-icon' name='coffee'/>
                                 {target[i].shop_name} ({target[i].customers}명)
                             </span>
                             }
-                            <Icon name='info circle' className='mypage-tt-info'/>
+                            <Icon name='angle double right' className='mypage-tt-info' onClick={() => bookingInfo(target[i].booking_cd)}/>
                         </Table.Cell>
                         </>
                         }
