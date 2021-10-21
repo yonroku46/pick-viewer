@@ -1,5 +1,6 @@
 import {useState} from 'react';
 import { Button, Grid, Icon } from 'semantic-ui-react'
+import { Link as Scroll } from "react-scroll";
 import moment from 'moment';
 
 export default function TimeTable(props) {
@@ -45,10 +46,12 @@ export default function TimeTable(props) {
         let result = [];
         result = result.concat(
         <Grid.Column>
-            <Button className={isSelected ? 'detailpage-menu-btn-bg' :'detailpage-menu-btn-sub'} onClick={bookingTimeToggle}>
+            <Scroll to='timeTable' offset={-56} spy={true} smooth={true}>
+            <Button id='timeTable' className={isSelected ? 'detailpage-menu-btn-bg' :'detailpage-menu-btn-sub'} onClick={bookingTimeToggle}>
                 <Icon name={isSelected ? 'chevron right' : 'chevron down'}/>
                 {menuName}
             </Button>
+            </Scroll>
             <div className='timetable-btn-area'>
             {showBookingTime && <p><Icon name='sun outline'/>오전</p>}
             {showBookingTime 

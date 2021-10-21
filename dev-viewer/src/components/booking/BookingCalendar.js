@@ -1,5 +1,6 @@
 import {useState} from 'react';
 import { Icon, Table, Button, Grid } from 'semantic-ui-react'
+import { Link as Scroll } from "react-scroll";
 import moment from 'moment';
 
 export default function BookingCalendar(props) {
@@ -97,10 +98,12 @@ export default function BookingCalendar(props) {
   return (
     <>
     <Grid.Column>
-        <Button className={isSelected ? 'detailpage-menu-btn-bg' :'detailpage-menu-btn-sub'} onClick={calendarToogle}>
+        <Scroll to='calendar' offset={-56} spy={true} smooth={true}>
+        <Button id='calendar' className={isSelected ? 'detailpage-menu-btn-bg' :'detailpage-menu-btn-sub'} onClick={calendarToogle}>
             <Icon name={isSelected ? 'chevron right' : 'chevron down'}/>
             {isSelected ? today.format('MM월 DD일') : '예약일자를 선택하세요' }
         </Button>
+        </Scroll>
     </Grid.Column>
     {calendarActive &&
     <>

@@ -4,6 +4,7 @@ import { Dimmer, Button, Comment, Label, Segment, Image, Icon, Loader, Form, Sta
 import MapContainer from "../booking/MapContainer";
 import * as api from '../../rest/server'
 import Slider from "react-slick";
+import { Link as Scroll } from "react-scroll";
 import axios from 'axios';
 
 export default function ShopPage(props) {
@@ -366,8 +367,12 @@ export default function ShopPage(props) {
         </p>
         <p className='detailpage-time'><Icon name='clock outline'/>{shop.shop_open}~{shop.shop_close}</p>
         <p className='detailpage-info'><Icon name='list alternate outline'/>{shop.shop_info}</p>
-        <p className='detailpage-location'><Icon name='map outline'/>{shop.shop_location} <Icon className='detailpage-icon' onClick={mapToogle} name={mapOpen ? 'angle up' : 'angle down'}/></p>
-        {mapOpen && <MapContainer location={shop.shop_location}/>}
+        <p className='detailpage-location'><Icon name='map outline'/>{shop.shop_location} 
+          <Scroll className='detailpage-icon' to='map' offset={-56} spy={true} smooth={true}>
+            <Icon onClick={mapToogle} name={mapOpen ? 'angle up' : 'angle down'}/>
+          </Scroll>
+        </p>
+        {mapOpen && <MapContainer id='map' location={shop.shop_location}/>}
       </Segment>
 
       {/* 리뷰 정보 탭*/}
@@ -415,9 +420,11 @@ export default function ShopPage(props) {
                 {review.review_text}
               </Comment.Text>
               {isStaff && 
-              <Comment.Actions onClick={() => clickReply(review.review_cd)}>
-                <Comment.Action>답글달기</Comment.Action>
-              </Comment.Actions>
+              <Scroll to='reply' spy={true} smooth={true}>
+                <Comment.Actions onClick={() => clickReply(review.review_cd)}>
+                  <Comment.Action>답글달기</Comment.Action>
+                </Comment.Actions>
+              </Scroll>
               }
             </Comment.Content>
           </Comment>
@@ -447,9 +454,11 @@ export default function ShopPage(props) {
                 {review.review_text}
               </Comment.Text>
               {isStaff && 
-              <Comment.Actions onClick={() => clickReply(review.review_cd)}>
-                <Comment.Action>답글달기</Comment.Action>
-              </Comment.Actions>
+              <Scroll to='reply' spy={true} smooth={true}>
+                <Comment.Actions onClick={() => clickReply(review.review_cd)}>
+                  <Comment.Action>답글달기</Comment.Action>
+                </Comment.Actions>
+              </Scroll>
               }
             </Comment.Content>
 
@@ -491,7 +500,7 @@ export default function ShopPage(props) {
         ))}
       </Comment.Group>
 
-      <Form className='review-write-area' reply>
+      <Form className='review-write-area' id='reply' reply>
         {isStaff ?
         targetReply &&
         <Form.Field class='review-rating'>

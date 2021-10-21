@@ -7,6 +7,7 @@ import * as api from '../../rest/server'
 import axios from 'axios';
 import MapContainer from "./MapContainer";
 import Slider from "react-slick";
+import { Link as Scroll } from "react-scroll";
 import moment from "moment";
 
 export default function DetailPage(props) {
@@ -427,55 +428,53 @@ export default function DetailPage(props) {
   function designerContent() {
     return (
       <Grid.Column>
-      <Button onClick={designerToggle} className={designerSelected ? 'detailpage-menu-btn-bg' :'detailpage-menu-btn-sub'}>
-        <Icon name={designer === null ? 'chevron down' : 'chevron right'}/>
-        {designer === null ? designerTitle : '디자이너 : ' + designer}
-      </Button>
-      {visibleDesigner}
-      {designerError && errorMessege}
-    </Grid.Column>
+        <Scroll to='designer' offset={-56} spy={true} smooth={true}>
+        <Button id='designer' onClick={designerToggle} className={designerSelected ? 'detailpage-menu-btn-bg' :'detailpage-menu-btn-sub'}>
+          <Icon name={designer === null ? 'chevron down' : 'chevron right'}/>
+          {designer === null ? designerTitle : '디자이너 : ' + designer}
+        </Button>
+        </Scroll>
+        {visibleDesigner}
+        {designerError && errorMessege}
+      </Grid.Column>
     );
   }
 
   function customersContent() {
     return (
       <Grid.Column>
-      <Button onClick={customersToggle} className={customersSelected ? 'detailpage-menu-btn-bg' :'detailpage-menu-btn-sub'}>
-        <Icon name={customers === null ? 'chevron down' : 'chevron right'}/>
-        {customers === null ? shopCustomersTitle : '방문인원 : ' + customers }
-      </Button>
-      {visibleCustomers}
-      {customersError && errorMessege}
-    </Grid.Column>
+        <Scroll to='customers' offset={-56} spy={true} smooth={true}>
+        <Button id='customers' onClick={customersToggle} className={customersSelected ? 'detailpage-menu-btn-bg' :'detailpage-menu-btn-sub'}>
+          <Icon name={customers === null ? 'chevron down' : 'chevron right'}/>
+          {customers === null ? shopCustomersTitle : '방문인원 : ' + customers }
+        </Button>
+        </Scroll>
+        {visibleCustomers}
+        {customersError && errorMessege}
+      </Grid.Column>
     );
   }
 
   function shopMenuContent() {
     return (
       <Grid.Column>
-      <Button onClick={shopMenuToggle} className={shopMenuSelected ? 'detailpage-menu-btn-bg' :'detailpage-menu-btn-sub'}>
-        <Icon name={shopMenu === null ? 'chevron down' : 'chevron right'}/>
-        {shopMenu === null ? (category === 'hairshop' ? hairShopMenuTitle : shopMenuTitle) : shopMenu}
-      </Button>
-      {category === 'hairshop' ? visibleHairShopMenu : visibleMenu}
-      {shopMenuError && errorMessege}
+        <Scroll to='shopMenu' offset={-56} spy={true} smooth={true}>
+        <Button id='shopMenu' onClick={shopMenuToggle} className={shopMenuSelected ? 'detailpage-menu-btn-bg' :'detailpage-menu-btn-sub'}>
+          <Icon name={shopMenu === null ? 'chevron down' : 'chevron right'}/>
+          {shopMenu === null ? (category === 'hairshop' ? hairShopMenuTitle : shopMenuTitle) : shopMenu}
+        </Button>
+        </Scroll>
+        {category === 'hairshop' ? visibleHairShopMenu : visibleMenu}
+        {shopMenuError && errorMessege}
       </Grid.Column>
     );
-  }
-
-  function discountPrice() {
-    var result = 0;
-    for (var target in useCouponList) {
-      const coupon = couponList.find(coupon => coupon.coupon_cd === useCouponList[target]);
-      result += coupon.coupon_discount;
-    }
-    return result;
   }
 
   function couponContent() {
     return (
       <Grid.Column>
-        <Button onClick={() => setShowCoupon(!showCoupon)} className={useCouponList.length !== 0 ? 'detailpage-menu-btn-bg' :'detailpage-menu-btn-sub'}>
+        <Scroll to='coupon' offset={-56} spy={true} smooth={true}>
+        <Button id='coupon' onClick={() => setShowCoupon(!showCoupon)} className={useCouponList.length !== 0 ? 'detailpage-menu-btn-bg' :'detailpage-menu-btn-sub'}>
           <Icon name={useCouponList.length === 0 ? 'chevron down' : 'chevron right'}/>
           {useCouponList.length === 0 ?
             '보유쿠폰 : ' + couponList.length + '개'
@@ -483,14 +482,13 @@ export default function DetailPage(props) {
             comma(discountPrice()) + '원 할인'
           }
         </Button>
+        </Scroll>
         {showCoupon && couponList !== null ?
           couponList.length === 0
           ?
-          <>
-          <Card.Group className='detailpage-coupon-list' itemsPerRow={1}>
-            <Card color='violet' onClick={() => setShowCoupon(!showCoupon)} header='쿠폰없음'/>
-          </Card.Group>
-          </>
+          <div className='detailpage-msg'>
+            <h4 onClick={() => setShowCoupon(!showCoupon)}>사용할 수 있는 쿠폰이 없습니다</h4>
+          </div>
           :
           <Card.Group className='detailpage-coupon-list' itemsPerRow={2}>
             {couponList.map(coupon =>
@@ -505,6 +503,15 @@ export default function DetailPage(props) {
         }
       </Grid.Column>
     );
+  }
+
+  function discountPrice() {
+    var result = 0;
+    for (var target in useCouponList) {
+      const coupon = couponList.find(coupon => coupon.coupon_cd === useCouponList[target]);
+      result += coupon.coupon_discount;
+    }
+    return result;
   }
 
   const settings = {
@@ -544,14 +551,18 @@ export default function DetailPage(props) {
           </span>
           <span className='shopmodal-rating'>
             <Link to={`/review/${category}/${shop_cd}`}>
-              <Button className='detailpage-link-btn' inverted color='violet'>댓글보기 <Icon name='angle double right'/></Button>
+              <Button className='detailpage-link-btn' inverted color='violet'>리뷰보기 <Icon name='angle double right'/></Button>
             </Link>
           </span>
         </p>
         <p className='detailpage-time'><Icon name='clock outline'/>{shop.shop_open}~{shop.shop_close}</p>
         <p className='detailpage-info'><Icon name='list alternate outline'/>{shop.shop_info}</p>
-        <p className='detailpage-location'><Icon name='map outline'/>{shop.shop_location} <Icon className='detailpage-icon' onClick={mapToogle} name={mapOpen ? 'angle up' : 'angle down'}/></p>
-        {mapOpen && <MapContainer location={shop.shop_location}/>}
+        <p className='detailpage-location'><Icon name='map outline'/>{shop.shop_location} 
+          <Scroll className='detailpage-icon' to='map' offset={-56} spy={true} smooth={true}>
+            <Icon onClick={mapToogle} name={mapOpen ? 'angle up' : 'angle down'}/>
+          </Scroll>
+        </p>
+        {mapOpen && <MapContainer id='map' location={shop.shop_location}/>}
       </Segment>
 
       {/* 리뷰 정보 탭*/}

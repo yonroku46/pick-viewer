@@ -986,9 +986,15 @@ hr {
 .slick-next:before {
   margin-left: -47px;
 }
+.detailpage-icon {
+  margin-left: 4px;
+  color: #000;
+  opacity: 0.6;
+}
 .detailpage-icon:hover {
   cursor: pointer;
-  opacity: 0.8;
+  color: #000;
+  opacity: 1;
 }
 .detailpage-main-image {
   padding: 0px !important;
@@ -1124,7 +1130,7 @@ a.detailpage-tel:hover {
 }
 .detailpage-msg {
   margin-top: -6px;
-  padding: 10px 0px;
+  padding: 20px 0px;
   color: rgba(90, 90, 90, 0.8);
 }
 .detailpage-menu-btn .chevron.right {
