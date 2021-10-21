@@ -439,6 +439,18 @@ def favoriteList():
     try:
         query = gen.getQuery("sql/SELECT_favoriteList.sql", {"user_cd": user_cd})
         rows = mng.fetch_all(query)
+
+        for row in rows:
+            category = ''
+            if row['shop_serial'][0:2] == 'HS':
+                category = 'hairshop'
+            elif row['shop_serial'][0:2] == 'RT':
+                category = 'restaurant'
+            elif row['shop_serial'][0:2] == 'CF':
+                category = 'cafe'
+            row['category'] = category
+            del row['shop_serial']
+
         return (jsonify(rows), 200)
     except Exception as e:
         app.logger.info("Exception:{}".format(e))
