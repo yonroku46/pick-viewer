@@ -1,5 +1,6 @@
-import { useEffect, useState } from 'react';
-import { Icon, Table } from 'semantic-ui-react'
+import { useState } from 'react';
+import { Link } from "react-router-dom";
+import { Icon, Table, Segment, Button, Header } from 'semantic-ui-react'
 import moment from 'moment';
 
 export default function TimeTable(props) {
@@ -80,7 +81,15 @@ export default function TimeTable(props) {
         } else {
             result = result.concat(
             <Table.Cell colSpan='2' className='mypage-tt-time'>
-                예약정보 없음
+                <Segment className='mypage-tt-nodata' placeholder>
+                    <Header icon>
+                    <Icon name='qq'/>
+                    등록된 예약이 없습니다.
+                    </Header>
+                    <Link to='/booking/hairshop'>
+                        <Button secondary>둘러보기<Icon name='angle double right'/></Button>
+                    </Link>
+                </Segment>
             </Table.Cell>
             );
         }

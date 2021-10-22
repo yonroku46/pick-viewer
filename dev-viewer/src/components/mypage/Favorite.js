@@ -1,16 +1,17 @@
-import { useEffect, useState } from "react";
-import { Icon, Card, Menu, Label } from 'semantic-ui-react'
+import { useState } from "react";
+import { Link } from "react-router-dom";
+import { Icon, Card, Menu, Label, Segment, Header, Button } from 'semantic-ui-react'
 import { useHistory } from "react-router-dom";
 import { Link as Scroll } from "react-scroll";
 import * as api from '../../rest/server';
-import axios from 'axios';
 
 export default function Favorite(props) {
 
     let history = useHistory();
-    const user_cd = props.user_cd;
-    const [favoriteList, setFavoriteList] = useState([]);
-    
+    const favoriteList = props.favoriteList;
+    const cardRow = parseInt(window.innerWidth / 350);
+    const shopDefault = 'images/shop/default.png';
+
     const [activeItem, setActiveItem] = useState('All');
     function handleItemClick(e, { name }) {
         var renderName = 'All'
@@ -23,29 +24,6 @@ export default function Favorite(props) {
         }
         setActiveItem(renderName);
     };
-
-    const shopDefault = 'images/shop/default.png';
-
-    useEffect(() => {
-        return new Promise(function(resolve, reject) {
-          axios
-            .get(api.favoriteList, {
-                params: {
-                  'user_cd': user_cd
-                }
-            })
-            .then(response => resolve(response.data))
-            .catch(error => reject(error.response))
-        })
-        .then(res => {
-          if (res !== null) {
-            setFavoriteList(res);
-          }
-        })
-        .catch(err => {
-          alert("현재 서버와의 연결이 원활하지 않습니다. 관리자에게 문의해주세요.");
-        })
-    }, [])
 
     return (
         <>
@@ -64,21 +42,9 @@ export default function Favorite(props) {
             </Scroll>
         </Menu>
 
-        <Card.Group itemsPerRow={3}>
+        <Card.Group itemsPerRow={cardRow}>
             {favoriteList.length !== 0 ?
-                activeItem !== 'All' ?
-                favoriteList.filter(shop => shop.category === activeItem).map(shop => 
-                    <Card
-                    image={api.imgRender(shop.shop_img === null ? shopDefault : shop.shop_img)}
-                    header={shop.shop_name}
-                    meta={shop.shop_location}
-                    color={shop.category === 'hairshop' ? 'violet' : shop.category === 'restaurant' ? 'teal' : 'blue'}
-                    description={<Label className='mypage-favorite-label'><Icon name='archive'/>프로모션 진행중</Label>}
-                    onClick={() => {history.push(`/booking/${shop.category}/${shop.shop_cd}`)}}
-                    className='quick-card'
-                    />
-                )
-                :
+                activeItem === 'All' ?
                 favoriteList.map(shop => 
                     <Card
                     image={api.imgRender(shop.shop_img === null ? shopDefault : shop.shop_img)}
@@ -87,13 +53,42 @@ export default function Favorite(props) {
                     color={shop.category === 'hairshop' ? 'violet' : shop.category === 'restaurant' ? 'teal' : 'blue'}
                     description={<Label className='mypage-favorite-label'><Icon name='archive'/>프로모션 진행중</Label>}
                     onClick={() => {history.push(`/booking/${shop.category}/${shop.shop_cd}`)}}
-                    className='quick-card'
+                    className='mypage-favorite-card'
                     />
                 )
+                :
+                favoriteList.filter(shop => shop.category === activeItem).length !== 0 ?
+                favoriteList.filter(shop => shop.category === activeItem).map(shop => 
+                    <Card
+                    image={api.imgRender(shop.shop_img === null ? shopDefault : shop.shop_img)}
+                    header={shop.shop_name}
+                    meta={shop.shop_location}
+                    color={shop.category === 'hairshop' ? 'violet' : shop.category === 'restaurant' ? 'teal' : 'blue'}
+                    description={<Label className='mypage-favorite-label'><Icon name='archive'/>프로모션 진행중</Label>}
+                    onClick={() => {history.push(`/booking/${shop.category}/${shop.shop_cd}`)}}
+                    className='mypage-favorite-card'
+                    />
+                )
+                :
+                <Segment className='mypage-favorite-nodata' placeholder>
+                    <Header icon>
+                    <Icon name='file text outline'/>
+                    해당 카테고리에 등록된 매장가 없습니다.
+                    </Header>
+                    <Link to='/booking/hairshop'>
+                        <Button className='mypage-favorite-nodata-btn' secondary>둘러보기<Icon name='angle double right'/></Button>
+                    </Link>
+                </Segment>
             :
-            <>
-            즐겨찾기 없음
-            </>
+            <Segment className='mypage-favorite-nodata' placeholder>
+                <Header icon>
+                <Icon name='file text outline'/>
+                아직 즐겨찾기에 등록된 매장가 없습니다.
+                </Header>
+                <Link to='/booking/hairshop'>
+                    <Button className='mypage-favorite-nodata-btn' secondary>둘러보기<Icon name='angle double right'/></Button>
+                </Link>
+            </Segment>
             }
         </Card.Group>
         </>

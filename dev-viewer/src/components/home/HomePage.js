@@ -1,6 +1,6 @@
 import React, { useState, useRef } from 'react';
-import robo from '../../img/robo.png';
 import { Link } from "react-router-dom";
+import robo from '../../img/robo.png';
 import src from '../../img/robo.png';
 import page1 from '../../img/page1.png'
 import page2 from '../../img/page2.png'
@@ -139,7 +139,7 @@ export default function HomePage() {
               매장까지 똑똑하게 추천해드립니다.
             </p>
             <Link to='/styles'>
-              <Button inverted color='blue'>추천 헤어보기<Icon name='chevron right'/></Button>
+              <Button inverted color='blue'>추천 헤어보기<Icon name='angle double right'/></Button>
             </Link>
           </Segment>
         </Grid.Column>

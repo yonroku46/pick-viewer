@@ -31,6 +31,7 @@ export default function MyPage(props) {
   const [newInfo, setNewInfo] = useState(info);
 
   const [bookingList, setBookingList] = useState([]);
+  const [favoriteList, setFavoriteList] = useState([]);
 
   useEffect(() => {
     const params = { 
@@ -45,12 +46,34 @@ export default function MyPage(props) {
       .then(res => {
         if (res !== null) {
             setBookingList(res);
+            getFavoriteList();
         }
       })
       .catch(err => {
         alert("현재 서버와의 연결이 원활하지 않습니다. 관리자에게 문의해주세요.");
       })
   }, []); 
+
+  function getFavoriteList() {
+    return new Promise(function(resolve, reject) {
+      axios
+        .get(api.favoriteList, {
+            params: {
+              'user_cd': user_cd
+            }
+        })
+        .then(response => resolve(response.data))
+        .catch(error => reject(error.response))
+    })
+    .then(res => {
+      if (res !== null) {
+        setFavoriteList(res);
+      }
+    })
+    .catch(err => {
+      alert("현재 서버와의 연결이 원활하지 않습니다. 관리자에게 문의해주세요.");
+    })
+  }
 
   function newInfoInput(e) {
     setNewInfo(e.target.value);
@@ -288,7 +311,7 @@ export default function MyPage(props) {
         <Quick/>
       :
       activeItem === 'favorite'?
-        <Favorite user_cd={user_cd}/>
+        <Favorite favoriteList={favoriteList}/>
       :
       <></>
       }

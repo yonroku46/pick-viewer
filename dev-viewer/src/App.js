@@ -12,6 +12,7 @@ import LoginPage from './components/login/LoginPage'
 import SignupPage from './components/login/SignupPage'
 import HelpPage from './components/login/HelpPage'
 import MyPage from './components/mypage/MyPage'
+import DashboardPage from './components/dashboard/DashboardPage'
 import WikiPage from './components/WikiPage'
 import EmptyPage from './components/EmptyPage'
 import { Link, Route, Switch } from "react-router-dom"
@@ -25,7 +26,7 @@ axios.defaults.baseURL = 'http://localhost:3000';
 axios.defaults.headers.post['Content-Type'] = 'application/json;charset=utf-8';
 axios.defaults.headers.post['Access-Control-Allow-Origin'] = '*';
 
-function App() {
+export default function App() {
 
   const [ipStat, setIpStat] = useState(true);
   
@@ -59,7 +60,9 @@ function App() {
 
   // menu setting
   const [visible, setVisible] = useState(false);
-  let isAuthorized = sessionStorage.getItem("isAuthorized");
+  const isAuthorized = sessionStorage.getItem("isAuthorized");
+  const userInfo = JSON.parse(sessionStorage.getItem('userInfo'));
+  const permission = userInfo ? userInfo['permission'] : null;
 
   function toggleMenu() {
     setVisible(!visible);
@@ -145,16 +148,25 @@ function App() {
             <Icon name='home'/>
             홈
           </Menu.Item>
-          {isAuthorized &&
-          <Menu.Item as={Link} to='/mypage' onClick={menuClose}>
-            <Icon name='user'/>
-            마이페이지
-          </Menu.Item>
+          {
+          isAuthorized && (permission === 1 | permission === 2) ?
+            <Menu.Item as={Link} to='/mypage' onClick={menuClose}>
+              <Icon name='user'/>
+              마이페이지
+            </Menu.Item>
+          :
+          isAuthorized && (permission === 3) &&
+            <Menu.Item as={Link} to='/dashboard' onClick={menuClose}>
+              <Icon name='sitemap'/>
+              매장관리
+            </Menu.Item>
           }
-          <Menu.Item as={Link} to='/booking/' onClick={menuClose}>
-            <Icon name='inbox'/>
-            예약하기
-          </Menu.Item>
+          {permission !== 3 &&
+            <Menu.Item as={Link} to='/booking/' onClick={menuClose}>
+              <Icon name='inbox'/>
+              예약하기
+            </Menu.Item>
+          }
           <Menu.Item as={Link} to='/styles' onClick={menuClose}>
             <Icon name='winner'/>
             스타일
@@ -187,6 +199,7 @@ function App() {
                 <Route exact path="/signup" component={SignupPage} />
                 <Route exact path="/help" component={HelpPage} />
                 <Route exact path="/mypage" component={MyPage} />
+                <Route exact path="/dashboard" component={DashboardPage} />
                 <Route exact path="/wiki" component={WikiPage} />
                 <Route component={EmptyPage} />
               </Switch>
@@ -212,5 +225,3 @@ function App() {
   </>
   );
 }
-
-export default App;

@@ -455,7 +455,7 @@ hr {
 .mypage-user-icon {
   width: 115px;
   height: 110px;
-  border-radius: 50%;
+  border-radius: 42%;
   border: 2px rgba(0, 0, 0, 0.4) solid;
   margin: 0 30px;
   filter: grayscale(0.25);
@@ -518,6 +518,25 @@ hr {
 }
 .mypage-bottom {
   margin-top: 10px !important;
+}
+.mypage-favorite-card {
+  margin-top: 1em !important;
+}
+.mypage-favorite-card:hover {
+  opacity: 0.9;
+}
+.mypage-favorite-nodata {
+  margin-left: auto !important;
+  margin-right: auto !important;
+  background-color: #fff !important;
+  padding-top: 8em !important;
+  padding-bottom: 8em !important;
+}
+.mypage-favorite-nodata-btn {
+  margin-top: 1em !important;
+}
+.mypage-tt-nodata {
+  background-color: #fff !important;
 }
 
 /* pc */
