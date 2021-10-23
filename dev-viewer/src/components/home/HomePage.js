@@ -8,6 +8,8 @@ import { Button, Segment, Icon, Accordion, Grid, Image, Header, Card, Reveal } f
 
 export default function HomePage() {
     let isAuthorized = sessionStorage.getItem("isAuthorized");
+    const userInfo = JSON.parse(sessionStorage.getItem('userInfo'));
+    const permission = userInfo ? userInfo.permission : null;
 
     const [activeIndex, SetActiveIndex] = useState();
 
@@ -108,7 +110,15 @@ export default function HomePage() {
           <div className='home-quick-name'>메뉴5</div>
         </Segment>
         </div> */}
-         <Link to='/mypage'>
+          {permission === 3 ?
+          <Link to='/dashboard'>
+          <Button className='home-content-new'>
+              매장관리
+              <Icon name='arrow right'/>
+            </Button>
+          </Link>
+          :
+          <Link to='/mypage'>
           <Button className='home-content-new' animated>
             <Button.Content visible>
               예약 확인하기
@@ -118,6 +128,7 @@ export default function HomePage() {
             </Button.Content>
             </Button>
           </Link>
+          }
         <img src={robo} className='home-robo'/>
       </Segment>
       </>

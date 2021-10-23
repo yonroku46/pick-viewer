@@ -16,11 +16,9 @@
 body {
   font-family: "NotoSans" !important;
 }
-
 h1, h2, h3, h4, h5, div, a, button {
   font-family: "NotoSans" !important;
 }
-
 .pcolor {
   color: rgb(0, 153, 255);
   font-weight: bold;
@@ -87,7 +85,6 @@ h1, h2, h3, h4, h5, div, a, button {
   width: 100%;
   color: rgb(160, 160, 160, 1);
   background: rgb(255, 255, 255);
-  /* border-top: rgb(200, 200,200, 0.6) 1px solid; */
   padding: 5px 10px;
   font-size: 12px;
 }
@@ -330,6 +327,60 @@ hr {
   .signup-main-content {
     margin: 0 auto;
     max-width: 530px;
+  }
+}
+
+/* DashboardPage */
+.dashboard-main {
+  display: block;
+  margin: 1em 10vw;
+  min-height: calc(100vh - 81px);
+}
+.dashboard-menu {
+  float: left;
+  width: 180px !important;
+  margin-top: 2em !important;
+  margin-bottom: 2em !important;
+}
+.dashboard-menu div.header {
+  padding-top: 0.5em;
+  padding-bottom: 0.5em;
+  text-align: left;
+  padding-left: 0.5em;
+  border-left: rgb(0, 0, 0, 0.05) 3px solid;
+  border-top: rgb(0, 0, 0, 0.05) 1px solid;
+  border-bottom: rgb(0, 0, 0, 0.05) 1px solid;
+}
+.dashboard-menu a.item {
+  text-align: left;
+  color: rgb(0, 0, 0, 0.7) !important;
+  padding-left: 1.5em !important;
+  padding-top: 0.7em !important;
+  padding-bottom: 0.7em !important;
+}
+.dashboard-viewer {
+  float: left;
+  width: 64vw;
+  min-height: 80vh;
+  margin-top: 2.4em;
+  margin-bottom: 2.4em;
+  margin-left: 2em;
+  border: rgb(0, 0, 0, 0.1) 1px solid !important;
+  border-radius: 0.5em;
+}
+/* sp */
+@media only screen and (max-width: 767px) {
+  .dashboard-main {
+    margin: 1em 0vw;
+  }
+  .dashboard-menu {
+    width: 100vw !important;
+    margin-top: -1em !important;
+  }
+  .dashboard-viewer {
+    width: 100vw !important;
+    margin-top: -1em !important;
+    margin-left: 0em;
   }
 }
 

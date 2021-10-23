@@ -10,8 +10,11 @@ import axios from 'axios';
 export default function MyPage(props) {
   
   const isAuthorized = sessionStorage.getItem('isAuthorized');
-  const userInfo = JSON.parse(sessionStorage.getItem('userInfo'));
+  if (isAuthorized === null) {
+    props.history.goBack(1);
+  }
 
+  const userInfo = JSON.parse(sessionStorage.getItem('userInfo'));
   const userName = userInfo['user_name'] ?? '';
   const email = userInfo['user_email'] ?? '';
   const userIcon = userInfo['user_img'] ?? 'images/user/default.png';
@@ -34,6 +37,9 @@ export default function MyPage(props) {
   const [favoriteList, setFavoriteList] = useState([]);
 
   useEffect(() => {
+    if (!(permission === 1 | permission === 2)) {
+      props.history.goBack(1);
+    }
     const params = { 
         'user_cd': user_cd
       };

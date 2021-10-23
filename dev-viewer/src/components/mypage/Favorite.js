@@ -14,7 +14,7 @@ export default function Favorite(props) {
 
     const [activeItem, setActiveItem] = useState('All');
     function handleItemClick(e, { name }) {
-        var renderName = 'All'
+        let renderName = 'All'
         if (name === '헤어샵') {
             renderName = 'hairshop';
         } else if (name === '맛집') {

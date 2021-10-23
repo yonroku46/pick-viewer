@@ -39,7 +39,7 @@ export default function App() {
       .then(ip => {
         fetch(api.check + ip, { method: 'POST'}).then(res =>
           res.json().then(data => {
-            var countryCode = data.split(":");
+            let countryCode = data.split(":");
             if (countryCode[5].includes('JP') || countryCode[5].includes('KR') || countryCode[5].includes('GB')) {
               setIpStat(true);
             } else {

@@ -330,12 +330,12 @@ export default function DetailPage(props) {
     })
   }
 
-  function comma(num) {
-    var num = num + ""; 
-    var point = num.length % 3 ;
-    var len = num.length; 
+  function comma(number) {
+    let num = number + ""; 
+    let point = num.length % 3 ;
+    let len = num.length; 
    
-    var result = num.substring(0, point); 
+    let result = num.substring(0, point); 
     while (point < len) { 
         if (result != "") result += ","; 
         result += num.substring(point, point + 3); 
@@ -506,8 +506,8 @@ export default function DetailPage(props) {
   }
 
   function discountPrice() {
-    var result = 0;
-    for (var target in useCouponList) {
+    let result = 0;
+    for (let target in useCouponList) {
       const coupon = couponList.find(coupon => coupon.coupon_cd === useCouponList[target]);
       result += coupon.coupon_discount;
     }

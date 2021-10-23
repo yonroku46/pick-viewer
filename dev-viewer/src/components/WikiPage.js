@@ -15,7 +15,7 @@ export default function WikiPage() {
             </List.Item>
             <List.Item>
                 <List.Content>
-                <div className="wiki-header"><List.Header><Icon inverted color='grey' name='gitlab'/> 소스관리</List.Header></div>
+                <div className="wiki-header"><List.Header><Icon inverted color='grey' name='github'/> 소스관리</List.Header></div>
                 <div className="wiki-content"><a href="https://github.com/yonroku46/pickProject" target="_blank" rel="noreferrer">https://github.com/yonroku46/pickProject</a></div>
                 </List.Content>
             </List.Item>

@@ -62,9 +62,9 @@ export default function ShopPage(props) {
   }, [])
 
   function staffJudge(res) {
-    var staffList = [];
+    let staffList = [];
     if (res.staff_list != null) {
-      for (var staff of res.staff_list) {
+      for (let staff of res.staff_list) {
         staffList.push(staff.user_cd);
       }
       setIsStaff(staffList.indexOf(user_cd) !== -1);
@@ -305,12 +305,12 @@ export default function ShopPage(props) {
     return `${Math.floor(betweenTimeDay / 365)}년전`;
   }
 
-  function comma(num) {
-    var num = num + ""; 
-    var point = num.length % 3 ;
-    var len = num.length; 
+  function comma(number) {
+    let num = number + ""; 
+    let point = num.length % 3 ;
+    let len = num.length; 
    
-    var result = num.substring(0, point); 
+    let result = num.substring(0, point); 
     while (point < len) { 
         if (result != "") result += ","; 
         result += num.substring(point, point + 3); 

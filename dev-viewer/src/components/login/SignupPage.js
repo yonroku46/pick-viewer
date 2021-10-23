@@ -59,7 +59,7 @@ export default function SignupPage(props) {
   // 이메일 작성
   function step2() {
     toggleVisibility();
-    var reg = /^[A-Za-z0-9]{1}[A-Za-z0-9_.-]*@{1}[A-Za-z0-9_.-]{1,}.[A-Za-z0-9]{1,}$/;
+    let reg = /^[A-Za-z0-9]{1}[A-Za-z0-9_.-]*@{1}[A-Za-z0-9_.-]{1,}.[A-Za-z0-9]{1,}$/;
 
     if (reg.test(email)) {
       setError(null);
