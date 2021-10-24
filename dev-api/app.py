@@ -258,9 +258,13 @@ def getShopList():
 def getShopInfo():
     params = request.get_json()
     shop_cd = params['shop_cd']
+    permission = params['permission']
     try:
         query = gen.getQuery("sql/SELECT_shopInfo.sql", {"shop_cd": shop_cd})
         rows = mng.fetch(query)
+
+        if permission != 3:
+            del rows['shop_serial']
 
         if rows['staff_list'] != None:
             staff_list = rows['staff_list'].replace(",","','")
