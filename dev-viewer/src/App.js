@@ -32,7 +32,7 @@ export default function App() {
   
   useEffect(() => {
      // ip Check
-      fetch('https://api.ipify.org/?format=json').then(res =>
+      fetch('https://api64.ipify.org?format=json').then(res =>
       res.json().then(data => {
         return data.ip
       })

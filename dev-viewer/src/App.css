@@ -338,6 +338,8 @@ hr {
 }
 .dashboard-menu {
   float: left;
+  position: absolute;
+  z-index: 100;
   width: 180px !important;
   margin-top: 2em !important;
   margin-bottom: 2em !important;
@@ -359,14 +361,53 @@ hr {
   padding-bottom: 0.7em !important;
 }
 .dashboard-viewer {
+  position: absolute;
   float: left;
-  width: 64vw;
+  text-align: left;
   min-height: 80vh;
+  width: 67vw;
+  margin-left: 13vw;
   margin-top: 2.4em;
   margin-bottom: 2.4em;
-  margin-left: 2em;
+  margin-right: auto;
   border: rgb(0, 0, 0, 0.1) 1px solid !important;
   border-radius: 0.5em;
+}
+.dashboard-viewer-back {
+  min-height: 80vh;
+  padding-bottom: 0px !important;
+}
+.dashboard-viewer-inline {
+  padding: 1em;
+}
+.dashboard-viewer-btns {
+  background-color: #fff !important;
+}
+.dashboard-menu-fold {
+  cursor: pointer;
+  opacity: 0.3;
+}
+.dashboard-shopinfo-tel {
+  max-width: 100px;
+  margin-right: 8px;
+  margin-bottom: 0.5em;
+}
+.dashboard-shopinfo-hours {
+  max-width: 220px;
+}
+.dashboard-shopinfo-name {
+  margin-top: 0px !important;
+  margin-left: 0.5em !important;
+}
+.dashboard-share-btn {
+  cursor: pointer;
+  font-size: 1em !important;
+  margin-left: 0.5em !important;
+  margin-bottom: 0.5em !important;
+  opacity: 0.4 !important;
+}
+.dashboard-share-btn:hover {
+  opacity: 1 !important;
 }
 /* sp */
 @media only screen and (max-width: 767px) {
@@ -379,8 +420,15 @@ hr {
   }
   .dashboard-viewer {
     width: 100vw !important;
+    min-height: calc(100vh - 51px);
     margin-top: -1em !important;
     margin-left: 0em;
+  }
+  a.item.dashboard-menu-fold {
+    padding: 0px !important;
+  }
+  .dashboard-viewer-inline {
+    padding: 0.5em;
   }
 }
 

@@ -13,6 +13,7 @@ export default function ShopPage(props) {
   const userInfo = JSON.parse(sessionStorage.getItem('userInfo'));
   const favorites = JSON.parse(sessionStorage.getItem('favorites'));
   const user_cd = userInfo ? userInfo.user_cd : null;
+  const permission = userInfo ? userInfo.permission : null;
 
   // 공통 default
   const shopDefault = 'images/shop/default.png';
@@ -41,7 +42,8 @@ export default function ShopPage(props) {
       favoriteJudge();
     }
     const params = { 
-      'shop_cd': shop_cd
+      'shop_cd': shop_cd,
+      'permission': permission
     };
     return new Promise(function(resolve, reject) {
       axios
