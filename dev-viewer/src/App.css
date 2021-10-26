@@ -333,7 +333,7 @@ hr {
 /* DashboardPage */
 .dashboard-main {
   display: block;
-  margin: 1em 10vw;
+  margin: 1em 8vw;
   min-height: calc(100vh - 81px);
 }
 .dashboard-menu {
@@ -349,9 +349,9 @@ hr {
   padding-bottom: 0.5em;
   text-align: left;
   padding-left: 0.5em;
-  border-left: rgb(0, 0, 0, 0.05) 3px solid;
+  border-bottom: rgb(0, 153, 255, 0.5) 1px solid;
+  color: rgb(0, 153, 255);
   border-top: rgb(0, 0, 0, 0.05) 1px solid;
-  border-bottom: rgb(0, 0, 0, 0.05) 1px solid;
 }
 .dashboard-menu a.item {
   text-align: left;
@@ -365,23 +365,31 @@ hr {
   float: left;
   text-align: left;
   min-height: 80vh;
-  width: 67vw;
-  margin-left: 13vw;
-  margin-top: 2.4em;
-  margin-bottom: 2.4em;
-  margin-right: auto;
-  border: rgb(0, 0, 0, 0.1) 1px solid !important;
-  border-radius: 0.5em;
-}
-.dashboard-viewer-back {
-  min-height: 80vh;
+  width: 65vw;
+  margin-left: 14vw !important;
+  margin-top: 2.4em !important;
+  margin-bottom: 2.4em !important;
+  margin-right: auto !important;
   padding-bottom: 0px !important;
+}
+div.ui.segment.dashboard-viewer {
+  border: rgb(0, 0, 0, 0.1) 1px solid !important;
 }
 .dashboard-viewer-inline {
   padding: 1em;
 }
+.dashboard-viewer-title {
+  background-color: rgb(0, 153, 255) !important;
+  color: #fff !important;
+  font-size: 1.1em !important;
+  font-weight: 500 !important;
+  padding-top: 0.8em !important;
+  padding-bottom: 0.8em !important;
+}
 .dashboard-viewer-btns {
   background-color: #fff !important;
+  padding-top: 1em !important;
+  padding-bottom: 1em !important;
 }
 .dashboard-menu-fold {
   cursor: pointer;
@@ -409,6 +417,18 @@ hr {
 .dashboard-share-btn:hover {
   opacity: 1 !important;
 }
+.dashboard-viewer-page {
+  border: none !important;
+}
+.dashboard-staff-search {
+  width: 330px !important;
+  margin-top: 10px !important;
+  margin-bottom: -6px !important;
+}
+.dashboard-content-final-empty {
+  margin-bottom: 8vh !important;
+}
+
 /* sp */
 @media only screen and (max-width: 767px) {
   .dashboard-main {
@@ -422,13 +442,19 @@ hr {
     width: 100vw !important;
     min-height: calc(100vh - 51px);
     margin-top: -1em !important;
-    margin-left: 0em;
+    margin-bottom: 0.5em !important;
+    margin-left: 0px !important;
+    margin-left: 0px;
+    padding-bottom: 0px !important;
   }
   a.item.dashboard-menu-fold {
     padding: 0px !important;
   }
   .dashboard-viewer-inline {
     padding: 0.5em;
+  }
+  .dashboard-content-final {
+    margin-bottom: 8vh !important;
   }
 }
 
