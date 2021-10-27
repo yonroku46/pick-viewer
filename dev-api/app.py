@@ -491,10 +491,10 @@ def submitEmployment():
         return (jsonify({'error': 'Not found'}), 404)
 
 # Dashboard
-@app.route('/api/shopRequestList', methods=['POST'])
+@app.route('/api/shopRequestList', methods=['GET'])
 def shopRequestList():
-    params = request.get_json()
-    shop_cd = params['shop_cd']
+    params = request.args
+    shop_cd = params.get('shop_cd')
     try:
         query = gen.getQuery("sql/SELECT_shopRequestList.sql", {"shop_cd": shop_cd})
         rows = mng.fetch_all(query)
