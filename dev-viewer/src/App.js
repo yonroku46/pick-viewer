@@ -205,11 +205,11 @@ export default function App() {
               </Switch>
             </Segment>
 
-            {/* Footer */}
-            <footer className="app-footer">
-              <Icon name='copyright'/>TEAMBEPO
-            </footer>
           </Sidebar.Pusher>
+          {/* Footer */}
+          <footer className={visible ? "app-footer push-background" : "app-footer"}>
+            <Icon name='copyright'/>TEAMBEPO
+          </footer>
         </Sidebar.Pushable>
       </div>
         <Modal size={size} open={open} onClose={() => dispatch({ type: 'close' })}>

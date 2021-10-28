@@ -10,6 +10,8 @@ import { Link as Scroll } from "react-scroll";
 export default function ShopPage(props) {
   const isAuthorized = sessionStorage.getItem("isAuthorized");
 
+  const [reload, setReload] = useState(0);
+
   const userInfo = JSON.parse(sessionStorage.getItem('userInfo'));
   const favorites = JSON.parse(sessionStorage.getItem('favorites'));
   const user_cd = userInfo ? userInfo.user_cd : null;
@@ -61,7 +63,7 @@ export default function ShopPage(props) {
     .catch(err => {
       alert("현재 서버와의 연결이 원활하지 않습니다. 관리자에게 문의해주세요.");
     })
-  }, [])
+  }, [reload])
 
   function staffJudge(res) {
     let staffList = [];
@@ -137,7 +139,7 @@ export default function ShopPage(props) {
     .then(res => {
       if (res) {
         alert("리뷰가 작성되었습니다.");
-        window.location.replace(`/review/${category}/${shop_cd}`);
+        setReload(reload + 1);
       } else {
         alert("리뷰 작성에 실패하였습니다. 지속시 관리자에게 문의해주세요.");
         setSendLoading(false);
@@ -167,7 +169,7 @@ export default function ShopPage(props) {
       if (res) {
         alert("리뷰 삭제가 완료되었습니다.");
         dispatch({ type: 'close' });
-        window.location.replace(`/review/${category}/${shop_cd}`);
+        setReload(reload + 1);
       } else {
         alert("리뷰 삭제에 실패하였습니다. 지속시 관리자에게 문의해주세요.");
         setSendLoading(false);
@@ -505,7 +507,7 @@ export default function ShopPage(props) {
       <Form className='review-write-area' id='reply' reply>
         {isStaff ?
         targetReply &&
-        <Form.Field class='review-rating'>
+        <Form.Field className='review-rating'>
           <label><Icon name='angle double left'/><span className='pcolor'>{targetReply.user_name}</span> 님에게 답글</label>
           <Comment className='review-style-replyview'>
             <Comment.Content>
@@ -515,7 +517,7 @@ export default function ShopPage(props) {
           </Comment>
         </Form.Field>
         :
-        <Form.Field class='review-rating'>
+        <Form.Field className='review-rating'>
           <label>만족도</label>
           <Rating icon='star' defaultRating={4} maxRating={5} size='huge' onRate={handleRate}/>
         </Form.Field>

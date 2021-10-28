@@ -47,6 +47,11 @@ h1, h2, h3, h4, h5, div, a, button {
 .favorite-icon {
   color: rgb(245, 83, 145);
 }
+.user-icon {
+  width: 2.1em !important;
+  height: 2em !important;
+  border-radius: 42% !important;
+}
 .map-container {
   margin-right: auto;
   margin-left: auto;
@@ -84,9 +89,13 @@ h1, h2, h3, h4, h5, div, a, button {
 .app-footer {
   width: 100%;
   color: rgb(160, 160, 160, 1);
-  background: rgb(255, 255, 255);
+  background-color: rgb(255, 255, 255);
   padding: 5px 10px;
   font-size: 12px;
+}
+.push-background {
+  background-color: rgb(0, 0, 0, 0.4);
+  transition: background-color 0.5s;
 }
 
 .menu-left {
@@ -343,6 +352,7 @@ hr {
   width: 180px !important;
   margin-top: 2em !important;
   margin-bottom: 2em !important;
+  min-height: 1em !important;
 }
 .dashboard-menu div.header {
   padding-top: 0.5em;
@@ -394,6 +404,14 @@ div.ui.segment.dashboard-viewer {
 .dashboard-menu-fold {
   cursor: pointer;
   opacity: 0.3;
+  text-align: center !important;
+  padding: 0px !important;
+  border-bottom: none !important;
+}
+.dashboard-viewer-email {
+  margin-left: 1em;
+  font-size: 0.6em;
+  color: rgb(0, 0, 0, 0.3);
 }
 .dashboard-shopinfo-tel {
   max-width: 100px;
@@ -428,6 +446,42 @@ div.ui.segment.dashboard-viewer {
 .dashboard-content-final-empty {
   margin-bottom: 8vh !important;
 }
+.dashboard-table-name {
+  width: 6em !important;
+  max-width: 6em !important;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  text-align: center !important;
+}
+.dashboard-table-career {
+  width: 6em !important;
+  max-width: 6em !important;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  text-align: center !important;
+}
+.dashboard-table-info {
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.dashboard-table-delete {
+  width: 2.5em !important;
+  max-width: 2.5em !important;
+  padding: 0.2em !important;
+  text-align: center !important;
+  border-left: none !important;
+  opacity: 0.4;
+}
+.dashboard-table-delete:hover {
+  cursor: pointer;
+  opacity: 1;
+}
+table.dashboard-table-sp input {
+  padding: 0.4em !important;
+}
+.edit-input {
+  padding: 0em 0.2em !important;
+}
 
 /* sp */
 @media only screen and (max-width: 767px) {
@@ -435,7 +489,9 @@ div.ui.segment.dashboard-viewer {
     margin: 1em 0vw;
   }
   .dashboard-menu {
+    position: relative;
     width: 100vw !important;
+    margin-bottom: 1em !important;
     margin-top: -1em !important;
   }
   .dashboard-viewer {
@@ -447,14 +503,36 @@ div.ui.segment.dashboard-viewer {
     margin-left: 0px;
     padding-bottom: 0px !important;
   }
-  a.item.dashboard-menu-fold {
-    padding: 0px !important;
-  }
   .dashboard-viewer-inline {
     padding: 0.5em;
   }
   .dashboard-content-final {
     margin-bottom: 8vh !important;
+  }
+  table.dashboard-table-sp {
+    width: 94vw !important;
+    margin-left: -3vw !important;
+  }
+  table.dashboard-table-sp .edit-input {
+    padding: 0em 0.2em !important;
+  }
+  table.dashboard-table-sp input {
+    padding: 0.4em 0.15em !important;
+  }
+  table.dashboard-table-sp button {
+    padding: 0.4em 0.15em !important;
+  }
+  .dashboard-table-sp th.dashboard-table-name,td.dashboard-table-name {
+    padding: 0.4em 0.15em !important;
+    font-size: 0.9em !important;
+  }
+  .dashboard-table-sp th.dashboard-table-career,td.dashboard-table-career {
+    padding: 0.4em 0.15em !important;
+    font-size: 0.9em !important;
+  }
+  .dashboard-table-sp th.dashboard-table-info,td.dashboard-table-info {
+    padding: 0.4em 0.3em !important;
+    font-size: 0.9em !important;
   }
 }
 

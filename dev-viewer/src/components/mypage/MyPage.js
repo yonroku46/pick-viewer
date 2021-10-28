@@ -14,6 +14,8 @@ export default function MyPage(props) {
     props.history.goBack(1);
   }
 
+  const [reload, setReload] = useState(0);
+
   const userInfo = JSON.parse(sessionStorage.getItem('userInfo'));
   const userName = userInfo['user_name'] ?? '';
   const email = userInfo['user_email'] ?? '';
@@ -58,7 +60,7 @@ export default function MyPage(props) {
       .catch(err => {
         alert("현재 서버와의 연결이 원활하지 않습니다. 관리자에게 문의해주세요.");
       })
-  }, []); 
+  }, [reload]); 
 
   function getFavoriteList() {
     return new Promise(function(resolve, reject) {
@@ -149,13 +151,12 @@ export default function MyPage(props) {
             userInfo['user_img'] = res.data;
             sessionStorage.setItem('userInfo', JSON.stringify(userInfo));
             setIcon(res.data);
-            window.location.replace("/mypage");
+            setReload(reload + 1);
           }
         })
         .catch((err) => {
           console.error(err);
           alert("업로드에 실패하였습니다. 잠시 후 시도해주세요.");
-          window.location.replace("/mypage");
         });
     } else {
       alert("파일형식이 올바르지 않습니다.")

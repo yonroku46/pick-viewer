@@ -4,7 +4,7 @@ import axios from 'axios';
 import { Link } from 'react-router-dom';
 import { Menu, Input, Dimmer, Loader, Icon } from 'semantic-ui-react';
 
-class ShopModal extends Component {
+export default class ShopModal extends Component {
 
     state = {
         isLoading: false,
@@ -92,4 +92,3 @@ class ShopModal extends Component {
         )
     }
 }
-export default ShopModal;
