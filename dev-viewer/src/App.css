@@ -23,6 +23,9 @@ h1, h2, h3, h4, h5, div, a, button {
   color: rgb(0, 153, 255);
   font-weight: bold;
 }
+.empty {
+  color: rgb(202, 202, 202, 0.5);
+}
 .left {
   text-align: left;
 }
@@ -388,6 +391,11 @@ div.ui.segment.dashboard-viewer {
 .dashboard-viewer-inline {
   padding: 1em;
 }
+.dashboard-viewer-inline label {
+  padding-left: 0.5em !important;
+  margin-bottom: 0.5em !important;
+  border-left: 0.2em solid rgb(0, 0, 0, 0.5);
+}
 .dashboard-viewer-title {
   background-color: rgb(0, 153, 255) !important;
   color: #fff !important;
@@ -395,6 +403,16 @@ div.ui.segment.dashboard-viewer {
   font-weight: 500 !important;
   padding-top: 0.8em !important;
   padding-bottom: 0.8em !important;
+}
+.dashboard-viewer-imgs {
+  border: 1px solid rgb(0, 0, 0, 0.2);
+  background-color: rgb(0, 0, 0, 0.05);
+  margin-top: 14px !important;
+  border-radius: 7px !important;
+  padding-left: 10px !important;
+  padding-right: 10px !important;
+  padding-top: 14px !important;
+  padding-bottom: 7px !important;
 }
 .dashboard-viewer-btns {
   background-color: #fff !important;
@@ -413,6 +431,9 @@ div.ui.segment.dashboard-viewer {
   font-size: 0.6em;
   color: rgb(0, 0, 0, 0.3);
 }
+.dashboard-viewer-menu {
+  margin: 5px 0px !important;
+}
 .dashboard-shopinfo-tel {
   max-width: 100px;
   margin-right: 8px;
@@ -421,9 +442,9 @@ div.ui.segment.dashboard-viewer {
 .dashboard-shopinfo-hours {
   max-width: 220px;
 }
-.dashboard-shopinfo-name {
+.dashboard-shopinfo-text {
   margin-top: 0px !important;
-  margin-left: 0.5em !important;
+  margin-left: 1em !important;
 }
 .dashboard-share-btn {
   cursor: pointer;
@@ -460,13 +481,17 @@ div.ui.segment.dashboard-viewer {
   text-overflow: ellipsis;
   text-align: center !important;
 }
+.dashboard-table-career input {
+  width: 5.5em !important;
+  max-width: 5.5em !important;
+}
 .dashboard-table-info {
   overflow: hidden;
   text-overflow: ellipsis;
 }
 .dashboard-table-delete {
-  width: 2.5em !important;
-  max-width: 2.5em !important;
+  width: 2em !important;
+  max-width: 2em !important;
   padding: 0.2em !important;
   text-align: center !important;
   border-left: none !important;
@@ -476,8 +501,12 @@ div.ui.segment.dashboard-viewer {
   cursor: pointer;
   opacity: 1;
 }
-table.dashboard-table-sp input {
+table.dashboard-table input {
   padding: 0.4em !important;
+}
+.dashboard-viewer-category {
+  margin-top: 0.5em !important;
+  width: 330px !important;
 }
 .edit-input {
   padding: 0em 0.2em !important;
@@ -509,28 +538,34 @@ table.dashboard-table-sp input {
   .dashboard-content-final {
     margin-bottom: 8vh !important;
   }
-  table.dashboard-table-sp {
+  table.dashboard-table {
     width: 94vw !important;
     margin-left: -3vw !important;
   }
-  table.dashboard-table-sp .edit-input {
+  table.dashboard-table .edit-input {
     padding: 0em 0.2em !important;
   }
-  table.dashboard-table-sp input {
+  .dashboard-table-career input {
+    width: 4.5em !important;
+    max-width: 4.5em !important;
+  }
+  table.dashboard-table input {
     padding: 0.4em 0.15em !important;
   }
-  table.dashboard-table-sp button {
+  table.dashboard-table button {
     padding: 0.4em 0.15em !important;
   }
-  .dashboard-table-sp th.dashboard-table-name,td.dashboard-table-name {
+  .dashboard-table th.dashboard-table-name,td.dashboard-table-name {
     padding: 0.4em 0.15em !important;
     font-size: 0.9em !important;
   }
-  .dashboard-table-sp th.dashboard-table-career,td.dashboard-table-career {
+  .dashboard-table th.dashboard-table-career,td.dashboard-table-career {
+    width: 5em !important;
+    max-width: 5em !important;
     padding: 0.4em 0.15em !important;
     font-size: 0.9em !important;
   }
-  .dashboard-table-sp th.dashboard-table-info,td.dashboard-table-info {
+  .dashboard-table th.dashboard-table-info,td.dashboard-table-info {
     padding: 0.4em 0.3em !important;
     font-size: 0.9em !important;
   }

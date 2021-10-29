@@ -382,7 +382,7 @@ export default function DetailPage(props) {
       <Item.Group unstackable className='detailpage-service-menu' key={menu.menu_cd}>
         <Item className='detailpage-service' onClick={() => hairShopMenuBtnClick(menu.menu_cd)}>
           <Item.Image className='detailpage-service-img' src={api.imgRender(menu.menu_img === null ? menuDefault : menu.menu_img)}/>
-          <Item.Content header={menu.menu_name} meta={comma(menu.menu_price) + '원'}/>
+          <Item.Content header={menu.menu_name} meta={comma(menu.menu_price) + '원'} description={menu.menu_description === null ? '' : menu.menu_description}/>
         </Item>
       </Item.Group>
       </>

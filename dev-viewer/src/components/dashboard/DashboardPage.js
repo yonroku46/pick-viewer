@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { Label, Image, Menu, Icon, Form, Segment, Input, TextArea, Header, Button, Table, List, Item, Select } from 'semantic-ui-react'
+import { Label, Image, Menu, Icon, Form, Segment, Input, TextArea, Header, Button, Table, List, Item, Dimmer, Loader, Select } from 'semantic-ui-react'
 import * as api from '../../rest/server'
 import axios from 'axios';
 
@@ -13,11 +13,13 @@ export default function DashboardPage(props) {
     }
 
     const [reload, setReload] = useState(0);
+    const [loading, setLoading] = useState(false);
 
     const [shop, setShop] = useState([]);
     const [requestList, setRequestList] = useState([]);
     const [staffList, setStaffList] = useState([]);
     const [menuList, setMenuList] = useState([]);
+    const [categoryList, setCategoryList] = useState([]);
     const shop_cd = userInfo? userInfo.employment : null;
 
     const shopDefault = 'images/shop/default.png';
@@ -26,13 +28,11 @@ export default function DashboardPage(props) {
 
     const [menuVisible, setMenuVisible] = useState(true);
     const [editMode, setEditMode] = useState(false);
-    const [activeItem, setActiveItem] = useState('inbox');
+    const [activeItem, setActiveItem] = useState('shopInfo');
     function handleItemClick (e, { name }) {
         setActiveItem(name);
         window.innerWidth < 767 && setMenuVisible(false);
     }
-
-    const [menuCategory, setMenuCategory] = useState('');
 
     function copy(text) {
         if (!navigator.clipboard) {
@@ -46,6 +46,7 @@ export default function DashboardPage(props) {
         if (permission !== 3) {
             props.history.goBack(1);
         }
+        setLoading(true);
         const params = { 
           'shop_cd': shop_cd,
           'permission': permission
@@ -61,14 +62,24 @@ export default function DashboardPage(props) {
             setShop(res);
             setStaffList(res.staff_list);
             setMenuList(res.menu_list);
+            makeCategoryList(res.menu_categorys);
             getRequestList(shop_cd);
           }
         })
         .catch(err => {
           alert("현재 서버와의 연결이 원활하지 않습니다. 관리자에게 문의해주세요.");
+          setLoading(false);
         })
       }, [reload])
     
+    function makeCategoryList(menu_categorys) {
+        const result = [];
+        result.push({ key: 'All', value: 'All', text: '전체선택' });
+        menu_categorys.map(category => {
+            result.push({ key: category, value: category, text: category });
+        });
+        setCategoryList(result);
+    }
     
     function getRequestList(shop_cd) {
         return new Promise(function(resolve, reject) {
@@ -84,10 +95,12 @@ export default function DashboardPage(props) {
         .then(res => {
           if (res !== null) {
             setRequestList(res);
+            setLoading(false);
           }
         })
         .catch(err => {
           alert("현재 서버와의 연결이 원활하지 않습니다. 관리자에게 문의해주세요.");
+          setLoading(false);
         })
     }
 
@@ -101,21 +114,21 @@ export default function DashboardPage(props) {
             <Form className='dashboard-viewer-inline'>
                 <Form.Field>
                     <label>매장명</label>
-                    <Header className='dashboard-shopinfo-name'>{shop.shop_name}</Header>
+                    <Header className='dashboard-shopinfo-text'>{shop.shop_name}</Header>
                 </Form.Field>
                 <Form.Field>
                     <label>매장코드</label>
-                    <Header className='dashboard-shopinfo-name'>{shop.shop_serial}
+                    <Header className='dashboard-shopinfo-text'>{shop.shop_serial}
                         <Icon className='dashboard-share-btn' name='share square' onClick={() => copy(shop.shop_serial)}/>
                     </Header>
                 </Form.Field>
                 <Form.Field>
                     <label>매장 사진</label>
-                    <Image.Group size='small'>
-                        <Image src={api.imgRender(shopDefault)}/>
-                        <Image src={api.imgRender(shopDefault)}/>
-                        <Image src={api.imgRender(shopDefault)}/>
-                        <Image src={api.imgRender(shopDefault)}/>
+                    <Image.Group className='dashboard-viewer-imgs' size='small'>
+                        <Image label={editMode && { color: 'blue', size: 'mini', corner: 'right', icon: 'move' }} src={api.imgRender(shop.shop_img)}/>
+                        <Image label={editMode && { color: 'grey', size: 'mini', corner: 'right', icon: 'move' }} src={api.imgRender(shopDefault)}/>
+                        <Image label={editMode && { color: 'grey', size: 'mini', corner: 'right', icon: 'move' }} src={api.imgRender(shopDefault)}/>
+                        <Image label={editMode && { color: 'grey', size: 'mini', corner: 'right', icon: 'move' }} src={api.imgRender(shopDefault)}/>
                     </Image.Group>
                 </Form.Field>
                 <Form.Group  widths='equal'>
@@ -128,7 +141,7 @@ export default function DashboardPage(props) {
                         <Input className='dashboard-shopinfo-tel' placeholder='0000' value={shop.shop_tel.split('-')[2]}/>
                         </>
                         :
-                        <Header className='dashboard-shopinfo-name'>{shop.shop_tel}</Header>
+                        <Header className='dashboard-shopinfo-text'>{shop.shop_tel}</Header>
                         }
                     </Form.Field>
                 </Form.Group>
@@ -141,7 +154,7 @@ export default function DashboardPage(props) {
                     :
                     <Form.Field>
                         <label>매장 운영시간</label>
-                        <Header className='dashboard-shopinfo-name'>{shop.shop_open} ~ {shop.shop_close}</Header>
+                        <Header className='dashboard-shopinfo-text'>{shop.shop_open} ~ {shop.shop_close}</Header>
                     </Form.Field>
                     }
                 </Form.Group>
@@ -150,7 +163,7 @@ export default function DashboardPage(props) {
                 :
                 <Form.Field>
                     <label>매장 소개</label>
-                    <Header as='h4' className='dashboard-shopinfo-name'>{shop.shop_info}</Header>
+                    <Header as='h4' className='dashboard-shopinfo-text'>{shop.shop_info}</Header>
                 </Form.Field>
                 }
             </Form>
@@ -176,7 +189,7 @@ export default function DashboardPage(props) {
             <Form className='dashboard-viewer-inline'>
                 <Form.Field>
                     <label>총 직원수</label>
-                    <Header className='dashboard-shopinfo-name'>{shop.staff_list.length + '명'}</Header>
+                    <Header className='dashboard-shopinfo-text'>{shop.staff_list.length + '명'}</Header>
                 </Form.Field>
                 <Form.Field>
                     <label>직원 신쳥현황</label>
@@ -199,7 +212,7 @@ export default function DashboardPage(props) {
                         ))}
                     </List>
                     : 
-                    <Header className='dashboard-shopinfo-name'>
+                    <Header className='dashboard-shopinfo-text'>
                         신청목록 없음
                     </Header>
                     }
@@ -207,7 +220,7 @@ export default function DashboardPage(props) {
                 <Form.Field>
                     <label>직원 리스트</label>
                     <Input icon='search' className='dashboard-staff-search' placeholder='직원명으로 검색' onChange={staffSearch}/>
-                    <Table celled unstackable selectable className='dashboard-table-sp'>
+                    <Table celled unstackable selectable className='dashboard-table'>
                         <Table.Header>
                         <Table.Row>
                             <Table.HeaderCell className='dashboard-table-name'>이름</Table.HeaderCell>
@@ -227,14 +240,14 @@ export default function DashboardPage(props) {
                                         {editMode ? 
                                         <Input placeholder={staff.career} value={staff.career}/>
                                         :
-                                        staff.career
+                                        staff.career ? staff.career : <span className='empty'>미입력</span>
                                         }
                                     </Table.Cell>
                                     <Table.Cell className={editMode ? 'dashboard-table-info edit-input' : 'dashboard-table-info'}>
                                         {editMode ? 
                                         <Input placeholder={staff.info} value={staff.info}/>
                                         :
-                                        staff.info
+                                        staff.info ? staff.info : <span className='empty'>미입력</span>
                                         }
                                     </Table.Cell>
                                     {editMode &&
@@ -276,18 +289,16 @@ export default function DashboardPage(props) {
             <Form className='dashboard-viewer-inline'>
                 <Form.Field>
                     <label>메뉴 리스트</label>
-                    <Menu secondary>
-                        {shop.menu_categorys.map(category => (
-                            <Menu.Item name={category} active={menuCategory === category} onClick={menuCategoryClick}>
-                                <Icon name='slack hash'/>{category}
-                            </Menu.Item>
-                        ))}
-                    </Menu>
+                    <Select className='dashboard-viewer-category' placeholder='전체선택' options={categoryList} onChange={selectCategory}/>
                     {menuList.map(menu => (
-                    <Item.Group unstackable className='detailpage-service-menu' key={menu.menu_cd}>
+                    <Item.Group unstackable className='detailpage-service-menu dashboard-viewer-menu' key={menu.menu_cd}>
                         <Item className='detailpage-service' onClick={() => {}}>
                             <Item.Image className='detailpage-service-img' src={api.imgRender(menu.menu_img === null ? menuDefault : menu.menu_img)}/>
-                            <Item.Content header={menu.menu_name} meta={comma(menu.menu_price) + '원'} description={menu.menu_description}/>
+                            <Item.Content 
+                                header={editMode ? <Input placeholder={menu.menu_name} value={menu.menu_name}/> : menu.menu_name}
+                                meta={editMode ? <Input placeholder={menu.menu_price} value={menu.menu_price}/> : comma(menu.menu_price) + '원'}
+                                description={editMode ? <Input placeholder={menu.menu_description} value={menu.menu_description}/> : menu.menu_description ? menu.menu_description : <span className='empty'>설명 미입력</span>}
+                            />
                         </Item>
                     </Item.Group>
                     ))}
@@ -315,6 +326,14 @@ export default function DashboardPage(props) {
         )
     }
 
+    function Loading() {
+        return(
+            <Dimmer active inverted>
+              <Loader size='large'>로딩중</Loader>
+            </Dimmer>
+          )
+    }
+
     function staffSearch(e) {
         const result = shop.staff_list.filter(staff => staff.user_name.match(e.target.value));
         setStaffList(result);
@@ -334,11 +353,39 @@ export default function DashboardPage(props) {
         return result;
     }
 
-    function menuCategoryClick (e, { name }) {
-        const result = shop.menu_list.filter(menu => menu.menu_category === name);
-        setMenuCategory(name);
-        setMenuList(result);
+    function selectCategory (e, { value }) {
+        if (value === 'All') {
+            setMenuList(shop.menu_list);
+        } else {
+            const result = shop.menu_list.filter(menu => menu.menu_category === value);
+            setMenuList(result);
+        }
     }
+
+    // function dragStart(e) {
+    //     this.dragged = e.currentTarget; e.dataTransfer.effectAllowed = 'move';
+    //     e.dataTransfer.setData('text/html', this.dragged);
+    // } 
+    // function dragEnd(e) {
+    //     this.dragged.style.display = 'block';
+    //     this.dragged.parentNode.removeChild(placeholder);
+
+    //     // update state
+    //     var data = this.state.colors;
+    //     var from = Number(this.dragged.dataset.id);
+    //     var to = Number(this.over.dataset.id);
+    //     if (from < to) to--;
+    //     data.splice(to, 0, data.splice(from, 1)[0]);
+    //     this.setState({colors: data});
+    // }
+    // function dragOver(e) {
+    //     e.preventDefault();
+    //     this.dragged.style.display = "none";
+    //     if (e.target.className === 'placeholder') return;
+    //     this.over = e.target;
+    //     e.target.parentNode.insertBefore(placeholder, e.target);
+    // }
+
 
     function requestConfirm(request_stat, targetId) {
         const target = requestList.find(request => request.request_cd === targetId);
@@ -449,6 +496,10 @@ export default function DashboardPage(props) {
         }
         </Menu>
         <Segment className='dashboard-viewer'>
+            {loading ? 
+            <Loading/>
+            :
+            <>
             {activeItem === 'shopInfo' && shopInfoView()}
             {activeItem === 'staffInfo' && staffInfoView()}
             {activeItem === 'menuInfo' && menuInfoView()}
@@ -460,6 +511,8 @@ export default function DashboardPage(props) {
 
             {activeItem === 'system' && sampleView()}
             {activeItem === 'help' && sampleView()}
+            </>
+            }
         </Segment>
     </div>
     </>
