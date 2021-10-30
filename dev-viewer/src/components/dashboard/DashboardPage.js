@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import { Label, Image, Menu, Icon, Form, Segment, Input, TextArea, Header, Button, Table, List, Item, Dimmer, Loader, Select } from 'semantic-ui-react'
 import * as api from '../../rest/server'
+import moment from 'moment';
 import axios from 'axios';
 
 export default function DashboardPage(props) {
@@ -20,7 +21,7 @@ export default function DashboardPage(props) {
     const [staffList, setStaffList] = useState([]);
     const [menuList, setMenuList] = useState([]);
     const [categoryList, setCategoryList] = useState([]);
-    const shop_cd = userInfo? userInfo.employment : null;
+    const shop_cd = userInfo ? userInfo.employment : null;
 
     const shopDefault = 'images/shop/default.png';
     const menuDefault = 'images/menu/default.png';
@@ -29,9 +30,26 @@ export default function DashboardPage(props) {
     const [menuVisible, setMenuVisible] = useState(true);
     const [editMode, setEditMode] = useState(false);
     const [activeItem, setActiveItem] = useState('shopInfo');
+
     function handleItemClick (e, { name }) {
         setActiveItem(name);
         window.innerWidth < 767 && setMenuVisible(false);
+    }
+
+    const hours = [];
+    new Array(24).fill().forEach((acc, index) => {
+        const time = moment( {hour: index} ).format('HH:mm');
+        hours.push({ key: time, value: time, text: time });
+        // hours.push(moment({ hour: index, minute: 30 }).format('HH:mm'));
+    })
+    const startHour = 9;
+    const endHour = 24;
+
+    for (let i = 0; i < startHour; i++) {
+        hours.shift()
+    }
+    for (let i = 0; i <  23 - endHour; i++) {
+        hours.pop()
     }
 
     function copy(text) {
@@ -104,6 +122,109 @@ export default function DashboardPage(props) {
         })
     }
 
+    function changeTel(e, { tabIndex }) {
+        const shop_tel = shop.shop_tel.split('-');
+        shop_tel[tabIndex] = e.target.value.replace(/[^0-9]/g, '');
+        setShop(
+            { ...shop, shop_tel: shop_tel[0] + '-' + shop_tel[1] + '-' + shop_tel[2] }
+        );
+    }
+    function changeOpen(e, { value }) {
+        setShop(
+            { ...shop, shop_open: value }
+        );
+    }
+    function changeClose(e, { value }) {
+        setShop(
+            { ...shop, shop_close: value }
+        );
+    }
+    function changeShopInfo(e) {
+        setShop(
+            { ...shop, shop_info: e.target.value }
+        );
+    }
+    function changeCareer(e, { tabIndex }) {
+        setStaffList(
+            staffList.map(
+                staff => staff.user_cd === tabIndex
+                ? { ...staff, career: e.target.value }
+                : staff
+            )
+        );
+        setShop(
+            { ...shop, staff_list: shop.staff_list.map(
+                staff => staff.user_cd === tabIndex
+                ? { ...staff, career: e.target.value }
+                : staff
+            ) }
+        );
+    }
+    function changeInfo(e, { tabIndex }) {
+        setStaffList(
+            staffList.map(
+                staff => staff.user_cd === tabIndex
+                ? { ...staff, info: e.target.value }
+                : staff
+            )
+        );
+        setShop(
+            { ...shop, staff_list: shop.staff_list.map(
+                staff => staff.user_cd === tabIndex
+                ? { ...staff, info: e.target.value }
+                : staff
+            ) }
+        );
+    }
+    function changeMenuName(e, { tabIndex }) {
+        setMenuList(
+            menuList.map(
+                menu => menu.menu_cd === tabIndex
+                ? { ...menu, menu_name: e.target.value }
+                : menu
+            )
+        );
+        setShop(
+            { ...shop, menu_list: shop.menu_list.map(
+                menu => menu.menu_cd === tabIndex
+                ? { ...menu, menu_name: e.target.value }
+                : menu
+            ) }
+        );
+    }
+    function changeMenuPrice(e, { tabIndex }) {
+        setMenuList(
+            menuList.map(
+                menu => menu.menu_cd === tabIndex
+                ? { ...menu, menu_price: e.target.value.replace(/[^0-9]/g, '') }
+                : menu
+            )
+        );
+        setShop(
+            { ...shop, menu_list: shop.menu_list.map(
+                menu => menu.menu_cd === tabIndex
+                ? { ...menu, menu_price: e.target.value.replace(/[^0-9]/g, '') }
+                : menu
+            ) }
+        );
+    }
+    function changeMenuDescription(e, { tabIndex }) {
+        setMenuList(
+            menuList.map(
+                menu => menu.menu_cd === tabIndex
+                ? { ...menu, menu_description: e.target.value }
+                : menu
+            )
+        );
+        setShop(
+            { ...shop, menu_list: shop.menu_list.map(
+                menu => menu.menu_cd === tabIndex
+                ? { ...menu, menu_description: e.target.value }
+                : menu
+            ) }
+        );
+    }
+
     function shopInfoView() {
         return (
             <>
@@ -136,20 +257,20 @@ export default function DashboardPage(props) {
                         <label>매장 전화번호</label>
                         {editMode ? 
                         <>
-                        <Input className='dashboard-shopinfo-tel' placeholder='000' value={shop.shop_tel.split('-')[0]}/>
-                        <Input className='dashboard-shopinfo-tel' placeholder='000' value={shop.shop_tel.split('-')[1]}/>
-                        <Input className='dashboard-shopinfo-tel' placeholder='0000' value={shop.shop_tel.split('-')[2]}/>
+                        <Input className='dashboard-shopinfo-tel' placeholder='000' value={shop.shop_tel.split('-')[0]} tabIndex='0' onChange={changeTel}/>
+                        <Input className='dashboard-shopinfo-tel' placeholder='000' value={shop.shop_tel.split('-')[1]} tabIndex='1' onChange={changeTel}/>
+                        <Input className='dashboard-shopinfo-tel' placeholder='0000' value={shop.shop_tel.split('-')[2]} tabIndex='2' onChange={changeTel}/>
                         </>
                         :
-                        <Header className='dashboard-shopinfo-text'>{shop.shop_tel}</Header>
+                        <Header className='dashboard-shopinfo-text'>{shop.shop_tel.length === 2 ? <span className='empty'>전화번호 미입력</span> : shop.shop_tel}</Header>
                         }
                     </Form.Field>
                 </Form.Group>
                 <Form.Group widths='equal'>
                     {editMode ? 
                     <>
-                    <Form.Select className='dashboard-shopinfo-hours' label='오픈시간' placeholder='09:00' value={shop.shop_open}/>
-                    <Form.Select className='dashboard-shopinfo-hours' label='마감시간' placeholder='18:00' value={shop.shop_close}/>
+                    <Form.Select className='dashboard-shopinfo-hours' label='오픈시간' placeholder='09:00' value={shop.shop_open} options={hours} onChange={changeOpen}/>
+                    <Form.Select className='dashboard-shopinfo-hours' label='마감시간' placeholder='18:00' value={shop.shop_close} options={hours} onChange={changeClose}/>
                     </>
                     :
                     <Form.Field>
@@ -159,21 +280,27 @@ export default function DashboardPage(props) {
                     }
                 </Form.Group>
                 {editMode ? 
-                <Form.Field className='dashboard-content-final' control={TextArea} label='매장 소개' placeholder='매장 소개를 입력해보세요. (최대 100자)' value={shop.shop_info}/>
+                <Form.Field className='dashboard-content-final' control={TextArea} label='매장 소개' placeholder='매장 소개를 입력해보세요. (최대 100자)' value={shop.shop_info} onChange={changeShopInfo}/>
                 :
                 <Form.Field>
                     <label>매장 소개</label>
                     <Header as='h4' className='dashboard-shopinfo-text'>{shop.shop_info}</Header>
                 </Form.Field>
                 }
+                <div className='dashboard-content-final-empty'> </div>
             </Form>
             <Label className='dashboard-viewer-btns' attached='bottom right'>
                 {editMode ?
-                <Button primary floated='right' onClick={() => setEditMode(false)}><Icon name='save'/>저장</Button>
+                <>
+                <Button inverted color='blue' floated='right' onClick={() => setEditMode(false)}><Icon name='save'/>임시저장</Button>
+                <Button color='blue' floated='right' onClick={() => setEditMode(false)}><Icon name='cloud upload'/>저장</Button>
+                </>
                 :
-                <Button secondary floated='right' onClick={() => setEditMode(true)}><Icon name='edit'/>수정</Button>
-                }
+                <>
+                <Button color='violet' floated='right' onClick={() => setEditMode(true)}><Icon name='edit'/>수정</Button>
                 <Button inverted color='violet' floated='right'><Icon name='eye'/>프리뷰</Button>
+                </>
+                }
             </Label>
             </>}
             </>
@@ -238,20 +365,20 @@ export default function DashboardPage(props) {
                                     </Table.Cell>
                                     <Table.Cell className={editMode ? 'dashboard-table-career edit-input' : 'dashboard-table-career'}>
                                         {editMode ? 
-                                        <Input placeholder={staff.career} value={staff.career}/>
+                                        <Input placeholder={staff.career} value={staff.career} tabIndex={staff.user_cd} onChange={changeCareer}/>
                                         :
                                         staff.career ? staff.career : <span className='empty'>미입력</span>
                                         }
                                     </Table.Cell>
                                     <Table.Cell className={editMode ? 'dashboard-table-info edit-input' : 'dashboard-table-info'}>
                                         {editMode ? 
-                                        <Input placeholder={staff.info} value={staff.info}/>
+                                        <Input placeholder={staff.info} value={staff.info} tabIndex={staff.user_cd} onChange={changeInfo}/>
                                         :
                                         staff.info ? staff.info : <span className='empty'>미입력</span>
                                         }
                                     </Table.Cell>
                                     {editMode &&
-                                     <Table.Cell className='dashboard-table-delete'>
+                                    <Table.Cell className='dashboard-table-delete'>
                                         <Icon name='x' onClick={() => staffInfoManage('delete', staff.user_cd)}/>
                                     </Table.Cell>
                                     }
@@ -269,11 +396,16 @@ export default function DashboardPage(props) {
             </Form>
             <Label className='dashboard-viewer-btns' attached='bottom right'>
                 {editMode ?
-                <Button primary floated='right' onClick={() => setEditMode(false)}><Icon name='save'/>저장</Button>
+                <>
+                <Button inverted color='blue' floated='right' onClick={() => setEditMode(false)}><Icon name='save'/>임시저장</Button>
+                <Button color='blue' floated='right' onClick={() => setEditMode(false)}><Icon name='cloud upload'/>저장</Button>
+                </>
                 :
-                <Button secondary floated='right' onClick={() => setEditMode(true)}><Icon name='edit'/>수정</Button>
-                }
+                <>
+                <Button color='violet' floated='right' onClick={() => setEditMode(true)}><Icon name='edit'/>수정</Button>
                 <Button inverted color='violet' floated='right'><Icon name='eye'/>프리뷰</Button>
+                </>
+                }
             </Label>
             </>}
             </>
@@ -291,14 +423,27 @@ export default function DashboardPage(props) {
                     <label>메뉴 리스트</label>
                     <Select className='dashboard-viewer-category' placeholder='전체선택' options={categoryList} onChange={selectCategory}/>
                     {menuList.map(menu => (
-                    <Item.Group unstackable className='detailpage-service-menu dashboard-viewer-menu' key={menu.menu_cd}>
+                    <Item.Group unstackable className='dashboard-viewer-menu' key={menu.menu_cd}>
                         <Item className='detailpage-service' onClick={() => {}}>
                             <Item.Image className='detailpage-service-img' src={api.imgRender(menu.menu_img === null ? menuDefault : menu.menu_img)}/>
-                            <Item.Content 
-                                header={editMode ? <Input placeholder={menu.menu_name} value={menu.menu_name}/> : menu.menu_name}
-                                meta={editMode ? <Input placeholder={menu.menu_price} value={menu.menu_price}/> : comma(menu.menu_price) + '원'}
-                                description={editMode ? <Input placeholder={menu.menu_description} value={menu.menu_description}/> : menu.menu_description ? menu.menu_description : <span className='empty'>설명 미입력</span>}
+                            <Item.Content className={editMode && 'dashboard-viewer-edit-content'}
+                                header= 
+                                    {editMode 
+                                    ? <Input placeholder='메뉴 이름' value={menu.menu_name} tabIndex={menu.menu_cd} onChange={changeMenuName}/> 
+                                    : menu.menu_name
+                                    }
+                                meta=
+                                    {editMode
+                                    ? <Input placeholder='메뉴 가격' value={menu.menu_price} tabIndex={menu.menu_cd} onChange={changeMenuPrice}/> 
+                                    : comma(menu.menu_price) + '원'
+                                    }
+                                description=
+                                    {editMode
+                                    ? <TextArea placeholder='메뉴 설명' value={menu.menu_description} tabIndex={menu.menu_cd} onChange={changeMenuDescription}/>
+                                    : menu.menu_description ? menu.menu_description : <span className='empty'>설명 미입력</span>
+                                    }
                             />
+                            {editMode && <Item className='dashboard-content-delete'><Icon name='x'/></Item>}
                         </Item>
                     </Item.Group>
                     ))}
@@ -307,11 +452,16 @@ export default function DashboardPage(props) {
             </Form>
             <Label className='dashboard-viewer-btns' attached='bottom right'>
                 {editMode ?
-                <Button primary floated='right' onClick={() => setEditMode(false)}><Icon name='save'/>저장</Button>
+                <>
+                <Button inverted color='blue' floated='right' onClick={() => setEditMode(false)}><Icon name='save'/>임시저장</Button>
+                <Button color='blue' floated='right' onClick={() => setEditMode(false)}><Icon name='cloud upload'/>저장</Button>
+                </>
                 :
-                <Button secondary floated='right' onClick={() => setEditMode(true)}><Icon name='edit'/>수정</Button>
-                }
+                <>
+                <Button color='violet' floated='right' onClick={() => setEditMode(true)}><Icon name='edit'/>수정</Button>
                 <Button inverted color='violet' floated='right'><Icon name='eye'/>프리뷰</Button>
+                </>
+                }
             </Label>
             </>}
             </>

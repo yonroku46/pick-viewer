@@ -433,6 +433,15 @@ div.ui.segment.dashboard-viewer {
 }
 .dashboard-viewer-menu {
   margin: 5px 0px !important;
+  padding: 16px 6px !important;
+  border: 1px lightgray solid;
+  border-radius: 6px;
+}
+.dashboard-viewer-menu div.meta {
+  margin-top: 3px !important;
+}
+.dashboard-viewer-menu div.description {
+  margin-left: 6px;
 }
 .dashboard-shopinfo-tel {
   max-width: 100px;
@@ -508,6 +517,25 @@ table.dashboard-table input {
   margin-top: 0.5em !important;
   width: 330px !important;
 }
+.dashboard-content-delete {
+  position: absolute;
+  margin-top: -1em;
+  font-size: 1.2em;
+  right: 0.7em;
+  opacity: 0.4;
+}
+.dashboard-content-delete:hover {
+  cursor: pointer;
+  opacity: 1;
+}
+.detailpage-service div.content.dashboard-viewer-edit-content {
+  margin-top: 0px !important;
+  padding-left: 6px !important;
+}
+.detailpage-service div.content.dashboard-viewer-edit-content input, textarea {
+  padding: 0.35em 0.5em !important;
+  margin-bottom: 0.15em;
+}
 .edit-input {
   padding: 0em 0.2em !important;
 }
@@ -568,6 +596,9 @@ table.dashboard-table input {
   .dashboard-table th.dashboard-table-info,td.dashboard-table-info {
     padding: 0.4em 0.3em !important;
     font-size: 0.9em !important;
+  }
+  .dashboard-content-delete {
+    right: 0.25em;
   }
 }
 
