@@ -506,8 +506,8 @@ def shopRequestList():
 @app.route('/api/staffInfoManage', methods=['POST'])
 def staffInfoManage():
     params = request.get_json()
-    user_cd = params['user_cd']
     shop_cd = params['shop_cd']
+    user_cd = params['user_cd']
     additional = params['additional']
     methods = params['methods']
     try:
