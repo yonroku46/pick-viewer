@@ -21,8 +21,7 @@ import * as api from './rest/server'
 import './App.css';
 import axios from 'axios';
 
-// axios.defaults.baseURL = 'http://3.36.69.67';
-axios.defaults.baseURL = 'http://localhost:3000';
+axios.defaults.baseURL = process.env.REACT_APP_API_BASE;
 axios.defaults.headers.post['Content-Type'] = 'application/json;charset=utf-8';
 axios.defaults.headers.post['Access-Control-Allow-Origin'] = '*';
 
@@ -58,7 +57,6 @@ export default function App() {
     );
   }, []); 
 
-  // menu setting
   const [visible, setVisible] = useState(false);
   const isAuthorized = sessionStorage.getItem("isAuthorized");
   const userInfo = JSON.parse(sessionStorage.getItem('userInfo'));
@@ -82,7 +80,6 @@ export default function App() {
     location.href="/";
   }
 
-  // logout modal setting
   const [state, dispatch] = React.useReducer(logoutModal, {
     open: false,
     size: undefined,

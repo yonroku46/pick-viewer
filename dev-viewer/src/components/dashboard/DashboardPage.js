@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
-import { Label, Image, Menu, Icon, Form, Segment, Input, TextArea, Header, Button, Table, List, Item, Dimmer, Loader, Select } from 'semantic-ui-react'
+import { Label, Image, Menu, Icon, Form, Segment, Input, TextArea, Header, Button, Table, List, Item, Dimmer, Loader, Select, Popup } from 'semantic-ui-react'
 import * as api from '../../rest/server'
+import MapContainer from "../booking/MapContainer";
 import moment from 'moment';
 import axios from 'axios';
 
@@ -15,8 +16,10 @@ export default function DashboardPage(props) {
 
     const [reload, setReload] = useState(0);
     const [loading, setLoading] = useState(false);
-
+    
+    const [locationSearch, setLocationSearch] = useState(null);
     const [shop, setShop] = useState([]);
+    const [shopOrigin, setShopOrigin] = useState([]);
     const [requestList, setRequestList] = useState([]);
     const [staffList, setStaffList] = useState([]);
     const [menuList, setMenuList] = useState([]);
@@ -78,6 +81,7 @@ export default function DashboardPage(props) {
         .then(res => {
           if (res !== null) {
             setShop(res);
+            setShopOrigin(res);
             setStaffList(res.staff_list);
             setMenuList(res.menu_list);
             makeCategoryList(res.menu_categorys);
@@ -122,6 +126,19 @@ export default function DashboardPage(props) {
         })
     }
 
+    function changeLocationSearch(e) {
+        setLocationSearch(e.target.value);
+    }
+    function copyLocation(e) {
+        setShop(
+            { ...shop, shop_location: locationSearch }
+        );
+    }
+    function changeLocation(e) {
+        setShop(
+            { ...shop, shop_location: e.target.value }
+        );
+    }
     function changeTel(e, { tabIndex }) {
         const shop_tel = shop.shop_tel.split('-');
         shop_tel[tabIndex] = e.target.value.replace(/[^0-9]/g, '');
@@ -157,7 +174,7 @@ export default function DashboardPage(props) {
                 staff => staff.user_cd === tabIndex
                 ? { ...staff, career: e.target.value }
                 : staff
-            ) }
+            )}
         );
     }
     function changeInfo(e, { tabIndex }) {
@@ -173,7 +190,7 @@ export default function DashboardPage(props) {
                 staff => staff.user_cd === tabIndex
                 ? { ...staff, info: e.target.value }
                 : staff
-            ) }
+            )}
         );
     }
     function changeMenuName(e, { tabIndex }) {
@@ -189,7 +206,7 @@ export default function DashboardPage(props) {
                 menu => menu.menu_cd === tabIndex
                 ? { ...menu, menu_name: e.target.value }
                 : menu
-            ) }
+            )}
         );
     }
     function changeMenuPrice(e, { tabIndex }) {
@@ -205,7 +222,7 @@ export default function DashboardPage(props) {
                 menu => menu.menu_cd === tabIndex
                 ? { ...menu, menu_price: e.target.value.replace(/[^0-9]/g, '') }
                 : menu
-            ) }
+            )}
         );
     }
     function changeMenuDescription(e, { tabIndex }) {
@@ -221,7 +238,7 @@ export default function DashboardPage(props) {
                 menu => menu.menu_cd === tabIndex
                 ? { ...menu, menu_description: e.target.value }
                 : menu
-            ) }
+            )}
         );
     }
 
@@ -238,10 +255,20 @@ export default function DashboardPage(props) {
                     <Header className='dashboard-shopinfo-text'>{shop.shop_name}</Header>
                 </Form.Field>
                 <Form.Field>
-                    <label>매장코드</label>
-                    <Header className='dashboard-shopinfo-text'>{shop.shop_serial}
-                        <Icon className='dashboard-share-btn' name='share square' onClick={() => copy(shop.shop_serial)}/>
-                    </Header>
+                    <label>
+                        매장주소 
+                        <Popup size='tiny' position='right center' className='dashboard-info-popup' trigger={<Icon className='dashboard-info-icon' name='info circle'/>} header={'지도상의 위치가 필요합니다'} content={'수정모드를 활성화 후,\n 빨간핀을 이동시켜 위치를 지정해주세요.'} inverted/>
+                    </label>
+                    {editMode ? 
+                    <>
+                    <Input placeholder='주소 직접입력' value={shop.shop_location} onChange={changeLocation}/>
+                    <Icon className='dashboard-location-btn' name='chevron circle up' onClick={copyLocation}/>
+                    <Input placeholder='핀을 움직이면 주소가 자동완성됩니다' className='dashboard-location-search' iconPosition='left' icon='point' value={locationSearch} onChange={changeLocationSearch}/>
+                    </>
+                    :
+                    <Header className='dashboard-shopinfo-text'>{shop.shop_location}</Header>
+                    }
+                    <MapContainer id='map' shop={shop} setShop={setShop} setLocationSearch={setLocationSearch} editMode={editMode} permission={permission}/>
                 </Form.Field>
                 <Form.Field>
                     <label>매장 사진</label>
@@ -287,6 +314,12 @@ export default function DashboardPage(props) {
                     <Header as='h4' className='dashboard-shopinfo-text'>{shop.shop_info}</Header>
                 </Form.Field>
                 }
+                <Form.Field>
+                    <label>매장코드</label>
+                    <Header className='dashboard-shopinfo-text'>{shop.shop_serial}
+                        <Icon className='dashboard-share-btn' name='share square' onClick={() => copy(shop.shop_serial)}/>
+                    </Header>
+                </Form.Field>
                 <div className='dashboard-content-final-empty'> </div>
             </Form>
             <Label className='dashboard-viewer-btns' attached='bottom right'>
@@ -439,7 +472,7 @@ export default function DashboardPage(props) {
                                     }
                                 description=
                                     {editMode
-                                    ? <TextArea placeholder='메뉴 설명' value={menu.menu_description} tabIndex={menu.menu_cd} onChange={changeMenuDescription}/>
+                                    ? <TextArea className='detailpage-menu-description' placeholder='메뉴 설명' value={menu.menu_description} tabIndex={menu.menu_cd} onChange={changeMenuDescription}/>
                                     : menu.menu_description ? menu.menu_description : <span className='empty'>설명 미입력</span>
                                     }
                             />
@@ -636,6 +669,7 @@ export default function DashboardPage(props) {
                     - 도움말
                 </Menu.Item>
             </Menu.Menu>
+            <Button className='dashboard-reset-btn' onClick={() => setShop(shopOrigin)}><Icon name='redo'/> 수정값 초기화</Button>
             </>
             :
             <>

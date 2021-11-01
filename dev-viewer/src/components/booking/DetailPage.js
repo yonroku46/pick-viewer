@@ -561,10 +561,15 @@ export default function DetailPage(props) {
         <p className='detailpage-info'><Icon name='list alternate outline'/>{shop.shop_info}</p>
         <p className='detailpage-location'><Icon name='map outline'/>{shop.shop_location} 
           <Scroll className='detailpage-icon' to='map' offset={-56} spy={true} smooth={true}>
-            <Icon onClick={mapToogle} name={mapOpen ? 'angle up' : 'angle down'}/>
+            <Icon id='map' onClick={mapToogle} name={mapOpen ? 'angle up' : 'angle down'}/>
           </Scroll>
         </p>
-        {mapOpen && <MapContainer id='map' location={shop.shop_location}/>}
+        {mapOpen && 
+          (shop.location_lat === 0 && shop.location_lng === 0
+          ? <h4 className='detailpage-location-empty'>주소등록이 되지않은 매장입니다</h4>
+          : <MapContainer shop={shop}/>
+          )
+        }
       </Segment>
 
       {/* 리뷰 정보 탭*/}
