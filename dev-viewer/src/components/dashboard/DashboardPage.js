@@ -6,7 +6,6 @@ import moment from 'moment';
 import axios from 'axios';
 
 export default function DashboardPage(props) {
-
     const isAuthorized = sessionStorage.getItem('isAuthorized');
     const userInfo = JSON.parse(sessionStorage.getItem('userInfo'));
     const permission = userInfo ? userInfo.permission : null;
@@ -126,9 +125,6 @@ export default function DashboardPage(props) {
         })
     }
 
-    function changeLocationSearch(e) {
-        setLocationSearch(e.target.value);
-    }
     function copyLocation(e) {
         setShop(
             { ...shop, shop_location: locationSearch }
@@ -263,12 +259,11 @@ export default function DashboardPage(props) {
                     <>
                     <Input placeholder='주소 직접입력' value={shop.shop_location} onChange={changeLocation}/>
                     <Icon className='dashboard-location-btn' name='chevron circle up' onClick={copyLocation}/>
-                    <Input placeholder='핀을 움직이면 주소가 자동완성됩니다' className='dashboard-location-search' iconPosition='left' icon='point' value={locationSearch} onChange={changeLocationSearch}/>
                     </>
                     :
                     <Header className='dashboard-shopinfo-text'>{shop.shop_location}</Header>
                     }
-                    <MapContainer id='map' shop={shop} setShop={setShop} setLocationSearch={setLocationSearch} editMode={editMode} permission={permission}/>
+                    <MapContainer id='map' shop={shop} setShop={setShop} setLocationSearch={setLocationSearch} locationSearch={locationSearch} editMode={editMode} permission={permission}/>
                 </Form.Field>
                 <Form.Field>
                     <label>매장 사진</label>
@@ -456,7 +451,7 @@ export default function DashboardPage(props) {
                     <label>메뉴 리스트</label>
                     <Select className='dashboard-viewer-category' placeholder='전체선택' options={categoryList} onChange={selectCategory}/>
                     {menuList.map(menu => (
-                    <Item.Group unstackable className='dashboard-viewer-menu' key={menu.menu_cd}>
+                    <Item.Group unstackable className={editMode ? 'dashboard-viewer-menu menu-edit' : 'dashboard-viewer-menu'} key={menu.menu_cd}>
                         <Item className='detailpage-service' onClick={() => {}}>
                             <Item.Image className='detailpage-service-img' src={api.imgRender(menu.menu_img === null ? menuDefault : menu.menu_img)}/>
                             <Item.Content className={editMode && 'dashboard-viewer-edit-content'}
@@ -633,6 +628,12 @@ export default function DashboardPage(props) {
             <Menu.Header className='dashboard-menu-fold' onClick={() => {setMenuVisible(false)}}>
                 <Icon name='angle double up'/>
             </Menu.Header>
+            <Menu.Header><Icon name='bullhorn'/> 알림</Menu.Header>
+            <Menu.Menu>
+                <Menu.Item name='notice' active={activeItem === 'notice'} onClick={handleItemClick}>
+                    - 알림확인
+                </Menu.Item>
+            </Menu.Menu>
             <Menu.Header><Icon name='table'/> 매장관리</Menu.Header>
             <Menu.Menu>
                 <Menu.Item name='shopInfo' active={activeItem === 'shopInfo'} onClick={handleItemClick}>
@@ -660,6 +661,15 @@ export default function DashboardPage(props) {
                     - 매출정보
                 </Menu.Item>
             </Menu.Menu>
+            <Menu.Header><Icon name='gift'/> 이벤트관리</Menu.Header>
+            <Menu.Menu>
+                <Menu.Item name='eventInfo' active={activeItem === 'eventInfo'} onClick={handleItemClick}>
+                    - 이벤트추가
+                </Menu.Item>
+                <Menu.Item name='couponInfo' active={activeItem === 'couponInfo'} onClick={handleItemClick}>
+                    - 쿠폰추가
+                </Menu.Item>
+            </Menu.Menu>
             <Menu.Header><Icon name='question circle outline'/> 기타</Menu.Header>
             <Menu.Menu>
                 <Menu.Item name='system' active={activeItem === 'system'} onClick={handleItemClick}>
@@ -684,6 +694,8 @@ export default function DashboardPage(props) {
             <Loading/>
             :
             <>
+            {activeItem === 'notice' && sampleView()}
+
             {activeItem === 'shopInfo' && shopInfoView()}
             {activeItem === 'staffInfo' && staffInfoView()}
             {activeItem === 'menuInfo' && menuInfoView()}
@@ -692,6 +704,9 @@ export default function DashboardPage(props) {
             {activeItem === 'bookingData' && sampleView()}
 
             {activeItem === 'salesInfo' && sampleView()}
+
+            {activeItem === 'eventInfo' && sampleView()}
+            {activeItem === 'couponInfo' && sampleView()}
 
             {activeItem === 'system' && sampleView()}
             {activeItem === 'help' && sampleView()}

@@ -1,6 +1,7 @@
-import {Map, InfoWindow, Marker, GoogleApiWrapper} from 'google-maps-react';
+import {Map, Marker, GoogleApiWrapper} from 'google-maps-react';
 import React, { Component } from 'react'
 import Geocode from "react-geocode";
+import { Input } from 'semantic-ui-react';
  
 export class MapContainer extends Component {
     state = {
@@ -62,7 +63,29 @@ export class MapContainer extends Component {
         return res.slice(0, -1);
     }
 
-    onMarkerDragEnd = (coord) => {
+    addressSearch(address) {
+        Geocode.setApiKey(process.env.REACT_APP_GOOGLE_API_KEY);
+        Geocode.setLanguage('ko');
+        Geocode.fromAddress(address)
+            .then(response => {
+                const newLat = response.results[0].geometry.location.lat;
+                const newLng  = response.results[0].geometry.location.lng;
+                this.setState({
+                    address: address ? address : "",
+                    mapPosition:{
+                        lat: newLat,
+                        lng: newLng,
+                    },
+                    markerPosition:{
+                        lat: newLat,
+                        lng: newLng
+                    }
+                })
+                console.log(newLat,newLng)
+            });
+    }
+
+    onMarkerDragEnd(coord) {
         const { latLng } = coord;
         const newLat = latLng.lat();
         const newLng = latLng.lng();
@@ -74,8 +97,6 @@ export class MapContainer extends Component {
                 const addressArray = response.results[0].address_components;
                 // const address = response.results[0].formatted_address;
                 const address = this.convertAddress(addressArray);
-                console.log(addressArray)
-                console.log(address)
                 
                 this.setState({
                     address: address ? address : "",
@@ -92,13 +113,25 @@ export class MapContainer extends Component {
                     { ...this.props.shop, location_lat: newLat, location_lng: newLng }
                 );
                 this.props.setLocationSearch(address);
-            }) 
+            })
     }
 
     render() {
         return (
             <div className='map-container'>
             {(this.state.mapPosition.lat && this.state.mapPosition.lng) &&
+            <>
+            {this.props.editMode &&
+            <Input 
+                placeholder='핀을 움직이거나 주소를 검색해주세요'
+                className='dashboard-location-search'
+                iconPosition='left'
+                icon='point'
+                action={{ icon: 'search', onClick: () => this.addressSearch(this.props.locationSearch) }}
+                value={this.props.locationSearch ? this.props.locationSearch : ''}
+                onChange={(e) => this.props.setLocationSearch(e.target.value)}
+                />
+            }
             <Map
                 className='google-map'
                 google={this.props.google}
@@ -107,6 +140,7 @@ export class MapContainer extends Component {
                 streetViewControl={false}
                 keyboardShortcuts={false}
                 initialCenter={{lat: this.state.mapPosition.lat, lng: this.state.mapPosition.lng}}
+                center={this.state.mapPosition && this.state.mapPosition}
             >
             <Marker
                 position={{lat: this.state.markerPosition.lat, lng: this.state.markerPosition.lng}}
@@ -114,6 +148,7 @@ export class MapContainer extends Component {
                 onDragend={(t, map, coord) => this.onMarkerDragEnd(coord)}
             />
             </Map>
+            </>
             }
             </div>
         );

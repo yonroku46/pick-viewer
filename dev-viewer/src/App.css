@@ -60,7 +60,6 @@ h1, h2, h3, h4, h5, div, a, button {
   margin-left: auto;
   width: 100% !important;
   height: 240px !important;
-  background-color: gray;
 }
 
 .body-segment {
@@ -475,6 +474,9 @@ div.ui.segment.dashboard-viewer {
 .dashboard-viewer-menu div.description {
   margin-left: 6px;
 }
+.menu-edit {
+  border-radius: 6px 30px 6px 6px !important;
+}
 .dashboard-shopinfo-tel {
   max-width: 100px;
   margin-right: 8px;
@@ -551,9 +553,9 @@ table.dashboard-table input {
 }
 .dashboard-content-delete {
   position: absolute;
-  margin-top: -1.4em;
+  margin-top: -1em;
   font-size: 1.2em;
-  right: 0.1em;
+  right: 0.2em;
   opacity: 0.4;
 }
 .dashboard-content-delete:hover {

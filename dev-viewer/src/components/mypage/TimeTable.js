@@ -15,7 +15,6 @@ export default function TimeTable(props) {
     
     function bookingInfo(targetId) {
         const target = bookingList.filter(booking => booking.booking_cd === targetId);
-        console.log(target);
     }
 
     const timeArr = [];
