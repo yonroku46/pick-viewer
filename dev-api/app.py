@@ -524,6 +524,38 @@ def staffInfoManage():
         app.logger.info("Exception:{}".format(e))
         return (jsonify({'error': 'Not found'}), 404)
 
+@app.route('/api/saveShopInfo', methods=['POST'])
+def saveShopInfo():
+    params = request.get_json()
+    shop = params['shop']
+    origin = params['origin']
+    staff_list = shop['staff_list']
+    menu_list = shop['menu_list']
+    try:
+        # nothing to save
+        if shop == origin:
+            return (jsonify(True), 200)
+
+        # shopInfo update
+        query = gen.getQuery("sql/UPDATE_saveShopInfo.sql", {"shop_cd": shop['shop_cd'], "shop_location": shop['shop_location'], "shop_info": shop['shop_info'], "shop_tel": shop['shop_tel'], "shop_img": shop['shop_img'], "shop_open": shop['shop_open'], "shop_close": shop['shop_close'], "location_lat": shop['location_lat'], "location_lng": shop['location_lng']})
+        mng.fetch(query)
+
+        # staffInfo update
+        # for staff in origin['staff_list']:
+        #     if staff in staff_list:
+        #         # update
+        #         # print('staff is update', staff)
+        #     else:
+        #         # delete
+        #         # print('staff is delete', staff)
+
+        # menuInfo update
+        
+        return (jsonify(True), 200)
+    except Exception as e:
+        app.logger.info("Exception:{}".format(e))
+        return (jsonify({'error': 'Not found'}), 404)
+
 @app.route('/api/userRequestConfirm', methods=['POST'])
 def userRequestConfirm():
     params = request.get_json()
