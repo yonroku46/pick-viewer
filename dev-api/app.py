@@ -503,27 +503,6 @@ def shopRequestList():
         app.logger.info("Exception:{}".format(e))
         return (jsonify({'error': 'Not found'}), 404)
 
-@app.route('/api/staffInfoManage', methods=['POST'])
-def staffInfoManage():
-    params = request.get_json()
-    shop_cd = params['shop_cd']
-    user_cd = params['user_cd']
-    additional = params['additional']
-    methods = params['methods']
-    try:
-        if methods == 'update':
-            query = gen.getQuery("sql/UPDATE_staffInfoManage.sql", {"user_cd": user_cd, "info": additional['info'], "career": additional['career']})
-            mng.fetch(query)
-        elif methods == 'delete':
-            query = gen.getQuery("sql/DELETE_staffInfoManage_user.sql", {"user_cd": user_cd})
-            mng.fetch(query)
-            query = gen.getQuery("sql/DELETE_staffInfoManage_shop.sql", {"shop_cd": shop_cd, "user_cd": user_cd})
-            mng.fetch(query)
-        return (jsonify(True), 200)
-    except Exception as e:
-        app.logger.info("Exception:{}".format(e))
-        return (jsonify({'error': 'Not found'}), 404)
-
 @app.route('/api/saveShopInfo', methods=['POST'])
 def saveShopInfo():
     params = request.get_json()
@@ -541,13 +520,20 @@ def saveShopInfo():
         mng.fetch(query)
 
         # staffInfo update
-        # for staff in origin['staff_list']:
-        #     if staff in staff_list:
-        #         # update
-        #         # print('staff is update', staff)
-        #     else:
-        #         # delete
-        #         # print('staff is delete', staff)
+        userCdDict = {}
+        for staff in staff_list:
+            userCdDict[staff['user_cd']] =  staff
+
+        for origin in origin['staff_list']:
+            if origin not in staff_list:
+                if origin['user_cd'] in userCdDict.keys():
+                    query = gen.getQuery("sql/UPDATE_staffInfoManage.sql", {"user_cd": userCdDict[origin['user_cd']]['user_cd'], "info": userCdDict[origin['user_cd']]['info'], "career": userCdDict[origin['user_cd']]['career']})
+                    mng.fetch(query)
+                else:
+                    query = gen.getQuery("sql/DELETE_staffInfoManage_user.sql", {"user_cd": origin['user_cd']})
+                    mng.fetch(query)
+                    query = gen.getQuery("sql/DELETE_staffInfoManage_shop.sql", {"shop_cd": shop['shop_cd'], "user_cd": origin['user_cd']})
+                    mng.fetch(query)
 
         # menuInfo update
         
