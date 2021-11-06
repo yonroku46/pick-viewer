@@ -516,7 +516,7 @@ def saveShopInfo():
             return (jsonify(True), 200)
 
         # shopInfo update
-        query = gen.getQuery("sql/UPDATE_saveShopInfo.sql", {"shop_cd": shop['shop_cd'], "shop_location": shop['shop_location'], "shop_info": shop['shop_info'], "shop_tel": shop['shop_tel'], "shop_img": shop['shop_img'], "shop_open": shop['shop_open'], "shop_close": shop['shop_close'], "location_lat": shop['location_lat'], "location_lng": shop['location_lng']})
+        query = gen.getQuery("sql/UPDATE_saveShopInfo.sql", {"shop_cd": shop['shop_cd'], "shop_location": shop['shop_location'], "shop_info": shop['shop_info'], "shop_tel": shop['shop_tel'], "shop_img": shop['shop_img'], "shop_open": shop['shop_open'], "shop_close": shop['shop_close'], "shop_holiday": shop['shop_holiday'], "location_lat": shop['location_lat'], "location_lng": shop['location_lng']})
         mng.fetch(query)
 
         # staffInfo update
