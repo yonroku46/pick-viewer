@@ -507,35 +507,58 @@ def shopRequestList():
 def saveShopInfo():
     params = request.get_json()
     shop = params['shop']
-    origin = params['origin']
     staff_list = shop['staff_list']
     menu_list = shop['menu_list']
     try:
         # nothing to save
+        origin = params['origin']
         if shop == origin:
             return (jsonify(True), 200)
 
-        # shopInfo update
+        # shopInfo event
         query = gen.getQuery("sql/UPDATE_saveShopInfo.sql", {"shop_cd": shop['shop_cd'], "shop_location": shop['shop_location'], "shop_info": shop['shop_info'], "shop_tel": shop['shop_tel'], "shop_img": shop['shop_img'], "shop_open": shop['shop_open'], "shop_close": shop['shop_close'], "shop_holiday": shop['shop_holiday'], "location_lat": shop['location_lat'], "location_lng": shop['location_lng']})
         mng.fetch(query)
 
-        # staffInfo update
+        # staffInfo event
         userCdDict = {}
         for staff in staff_list:
-            userCdDict[staff['user_cd']] =  staff
+            userCdDict[staff['user_cd']] = staff
 
+        origin = params['origin']
         for origin in origin['staff_list']:
             if origin not in staff_list:
+                # update
                 if origin['user_cd'] in userCdDict.keys():
                     query = gen.getQuery("sql/UPDATE_staffInfoManage.sql", {"user_cd": userCdDict[origin['user_cd']]['user_cd'], "info": userCdDict[origin['user_cd']]['info'], "career": userCdDict[origin['user_cd']]['career']})
                     mng.fetch(query)
+                # delete
                 else:
                     query = gen.getQuery("sql/DELETE_staffInfoManage_user.sql", {"user_cd": origin['user_cd']})
                     mng.fetch(query)
                     query = gen.getQuery("sql/DELETE_staffInfoManage_shop.sql", {"shop_cd": shop['shop_cd'], "user_cd": origin['user_cd']})
                     mng.fetch(query)
 
-        # menuInfo update
+        # menuInfo event
+        menuCdDict = {}
+        newMenu = {}
+        for menu in menu_list:
+            menuCdDict[menu['menu_cd']] = menu
+            if str(menu['menu_cd']).find("add") == 0:
+                newMenu[menu['menu_cd']] = menu
+        
+        origin = params['origin']
+        for origin in origin['menu_list']:
+            if origin not in menu_list:
+                # update
+                if origin['menu_cd'] in menuCdDict.keys():
+                    print("update", menuCdDict[origin['menu_cd']])
+                # delete
+                else:
+                    print("delete", origin)
+
+        for menu in newMenu:
+            # add
+            print("add", newMenu[menu])
         
         return (jsonify(True), 200)
     except Exception as e:
