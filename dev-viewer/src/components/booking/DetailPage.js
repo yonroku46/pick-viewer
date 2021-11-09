@@ -339,12 +339,29 @@ export default function DetailPage(props) {
    
     let result = num.substring(0, point); 
     while (point < len) { 
-        if (result != "") result += ","; 
+        if (result !== "") result += ","; 
         result += num.substring(point, point + 3); 
         point += 3; 
     } 
     return result;
   }
+
+  const weeks = [
+    { key: 'none', value: 'none', text: '휴무없음' },
+    { key: 'mon', value: 'mon', text: '월요일' },
+    { key: 'tue', value: 'tue', text: '화요일' },
+    { key: 'wed', value: 'wed', text: '수요일' },
+    { key: 'thu', value: 'thu', text: '목요일' },
+    { key: 'fri', value: 'fri', text: '금요일' },
+    { key: 'sat', value: 'sat', text: '토요일' },
+    { key: 'sun', value: 'sun', text: '일요일' },
+  ];
+
+  function convertWeek(key) {
+    const target = weeks.filter(day => day.key.match(key));
+    const result = target[0].text;
+    return result;
+}
 
   function dateConvert(date) {
     return moment(date).format("YYYY년 MM월 DD일");
@@ -557,9 +574,11 @@ export default function DetailPage(props) {
             </Link>
           </span>
         </p>
-        <p className='detailpage-time'><Icon name='clock outline'/>{shop.shop_open}~{shop.shop_close}</p>
+        <p className='detailpage-time'><Icon name='clock outline'/>{shop.shop_open}~{shop.shop_close} 
+          <span className='detailpage-holiday'>({shop.shop_holiday === 'none' ? '휴무일 없음' : convertWeek(shop.shop_holiday) + ' 휴무'})</span>
+        </p>
         <p className='detailpage-info'><Icon name='list alternate outline'/>{shop.shop_info}</p>
-        <p className='detailpage-location'><Icon name='map outline'/>{shop.shop_location} 
+        <p className='detailpage-location'><Icon name='map outline'/>{shop.shop_location}
           <Scroll className='detailpage-icon' to='map' offset={-56} spy={true} smooth={true}>
             <Icon id='map' onClick={mapToogle} name={mapOpen ? 'angle up' : 'angle down'}/>
           </Scroll>

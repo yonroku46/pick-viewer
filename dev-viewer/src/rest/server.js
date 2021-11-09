@@ -45,4 +45,4 @@ export const favoriteList = "/api/favoriteList";
 // DashBoard
 export const shopRequestList = "/api/shopRequestList";
 export const userRequestConfirm = "/api/userRequestConfirm";
-export const staffInfoManage = "/api/staffInfoManage";
+export const saveShopInfo = "/api/saveShopInfo";

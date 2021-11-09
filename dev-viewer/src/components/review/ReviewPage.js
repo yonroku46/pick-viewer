@@ -316,7 +316,7 @@ export default function ShopPage(props) {
    
     let result = num.substring(0, point); 
     while (point < len) { 
-        if (result != "") result += ","; 
+        if (result !== "") result += ","; 
         result += num.substring(point, point + 3); 
         point += 3; 
     } 

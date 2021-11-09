@@ -1,5 +1,5 @@
-import { useEffect, useState } from 'react';
-import { Label, Image, Menu, Icon, Form, Segment, Input, TextArea, Header, Button, Table, List, Item, Dimmer, Loader, Select, Popup } from 'semantic-ui-react'
+import { useEffect, useState, useRef } from 'react';
+import { Label, Modal, Image, Menu, Icon, Form, Segment, Input, TextArea, Header, Button, Table, List, Item, Dimmer, Loader, Select, Popup } from 'semantic-ui-react'
 import * as api from '../../rest/server'
 import MapContainer from "../booking/MapContainer";
 import moment from 'moment';
@@ -15,7 +15,9 @@ export default function DashboardPage(props) {
 
     const [reload, setReload] = useState(0);
     const [loading, setLoading] = useState(false);
-    
+    const [open, setOpen] = useState(false);
+
+    const [count, setCount] = useState(0);
     const [locationSearch, setLocationSearch] = useState(null);
     const [shop, setShop] = useState([]);
     const [shopOrigin, setShopOrigin] = useState([]);
@@ -23,11 +25,22 @@ export default function DashboardPage(props) {
     const [staffList, setStaffList] = useState([]);
     const [menuList, setMenuList] = useState([]);
     const [categoryList, setCategoryList] = useState([]);
+    const [modalCategoryList, setModalCategoryList] = useState([]);
     const shop_cd = userInfo ? userInfo.employment : null;
+    
+    const [searchValue, setSearchValue] = useState('');
+    const [modalMenuCategory, setModalMenuCategory] = useState('');
+    const [modalMenuImg, setModalMenuImg] = useState('');
+    const [modalMenuName, setModalMenuName] = useState('');
+    const [modalMenuPrice, setModalMenuPrice] = useState('');
+    const [modalMenuDescription, setModalMenuDescription] = useState('');
+    const inputRef = useRef(null);
 
+    const fileType=['image/png','image/jpg','image/jpeg'];
     const shopDefault = 'images/shop/default.png';
     const menuDefault = 'images/menu/default.png';
     const userimgDefault =  'images/user/default.png';
+    const sampleImg = 'https://react.semantic-ui.com/images/wireframe/image.png';
 
     const [menuVisible, setMenuVisible] = useState(true);
     const [editMode, setEditMode] = useState(false);
@@ -37,6 +50,17 @@ export default function DashboardPage(props) {
         setActiveItem(name);
         window.innerWidth < 767 && setMenuVisible(false);
     }
+
+    const weeks = [
+        { key: 'none', value: 'none', text: '휴무없음' },
+        { key: 'mon', value: 'mon', text: '월요일' },
+        { key: 'tue', value: 'tue', text: '화요일' },
+        { key: 'wed', value: 'wed', text: '수요일' },
+        { key: 'thu', value: 'thu', text: '목요일' },
+        { key: 'fri', value: 'fri', text: '금요일' },
+        { key: 'sat', value: 'sat', text: '토요일' },
+        { key: 'sun', value: 'sun', text: '일요일' },
+    ];
 
     const hours = [];
     new Array(24).fill().forEach((acc, index) => {
@@ -80,7 +104,7 @@ export default function DashboardPage(props) {
         .then(res => {
           if (res !== null) {
             setShop(res);
-            setShopOrigin(res);
+            setShopOrigin(JSON.parse(JSON.stringify(res)));
             setStaffList(res.staff_list);
             setMenuList(res.menu_list);
             makeCategoryList(res.menu_categorys);
@@ -95,11 +119,15 @@ export default function DashboardPage(props) {
     
     function makeCategoryList(menu_categorys) {
         const result = [];
-        result.push({ key: 'All', value: 'All', text: '전체선택' });
+        const modalResult = [];
+        result.push({ key: 'all', value: 'all', text: '전체선택' });
+        modalResult.push({ key: 'direct', value: 'direct', text: '직접입력' });
         menu_categorys.map(category => {
             result.push({ key: category, value: category, text: category });
+            modalResult.push({ key: category, value: category, text: category });
         });
         setCategoryList(result);
+        setModalCategoryList(modalResult);
     }
     
     function getRequestList(shop_cd) {
@@ -150,6 +178,11 @@ export default function DashboardPage(props) {
     function changeClose(e, { value }) {
         setShop(
             { ...shop, shop_close: value }
+        );
+    }
+    function changeHoliday(e, { value }) {
+        setShop(
+            { ...shop, shop_holiday: value }
         );
     }
     function changeShopInfo(e) {
@@ -238,6 +271,75 @@ export default function DashboardPage(props) {
         );
     }
 
+    function setImg() {
+        inputRef.current.click();
+    };
+    
+    function imgUpload(e) {
+        if (e.target.files[0] === undefined) {
+            return;
+        }
+        const file = e.target.files[0];
+        console.log(inputRef.current)
+        // if (fileType.indexOf(file.type) !== -1) {
+        //   const params = new FormData();
+        //   params.append('file', file);
+        //   params.append('shop_cd', shop_cd);
+        //   params.append('call', 'menu');
+        //   axios
+        //     .post(api.imgUpload, params)
+        //     .then((res) => {
+        //       if (res) {
+        //         setModalMenuImg(res.data)
+        //       }
+        //     })
+        //     .catch((err) => {
+        //       console.error(err);
+        //       alert("업로드에 실패하였습니다. 잠시 후 시도해주세요.");
+        //     });
+        // } else {
+        //   alert("파일형식이 올바르지 않습니다.")
+        // }
+    };
+
+    function saveShopInfo() {
+        setLoading(true);
+        const params = { 
+          'shop': shop,
+          'origin': shopOrigin
+        };
+        return new Promise(function(resolve, reject) {
+          axios
+            .post(api.saveShopInfo, params)
+            .then(response => resolve(response.data))
+            .catch(error => reject(error.response))
+        })
+        .then(res => {
+          if (res) {
+            alert('저장이 완료되었습니다.')
+            setEditMode(false)
+          }
+          setLoading(false);
+        })
+        .catch(err => {
+          alert("현재 서버와의 연결이 원활하지 않습니다. 관리자에게 문의해주세요.");
+          setLoading(false);
+        })
+    }
+
+    function convertWeek(key) {
+        const target = weeks.filter(day => day.key.match(key));
+        const result = target[0].text;
+        return result;
+    }
+
+    function rollBack() {
+        setShop(JSON.parse(JSON.stringify(shopOrigin)));
+        setStaffList(JSON.parse(JSON.stringify(shopOrigin.staff_list)));
+        setMenuList(JSON.parse(JSON.stringify(shopOrigin.menu_list)));
+        makeCategoryList(JSON.parse(JSON.stringify(shopOrigin.menu_categorys)));
+    }
+
     function shopInfoView() {
         return (
             <>
@@ -249,6 +351,12 @@ export default function DashboardPage(props) {
                 <Form.Field>
                     <label>매장명</label>
                     <Header className='dashboard-shopinfo-text'>{shop.shop_name}</Header>
+                </Form.Field>
+                <Form.Field>
+                    <label>매장코드</label>
+                    <Header className='dashboard-shopinfo-text'>{shop.shop_serial}
+                        <Icon className='dashboard-share-btn' name='share square' onClick={() => copy(shop.shop_serial)}/>
+                    </Header>
                 </Form.Field>
                 <Form.Field>
                     <label>
@@ -293,11 +401,14 @@ export default function DashboardPage(props) {
                     <>
                     <Form.Select className='dashboard-shopinfo-hours' label='오픈시간' placeholder='09:00' value={shop.shop_open} options={hours} onChange={changeOpen}/>
                     <Form.Select className='dashboard-shopinfo-hours' label='마감시간' placeholder='18:00' value={shop.shop_close} options={hours} onChange={changeClose}/>
+                    <Form.Select className='dashboard-shopinfo-hours' label='휴무일' placeholder='휴무없음' value={shop.shop_holiday} options={weeks} onChange={changeHoliday}/>
                     </>
                     :
                     <Form.Field>
                         <label>매장 운영시간</label>
-                        <Header className='dashboard-shopinfo-text'>{shop.shop_open} ~ {shop.shop_close}</Header>
+                        <Header className='dashboard-shopinfo-text'>{shop.shop_open} ~ {shop.shop_close}
+                            <span className='detailpage-holiday'>({shop.shop_holiday === 'none' ? '휴무일 없음' : convertWeek(shop.shop_holiday) + ' 휴무'})</span>
+                        </Header>
                     </Form.Field>
                     }
                 </Form.Group>
@@ -309,19 +420,13 @@ export default function DashboardPage(props) {
                     <Header as='h4' className='dashboard-shopinfo-text'>{shop.shop_info}</Header>
                 </Form.Field>
                 }
-                <Form.Field>
-                    <label>매장코드</label>
-                    <Header className='dashboard-shopinfo-text'>{shop.shop_serial}
-                        <Icon className='dashboard-share-btn' name='share square' onClick={() => copy(shop.shop_serial)}/>
-                    </Header>
-                </Form.Field>
                 <div className='dashboard-content-final-empty'> </div>
             </Form>
             <Label className='dashboard-viewer-btns' attached='bottom right'>
                 {editMode ?
                 <>
                 <Button inverted color='blue' floated='right' onClick={() => setEditMode(false)}><Icon name='save'/>임시저장</Button>
-                <Button color='blue' floated='right' onClick={() => setEditMode(false)}><Icon name='cloud upload'/>저장</Button>
+                <Button color='blue' floated='right' onClick={saveShopInfo}><Icon name='cloud upload'/>저장</Button>
                 </>
                 :
                 <>
@@ -374,13 +479,13 @@ export default function DashboardPage(props) {
                 </Form.Field>
                 <Form.Field>
                     <label>직원 리스트</label>
-                    <Input icon='search' className='dashboard-staff-search' placeholder='직원명으로 검색' onChange={staffSearch}/>
+                    <Input icon='search' className='dashboard-staff-search' placeholder='직원명으로 검색' value={searchValue} onChange={staffSearch}/>
                     <Table celled unstackable selectable className='dashboard-table'>
                         <Table.Header>
                         <Table.Row>
                             <Table.HeaderCell className='dashboard-table-name'>이름</Table.HeaderCell>
                             <Table.HeaderCell className='dashboard-table-career'>경력/직급</Table.HeaderCell>
-                            <Table.HeaderCell className='dashboard-table-info' colSpan={editMode && '2'}>직원소개</Table.HeaderCell>
+                            <Table.HeaderCell className='dashboard-table-info' colSpan={editMode ? '2' : '1'}>직원소개</Table.HeaderCell>
                         </Table.Row>
                         </Table.Header>
 
@@ -407,7 +512,7 @@ export default function DashboardPage(props) {
                                     </Table.Cell>
                                     {editMode &&
                                     <Table.Cell className='dashboard-table-delete'>
-                                        <Icon name='x' onClick={() => staffInfoManage('delete', staff.user_cd)}/>
+                                        <Icon name='x' onClick={() => staffDelete(staff.user_cd)}/>
                                     </Table.Cell>
                                     }
                                 </Table.Row>
@@ -426,7 +531,7 @@ export default function DashboardPage(props) {
                 {editMode ?
                 <>
                 <Button inverted color='blue' floated='right' onClick={() => setEditMode(false)}><Icon name='save'/>임시저장</Button>
-                <Button color='blue' floated='right' onClick={() => setEditMode(false)}><Icon name='cloud upload'/>저장</Button>
+                <Button color='blue' floated='right' onClick={saveShopInfo}><Icon name='cloud upload'/>저장</Button>
                 </>
                 :
                 <>
@@ -449,21 +554,30 @@ export default function DashboardPage(props) {
             <Form className='dashboard-viewer-inline'>
                 <Form.Field>
                     <label>메뉴 리스트</label>
-                    <Select className='dashboard-viewer-category' placeholder='전체선택' options={categoryList} onChange={selectCategory}/>
+                    <Select className='dashboard-viewer-category' placeholder='전체선택' defaultValue={'all'} options={categoryList} onChange={selectCategory}/>
+                    {editMode && 
+                    <Button.Group basic>
+                        <Button icon='add' onClick={() => setOpen(true)}/>
+                    </Button.Group>
+                    }
                     {menuList.map(menu => (
                     <Item.Group unstackable className={editMode ? 'dashboard-viewer-menu menu-edit' : 'dashboard-viewer-menu'} key={menu.menu_cd}>
                         <Item className='detailpage-service' onClick={() => {}}>
-                            <Item.Image className='detailpage-service-img' src={api.imgRender(menu.menu_img === null ? menuDefault : menu.menu_img)}/>
-                            <Item.Content className={editMode && 'dashboard-viewer-edit-content'}
+                            <input hidden type='file' ref={inputRef} accept=".png, .jpg, .jpeg" onChange={imgUpload}/>
+                            {editMode
+                            ? <Item.Image className='dashboard-viewer-img' src={api.imgRender(menu.menu_img === null ? menuDefault : menu.menu_img)} onClick={setImg}/>
+                            : <Item.Image className='detailpage-service-img' src={api.imgRender(menu.menu_img === null ? menuDefault : menu.menu_img)}/>
+                            }
+                            <Item.Content className={editMode ? 'dashboard-viewer-edit-content' : ''}
                                 header= 
                                     {editMode 
                                     ? <Input placeholder='메뉴 이름' value={menu.menu_name} tabIndex={menu.menu_cd} onChange={changeMenuName}/> 
-                                    : menu.menu_name
+                                    : menu.menu_name ? menu.menu_name : '메뉴명 미입력'
                                     }
                                 meta=
                                     {editMode
                                     ? <Input placeholder='메뉴 가격' value={menu.menu_price} tabIndex={menu.menu_cd} onChange={changeMenuPrice}/> 
-                                    : comma(menu.menu_price) + '원'
+                                    : menu.menu_price ? comma(menu.menu_price) + '원' : '가격 미입력'
                                     }
                                 description=
                                     {editMode
@@ -471,7 +585,7 @@ export default function DashboardPage(props) {
                                     : menu.menu_description ? menu.menu_description : <span className='empty'>설명 미입력</span>
                                     }
                             />
-                            {editMode && <Item className='dashboard-content-delete'><Icon name='x'/></Item>}
+                            {editMode && <Item className='dashboard-content-delete'><Icon name='x' onClick={() => menuDelete(menu.menu_cd)}/></Item>}
                         </Item>
                     </Item.Group>
                     ))}
@@ -482,7 +596,7 @@ export default function DashboardPage(props) {
                 {editMode ?
                 <>
                 <Button inverted color='blue' floated='right' onClick={() => setEditMode(false)}><Icon name='save'/>임시저장</Button>
-                <Button color='blue' floated='right' onClick={() => setEditMode(false)}><Icon name='cloud upload'/>저장</Button>
+                <Button color='blue' floated='right' onClick={saveShopInfo}><Icon name='cloud upload'/>저장</Button>
                 </>
                 :
                 <>
@@ -492,6 +606,30 @@ export default function DashboardPage(props) {
                 }
             </Label>
             </>}
+            <Modal open={open}>
+                <Modal.Header><Icon name='angle right'/>신규 메뉴작성</Modal.Header>
+                <Modal.Content image>
+                    <input hidden type='file' ref={inputRef} accept=".png, .jpg, .jpeg" onChange={imgUpload}/>
+                    <Image className='dashboard-modal-img' src={modalMenuImg ? modalMenuImg : sampleImg} onClick={setImg} wrapped/>
+                    <Modal.Description className='dashboard-modal-body'>
+                        <Form.Group>
+                            <Select placeholder='직접입력' className='dashboard-modal-category-select' defaultValue={'direct'} options={modalCategoryList} onChange={selectModalCategory}/>
+                            <Input placeholder='카테고리 입력' className='dashboard-modal-category' value={modalMenuCategory} onChange={(e) => setModalMenuCategory(e.target.value)}/>
+                        </Form.Group>
+                        <Form.Group>
+                            <Input placeholder='메뉴 이름' className='dashboard-modal-name' value={modalMenuName} onChange={(e) => setModalMenuName(e.target.value)}/>
+                            <Input placeholder='메뉴 가격' className='dashboard-modal-price' value={modalMenuPrice} onChange={(e) => setModalMenuPrice(e.target.value)}/>
+                        </Form.Group>
+                        <Form.Group>
+                            <TextArea placeholder='메뉴 설명(생략가능)' className='dashboard-modal-description' value={modalMenuDescription} onChange={(e) => setModalMenuDescription(e.target.value)}/>
+                        </Form.Group>
+                    </Modal.Description>
+                </Modal.Content>
+                <Modal.Actions>
+                    <Button onClick={() => setOpen(false)}>취소</Button>
+                    <Button onClick={menuAdd} color='blue'>추가등록</Button>
+                </Modal.Actions>
+            </Modal>
             </>
         )
     }
@@ -515,6 +653,7 @@ export default function DashboardPage(props) {
     function staffSearch(e) {
         const result = shop.staff_list.filter(staff => staff.user_name.match(e.target.value));
         setStaffList(result);
+        setSearchValue(e.target.value);
     }
 
     function comma(number) {
@@ -524,7 +663,7 @@ export default function DashboardPage(props) {
        
         let result = num.substring(0, point); 
         while (point < len) { 
-            if (result != "") result += ","; 
+            if (result !== "") result += ","; 
             result += num.substring(point, point + 3); 
             point += 3; 
         } 
@@ -532,11 +671,19 @@ export default function DashboardPage(props) {
     }
 
     function selectCategory (e, { value }) {
-        if (value === 'All') {
+        if (value === 'all') {
             setMenuList(shop.menu_list);
         } else {
             const result = shop.menu_list.filter(menu => menu.menu_category === value);
             setMenuList(result);
+        }
+    }
+
+    function selectModalCategory (e, { value }) {
+        if (value === 'direct') {
+            setModalMenuCategory('');
+        } else {
+            setModalMenuCategory(value);
         }
     }
 
@@ -586,37 +733,66 @@ export default function DashboardPage(props) {
         }
         })
         .catch(err => {
-        alert("현재 서버와의 연결이 원활하지 않습니다. 관리자에게 문의해주세요.");
+            alert("현재 서버와의 연결이 원활하지 않습니다. 관리자에게 문의해주세요.");
         })
     }
 
-    function staffInfoManage(methods, targetId) {
+    function staffDelete(targetId) {
         const target = shop.staff_list.find(staff => staff.user_cd === targetId);
-        const additional = {
-            'career': target.career,
-            'info': target.info
+        const index = shop.staff_list.indexOf(target);
+        staffList.splice(index, 1);
+        setStaffList(staffList);
+        setShop(
+            { ...shop, staff_list: staffList }
+        );
+    }
+
+    function menuDelete(targetId) {
+        const target = shop.menu_list.find(menu => menu.menu_cd === targetId);
+        const index = shop.menu_list.indexOf(target);
+        menuList.splice(index, 1);
+        setMenuList(menuList);
+        setShop(
+            { ...shop, menu_list: menuList }
+        );
+    }
+
+    function menuAdd() {
+        if (modalMenuCategory.length === 0 || modalMenuName.length === 0 || modalMenuPrice.length === 0) {
+            return alert('입력되지 않은 항목이 존재합니다.');
         }
-        const params = { 
-            'shop_cd': shop_cd,
-            'user_cd': target.user_cd,
-            'additional': additional,
-            'methods': methods
-        };
-        return new Promise(function(resolve, reject) {
-        axios
-            .post(api.staffInfoManage, params)
-            .then(response => resolve(response.data))
-            .catch(error => reject(error.response))
-        })
-        .then(res => {
-        if (res) {
-            alert("처리가 완료되었습니다.");
-            setReload(reload + 1);
+        if (shop.menu_categorys.indexOf(modalMenuCategory) === -1) {
+            categoryList.push({ key: modalMenuCategory, value: modalMenuCategory, text: modalMenuCategory });
+            modalCategoryList.push({ key: modalMenuCategory, value: modalMenuCategory, text: modalMenuCategory });
+            shop.menu_categorys.push(modalMenuCategory);
+            setCategoryList(categoryList);
+            setModalCategoryList(modalCategoryList);
+            setShop(
+                { ...shop, menu_categorys: shop.menu_categorys }
+            );
         }
+        menuList.push({
+            menu_category: modalMenuCategory,
+            menu_cd: 'add' + count,
+            menu_description: modalMenuDescription,
+            menu_img: menuDefault,
+            menu_name: modalMenuName,
+            menu_price: modalMenuPrice
         })
-        .catch(err => {
-        alert("현재 서버와의 연결이 원활하지 않습니다. 관리자에게 문의해주세요.");
-        })
+        setCount(count + 1);
+        setMenuList(menuList);
+        setShop(
+            { ...shop, menu_list: menuList }
+        );
+        setModalMenuCategory('');
+        setModalMenuName('');
+        setModalMenuName('');
+        setModalMenuPrice('');
+        setModalMenuDescription('');
+        setOpen(false);
+        console.log(categoryList)
+        console.log(modalCategoryList)
+        console.log(shop)
     }
 
     return(
@@ -679,7 +855,7 @@ export default function DashboardPage(props) {
                     - 도움말
                 </Menu.Item>
             </Menu.Menu>
-            <Button className='dashboard-reset-btn' onClick={() => setShop(shopOrigin)}><Icon name='redo'/> 수정값 초기화</Button>
+            <Button className='dashboard-reset-btn' onClick={rollBack}><Icon name='redo'/> 수정값 초기화</Button>
             </>
             :
             <>
