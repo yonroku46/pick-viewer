@@ -398,6 +398,9 @@ hr {
 div.ui.segment.dashboard-viewer {
   border: rgb(0, 0, 0, 0.1) 1px solid !important;
 }
+.dashboard-viewer-empty {
+  margin: 1em !important;
+}
 .dashboard-viewer-inline {
   padding: 1em;
 }
@@ -622,6 +625,19 @@ table.dashboard-table input {
 }
 .dashboard-modal-description {
   width: 100% !important;
+}
+.dashboard-data-progress-title {
+  margin-right: 0.5em;
+  margin-top: 0.25em !important;
+  margin-bottom: 0.25em !important;
+  width: 3%;
+  float: left;
+}
+.dashboard-data-progress {
+  margin-top: 0.5em !important;
+  margin-bottom: 0.5em !important;
+  width: 94%;
+  float: left;
 }
 
 /* sp */

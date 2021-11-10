@@ -1,5 +1,5 @@
 import { useEffect, useState, useRef } from 'react';
-import { Label, Modal, Image, Menu, Icon, Form, Segment, Input, TextArea, Header, Button, Table, List, Item, Dimmer, Loader, Select, Popup } from 'semantic-ui-react'
+import { Label, Modal, Image, Menu, Icon, Form, Segment, Input, TextArea, Header, Button, Table, List, Item, Dimmer, Loader, Select, Progress, Popup } from 'semantic-ui-react'
 import * as api from '../../rest/server'
 import MapContainer from "../booking/MapContainer";
 import moment from 'moment';
@@ -28,6 +28,7 @@ export default function DashboardPage(props) {
     const [modalCategoryList, setModalCategoryList] = useState([]);
     const shop_cd = userInfo ? userInfo.employment : null;
     
+    const [category, setCategory] = useState('all');
     const [searchValue, setSearchValue] = useState('');
     const [modalMenuCategory, setModalMenuCategory] = useState('');
     const [modalMenuImg, setModalMenuImg] = useState('');
@@ -334,10 +335,17 @@ export default function DashboardPage(props) {
     }
 
     function rollBack() {
-        setShop(JSON.parse(JSON.stringify(shopOrigin)));
-        setStaffList(JSON.parse(JSON.stringify(shopOrigin.staff_list)));
-        setMenuList(JSON.parse(JSON.stringify(shopOrigin.menu_list)));
-        makeCategoryList(JSON.parse(JSON.stringify(shopOrigin.menu_categorys)));
+        if (window.confirm("수정된 내용이 초기화됩니다. 계속하시겠습니까?")) {
+            window.location.replace("/dashboard");
+        } else {
+            return;
+        }
+        // setShop(JSON.parse(JSON.stringify(shopOrigin)));
+        // setStaffList(JSON.parse(JSON.stringify(shopOrigin.staff_list)));
+        // setMenuList(JSON.parse(JSON.stringify(shopOrigin.menu_list)));
+        // makeCategoryList(JSON.parse(JSON.stringify(shopOrigin.menu_categorys)));
+        // setCategory('all');
+        // setSearchValue('');
     }
 
     function shopInfoView() {
@@ -554,12 +562,16 @@ export default function DashboardPage(props) {
             <Form className='dashboard-viewer-inline'>
                 <Form.Field>
                     <label>메뉴 리스트</label>
-                    <Select className='dashboard-viewer-category' placeholder='전체선택' defaultValue={'all'} options={categoryList} onChange={selectCategory}/>
+                    <Select className='dashboard-viewer-category' placeholder='전체선택' value={category} options={categoryList} onChange={selectCategory}/>
                     {editMode && 
                     <Button.Group basic>
                         <Button icon='add' onClick={() => setOpen(true)}/>
                     </Button.Group>
                     }
+                    {menuList.length === 0 ?
+                    <p className='dashboard-viewer-empty'>찾으시는 메뉴가 없습니다</p>
+                    :
+                    <>
                     {menuList.map(menu => (
                     <Item.Group unstackable className={editMode ? 'dashboard-viewer-menu menu-edit' : 'dashboard-viewer-menu'} key={menu.menu_cd}>
                         <Item className='detailpage-service' onClick={() => {}}>
@@ -589,6 +601,8 @@ export default function DashboardPage(props) {
                         </Item>
                     </Item.Group>
                     ))}
+                    </>
+                    }
                     <div className='dashboard-content-final-empty'> </div>
                 </Form.Field>
             </Form>
@@ -618,7 +632,7 @@ export default function DashboardPage(props) {
                         </Form.Group>
                         <Form.Group>
                             <Input placeholder='메뉴 이름' className='dashboard-modal-name' value={modalMenuName} onChange={(e) => setModalMenuName(e.target.value)}/>
-                            <Input placeholder='메뉴 가격' className='dashboard-modal-price' value={modalMenuPrice} onChange={(e) => setModalMenuPrice(e.target.value)}/>
+                            <Input placeholder='메뉴 가격' className='dashboard-modal-price' value={modalMenuPrice} onChange={(e) => setModalMenuPrice(e.target.value.replace(/[^0-9]/g, ''))}/>
                         </Form.Group>
                         <Form.Group>
                             <TextArea placeholder='메뉴 설명(생략가능)' className='dashboard-modal-description' value={modalMenuDescription} onChange={(e) => setModalMenuDescription(e.target.value)}/>
@@ -630,6 +644,34 @@ export default function DashboardPage(props) {
                     <Button onClick={menuAdd} color='blue'>추가등록</Button>
                 </Modal.Actions>
             </Modal>
+            </>
+        )
+    }
+
+    function bookingDataView() {
+        return (
+            <>
+            {shop.length !== 0 && <>
+            <Label className='dashboard-viewer-title' attached='top'>
+                <Icon name='pie graph'/> 예약통계
+            </Label>
+            <Form className='dashboard-viewer-inline'>
+                <Form.Field>
+                    <label>최근 한달 예약수</label>
+                    <Header className='dashboard-shopinfo-text'>00건</Header>
+                </Form.Field>
+                <Form.Field>
+                    <label>예약 분석차트</label>
+                    <Header className='dashboard-shopinfo-text'>요일별 / 시간별</Header>
+                        <p className='dashboard-data-progress-title'>월</p><Progress className='dashboard-data-progress' percent={44} color='blue' size='small' progress/>
+                        <p className='dashboard-data-progress-title'>화</p><Progress className='dashboard-data-progress' percent={60} color='green' size='small' progress/>
+                        <p className='dashboard-data-progress-title'>수</p><Progress className='dashboard-data-progress' percent={23} color='violet' size='small' progress/>
+                        <p className='dashboard-data-progress-title'>목</p><Progress className='dashboard-data-progress' percent={18} color='purple' size='small' progress/>
+                        <p className='dashboard-data-progress-title'>금</p><Progress className='dashboard-data-progress' percent={57} color='teal' size='small' progress/>
+                </Form.Field>
+                <div className='dashboard-content-final-empty'> </div>
+            </Form>
+            </>}
             </>
         )
     }
@@ -670,23 +712,6 @@ export default function DashboardPage(props) {
         return result;
     }
 
-    function selectCategory (e, { value }) {
-        if (value === 'all') {
-            setMenuList(shop.menu_list);
-        } else {
-            const result = shop.menu_list.filter(menu => menu.menu_category === value);
-            setMenuList(result);
-        }
-    }
-
-    function selectModalCategory (e, { value }) {
-        if (value === 'direct') {
-            setModalMenuCategory('');
-        } else {
-            setModalMenuCategory(value);
-        }
-    }
-
     // function dragStart(e) {
     //     this.dragged = e.currentTarget; e.dataTransfer.effectAllowed = 'move';
     //     e.dataTransfer.setData('text/html', this.dragged);
@@ -710,7 +735,6 @@ export default function DashboardPage(props) {
     //     this.over = e.target;
     //     e.target.parentNode.insertBefore(placeholder, e.target);
     // }
-
 
     function requestConfirm(request_stat, targetId) {
         const target = requestList.find(request => request.request_cd === targetId);
@@ -747,13 +771,33 @@ export default function DashboardPage(props) {
         );
     }
 
+    function selectCategory (e, { value }) {
+        if (value === 'all') {
+            setMenuList(shop.menu_list);
+        } else {
+            const result = shop.menu_list.filter(menu => menu.menu_category === value);
+            setMenuList(result);
+        }
+        setCategory(value)
+    }
+
+    function selectModalCategory (e, { value }) {
+        if (value === 'direct') {
+            setModalMenuCategory('');
+        } else {
+            setModalMenuCategory(value);
+        }
+    }
+
     function menuDelete(targetId) {
         const target = shop.menu_list.find(menu => menu.menu_cd === targetId);
-        const index = shop.menu_list.indexOf(target);
-        menuList.splice(index, 1);
-        setMenuList(menuList);
+        if (category !== 'all') {
+            menuList.splice(menuList.indexOf(target), 1);
+            setMenuList(menuList);
+        }
+        shop.menu_list.splice(shop.menu_list.indexOf(target), 1);
         setShop(
-            { ...shop, menu_list: menuList }
+            { ...shop, menu_list: shop.menu_list }
         );
     }
 
@@ -771,18 +815,28 @@ export default function DashboardPage(props) {
                 { ...shop, menu_categorys: shop.menu_categorys }
             );
         }
-        menuList.push({
+        setCount(count + 1);
+        if (category === modalMenuCategory) {
+            menuList.push({
+                menu_category: modalMenuCategory,
+                menu_cd: 'new' + count,
+                menu_description: modalMenuDescription,
+                menu_img: menuDefault,
+                menu_name: modalMenuName,
+                menu_price: modalMenuPrice
+            });
+        }
+        setMenuList(menuList);
+        shop.menu_list.push({
             menu_category: modalMenuCategory,
-            menu_cd: 'add' + count,
+            menu_cd: 'new' + count,
             menu_description: modalMenuDescription,
             menu_img: menuDefault,
             menu_name: modalMenuName,
             menu_price: modalMenuPrice
-        })
-        setCount(count + 1);
-        setMenuList(menuList);
+        });
         setShop(
-            { ...shop, menu_list: menuList }
+            { ...shop, menu_list: shop.menu_list }
         );
         setModalMenuCategory('');
         setModalMenuName('');
@@ -790,9 +844,6 @@ export default function DashboardPage(props) {
         setModalMenuPrice('');
         setModalMenuDescription('');
         setOpen(false);
-        console.log(categoryList)
-        console.log(modalCategoryList)
-        console.log(shop)
     }
 
     return(
@@ -831,12 +882,6 @@ export default function DashboardPage(props) {
                     - 예약통계
                 </Menu.Item>
             </Menu.Menu>
-            <Menu.Header><Icon name='chart line'/> 매출관리</Menu.Header>
-            <Menu.Menu>
-                <Menu.Item name='salesInfo' active={activeItem === 'salesInfo'} onClick={handleItemClick}>
-                    - 매출정보
-                </Menu.Item>
-            </Menu.Menu>
             <Menu.Header><Icon name='gift'/> 이벤트관리</Menu.Header>
             <Menu.Menu>
                 <Menu.Item name='eventInfo' active={activeItem === 'eventInfo'} onClick={handleItemClick}>
@@ -848,6 +893,9 @@ export default function DashboardPage(props) {
             </Menu.Menu>
             <Menu.Header><Icon name='question circle outline'/> 기타</Menu.Header>
             <Menu.Menu>
+                <Menu.Item name='contract' active={activeItem === 'contract'} onClick={handleItemClick}>
+                    - 계약정보
+                </Menu.Item>
                 <Menu.Item name='system' active={activeItem === 'system'} onClick={handleItemClick}>
                     - 시스템문의
                 </Menu.Item>
@@ -866,8 +914,7 @@ export default function DashboardPage(props) {
         }
         </Menu>
         <Segment className='dashboard-viewer'>
-            {loading ? 
-            <Loading/>
+            {loading ? <Loading/>
             :
             <>
             {activeItem === 'notice' && sampleView()}
@@ -877,13 +924,12 @@ export default function DashboardPage(props) {
             {activeItem === 'menuInfo' && menuInfoView()}
 
             {activeItem === 'bookingInfo' && sampleView()}
-            {activeItem === 'bookingData' && sampleView()}
-
-            {activeItem === 'salesInfo' && sampleView()}
+            {activeItem === 'bookingData' && bookingDataView()}
 
             {activeItem === 'eventInfo' && sampleView()}
             {activeItem === 'couponInfo' && sampleView()}
 
+            {activeItem === 'contract' && sampleView()}
             {activeItem === 'system' && sampleView()}
             {activeItem === 'help' && sampleView()}
             </>
