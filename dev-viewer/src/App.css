@@ -474,9 +474,6 @@ div.ui.segment.dashboard-viewer {
 .dashboard-viewer-menu div.description {
   margin-left: 6px;
 }
-.menu-edit {
-  border-radius: 6px 30px 6px 6px !important;
-}
 .dashboard-shopinfo-tel {
   max-width: 100px;
   margin-right: 8px;
@@ -553,24 +550,13 @@ table.dashboard-table input {
   margin-top: 0.5em !important;
   margin-right: 0.5em !important;
 }
-.dashboard-content-delete {
-  position: absolute;
-  margin-top: -1em;
-  font-size: 1.2em;
-  right: 0.2em;
+.dashboard-content-icon {
+  margin-top: -0.5em;
   opacity: 0.4;
 }
-.dashboard-content-delete:hover {
+.dashboard-content-icon:hover {
   cursor: pointer;
   opacity: 1;
-}
-.detailpage-service div.content.dashboard-viewer-edit-content {
-  margin-top: 0px !important;
-  padding-left: 6px !important;
-}
-.detailpage-service div.content.dashboard-viewer-edit-content input, textarea {
-  padding: 0.35em 0.5em !important;
-  margin-bottom: 0.15em;
 }
 .edit-input {
   padding: 0em 0.2em !important;
@@ -604,6 +590,7 @@ table.dashboard-table input {
 .dashboard-modal-img img {
   width: 150px !important;
   height: 150px !important;
+  margin-top: 0.25em;
   border-radius: 6px !important;
 }
 .dashboard-modal-category {
@@ -625,6 +612,7 @@ table.dashboard-table input {
 }
 .dashboard-modal-description {
   width: 100% !important;
+  padding: 0.67857143em 1em;
 }
 .dashboard-data-progress-title {
   margin-right: 0.5em;
@@ -695,9 +683,6 @@ table.dashboard-table input {
   .dashboard-table th.dashboard-table-info,td.dashboard-table-info {
     padding: 0.4em 0.3em !important;
     font-size: 0.9em !important;
-  }
-  .dashboard-content-delete {
-    right: -0.35em;
   }
   .detailpage-modal-category {
     width: 39% !important;
@@ -1556,9 +1541,6 @@ a.detailpage-tel:hover {
 .detailpage-menu-btn button {
   width: 60vw;
   background-color: #fff !important;
-}
-.detailpage-menu-description {
-  max-height: 64px !important;
 }
 .detailpage-comment {
   float: right;
