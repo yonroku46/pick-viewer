@@ -610,7 +610,6 @@ def saveShopInfo():
             # 3 add shop.menu_list
             query = gen.getQuery("sql/UPDATE_menuInfoManage_menu.sql", {"shop_cd": shop['shop_cd'], "menu_cd": menu_cd})
             mng.fetch(query)
-            print("add", newMenu[menu])
         
         return (jsonify(True), 200)
     except Exception as e:
