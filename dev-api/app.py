@@ -10,8 +10,12 @@ import urllib.request as urlreq
 import configparser
 import ipaddress
 import smtplib
+import shutil
 from email.mime.text import MIMEText
+from datetime import datetime
 import random
+import os
+import glob
 from io import StringIO
 from PIL import Image
 from src.utils import SQLHelper as mng
@@ -383,7 +387,7 @@ def imgUpload():
     elif call == 'shop':
         shop_cd = request.values['shop_cd']
         public = '../dev-viewer/public/'
-        path = 'images/' + call + '/' + shop_cd + '.png'
+        path = 'images/' + call + '/' + shop_cd + '/' + shop_cd + '.png'
         f.save(public + path)
         try:
             query = gen.getQuery("sql/UPDATE_shopImg.sql", {"path": path, "shop_cd": shop_cd})
@@ -394,17 +398,36 @@ def imgUpload():
             return (jsonify({'error': 'Not found'}), 404)
     # menu img upload
     elif call == 'menu':
+        shop_cd = request.values['shop_cd']
         menu_cd = request.values['menu_cd']
+        fileName = menu_cd + datetime.now().strftime("_%m%d%Y%H%M%S") + '.png'
         public = '../dev-viewer/public/'
-        path = 'images/' + call + '/' + menu_cd + '.png'
-        f.save(public + path)
+        path = 'images/' + call + '/' + shop_cd + '/tmp/' + fileName
         try:
-            query = gen.getQuery("sql/UPDATE_menuImg.sql", {"path": path, "menu_cd": menu_cd})
-            mng.fetch(query)
+            f.save(public + path)
+            rmList = os.listdir(public + 'images/' + call + '/' + shop_cd + '/tmp/')
+            rmList.remove(fileName)
+            for target in rmList:
+                if target[0:2] == (menu_cd + '_'):
+                    os.remove(public + 'images/' + call + '/' + shop_cd + '/tmp/' + target)        
             return (jsonify(path), 200)
         except Exception as e:
             app.logger.info("Exception:{}".format(e))
             return (jsonify({'error': 'Not found'}), 404)
+
+# imgClear Service
+@app.route('/api/imgClear', methods=['POST'])
+def imgClear():
+    shop_cd = request.values['shop_cd']
+    call = request.values['call']
+    public = '../dev-viewer/public/'
+    path = 'images/' + call + '/' + shop_cd + '/tmp/*.png'
+    try:
+        [os.remove(f) for f in glob.glob(public + path)]
+        return (jsonify(True), 200)
+    except Exception as e:
+        app.logger.info("Exception:{}".format(e))
+        return (jsonify({'error': 'Not found'}), 404)
 
 # Mypage
 @app.route('/api/bookingList', methods=['POST'])
@@ -543,7 +566,7 @@ def saveShopInfo():
         newMenu = {}
         for menu in menu_list:
             menuCdDict[menu['menu_cd']] = menu
-            if str(menu['menu_cd']).find("add") == 0:
+            if str(menu['menu_cd']).find("new") == 0:
                 newMenu[menu['menu_cd']] = menu
         
         origin = params['origin']
@@ -551,13 +574,42 @@ def saveShopInfo():
             if origin not in menu_list:
                 # update
                 if origin['menu_cd'] in menuCdDict.keys():
-                    print("update", menuCdDict[origin['menu_cd']])
+                    menu = menuCdDict[origin['menu_cd']]
+                    query = gen.getQuery("sql/UPDATE_menuInfoManage.sql", {"menu_category": menu['menu_category'], "menu_cd": menu['menu_cd'], "menu_description": menu['menu_description'], "menu_img": menu['menu_img'], "menu_name": menu['menu_name'], "menu_price": menu['menu_price']})
+                    mng.fetch(query)
+
                 # delete
                 else:
-                    print("delete", origin)
-
+                    query = gen.getQuery("sql/DELETE_menuInfoManage_menu.sql", {"shop_cd": shop['shop_cd'], "menu_cd": origin['menu_cd']})
+                    mng.fetch(query)
+                    query = gen.getQuery("sql/DELETE_menuInfoManage_shop.sql", {"shop_cd": shop['shop_cd'], "menu_cd": origin['menu_cd']})
+                    mng.fetch(query)
+        
         for menu in newMenu:
             # add
+            menu = newMenu[menu]
+            tmpFile = menu['menu_img']
+            pin = random.randint(100000,999999)
+
+            # 1 insert
+            query = gen.getQuery("sql/INSERT_menuInfoManage_menu.sql", {"shop_cd": shop['shop_cd'], "menu_category": menu['menu_category'], "menu_name": menu['menu_name'], "menu_description": menu['menu_description'], "menu_price": menu['menu_price'], "pin": pin})
+            mng.fetch(query)
+
+            # 2 menu_cd get & menu_img update,move
+            query = gen.getQuery("sql/SELECT_menuInfoManage_tmp.sql", {"shop_cd": shop['shop_cd'], "pin": pin})
+            row = mng.fetch(query)
+            menu_cd = row['menu_cd']
+            
+            if tmpFile != 'images/menu/default.png':
+                menu_img = 'images/menu/' + str(shop['shop_cd']) + '/' + str(menu_cd) + '.png'
+                public = '../dev-viewer/public/'
+                shutil.move(public + tmpFile, public + menu_img)
+                query = gen.getQuery("sql/UPDATE_menuInfoManage_img.sql", {"shop_cd": shop['shop_cd'], "menu_cd": menu_cd, "menu_img": menu_img})
+                mng.fetch(query)
+
+            # 3 add shop.menu_list
+            query = gen.getQuery("sql/UPDATE_menuInfoManage_menu.sql", {"shop_cd": shop['shop_cd'], "menu_cd": menu_cd})
+            mng.fetch(query)
             print("add", newMenu[menu])
         
         return (jsonify(True), 200)
