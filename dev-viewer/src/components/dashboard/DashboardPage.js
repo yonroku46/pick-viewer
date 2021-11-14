@@ -221,12 +221,12 @@ export default function DashboardPage(props) {
     }
     function changeMenuCategory(e) {
         setModalMenu(
-            { ...modalMenu, menu_category: e.target.value }
+            { ...modalMenu, menu_category: e.target.value.replace(/[ \{\}\[\]\/?.,;:|\)*~`!^\-_+┼<>@\#$%&\'\"\\\(\=]/gi, '') }
         );
     }
     function changeMenuName(e) {
         setModalMenu(
-            { ...modalMenu, menu_name: e.target.value }
+            { ...modalMenu, menu_name: e.target.value.replace(/[ \{\}\[\]\/?.,;:|\)*~`!^\-_+┼<>@\#$%&\'\"\\\(\=]/gi, '') }
         );
     }
     function changeMenuPrice(e) {
@@ -236,7 +236,7 @@ export default function DashboardPage(props) {
     }
     function changeMenuDescription(e) {
         setModalMenu(
-            { ...modalMenu, menu_description: e.target.value }
+            { ...modalMenu, menu_description: e.target.value.replace(/[ \{\}\[\]\/?.,;:|\)*~`!^\-_+┼<>@\#$%&\'\"\\\(\=]/gi, '') }
         );
     }
 
@@ -259,11 +259,11 @@ export default function DashboardPage(props) {
           axios
             .post(api.imgUpload, params)
             .then((res) => {
-              if (res) {
-                setModalMenu(
-                    { ...modalMenu, menu_img: res.data }
-                )
-              }
+                if (res) {
+                    setModalMenu(
+                        { ...modalMenu, menu_img: res.data }
+                    )
+                }
             })
             .catch((err) => {
               console.error(err);
@@ -290,6 +290,9 @@ export default function DashboardPage(props) {
           if (res) {
             alert('저장이 완료되었습니다.')
             setEditMode(false)
+            // 리로드가 안되고 계속 메뉴코드가 new인채로 남아잇음
+            setReload(reload + 1);
+            setCategory('all');
           }
           setLoading(false);
         })
@@ -308,11 +311,12 @@ export default function DashboardPage(props) {
     function modalOpen(targetId) {
         if (editMode) {
             if (targetId === 'new') {
+                setCount(count + 1);
                 setModalMenu({
                     menu_category: '',
                     menu_cd: 'new' + count,
                     menu_description: '',
-                    menu_img: '',
+                    menu_img: null,
                     menu_name: '',
                     menu_price: ''
                 });
@@ -329,7 +333,20 @@ export default function DashboardPage(props) {
 
     function rollBack() {
         if (window.confirm("수정된 내용이 초기화됩니다. 계속하시겠습니까?")) {
-            window.location.replace("/dashboard");
+            const params = new FormData();
+            params.append('shop_cd', shop_cd);
+            params.append('call', 'menu');
+            axios
+            .post(api.imgClear, params)
+            .then((res) => {
+                if (res) {
+                    window.location.replace("/dashboard");
+                }
+            })
+            .catch((err) => {
+                console.error(err);
+                alert("초기화에 실패하였습니다. 잠시 후 시도해주세요.");
+            });
         } else {
             return;
         }
@@ -613,7 +630,7 @@ export default function DashboardPage(props) {
                 </Modal.Content>
                 <Modal.Actions>
                     <Button onClick={() => menuDelete(modalMenu.menu_cd)} color='red'>삭제</Button>
-                    <Button onClick={menuEdit} color='blue'>수정 / 등록</Button>
+                    <Button onClick={() => menuEdit(modalMenu.menu_cd)} color='blue'>수정 / 등록</Button>
                 </Modal.Actions>
             </Modal>
             }
@@ -769,21 +786,21 @@ export default function DashboardPage(props) {
     function menuDelete(targetId) {
         if (window.confirm("해당 메뉴를 삭제하시겠습니까?")) {
             const target = shop.menu_list.find(menu => menu.menu_cd === targetId);
-            console.log(targetId)
-            console.log(target)
             if (target === undefined) {
                 setOpen(false);
                 return;
             } else {
-                if (category !== 'all') {
-                    menuList.splice(menuList.indexOf(target), 1);
-                    setMenuList(menuList);
-                }
                 shop.menu_list.splice(shop.menu_list.indexOf(target), 1);
                 setShop(
                     { ...shop, menu_list: shop.menu_list }
                 );
                 setMenuList(shop.menu_list);
+                if (category !== 'all') {
+                    menuList.splice(menuList.indexOf(target), 1);
+                    setMenuList(menuList);
+                }
+
+                // 카테고리에 메뉴 없을시 리스트에서 삭제
                 const filter = shop.menu_list.filter(menu => menu.menu_category === target.menu_category);
                 if (filter.length === 0) {
                     const del1 = categoryList.find(category => category.value === target.menu_category);
@@ -793,14 +810,15 @@ export default function DashboardPage(props) {
                     modalCategoryList.splice(modalCategoryList.indexOf(del2), 1);
                     setModalCategoryList(modalCategoryList);
                 }
-                setOpen(false);
+                setOpen(false)
             }
         } else {
             return;
         }
     }
 
-    function menuEdit() {
+    function menuEdit(targetId) {
+        console.log(targetId)
         if (modalMenu.menu_category.length === 0 || modalMenu.menu_name.length === 0 || modalMenu.menu_price.length === 0) {
             return alert('입력되지 않은 항목이 존재합니다.');
         }
@@ -814,9 +832,24 @@ export default function DashboardPage(props) {
                 { ...shop, menu_categorys: shop.menu_categorys }
             );
         }
+
+        // 신규
         if (modalMenu.menu_cd.toString().indexOf('new') !== -1) {
-            if (category === modalMenu.menu_category) {
-                menuList.push({
+            const target = shop.menu_list.find(menu => menu.menu_cd === targetId);
+            // 신규 등록
+            if (target === undefined) {
+                if (category === modalMenu.menu_category) {
+                    menuList.push({
+                        menu_category: modalMenu.menu_category,
+                        menu_cd: modalMenu.menu_cd,
+                        menu_description: modalMenu.menu_description ? modalMenu.menu_description : '',
+                        menu_img: modalMenu.menu_img ? modalMenu.menu_img : menuDefault,
+                        menu_name: modalMenu.menu_name,
+                        menu_price: modalMenu.menu_price
+                    });
+                }
+                setMenuList(menuList);
+                shop.menu_list.push({
                     menu_category: modalMenu.menu_category,
                     menu_cd: modalMenu.menu_cd,
                     menu_description: modalMenu.menu_description ? modalMenu.menu_description : '',
@@ -824,29 +857,40 @@ export default function DashboardPage(props) {
                     menu_name: modalMenu.menu_name,
                     menu_price: modalMenu.menu_price
                 });
+                setShop(
+                    { ...shop, menu_list: shop.menu_list }
+                );
+            // 신규 수정
+            } else {
+                setMenuList(
+                    menuList.map(
+                        menu => menu.menu_cd === modalMenu.menu_cd
+                        ? modalMenu
+                        : menu
+                    )
+                );
+                setShop(
+                    { ...shop, menu_list: shop.menu_list.map(
+                        menu => menu.menu_cd === modalMenu.menu_cd
+                        ? modalMenu
+                        : menu
+                    )}
+                );
             }
-            setMenuList(menuList);
-            shop.menu_list.push({
-                menu_category: modalMenu.menu_category,
-                menu_cd: modalMenu.menu_cd,
-                menu_description: modalMenu.menu_description ? modalMenu.menu_description : '',
-                menu_img: modalMenu.menu_img ? modalMenu.menu_img : menuDefault,
-                menu_name: modalMenu.menu_name,
-                menu_price: modalMenu.menu_price
-            });
-            setCount(count + 1);
-            setShop(
-                { ...shop, menu_list: shop.menu_list }
-            );
             setOpen(false);
+            
+        // 기존 수정
         } else {
-            setMenuList(
-                menuList.map(
-                    menu => menu.menu_cd === modalMenu.menu_cd
-                    ? modalMenu
-                    : menu
-                )
-            );
+            const res = menuList.map(
+                menu => menu.menu_cd === modalMenu.menu_cd
+                ? modalMenu
+                : menu
+            )
+            setMenuList(res);
+            if (category !== 'all') {
+                const result = res.filter(menu => menu.menu_category === category);
+                setMenuList(result);
+            }
             setShop(
                 { ...shop, menu_list: shop.menu_list.map(
                     menu => menu.menu_cd === modalMenu.menu_cd

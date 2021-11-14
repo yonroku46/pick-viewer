@@ -46,3 +46,4 @@ export const favoriteList = "/api/favoriteList";
 export const shopRequestList = "/api/shopRequestList";
 export const userRequestConfirm = "/api/userRequestConfirm";
 export const saveShopInfo = "/api/saveShopInfo";
+export const imgClear = "/api/imgClear";
