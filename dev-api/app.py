@@ -270,21 +270,25 @@ def getShopInfo():
         if permission != 3:
             del rows['shop_serial']
 
-        if rows['staff_list'] != None:
-            staff_list = rows['staff_list'].replace(",","','")
-            query = gen.getQuery("sql/SELECT_shopStaffList.sql", {"staff_list": staff_list})
-            rows['staff_list'] = mng.fetch_all(query)
+        if rows['staff_list'] == None:
+            rows['staff_list'] = ''
 
-        if rows['menu_list'] != None:
-            menu_list = rows['menu_list'].replace(",","','")
-            query = gen.getQuery("sql/SELECT_shopMenuList.sql", {"shop_cd": shop_cd, "menu_list": menu_list})
-            rows['menu_list'] = mng.fetch_all(query)
-            categoryDict = {}
-            for menu in rows['menu_list']:
-                category = menu['menu_category']
-                if category not in categoryDict:
-                    categoryDict[category] = None
-            rows['menu_categorys'] = list(dict.fromkeys(categoryDict))
+        staff_list = rows['staff_list'].replace(",","','")
+        query = gen.getQuery("sql/SELECT_shopStaffList.sql", {"staff_list": staff_list})
+        rows['staff_list'] = mng.fetch_all(query)
+
+        if rows['menu_list'] == None:
+            rows['menu_list'] = ''
+
+        menu_list = rows['menu_list'].replace(",","','")
+        query = gen.getQuery("sql/SELECT_shopMenuList.sql", {"shop_cd": shop_cd, "menu_list": menu_list})
+        rows['menu_list'] = mng.fetch_all(query)
+        categoryDict = {}
+        for menu in rows['menu_list']:
+            category = menu['menu_category']
+            if category not in categoryDict:
+                categoryDict[category] = None
+        rows['menu_categorys'] = list(dict.fromkeys(categoryDict))
 
         return (jsonify(rows), 200)
     except Exception as e:
@@ -611,6 +615,9 @@ def saveShopInfo():
             query = gen.getQuery("sql/UPDATE_menuInfoManage_menu.sql", {"shop_cd": shop['shop_cd'], "menu_cd": menu_cd})
             mng.fetch(query)
         
+        query = gen.getQuery("sql/UPDATE_menuInfoManage_clear.sql", {"shop_cd": shop['shop_cd']})
+        mng.fetch(query)
+
         return (jsonify(True), 200)
     except Exception as e:
         app.logger.info("Exception:{}".format(e))
