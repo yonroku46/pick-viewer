@@ -78,8 +78,8 @@ export default class ShopModal extends Component {
                                 </div>
                                 <div className='shopmodal-location'>
                                     {shop.shop_location}
-                                    <span className='shopmodal-rating'><Icon name='star'/>{shop.ratings_ave}</span>
                                 </div>
+                                <span className='shopmodal-rating'><Icon name='star'/>{shop.ratings_ave}</span>
                             </button>
                         </Link>
                     ) 

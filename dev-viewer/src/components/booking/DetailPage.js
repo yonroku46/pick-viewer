@@ -160,14 +160,25 @@ export default function DetailPage(props) {
   function hairShopMenuBtnClick(targetId) {
     const target = shop.menu_list.find(menu => menu.menu_cd === targetId);
     const price = target.menu_price;
-    setResultPrice(resultPrice + price);
-    setOrderList(orderList.splice(0, orderList.length));
-    orderList.push(target);
-    orderList[orderList.indexOf(target)].num = 1;
-    setOrderList(orderList);
-    setShopMenu(orderList[0].menu_name);
-    setShopMenuSelected(true);
-    setShowShopMenu(false);
+    const orderTarget =  orderList.find(order => order.menu_cd === targetId);
+    if (orderTarget === undefined) {
+      setResultPrice(resultPrice + price);
+      orderList.push(target);
+      orderList[orderList.indexOf(target)].num = 1;
+      setOrderList(orderList);
+    } else {
+      setResultPrice(resultPrice - price);
+      orderList[orderList.indexOf(target)].num = 0;
+      orderList.splice(orderList.indexOf(orderTarget), 1);
+      setOrderList(orderList);
+    }
+    if (orderList.length === 0) {
+      setShopMenuSelected(false);
+      setShopMenu(null);
+    } else {
+      setShopMenuSelected(true);
+      setShopMenu('선택 메뉴 수 : ' + orderList.length + '개');
+    }
   }
 
   function CustomersBtnClick(targetId) {
@@ -262,11 +273,11 @@ export default function DetailPage(props) {
 
   function bookingCheck() {
     if (category === 'hairshop') {
-      return (dbDesigner === null || dbDate === null || dbTime === null) ? true : false;
+      return (dbDesigner === null || dbDate === null || dbTime === null || orderList.length === 0) ? true : false;
     } else if (category === 'restaurant') {
-      return (dbCustomers === null || dbDate === null || dbTime === null) ? true : false;
+      return (dbCustomers === null || dbDate === null || dbTime === null || orderList.length === 0) ? true : false;
     } else if (category === 'cafe') {
-      return (dbCustomers === null || dbDate === null || dbTime === null) ? true : false;
+      return (dbCustomers === null || dbDate === null || dbTime === null || orderList.length === 0) ? true : false;
     }
   }
 
@@ -379,12 +390,19 @@ export default function DetailPage(props) {
   </div>
 
   const visibleDesigner = showDesigner && (shop.staff_list.map(staff =>
-    <Item.Group unstackable className='detailpage-service-menu' key={staff.user_cd} onClick={() => DesignerBtnClick(staff.user_cd)}>
+    <>
+    <Item.Group unstackable className={dbDesigner === staff.user_cd ? 'detailpage-service-menu detailpage-selected' : 'detailpage-service-menu'} key={staff.user_cd} onClick={() => DesignerBtnClick(staff.user_cd)}>
       <Item className='detailpage-service'>
         <Item.Image className='detailpage-service-img' src={api.imgRender(staff.user_img === null ? staffDefault : staff.user_img)}/>
         <Item.Content header={staff.user_name + ' (' + staff.career +') '} meta={staff.info}/>
       </Item>
     </Item.Group>
+    {dbDesigner === staff.user_cd &&
+      <Item className='detailpage-service-num'>
+        <Icon color='violet' className='detailpage-service-minus' name='check circle'/>
+      </Item>
+    }
+    </>
     ));
 
   const visibleHairShopMenu = showShopMenu && (shop.menu_categorys.map(category => 
@@ -396,12 +414,17 @@ export default function DetailPage(props) {
     {
     shop.menu_list.filter(list => list.menu_category.match(category)).map(menu => 
       <>
-      <Item.Group unstackable className='detailpage-service-menu' key={menu.menu_cd}>
+      <Item.Group unstackable className={0 < menu.num ? 'detailpage-service-menu detailpage-selected' : 'detailpage-service-menu'} key={menu.menu_cd}>
         <Item className='detailpage-service' onClick={() => hairShopMenuBtnClick(menu.menu_cd)}>
           <Item.Image className='detailpage-service-img' src={api.imgRender(menu.menu_img === null ? menuDefault : menu.menu_img)}/>
           <Item.Content header={menu.menu_name} meta={comma(menu.menu_price) + '원'} description={menu.menu_description === null ? '' : menu.menu_description}/>
         </Item>
       </Item.Group>
+      {0 < menu.num &&
+        <Item className='detailpage-service-num'>
+          <Icon color='violet' className='detailpage-service-minus' name='check circle'/>
+        </Item>
+      }
       </>
       )
     }
@@ -424,7 +447,7 @@ export default function DetailPage(props) {
       {
       shop.menu_list.filter(list => list.menu_category.match(category)).map(menu => 
         <>
-        <Item.Group unstackable className='detailpage-service-menu' key={menu.menu_cd}>
+        <Item.Group unstackable className={0 < menu.num ? 'detailpage-service-menu detailpage-selected' : 'detailpage-service-menu'} key={menu.menu_cd}>
           <Item className='detailpage-service' onClick={() => shopMenuBtnClick(menu.menu_cd)}>
             <Item.Image className='detailpage-service-img' src={api.imgRender(menu.menu_img === null ? menuDefault : menu.menu_img)}/>
             <Item.Content header={menu.menu_name} meta={comma(menu.menu_price) + '원'} description={menu.menu_description === null ? '' : menu.menu_description}/>
@@ -432,9 +455,9 @@ export default function DetailPage(props) {
         </Item.Group>
         {0 < menu.num &&
         <Item className='detailpage-service-num'>
-          <Icon color='green' className='detailpage-service-minus' name='minus circle' onClick={() => shopMenuBtnMinusClick(menu.menu_cd)}/>
+          <Icon color='violet' className='detailpage-service-minus' name='minus circle' onClick={() => shopMenuBtnMinusClick(menu.menu_cd)}/>
           {menu.num}
-          <Icon color='green' className='detailpage-service-plus' name='plus circle' onClick={() => shopMenuBtnClick(menu.menu_cd)}/>
+          <Icon color='violet' className='detailpage-service-plus' name='plus circle' onClick={() => shopMenuBtnClick(menu.menu_cd)}/>
         </Item>
         }
         </>
@@ -568,7 +591,7 @@ export default function DetailPage(props) {
           <span className='detailpage-call'>
             <a href={`tel:${shop.shop_tel}`}><Icon name='phone square'/></a>
           </span>
-          <span className='shopmodal-rating'>
+          <span className='detailpage-review'>
             <Link to={`/review/${category}/${shop_cd}`}>
               <Button className='detailpage-link-btn' inverted color='violet'>리뷰보기 <Icon name='angle double right'/></Button>
             </Link>
@@ -595,15 +618,15 @@ export default function DetailPage(props) {
       <Segment className='review-info'>
         <Statistic.Group size='mini' widths='three' inverted>
           <Statistic>
-            <Statistic.Value className='review-favorite' onClick={favorite}><Icon name={isFavorite ? 'like' : 'like outline'}/> {shop.favorite_num === undefined ? 0 : comma(shop.favorite_num)}</Statistic.Value>
+            <Statistic.Value className='review-tab-icon' onClick={favorite}><Icon name={isFavorite ? 'like' : 'like outline'}/> {shop.favorite_num === undefined ? 0 : comma(shop.favorite_num)}</Statistic.Value>
             <Statistic.Label>즐겨찾기</Statistic.Label>
           </Statistic>
           <Statistic>
-            <Statistic.Value><Icon name='comments outline'/> {shop.review_num === undefined ? 0 : comma(shop.review_num)}</Statistic.Value>
+            <Statistic.Value className='review-tab-icon' onClick={() => props.history.push(`/review/${category}/${shop_cd}`)}><Icon name='comments outline'/> {shop.review_num === undefined ? 0 : comma(shop.review_num)}</Statistic.Value>
             <Statistic.Label>총 리뷰수</Statistic.Label>
           </Statistic>
           <Statistic>
-            <Statistic.Value><Icon name='star outline'/> {shop.ratings_ave}</Statistic.Value>
+            <Statistic.Value className='review-tab-icon' onClick={() => props.history.push(`/review/${category}/${shop_cd}`)}><Icon name='star outline'/> {shop.ratings_ave}</Statistic.Value>
             <Statistic.Label>만족도</Statistic.Label>
           </Statistic>
         </Statistic.Group>

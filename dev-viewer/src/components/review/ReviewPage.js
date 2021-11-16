@@ -363,7 +363,7 @@ export default function ShopPage(props) {
           <span className='detailpage-call'>
             <a href={`tel:${shop.shop_tel}`}><Icon name='phone square'/></a>
           </span>
-          <span className='shopmodal-rating'>
+          <span className='detailpage-review'>
             <Link to={`/booking/${category}/${shop_cd}`}>
               <Button className='detailpage-link-btn' color='violet'>예약하기 <Icon name='angle double right'/></Button>
             </Link>
@@ -383,7 +383,7 @@ export default function ShopPage(props) {
       <Segment className='review-info'>
         <Statistic.Group size='mini' widths='three' inverted>
           <Statistic>
-            <Statistic.Value className='review-favorite' onClick={favorite}><Icon name={isFavorite ? 'like' : 'like outline'}/> {shop.favorite_num === undefined ? 0 : comma(shop.favorite_num)}</Statistic.Value>
+            <Statistic.Value className='review-tab-icon' onClick={favorite}><Icon name={isFavorite ? 'like' : 'like outline'}/> {shop.favorite_num === undefined ? 0 : comma(shop.favorite_num)}</Statistic.Value>
             <Statistic.Label>즐겨찾기</Statistic.Label>
           </Statistic>
           <Statistic>

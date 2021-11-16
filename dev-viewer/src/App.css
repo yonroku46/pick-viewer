@@ -347,6 +347,9 @@ hr {
   margin: 1em 8vw;
   min-height: calc(100vh - 81px);
 }
+.dashboard-dnd li {
+  float: left;
+}
 .dashboard-reset-btn {
   width: 100%;
   border-radius: 0.25em !important;
@@ -382,6 +385,10 @@ hr {
   padding-left: 1.5em !important;
   padding-top: 0.7em !important;
   padding-bottom: 0.7em !important;
+}
+.dashboard-menu a.item:hover {
+  font-weight: bold;
+  background-color: rgba(0,0,0,.05)!important;
 }
 .dashboard-viewer {
   position: absolute;
@@ -444,6 +451,10 @@ div.ui.segment.dashboard-viewer {
   padding-right: 10px !important;
   padding-top: 14px !important;
   padding-bottom: 7px !important;
+}
+.move img:hover {
+  cursor: move;
+  opacity: 0.8;
 }
 .dashboard-viewer-btns {
   background-color: #fff !important;
@@ -1160,13 +1171,23 @@ table.dashboard-table input {
 }
 .shopmodal-name {
   font-size: 1.4em;
-  margin-top: 136px;
+  margin-top: 140px;
 }
-.shopmodal-rating {
+.detailpage-review {
   float: right;
   margin-left: 6px;
 }
+.shopmodal-rating {
+  float: right;
+  margin-top: -1.1em;
+}
 .shopmodal-location {
+  width: 80%;
+  font-weight: normal;
+  font-size: 0.9em;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
   margin-left: 6px;
   margin-top: 4px;
 }
@@ -1479,6 +1500,10 @@ a.detailpage-tel:hover {
 .detailpage-service-margin {
   margin-bottom: 11px;
 }
+.detailpage-selected {
+  border: #A291FB 1px solid !important;
+  background-image: linear-gradient(rgba(255, 255, 255, 0.7), rgba(216, 178, 225, 0.1)) !important;
+}
 .detailpage-service-menu {
   padding: 12px 6px !important;
   border: 1px lightgray solid;
@@ -1622,7 +1647,7 @@ a.detailpage-tel:hover {
   padding-right: 20vw;
   min-height: calc(100vh - 81px);
 }
-.review-favorite:hover {
+.review-tab-icon:hover {
   cursor: pointer;
   opacity: 0.75;
 }
@@ -1637,8 +1662,7 @@ a.detailpage-tel:hover {
 }
 .review-comment-area {
   text-align: left;
-  margin-top: 0px !important;
-  margin-bottom: 0px !important;
+  margin: 0px auto !important;
 }
 .review-write-area {
   text-align: left !important;
@@ -1693,7 +1717,7 @@ a.detailpage-tel:hover {
 }
 .review-style {
   padding: 0.8em !important;
-  margin: 0.2em !important;
+  margin: 0.4em !important;
   border: rgb(0, 0, 0, 0.1) 1px solid !important;
   border-radius: 1em;
   min-width: 40vw;
@@ -1701,7 +1725,7 @@ a.detailpage-tel:hover {
 }
 .review-style-deleted {
   padding: 0.8em !important;
-  margin: 0.2em !important;
+  margin: 0.4em !important;
   border: rgb(0, 0, 0, 0.1) 1px solid !important;
   background-color: rgb(0, 0, 0, 0.03)!important;
   color: rgb(0, 0, 0, 0.5);
@@ -1731,16 +1755,6 @@ a.detailpage-tel:hover {
 }
 .review-style-replyview p {
   margin-left: 0.5em;
-}
-/* pc */
-@media only screen and (min-width: 766px) {
-  .review-comment-area {
-    margin-left: 1em !important;
-  }
-}
-/* sp */
-@media only screen and (max-width: 767px){
-
 }
 
 /* IphoneX */
