@@ -272,6 +272,8 @@ def getShopInfo():
 
         if rows['staff_list'] == None:
             rows['staff_list'] = ''
+        
+        rows['shop_img'] = rows['shop_img'].split(',')
 
         staff_list = rows['staff_list'].replace(",","','")
         query = gen.getQuery("sql/SELECT_shopStaffList.sql", {"staff_list": staff_list})
