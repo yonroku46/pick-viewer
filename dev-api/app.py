@@ -392,12 +392,19 @@ def imgUpload():
     # shop img upload
     elif call == 'shop':
         shop_cd = request.values['shop_cd']
+        img_index = request.values['img_index']
+        fileName = img_index + datetime.now().strftime("_%m%d%Y%H%M%S") + '.png'
         public = '../dev-viewer/public/'
-        path = 'images/' + call + '/' + shop_cd + '/' + shop_cd + '.png'
-        f.save(public + path)
+        path = 'images/' + call + '/' + shop_cd + '/tmp/' + fileName
         try:
-            query = gen.getQuery("sql/UPDATE_shopImg.sql", {"path": path, "shop_cd": shop_cd})
-            mng.fetch(query)
+            f.save(public + path)
+            rmList = os.listdir(public + 'images/' + call + '/' + shop_cd + '/tmp/')
+            rmList.remove(fileName)
+            for target in rmList:
+                if target[0:2] == (img_index + '_'):
+                    os.remove(public + 'images/' + call + '/' + shop_cd + '/tmp/' + target)  
+            # query = gen.getQuery("sql/UPDATE_shopImg.sql", {"path": path, "shop_cd": shop_cd})
+            # mng.fetch(query)
             return (jsonify(path), 200)
         except Exception as e:
             app.logger.info("Exception:{}".format(e))
@@ -545,6 +552,11 @@ def saveShopInfo():
             return (jsonify(True), 200)
 
         # shopInfo event
+        shop_img = ''
+        for  img in shop['shop_img']:
+            if img != 'images/shop/default.png':
+                shop_img += img + ','
+        shop['shop_img'] = shop_img[:-1]
         query = gen.getQuery("sql/UPDATE_saveShopInfo.sql", {"shop_cd": shop['shop_cd'], "shop_location": shop['shop_location'], "shop_info": shop['shop_info'], "shop_tel": shop['shop_tel'], "shop_img": shop['shop_img'], "shop_open": shop['shop_open'], "shop_close": shop['shop_close'], "shop_holiday": shop['shop_holiday'], "location_lat": shop['location_lat'], "location_lng": shop['location_lng']})
         mng.fetch(query)
 
