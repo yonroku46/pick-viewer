@@ -432,11 +432,12 @@ def imgUpload():
 @app.route('/api/imgClear', methods=['POST'])
 def imgClear():
     shop_cd = request.values['shop_cd']
-    call = request.values['call']
     public = '../dev-viewer/public/'
-    path = 'images/' + call + '/' + shop_cd + '/tmp/*.png'
+    path = 'images/shop/' + shop_cd + '/tmp/*.png'
+    path2 = 'images/menu/' + shop_cd + '/tmp/*.png'
     try:
         [os.remove(f) for f in glob.glob(public + path)]
+        [os.remove(f) for f in glob.glob(public + path2)]
         return (jsonify(True), 200)
     except Exception as e:
         app.logger.info("Exception:{}".format(e))
@@ -553,9 +554,21 @@ def saveShopInfo():
 
         # shopInfo event
         shop_img = ''
-        for  img in shop['shop_img']:
+        public = '../dev-viewer/public/'
+        for tmpFile in shop['shop_img']:
+            img = ''
+            try:
+                img = tmpFile['img']
+            except Exception:
+                img = tmpFile
             if img != 'images/shop/default.png':
-                shop_img += img + ','
+                if img.find("_") != -1:
+                    img = 'images/shop/' + str(shop['shop_cd']) + '/' + str(tmpFile['id']) + '.png'
+                    shutil.move(public + tmpFile['img'], public + img)
+                    shop_img += img
+                else:
+                    shop_img += img
+            shop_img += ',' 
         shop['shop_img'] = shop_img[:-1]
         query = gen.getQuery("sql/UPDATE_saveShopInfo.sql", {"shop_cd": shop['shop_cd'], "shop_location": shop['shop_location'], "shop_info": shop['shop_info'], "shop_tel": shop['shop_tel'], "shop_img": shop['shop_img'], "shop_open": shop['shop_open'], "shop_close": shop['shop_close'], "shop_holiday": shop['shop_holiday'], "location_lat": shop['location_lat'], "location_lng": shop['location_lng']})
         mng.fetch(query)
