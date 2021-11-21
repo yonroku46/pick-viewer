@@ -361,6 +361,9 @@ hr {
 .dashboard-reset-btn:hover {
   opacity: 1;
 }
+.dashboard-map-bottom {
+  margin-top: 50px !important;
+}
 .dashboard-menu {
   float: left;
   position: absolute;

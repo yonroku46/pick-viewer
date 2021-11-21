@@ -1,5 +1,6 @@
 import { useEffect, useState, useRef } from 'react';
 import { Label, Modal, Image, Menu, Icon, Form, Segment, Input, TextArea, Header, Button, Table, List, Item, Dimmer, Loader, Select, Progress, Popup } from 'semantic-ui-react'
+import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd";
 import * as api from '../../rest/server'
 import MapContainer from "../booking/MapContainer";
 import moment from 'moment';
@@ -27,6 +28,8 @@ export default function DashboardPage(props) {
     const [categoryList, setCategoryList] = useState([]);
     const [modalMenu, setModalMenu] = useState(null);
     const [modalCategoryList, setModalCategoryList] = useState([]);
+    const [shopImages, setShopImages] = useState([]);
+    const [shopImageIndex, setShopImageIndex] = useState([]);
     const shop_cd = userInfo ? userInfo.employment : null;
     
     const [category, setCategory] = useState('all');
@@ -69,10 +72,10 @@ export default function DashboardPage(props) {
     const endHour = 24;
 
     for (let i = 0; i < startHour; i++) {
-        hours.shift()
+        hours.shift();
     }
     for (let i = 0; i <  23 - endHour; i++) {
-        hours.pop()
+        hours.pop();
     }
 
     function copy(text) {
@@ -105,6 +108,7 @@ export default function DashboardPage(props) {
             setStaffList(res.staff_list);
             setMenuList(res.menu_list);
             makeCategoryList(res.menu_categorys);
+            makeImageList(res.shop_img);
             getRequestList(shop_cd);
           }
         })
@@ -125,6 +129,15 @@ export default function DashboardPage(props) {
         });
         setCategoryList(result);
         setModalCategoryList(modalResult);
+    }
+
+    function makeImageList(shop_img) {
+        const result = [];
+        for (let index = 0; index < 4; index++) {
+            console.log(shop_img[index])
+            result.push({ id: (index + 1).toString(), img: shop_img[index] ? shop_img[index] : shopDefault });
+        }
+        setShopImages(result);
     }
     
     function getRequestList(shop_cd) {
@@ -149,6 +162,23 @@ export default function DashboardPage(props) {
           setLoading(false);
         })
     }
+
+    function handleChange(result) {
+        if (!result.destination) {
+            return;
+        }
+        const items = [...shopImages];
+        const shopImg = [];
+        const [reorderedItem] = items.splice(result.source.index, 1);
+        items.splice(result.destination.index, 0, reorderedItem);
+        items.map(item => {
+            shopImg.push(item.img)
+        });
+        setShop(
+            { ...shop, shop_img: shopImg }
+        );
+        setShopImages(items);
+    };
 
     function copyLocation(e) {
         setShop(
@@ -240,10 +270,46 @@ export default function DashboardPage(props) {
         );
     }
 
-    function setImg() {
+    function setImg(e) {
+        setShopImageIndex(e.target.id);
         inputRef.current.click();
     };
     
+    function shopImgUpload(e) {
+        if (e.target.files[0] === undefined) {
+            return;
+        }
+        const file = e.target.files[0];
+        const img_index = shopImageIndex;
+        if (fileType.indexOf(file.type) !== -1) {
+          const params = new FormData();
+          params.append('file', file);
+          params.append('shop_cd', shop_cd);
+          params.append('img_index', img_index);
+          params.append('call', 'shop');
+          axios
+            .post(api.imgUpload, params)
+            .then((res) => {
+                if (res) {
+                    const target = shopImages.find(image => image.id === img_index)
+                    target.img = res.data
+                    setShopImages(shopImages.map(image => image.id === img_index
+                            ? target
+                            : image
+                    ));
+                    setShop(
+                        { ...shop, shop_img: shopImages }
+                    );
+                }
+            })
+            .catch((err) => {
+              console.error(err);
+              alert("업로드에 실패하였습니다. 잠시 후 시도해주세요.");
+            });
+        } else {
+          alert("파일형식이 올바르지 않습니다.")
+        }
+    };
     function imgUpload(e) {
         if (e.target.files[0] === undefined) {
             return;
@@ -335,7 +401,6 @@ export default function DashboardPage(props) {
         if (window.confirm("수정된 내용이 초기화됩니다. 계속하시겠습니까?")) {
             const params = new FormData();
             params.append('shop_cd', shop_cd);
-            params.append('call', 'menu');
             axios
             .post(api.imgClear, params)
             .then((res) => {
@@ -351,6 +416,32 @@ export default function DashboardPage(props) {
             return;
         }
     }
+
+    const getItemStyle = (isDragging, draggableStyle,img) => ({
+        border: '1px solid rgb(200, 200, 200)',
+        borderRadius:' 8px',
+        padding: '8px',
+        transition: 'background-color 0.2s ease',
+        userSelect: 'none',
+        margin: '4px',
+        backgroundImage: 'url(' + img + ')',
+        backgroundSize: 'cover',
+        backgroundPosition: 'center',
+        width: '25%',
+        height: '150px',
+        pointerEvents: !editMode && 'none',
+        ...draggableStyle,
+      });
+      
+      const getListStyle = isDraggingOver => ({
+        border: '1px solid rgb(0, 0, 0, 0.2)',
+        borderRadius:' 8px',
+        backgroundColor: isDraggingOver ? 'rgba(0, 0, 0, 0.15)' : 'rgba(0, 0, 0, 0.05)',
+        padding: '8px',
+        listStyle: 'none',
+        display: 'flex',
+        overflow: 'auto',
+      });
 
     function shopInfoView() {
         return (
@@ -373,7 +464,7 @@ export default function DashboardPage(props) {
                 <Form.Field>
                     <label>
                         매장주소 
-                        <Popup size='tiny' position='right center' className='dashboard-info-popup' trigger={<Icon className='dashboard-info-icon' name='info circle'/>} header={'지도상의 위치가 필요합니다'} content={'수정모드를 활성화 후,\n 빨간핀을 이동시켜 위치를 지정해주세요.'} inverted/>
+                        <Popup size='tiny' position='right center' className='dashboard-info-popup' trigger={<Icon className='dashboard-info-icon' name='info circle'/>} header={'Tip'} content={'수정모드를 활성화 후,\n 빨간핀을 이동시켜 위치를 지정해주세요.'} inverted/>
                     </label>
                     {editMode ? 
                     <>
@@ -385,14 +476,28 @@ export default function DashboardPage(props) {
                     }
                     <MapContainer id='map' shop={shop} setShop={setShop} setLocationSearch={setLocationSearch} locationSearch={locationSearch} editMode={editMode} permission={permission}/>
                 </Form.Field>
-                <Form.Field>
-                    <label>매장 사진</label>
-                    <Image.Group className='dashboard-viewer-imgs' size='small'>
-                        <Image label={editMode && { color: 'blue', size: 'mini', corner: 'right', icon: 'move' }} src={api.imgRender(shop.shop_img)}/>
-                        <Image label={editMode && { color: 'grey', size: 'mini', corner: 'right', icon: 'move' }} src={api.imgRender(shopDefault)}/>
-                        <Image label={editMode && { color: 'grey', size: 'mini', corner: 'right', icon: 'move' }} src={api.imgRender(shopDefault)}/>
-                        <Image label={editMode && { color: 'grey', size: 'mini', corner: 'right', icon: 'move' }} src={api.imgRender(shopDefault)}/>
-                    </Image.Group>
+                <Form.Field className={editMode && 'dashboard-map-bottom'}>
+                    <label>
+                        매장 사진
+                        <Popup size='tiny' position='right center' className='dashboard-info-popup' trigger={<Icon className='dashboard-info-icon' name='info circle'/>} header={'Tip'} content={'클릭시 사진변경,\n 이동시 순서가 변경됩니다.'} inverted/>
+                    </label>
+                    <DragDropContext onDragEnd={handleChange}>
+                        <Droppable droppableId="shopImages" direction="horizontal">
+                        {(provided, snapshot) => (
+                        <ul ref={provided.innerRef} style={getListStyle(snapshot.isDraggingOver)} {...provided.droppableProps}>
+                            <input hidden type='file' ref={inputRef} accept=".png, .jpg, .jpeg" onChange={shopImgUpload}/>
+                            {shopImages.map((item, index) => (
+                                <Draggable key={item.id} draggableId={item.id} index={index}>
+                                    {(provided, snapshot) => (
+                                        <li onClick={setImg} id={item.id} ref={provided.innerRef} {...provided.draggableProps} {...provided.dragHandleProps} style={getItemStyle(snapshot.isDragging,provided.draggableProps.style,api.imgRender(item.img))}/>
+                                    )}
+                                </Draggable>
+                            ))}
+                            {provided.placeholder}
+                        </ul>
+                        )}
+                        </Droppable>
+                    </DragDropContext>
                 </Form.Field>
                 <Form.Group  widths='equal'>
                     <Form.Field>
@@ -701,30 +806,6 @@ export default function DashboardPage(props) {
         } 
         return result;
     }
-
-    // function dragStart(e) {
-    //     this.dragged = e.currentTarget; e.dataTransfer.effectAllowed = 'move';
-    //     e.dataTransfer.setData('text/html', this.dragged);
-    // } 
-    // function dragEnd(e) {
-    //     this.dragged.style.display = 'block';
-    //     this.dragged.parentNode.removeChild(placeholder);
-
-    //     // update state
-    //     var data = this.state.colors;
-    //     var from = Number(this.dragged.dataset.id);
-    //     var to = Number(this.over.dataset.id);
-    //     if (from < to) to--;
-    //     data.splice(to, 0, data.splice(from, 1)[0]);
-    //     this.setState({colors: data});
-    // }
-    // function dragOver(e) {
-    //     e.preventDefault();
-    //     this.dragged.style.display = "none";
-    //     if (e.target.className === 'placeholder') return;
-    //     this.over = e.target;
-    //     e.target.parentNode.insertBefore(placeholder, e.target);
-    // }
 
     function requestConfirm(request_stat, targetId) {
         const target = requestList.find(request => request.request_cd === targetId);
