@@ -90,7 +90,7 @@ h1, h2, h3, h4, h5, div, a, button {
 
 .app-footer {
   width: 100%;
-  color: rgb(160, 160, 160, 1);
+  color: rgb(160, 160, 160, 0.4);
   background-color: rgb(255, 255, 255);
   padding: 5px 10px;
   font-size: 12px;

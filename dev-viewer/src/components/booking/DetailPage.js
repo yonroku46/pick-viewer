@@ -34,9 +34,9 @@ export default function DetailPage(props) {
   ]
   
   const [shop, setShop] = useState([]);
+  const [shopImages, setShopImages] = useState([]);
   const {shop_cd} = useParams();
   const category = (props.location.pathname).split('/')[2];
-  const shopImg = shop.shop_img === null ? shopDefault : shop.shop_img;
 
   const [isFavorite, setIsFavorite] = useState(false);
   const [clickFavorite, setClickFavorite] = useState(false);
@@ -66,12 +66,21 @@ export default function DetailPage(props) {
     .then(res => {
       if (res !== null) {
         setShop(res);
+        makeImageList(res.shop_img);
       }
     })
     .catch(err => {
       alert("현재 서버와의 연결이 원활하지 않습니다. 관리자에게 문의해주세요.");
     })
   }, [])
+
+  function makeImageList(shop_img) {
+    const result = [];
+    for (let index = 0; index < 4; index++) {
+        result.push(shop_img[index] ? shop_img[index] : shopDefault);
+      }
+      setShopImages(result);
+  }
 
   const [showCoupon, setShowCoupon] = useState(false);
 
@@ -566,8 +575,6 @@ export default function DetailPage(props) {
     prevArrow: <Icon name='angle left'/>
   };
 
-  const images = [api.imgRender(shopImg), api.imgRender(shopDefault), api.imgRender(shopImg), api.imgRender(shopDefault)]
-
   return (
     <div className='detailpage'>
       {shop.length === 0 &&
@@ -579,8 +586,8 @@ export default function DetailPage(props) {
       {/* 샵 이미지 탭 */}
       <Segment className="detailpage-main-image" placeholder>
         <Slider {...settings}>
-          {images.map(img =>
-            <Image src={img}/>
+          {shopImages.map(img =>
+            <Image src={api.imgRender(img)}/>
           )}
         </Slider>
       </Segment>
@@ -608,7 +615,7 @@ export default function DetailPage(props) {
         </p>
         {mapOpen && 
           (shop.location_lat === 0 && shop.location_lng === 0
-          ? <h4 className='detailpage-location-empty'>주소등록이 되지않은 매장입니다</h4>
+          ? <h4 className='detailpage-location-empty'>위치정보 미등록 매장입니다</h4>
           : <MapContainer shop={shop}/>
           )
         }
@@ -696,7 +703,7 @@ export default function DetailPage(props) {
             <div className='booking-modal-bar'/>
             {shop.shop_name}
           </div>
-          <Image className='booking-modal-shopimg' src={api.imgRender(shopImg)}/>
+          <Image className='booking-modal-shopimg' src={api.imgRender(shopImages[0])}/>
           <h4><Icon name='calendar check outline'/>예약일시</h4>
             <h3>{dateConvert(dbDate) + ' ' + dbTime}</h3>
           {category === 'hairshop' ?
@@ -743,7 +750,7 @@ export default function DetailPage(props) {
             <Button primary onClick={sendBooking}>예약하기</Button>
             :
             <Button secondary onClick={() => {setFinalCheck(true)}}>
-               <Icon name='checkmark'/> 내용을 확인하였습니다
+               <Icon name='checkmark'/> 확인하였습니다
             </Button>
             }
         </Modal.Actions>

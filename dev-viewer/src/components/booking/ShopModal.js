@@ -69,10 +69,10 @@ export default class ShopModal extends Component {
                 {isLoading ? <this.Loading/> : 
                     shops === null ? <h3 className='booking-nodata'>데이터를 찾지 못했습니다</h3> :
                     shops.map(shop => {
-                    const shop_img = shop.shop_img === null ? 'images/shop/default.png' : shop.shop_img;
+                    const shop_img = shop.shop_img === null ? 'images/shop/default.png' : shop.shop_img.split(',')[0];
                     return(
                         <Link to={`/booking/${category}/${shop.shop_cd}`}>
-                            <button key={shop.shop_cd} style={{backgroundImage: 'linear-gradient(rgba(0, 0, 0, 0.05), rgba(0, 0, 0, 0.45)), url(' + api.imgRender(shop_img) + ')'}}>
+                            <button key={shop.shop_cd} style={{backgroundPosition: 'center', backgroundImage: 'linear-gradient(rgba(0, 0, 0, 0.05), rgba(0, 0, 0, 0.45)), url(' + api.imgRender(shop_img) + ')'}}>
                                 <div className='shopmodal-name'>
                                     {shop.shop_name}
                                 </div>

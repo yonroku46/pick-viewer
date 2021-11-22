@@ -134,7 +134,6 @@ export default function DashboardPage(props) {
     function makeImageList(shop_img) {
         const result = [];
         for (let index = 0; index < 4; index++) {
-            console.log(shop_img[index])
             result.push({ id: (index + 1).toString(), img: shop_img[index] ? shop_img[index] : shopDefault });
         }
         setShopImages(result);
@@ -356,7 +355,6 @@ export default function DashboardPage(props) {
           if (res) {
             alert('저장이 완료되었습니다.')
             setEditMode(false)
-            // 리로드가 안되고 계속 메뉴코드가 new인채로 남아잇음
             setReload(reload + 1);
             setCategory('all');
           }

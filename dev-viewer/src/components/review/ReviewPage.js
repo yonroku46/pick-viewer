@@ -25,7 +25,7 @@ export default function ShopPage(props) {
   const [isStaff, setIsStaff] = useState(false);
   const {shop_cd} = useParams();
   const category = (props.location.pathname).split('/')[2];
-  const shopImg = shop.shop_img === null ? shopDefault : shop.shop_img;
+  const [shopImages, setShopImages] = useState([]);
 
   const [comment, setComment] = useState('');
   const [reviewList, setReviewList] = useState([]);
@@ -58,12 +58,21 @@ export default function ShopPage(props) {
         setShop(res);
         staffJudge(res);
         getReviewList(res.shop_cd);
+        makeImageList(res.shop_img);
       }
     })
     .catch(err => {
       alert("현재 서버와의 연결이 원활하지 않습니다. 관리자에게 문의해주세요.");
     })
   }, [reload])
+
+  function makeImageList(shop_img) {
+    const result = [];
+    for (let index = 0; index < 4; index++) {
+        result.push(shop_img[index] ? shop_img[index] : shopDefault);
+      }
+      setShopImages(result);
+  }
 
   function staffJudge(res) {
     let staffList = [];
@@ -333,8 +342,6 @@ export default function ShopPage(props) {
     prevArrow: <Icon name='angle left'/>
   };
 
-  const images = [api.imgRender(shopImg), api.imgRender(shopDefault), api.imgRender(shopImg), api.imgRender(shopDefault)]
-
   return (
     <div className='detailpage'>
       {reviewLoading  &&
@@ -351,8 +358,8 @@ export default function ShopPage(props) {
       {/* 샵 이미지 탭 */}
       <Segment className="review-main-image" placeholder>
         <Slider {...settings}>
-          {images.map(img =>
-            <Image src={img}/>
+          {shopImages.map(img =>
+            <Image src={api.imgRender(img)}/>
           )}
         </Slider>
       </Segment>
@@ -373,10 +380,15 @@ export default function ShopPage(props) {
         <p className='detailpage-info'><Icon name='list alternate outline'/>{shop.shop_info}</p>
         <p className='detailpage-location'><Icon name='map outline'/>{shop.shop_location} 
           <Scroll className='detailpage-icon' to='map' offset={-56} spy={true} smooth={true}>
-            <Icon onClick={mapToogle} name={mapOpen ? 'angle up' : 'angle down'}/>
+            <Icon id='map' onClick={mapToogle} name={mapOpen ? 'angle up' : 'angle down'}/>
           </Scroll>
         </p>
-        {mapOpen && <MapContainer id='map' location={shop.shop_location}/>}
+        {mapOpen && 
+          (shop.location_lat === 0 && shop.location_lng === 0
+          ? <h4 className='detailpage-location-empty'>위치정보 미등록 매장입니다</h4>
+          : <MapContainer shop={shop}/>
+          )
+        }
       </Segment>
 
       {/* 리뷰 정보 탭*/}
