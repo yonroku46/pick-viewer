@@ -244,7 +244,7 @@ export default function DetailPage(props) {
   }
 
   function designerToggle() {
-    {shop.staff_list === null
+    {shop.staff_list === null || shop.staff_list.length === 0
     ? setDesignerError(!designerError)
     : setShowDesigner(!showDesigner)
     }
@@ -258,7 +258,7 @@ export default function DetailPage(props) {
   }
 
   function shopMenuToggle() {
-    {shop.menu_list === null
+    {shop.menu_list === null || shop.menu_list.length === 0
     ? setShopMenuError(!shopMenuError)
     : setShowShopMenu(!showShopMenu)
     }
@@ -395,7 +395,7 @@ export default function DetailPage(props) {
   
   const errorMessege = 
   <div className='detailpage-msg'>
-    <h4>데이터를 불러오는데 실패하였습니다</h4>
+    <h4>표시할 정보가 없습니다</h4>
   </div>
 
   const visibleDesigner = showDesigner && (shop.staff_list.map(staff =>

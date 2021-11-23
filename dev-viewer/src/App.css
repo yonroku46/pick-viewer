@@ -786,7 +786,7 @@ table.dashboard-table input {
   margin-right: 20px !important;
   color: rgb(0, 0, 0, 0.1);
  }
-.mypage-table-btn2 {
+.mypage-table-btn2::before {
   margin-left: 20px !important;
   cursor: pointer;
 }
@@ -1384,6 +1384,7 @@ table.dashboard-table input {
 }
 .slick-list {
   z-index: unset !important;
+  max-height: 46vh;
 }
 .slick-prev:before, .slick-next:before {
   color: #fff !important;
@@ -1421,7 +1422,9 @@ table.dashboard-table input {
 }
 .detailpage-main-image img {
   width: 100%;
-  height: 100%;
+  min-height: 46vh;
+  max-height: 46vh;
+  background-position: center !important;
   object-fit: cover;
 }
 .segment.detailpage-main {
@@ -1728,7 +1731,7 @@ a.detailpage-tel:hover {
   margin: 0.4em !important;
   border: rgb(0, 0, 0, 0.1) 1px solid !important;
   border-radius: 1em;
-  min-width: 40vw;
+  min-width: 30vw;
   white-space: pre-line;
 }
 .review-style-deleted {
@@ -1738,7 +1741,7 @@ a.detailpage-tel:hover {
   background-color: rgb(0, 0, 0, 0.03)!important;
   color: rgb(0, 0, 0, 0.5);
   border-radius: 1em;
-  min-width: 40vw;
+  min-width: 30vw;
 }
 .reply-style {
   padding: 0.8em !important;
@@ -1747,7 +1750,7 @@ a.detailpage-tel:hover {
   margin-left: 0.4em !important;
   border: rgb(0, 0, 0, 0.1) 1px solid !important;
   border-radius: 1em;
-  min-width: 36vw;
+  min-width: 28vw;
   white-space: pre-line;
 }
 .review-style-replyview {

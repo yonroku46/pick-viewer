@@ -11,7 +11,7 @@ export default function BookingCalendar(props) {
     const [isSelected, setIsSelected] = useState(false);
 
     const today = getMoment;
-    const originToday = parseInt(moment().format('YYYYMMDD'));
+    const originYear = parseInt(moment().format('YYYY'));
     const originMonth = parseInt(moment().format('MM'));
     const originDay = parseInt(moment().format('DD'));
 
@@ -73,7 +73,7 @@ export default function BookingCalendar(props) {
                         </Table.Cell>
                     );
                 } else {
-                    if ( (parseInt(days.format('MM')) <= originMonth) && (parseInt(days.format('D')) < originDay) ) {
+                    if ( (parseInt(today.format('YYYY')) === originYear && parseInt(days.format('MM')) <= originMonth) && (parseInt(days.format('D')) < originDay) ) {
                         return(
                             <Table.Cell className='table-other-month'>
                                 <span>{days.format('D')}</span>
@@ -112,7 +112,7 @@ export default function BookingCalendar(props) {
             <Table.Row>
                 <Table.HeaderCell colSpan='7' className='mypage-table-month'>
                     <h4>
-                    {parseInt(today.format('MM')) <= originMonth
+                    {parseInt(today.format('YYYY')) === originYear && parseInt(today.format('MM')) <= originMonth
                     ? <Icon name='chevron left' className='mypage-table-btn1-disable'/>
                     : <Icon name='chevron left' className='mypage-table-btn1' onClick={lastMonth}/>
                     }
