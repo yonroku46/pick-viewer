@@ -1120,7 +1120,7 @@ table.dashboard-table input {
 }
 .booking-main-category {
   height: 8vh;
-  width: 60vw;
+  width: 50vw;
   padding-top: 1.4vh;
   font-weight: bold;
   margin-left: auto;
@@ -1147,12 +1147,12 @@ table.dashboard-table input {
   margin-bottom: 1em !important;
 }
 .shopmodal-search input{
-  width: 60vw;
+  width: 50vw;
   border-radius: 20px !important;
   margin-top: -1px !important;
 }
 .shopmodal-main {
-  margin: 5px 14vw;
+  margin: 5px 25vw;
 }
 .shopmodal-main button {
   background-size:cover;
@@ -1368,8 +1368,8 @@ table.dashboard-table input {
 
 /* detailpage */
 .detailpage {
-  padding-left: 20vw;
-  padding-right: 20vw;
+  padding-left: 25vw;
+  padding-right: 25vw;
   min-height: calc(100vh - 81px);
 }
 .slick-dots {
@@ -1418,6 +1418,11 @@ table.dashboard-table input {
 .detailpage-main-image {
   padding: 0px !important;
   margin-bottom: 0px !important;
+}
+.detailpage-main-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
 }
 .segment.detailpage-main {
   display: flow-root;
@@ -1567,7 +1572,7 @@ a.detailpage-tel:hover {
   margin-right: 4px !important;
 }
 .detailpage-menu-btn button {
-  width: 60vw;
+  width: 50vw;
   background-color: #fff !important;
 }
 .detailpage-comment {
@@ -1646,8 +1651,8 @@ a.detailpage-tel:hover {
 
 /* review */
 .reviewpage {
-  padding-left: 20vw;
-  padding-right: 20vw;
+  padding-left: 25vw;
+  padding-right: 25vw;
   min-height: calc(100vh - 81px);
 }
 .review-tab-icon:hover {

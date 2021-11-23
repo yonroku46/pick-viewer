@@ -47,7 +47,7 @@ export default function Favorite(props) {
                 activeItem === 'All' ?
                 favoriteList.map(shop => 
                     <Card
-                    image={api.imgRender(shop.shop_img === null ? shopDefault : shop.shop_img)}
+                    image={api.imgRender(shop.shop_img === null ? shopDefault : shop.shop_img.split(",")[0])}
                     header={shop.shop_name}
                     meta={shop.shop_location}
                     color={shop.category === 'hairshop' ? 'violet' : shop.category === 'restaurant' ? 'teal' : 'blue'}
@@ -60,7 +60,7 @@ export default function Favorite(props) {
                 favoriteList.filter(shop => shop.category === activeItem).length !== 0 ?
                 favoriteList.filter(shop => shop.category === activeItem).map(shop => 
                     <Card
-                    image={api.imgRender(shop.shop_img === null ? shopDefault : shop.shop_img)}
+                    image={api.imgRender(shop.shop_img === null ? shopDefault : shop.shop_img.split(",")[0])}
                     header={shop.shop_name}
                     meta={shop.shop_location}
                     color={shop.category === 'hairshop' ? 'violet' : shop.category === 'restaurant' ? 'teal' : 'blue'}
