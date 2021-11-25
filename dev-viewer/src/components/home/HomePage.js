@@ -20,48 +20,48 @@ export default function HomePage() {
     }
 
     //// scroll func start
-    // const scrollRef = useRef(null);
-    // const [isDrag, setIsDrag] = useState(false);
-    // const [startX, setStartX] = useState();
+    const scrollRef = useRef(null);
+    const [isDrag, setIsDrag] = useState(false);
+    const [startX, setStartX] = useState();
 
-    // const throttle = (func, ms) => {
-    //   let throttled = false;
-    //   return (...args) => {
-    //     if (!throttled) {
-    //       throttled = true;
-    //       setTimeout(() => {
-    //         func(...args);
-    //         throttled = false;
-    //       }, ms);
-    //     }
-    //   };
-    // };
+    const throttle = (func, ms) => {
+      let throttled = false;
+      return (...args) => {
+        if (!throttled) {
+          throttled = true;
+          setTimeout(() => {
+            func(...args);
+            throttled = false;
+          }, ms);
+        }
+      };
+    };
   
-    // function onDragStart(e) {
-    //   e.preventDefault();
-    //   setIsDrag(true);
-    //   setStartX(e.pageX + scrollRef.current.scrollLeft);
-    // };
+    function onDragStart(e) {
+      e.preventDefault();
+      setIsDrag(true);
+      setStartX(e.pageX + scrollRef.current.scrollLeft);
+    };
   
-    // function onDragEnd() {
-    //   setIsDrag(false);
-    // };
+    function onDragEnd() {
+      setIsDrag(false);
+    };
   
-    // function onDragMove(e) {
-    //   if (isDrag) {
-    //     const { scrollWidth, clientWidth, scrollLeft } = scrollRef.current;
-    //     scrollRef.current.scrollLeft = startX - e.pageX;
+    function onDragMove(e) {
+      if (isDrag) {
+        const { scrollWidth, clientWidth, scrollLeft } = scrollRef.current;
+        scrollRef.current.scrollLeft = startX - e.pageX;
     
-    //     if (scrollLeft === 0) {
-    //       setStartX(e.pageX);
-    //     } else if (scrollWidth <= clientWidth + scrollLeft) {
-    //       setStartX(e.pageX + scrollLeft);
-    //     }
-    //   }
-    // };
+        if (scrollLeft === 0) {
+          setStartX(e.pageX);
+        } else if (scrollWidth <= clientWidth + scrollLeft) {
+          setStartX(e.pageX + scrollLeft);
+        }
+      }
+    };
 
-    // const delay = 100;
-    // const onThrottleDragMove = throttle(onDragMove, delay);
+    const delay = 100;
+    const onThrottleDragMove = throttle(onDragMove, delay);
     //// scroll func end
 
     return(
@@ -79,38 +79,10 @@ export default function HomePage() {
         </Link>
       </div>
       }
-      {isAuthorized
-      ?
+      {isAuthorized &&
       <>
       <Segment className="home-content-top">
-        {/* <div className='home-quick-menu'
-             onMouseDown={onDragStart}
-             onMouseMove={isDrag ? onThrottleDragMove : null}
-             onMouseUp={onDragEnd}
-             onMouseLeave={onDragEnd}
-             ref={scrollRef}>
-        <Segment className='home-quick' color='blue'>
-          <Icon name='calendar alternate outline' size='big'/>
-          <div className='home-quick-name'>메뉴1</div>
-        </Segment>
-        <Segment className='home-quick' color='blue'>
-          <Icon name='sitemap' size='big'/>
-          <div className='home-quick-name'>메뉴2</div>
-        </Segment>
-        <Segment className='home-quick' color='blue'>
-          <Icon name='tag' size='big'/>
-          <div className='home-quick-name'>메뉴3</div>
-        </Segment>
-        <Segment className='home-quick' color='blue'>
-          <Icon name='cut' size='big'/>
-          <div className='home-quick-name'>메뉴4</div>
-        </Segment>
-        <Segment className='home-quick' color='blue'>
-          <Icon name='camera' size='big'/>
-          <div className='home-quick-name'>메뉴5</div>
-        </Segment>
-        </div> */}
-          {permission === 3 ?
+        {permission === 3 ?
           <Link to='/dashboard'>
           <Button className='home-content-new'>
               매장관리
@@ -128,15 +100,19 @@ export default function HomePage() {
             </Button.Content>
             </Button>
           </Link>
-          }
+        }
         <img src={robo} className='home-robo'/>
       </Segment>
       </>
-      :
-      <>
-      </>
       }
-
+      <div className='home-quick-menu' onMouseDown={onDragStart} onMouseMove={isDrag ? onThrottleDragMove : null} onMouseUp={onDragEnd} onMouseLeave={onDragEnd} ref={scrollRef}>
+        <Segment className='home-quick' color='blue'>
+          <div className='home-quick-name'>메뉴1</div>
+        </Segment>
+        <Segment className='home-quick' color='blue'>
+          <div className='home-quick-name'>메뉴2</div>
+        </Segment>
+      </div>
       <Grid container columns={2} className='home-content-main' divided relaxed stackable>
         <Grid.Column>
           <Segment className="home-content-intro">
@@ -159,32 +135,6 @@ export default function HomePage() {
             <Iphone/>
           </Segment>
         </Grid.Column>
-      </Grid>
-      <hr/>
-      <Grid container columns={1}>
-        <Grid.Column>
-          <Segment className="home-content-1">
-          <h4 className='sub-title'>번거로운 예약은 그만</h4>
-          <h2><span className='pcolor'>퀵 카드</span>로 해결</h2>
-          <Card
-            image={robo}
-            header='모던미용실'
-            meta='커트'
-            color='blue'
-            description='미용실 메모'
-            extra={<a><Icon name='street view'/>최종예약일 : 2020.08.21</a>}
-            className='quick-card'
-          />
-
-          {/* <Segment circular inverted style={square}>
-            <Header as='h2' inverted>
-              Step1
-            <Header.Subheader>$10.99</Header.Subheader>
-            </Header>
-          </Segment> */}
-
-        </Segment>
-      </Grid.Column>
       </Grid>
       <hr/>
       <Grid container>
