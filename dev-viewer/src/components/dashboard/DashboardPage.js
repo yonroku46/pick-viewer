@@ -546,7 +546,6 @@ export default function DashboardPage(props) {
                 :
                 <>
                 <Button color='violet' floated='right' onClick={() => setEditMode(true)}><Icon name='edit'/>수정</Button>
-                <Button inverted color='violet' floated='right'><Icon name='eye'/>프리뷰</Button>
                 </>
                 }
             </Label>
@@ -651,7 +650,6 @@ export default function DashboardPage(props) {
                 :
                 <>
                 <Button color='violet' floated='right' onClick={() => setEditMode(true)}><Icon name='edit'/>수정</Button>
-                <Button inverted color='violet' floated='right'><Icon name='eye'/>프리뷰</Button>
                 </>
                 }
             </Label>
@@ -706,7 +704,6 @@ export default function DashboardPage(props) {
                 :
                 <>
                 <Button color='violet' floated='right' onClick={() => setEditMode(true)}><Icon name='edit'/>수정</Button>
-                <Button inverted color='violet' floated='right'><Icon name='eye'/>프리뷰</Button>
                 </>
                 }
             </Label>
