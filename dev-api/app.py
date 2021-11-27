@@ -392,6 +392,7 @@ def imgUpload():
         except Exception as e:
             app.logger.info("Exception:{}".format(e))
             return (jsonify({'error': 'Not found'}), 404)
+
     # shop img upload
     elif call == 'shop':
         shop_cd = request.values['shop_cd']
@@ -412,6 +413,7 @@ def imgUpload():
         except Exception as e:
             app.logger.info("Exception:{}".format(e))
             return (jsonify({'error': 'Not found'}), 404)
+            
     # menu img upload
     elif call == 'menu':
         shop_cd = request.values['shop_cd']
