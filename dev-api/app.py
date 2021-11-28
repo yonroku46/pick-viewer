@@ -406,9 +406,7 @@ def imgUpload():
             rmList.remove(fileName)
             for target in rmList:
                 if target[0:2] == (img_index + '_'):
-                    os.remove(public + 'images/' + call + '/' + shop_cd + '/tmp/' + target)  
-            # query = gen.getQuery("sql/UPDATE_shopImg.sql", {"path": path, "shop_cd": shop_cd})
-            # mng.fetch(query)
+                    os.remove(public + 'images/' + call + '/' + shop_cd + '/tmp/' + target)
             return (jsonify(path), 200)
         except Exception as e:
             app.logger.info("Exception:{}".format(e))
