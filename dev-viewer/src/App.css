@@ -628,13 +628,6 @@ table.dashboard-table input {
   width: 100% !important;
   padding: 0.67857143em 1em;
 }
-.dashboard-data-progress-title {
-  margin-right: 0.5em;
-  margin-top: 0.25em !important;
-  margin-bottom: 0.25em !important;
-  width: 3%;
-  float: left;
-}
 .dashboard-data-progress {
   margin-top: 0.5em !important;
   margin-bottom: 0.5em !important;

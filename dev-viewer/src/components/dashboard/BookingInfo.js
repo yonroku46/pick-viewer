@@ -1,8 +1,11 @@
+import { Label, Icon } from 'semantic-ui-react'
 
 export default function BookingInfo(props) {
     return(
         <>
-        준비중입니다...
+        <Label className='dashboard-viewer-title' attached='top'>
+            <Icon name='chart bar outline'/>예약정보
+        </Label> 
         </>
     );
 }
