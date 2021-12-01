@@ -1,4 +1,4 @@
-import {useState} from 'react';
+import { useState } from 'react';
 import { Icon, Table, Button, Grid } from 'semantic-ui-react'
 import { Link as Scroll } from "react-scroll";
 import moment from 'moment';

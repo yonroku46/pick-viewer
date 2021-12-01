@@ -868,7 +868,6 @@ export default function DashboardPage(props) {
     }
 
     function menuEdit(targetId) {
-        console.log(targetId)
         if (modalMenu.menu_category.length === 0 || modalMenu.menu_name.length === 0 || modalMenu.menu_price.length === 0) {
             return alert('입력되지 않은 항목이 존재합니다.');
         }
