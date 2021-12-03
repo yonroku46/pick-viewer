@@ -1,8 +1,18 @@
 import { useState } from 'react';
 import { Label, Icon, Table, Button, Grid } from 'semantic-ui-react';
 import moment from 'moment';
+import { useDispatch, useSelector } from 'react-redux';
 
 export default function BookingInfo(props) {
+
+    // userSelector:redux값 획득
+    const getUserInfo = useSelector( (state) => state );
+    // dispatch:값변경요청등 수행
+    const dispatch = useDispatch();
+
+    console.log(getUserInfo);
+    // 처리만하고 결과값은 리턴하지않음
+    console.log(dispatch({type: 'function1'}));
 
     const [getMoment, setMoment] = useState(moment());
 
