@@ -44,6 +44,7 @@ export const favoriteList = "/api/favoriteList";
 
 // DashBoard
 export const shopRequestList = "/api/shopRequestList";
+export const shopBookingList = "/api/shopBookingList";
 export const userRequestConfirm = "/api/userRequestConfirm";
 export const saveShopInfo = "/api/saveShopInfo";
 export const imgClear = "/api/imgClear";

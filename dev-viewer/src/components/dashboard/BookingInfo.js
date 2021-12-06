@@ -1,7 +1,9 @@
-import { useState } from 'react';
-import { Label, Icon, Table, Button, Grid } from 'semantic-ui-react';
-import moment from 'moment';
+import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import { Label, Icon, Table, Button, Header, Segment } from 'semantic-ui-react';
+import moment from 'moment';
+import axios from 'axios';
+import * as api from '../../rest/server'
 
 export default function BookingInfo(props) {
 
@@ -10,11 +12,60 @@ export default function BookingInfo(props) {
     // dispatch:값변경요청등 수행
     const dispatch = useDispatch();
 
-    console.log(getUserInfo);
     // 처리만하고 결과값은 리턴하지않음
+    console.log(getUserInfo);
     console.log(dispatch({type: 'function1'}));
 
+    const [loading, setLoading] = useState(false);
     const [getMoment, setMoment] = useState(moment());
+    const [bookingList, setBookingList] = useState([]);
+
+    const categoryList = ['hairshop', 'restaurant', 'cafe'];
+    // const bookingList = bookingList;
+
+    useEffect(() => {
+        setLoading(true);
+        return new Promise(function(resolve, reject) {
+          axios
+            .get(api.shopBookingList, {
+              params: {
+                'shop_cd': '1'
+              }
+            })
+            .then(response => resolve(response.data))
+            .catch(error => reject(error.response))
+        })
+        .then(res => {
+          if (res !== null) {
+            setBookingList(res);
+            setLoading(false);
+          }     
+        })
+        .catch(err => {
+          alert("현재 서버와의 연결이 원활하지 않습니다. 관리자에게 문의해주세요.");
+          setLoading(false);
+        })
+    },[])
+    
+    function bookingInfo(targetId) {
+        const target = bookingList.filter(booking => booking.booking_cd === targetId);
+    }
+
+    const timeArr = [];
+    new Array(24).fill().forEach((acc, index) => {
+        timeArr.push(moment( {hour: index} ).format('HH:mm'));
+        // timeArr.push(moment({ hour: index, minute: 30 }).format('HH:mm'));
+    })
+
+    const startHour = 9;
+    const endHour = 24;
+
+    for (let i = 0; i < startHour; i++) {
+        timeArr.shift()
+    }
+    for (let i = 0; i <  23 - endHour; i++) {
+        timeArr.pop()
+    }
 
     const today = getMoment;
     const originYear = parseInt(moment().format('YYYY'));
@@ -93,12 +144,73 @@ export default function BookingInfo(props) {
       return result;
     }
 
+    function timeRender() {
+        let result = [];
+
+        const target = bookingList.filter(booking => booking.booking_time.match(props.today));
+        let cnt = target.length;
+
+        if (cnt !== 0) {
+            for (let i = 0; i < cnt; i++) {
+                result = result.concat(
+                    timeArr.map(time => (
+                    <Table.Row className='center'>
+                        {target[i].booking_time.substr(9).split(":")[0] ===  time.split(":")[0] &&
+                        <>
+                        <Table.Cell className='mypage-tt-time'>
+                            <span>{time}</span>
+                        </Table.Cell>
+                        <Table.Cell style={{fontWeight:'bold', textAlign:'left'}}>
+                            {target[i].booking_category === categoryList[0] &&
+                            <span>
+                                <Icon className='mypage-tt-icon' name='cut'/>
+                                {target[i].shop_name}
+                            </span>
+                            }
+                            {target[i].booking_category === categoryList[1] &&
+                            <span>
+                                <Icon className='mypage-tt-icon' name='food'/>
+                                {target[i].shop_name} ({target[i].customers}명)
+                            </span>
+                            }
+                            {target[i].booking_category === categoryList[2] &&
+                            <span>
+                                <Icon className='mypage-tt-icon' name='coffee'/>
+                                {target[i].shop_name} ({target[i].customers}명)
+                            </span>
+                            }
+                            <Icon name='angle double right' className='mypage-tt-info' onClick={() => bookingInfo(target[i].booking_cd)}/>
+                        </Table.Cell>
+                        </>
+                        }
+                    </Table.Row> 
+                    )
+                )
+                );
+            }
+        } else {
+            result = result.concat(
+            <Table.Cell colSpan='2' className='mypage-tt-time'>
+                <Segment className='mypage-tt-nodata' placeholder>
+                    <Header icon>
+                    <Icon name='qq'/>
+                    등록된 예약이 없습니다.
+                    </Header>
+                </Segment>
+            </Table.Cell>
+            );
+        }
+
+        return result;
+    }
+
     return(
         <>
         <Label className='dashboard-viewer-title' attached='top'>
             <Icon name='chart bar outline'/>예약정보
         </Label>
-        <Table unstackable className='booking-table'>
+        <div style={{marginBottom:'4em'}}></div>
+        <Table unstackable>
             <Table.Header>
                 <Table.Row>
                     <Table.HeaderCell colSpan='7' className='mypage-table-month'>
@@ -121,6 +233,19 @@ export default function BookingInfo(props) {
                 {calendarRender()}
             </Table.Body>
         </Table>
+
+        <Table unstackable>
+        <Table.Header>
+            <Table.Row>
+                <Table.HeaderCell className='mypage-tt-header'>시간대</Table.HeaderCell>
+                <Table.HeaderCell>예약일정</Table.HeaderCell>
+            </Table.Row>
+        </Table.Header>
+
+        <Table.Body>
+            {timeRender()}
+        </Table.Body>
+    </Table>
     </>
     );
 }
