@@ -543,6 +543,22 @@ def shopRequestList():
         app.logger.info("Exception:{}".format(e))
         return (jsonify({'error': 'Not found'}), 404)
 
+@app.route('/api/shopBookingList', methods=['POST'])
+def shopBookingList():
+    params = request.get_json()
+    shop_cd = params['shop_cd']
+    try:
+        query = gen.getQuery("sql/SELECT_shopBookingList.sql", {"shop_cd": shop_cd})
+        rows = mng.fetch_all(query)
+
+        for row in rows:
+            row['booking_time'] = row['booking_time'].strftime("%Y%m%d %H:%M:%S")
+        
+        return (jsonify(rows), 200)
+    except Exception as e:
+        app.logger.info("Exception:{}".format(e))
+        return (jsonify({'error': 'Not found'}), 404)
+
 @app.route('/api/saveShopInfo', methods=['POST'])
 def saveShopInfo():
     params = request.get_json()
