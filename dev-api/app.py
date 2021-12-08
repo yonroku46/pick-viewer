@@ -543,10 +543,10 @@ def shopRequestList():
         app.logger.info("Exception:{}".format(e))
         return (jsonify({'error': 'Not found'}), 404)
 
-@app.route('/api/shopBookingList', methods=['POST'])
+@app.route('/api/shopBookingList', methods=['GET'])
 def shopBookingList():
-    params = request.get_json()
-    shop_cd = params['shop_cd']
+    params = request.args
+    shop_cd = params.get('shop_cd')
     try:
         query = gen.getQuery("sql/SELECT_shopBookingList.sql", {"shop_cd": shop_cd})
         rows = mng.fetch_all(query)
