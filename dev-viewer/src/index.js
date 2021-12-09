@@ -10,12 +10,17 @@ import 'semantic-ui-css/semantic.min.css'
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 
-const userInfo = null;
+const stateMap = {};
 
-function reducer(state = userInfo, action) {
-  console.log(action.type)
-  if (action.type === 'function1') {
-    state = 'data';
+function reducer(state = stateMap, action) {
+  const key = action.key;
+  const val = action.val;
+  console.log(key,val)
+  if (action.type === 'add') {
+    stateMap.set(key, val);
+    return state;
+  } else if (action.type === 'del') {
+    stateMap.delete(key);
     return state;
   } else {
     return state;

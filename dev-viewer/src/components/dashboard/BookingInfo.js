@@ -8,20 +8,23 @@ import * as api from '../../rest/server'
 export default function BookingInfo(props) {
 
     // userSelector:redux값 획득
-    const getUserInfo = useSelector( (state) => state );
+    const state = useSelector( (state) => state );
     // dispatch:값변경요청등 수행
     const dispatch = useDispatch();
-
     // 처리만하고 결과값은 리턴하지않음
-    console.log(getUserInfo);
-    console.log(dispatch({type: 'function1'}));
+
+    function add(val) {
+        dispatch({type: 'add', key: 'ktest', val: val})
+    }
+    function check() {
+        console.log(state);
+    }
 
     const [loading, setLoading] = useState(false);
     const [getMoment, setMoment] = useState(moment());
     const [bookingList, setBookingList] = useState([]);
 
     const categoryList = ['hairshop', 'restaurant', 'cafe'];
-    // const bookingList = bookingList;
 
     useEffect(() => {
         setLoading(true);
@@ -210,6 +213,8 @@ export default function BookingInfo(props) {
             <Icon name='chart bar outline'/>예약정보
         </Label>
         <div style={{marginBottom:'4em'}}></div>
+        <Button onClick={() => add('test')}>add</Button>
+        <Button onClick={() => check()}>check</Button>
         <Table unstackable>
             <Table.Header>
                 <Table.Row>
