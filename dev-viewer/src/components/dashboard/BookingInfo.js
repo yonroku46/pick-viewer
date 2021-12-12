@@ -8,16 +8,16 @@ import * as api from '../../rest/server'
 export default function BookingInfo(props) {
 
     // userSelector:redux값 획득
-    const state = useSelector( (state) => state );
+    const value = useSelector( (state) => state );
     // dispatch:값변경요청등 수행
     const dispatch = useDispatch();
     // 처리만하고 결과값은 리턴하지않음
 
-    function add(val) {
-        dispatch({type: 'add', key: 'ktest', val: val})
+    function add() {
+        dispatch({type: 'add'})
     }
     function check() {
-        console.log(state);
+        console.log(value);
     }
 
     const [loading, setLoading] = useState(false);
