@@ -968,34 +968,23 @@ table.dashboard-table input {
   filter: saturate(100%);
 }
 
-.home-main h1 {
+.home-main {
   padding-top: 35vh;
   padding-bottom: 2vh;
   margin-top: 0px !important;
   position: relative;
-  font-size: 2em;
 }
 .home-main-btn {
   border: #fff 2px solid !important;
   color: #fff !important;
-  font-size: 1.2em !important;
-  font-weight: bold;
+  font-size: 1.5em !important;
   border-radius: 20px !important;
   padding: 10px 30px;
   margin-bottom: 30px;
   position: relative;
-  width: 120px;
+  width: 160px;
   margin-left: auto;
   margin-right: auto;
-}
-
-.home-content-top {
-  background-color: rgb(0, 153, 255, 0.25) !important;
-  border: none !important;
-  border-radius: 0px !important;
-  box-shadow: none !important;
-  margin-top: 0px !important;
-  height: 94px !important;
 }
 
 .home-quick-menu {
@@ -1028,14 +1017,6 @@ table.dashboard-table input {
   margin-top: 6px;
 }
 
-.home-content-new {
-  margin-top: 8px !important;
-  background: #fff !important;
-  color: rgb(0, 153, 255, 0.6) !important;
-  border-radius: 30px !important;
-  font-size: 20px !important;
-}
-
 .home-robo {
   position: absolute;
   width: 65px;
@@ -1053,7 +1034,18 @@ table.dashboard-table input {
 }
 
 .home-content-main {
-  margin-top: 24px !important;
+  margin-top: 12px !important;
+  margin-bottom: 12px !important;
+  background-color: #def;
+  border-radius: 12px;
+  z-index: 1000 !important;
+}
+
+.main-top {
+  margin-top: -20vh !important;
+}
+.main-middle {
+  margin-top: 4vh !important;
 }
 
 .home-content-1 {

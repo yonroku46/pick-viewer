@@ -66,54 +66,62 @@ export default function HomePage() {
 
     return(
     <>
-     {isAuthorized
-     ?
-     <></>
-     :
       <div className="home-main">
-        <h1>바쁜일상<br/>슬기로운 시간활용</h1>
+        <span>서비스 오픈!<br/>MAX 50% off</span>
         <Link to='/login'>
           <Button.Content className='home-main-btn circle-h' visible>
-          <Icon name='play' style={{margin:'0px'}}/>
+            둘러보기
           </Button.Content>
         </Link>
       </div>
-      }
-      {isAuthorized &&
-      <>
-      <Segment className="home-content-top">
-        {permission === 3 ?
-          <Link to='/dashboard'>
-          <Button className='home-content-new'>
-              매장관리
-              <Icon name='arrow right'/>
+      <Grid container className='home-content-main main-top' divided relaxed stackable>
+        {isAuthorized ?
+        <Segment>
+          {permission === 3 ?
+            <Link to='/dashboard'>
+              <Button>
+                매장관리<Icon name='arrow right'/>
+              </Button>
+            </Link>
+            :
+            <Link to='/mypage'>
+              <Button>
+                마이페이지<Icon name='arrow right'/>
+              </Button>
+            </Link>
+          }
+          <img src={robo} className='home-robo'/>
+        </Segment>
+        :
+        <Segment>
+          <Link to='/login'>
+            <Button>
+              로그인/회원가입<Icon name='arrow right'/>
             </Button>
           </Link>
-          :
-          <Link to='/mypage'>
-          <Button className='home-content-new' animated>
-            <Button.Content visible>
-              예약 확인하기
-            </Button.Content>
-            <Button.Content hidden>
-              <Icon name='arrow right'/>마이페이지
-            </Button.Content>
-            </Button>
-          </Link>
+        </Segment>
         }
-        <img src={robo} className='home-robo'/>
-      </Segment>
-      </>
-      }
-      <div className='home-quick-menu' onMouseDown={onDragStart} onMouseMove={isDrag ? onThrottleDragMove : null} onMouseUp={onDragEnd} onMouseLeave={onDragEnd} ref={scrollRef}>
-        <Segment className='home-quick' color='blue'>
-          <div className='home-quick-name'>메뉴1</div>
-        </Segment>
-        <Segment className='home-quick' color='blue'>
-          <div className='home-quick-name'>메뉴2</div>
-        </Segment>
-      </div>
-      <Grid container columns={2} className='home-content-main' divided relaxed stackable>
+      </Grid>
+      <Grid container className='home-content-main' divided relaxed stackable>
+        <div className='home-quick-menu' onMouseDown={onDragStart} onMouseMove={isDrag ? onThrottleDragMove : null} onMouseUp={onDragEnd} onMouseLeave={onDragEnd} ref={scrollRef}>
+          <Segment className='home-quick' color='blue'>
+            <div className='home-quick-name'>메뉴1</div>
+          </Segment>
+          <Segment className='home-quick' color='blue'>
+            <div className='home-quick-name'>메뉴2</div>
+          </Segment>
+          <Segment className='home-quick' color='blue'>
+            <div className='home-quick-name'>메뉴3</div>
+          </Segment>
+          <Segment className='home-quick' color='blue'>
+            <div className='home-quick-name'>메뉴4</div>
+          </Segment>
+          <Segment className='home-quick' color='blue'>
+            <div className='home-quick-name'>메뉴5</div>
+          </Segment>
+        </div>
+      </Grid>
+      <Grid container columns={2} className='home-content-main main-middle' divided relaxed stackable>
         <Grid.Column>
           <Segment className="home-content-intro">
             <h2 className="home-content-intro-title">예약을 쉽고<br/><span className='pcolor'>스마트</span>하게!</h2>
@@ -136,8 +144,7 @@ export default function HomePage() {
           </Segment>
         </Grid.Column>
       </Grid>
-      <hr/>
-      <Grid container>
+      <Grid className='home-content-main' container>
         <Grid.Column>
           <Segment className="home-content-2">
           <h4 className='sub-title'>번거로움을 줄이다</h4>
@@ -192,32 +199,6 @@ export default function HomePage() {
           </Segment>
         </Grid.Column>
       </Grid>
-      <hr/>
-      <Grid container>
-        <Grid.Column>
-          <Segment className="home-content-2">
-          <h4 className='pcolor'>Pick앱 서비스</h4>
-          <h2 className='center'>스타일이 고민되면?<br/>일단 <span className='pcolor'>전문가</span>에게 물어보자!</h2>
-            <Card.Group itemsPerRow={3}>
-              <Card raised image={src} />
-              <Card raised image={src} />
-              <Card raised image={src} />
-              <Card raised image={src} />
-              <Card raised image={src} />
-              <Card raised image={src} />
-            </Card.Group>
-          </Segment>
-        </Grid.Column>
-      </Grid>
-      {/* <hr />
-      <Grid container>
-        <Grid.Column>
-          <Segment className="home-content-2">
-            <h4 className='pcolor'>서브타이틀</h4>
-            <h2 className='center'>타이틀<br/>여기가<span className='pcolor'>포인트</span>입니다</h2>
-          </Segment>
-        </Grid.Column>
-      </Grid> */}
     </>
     )
   };
