@@ -67,17 +67,18 @@ export default function HomePage() {
     return(
     <>
       <div className="home-main">
-        <span>서비스 오픈!<br/>MAX 50% off</span>
+        <p className='home-main-title'>서비스 오픈!</p>
+        <p className='home-main-subtitle'>MAX 50% off</p>
         <Link to='/login'>
           <Button.Content className='home-main-btn circle-h' visible>
             둘러보기
           </Button.Content>
         </Link>
       </div>
-      <Grid container className='home-content-main main-top' divided relaxed stackable>
+
+      <Grid container className='home-content-main' divided relaxed stackable>
         {isAuthorized ?
-        <Segment>
-          {permission === 3 ?
+          permission === 3 ?
             <Link to='/dashboard'>
               <Button>
                 매장관리<Icon name='arrow right'/>
@@ -89,19 +90,16 @@ export default function HomePage() {
                 마이페이지<Icon name='arrow right'/>
               </Button>
             </Link>
-          }
-          <img src={robo} className='home-robo'/>
-        </Segment>
+          // <img src={robo} className='home-robo'/>
         :
-        <Segment>
-          <Link to='/login'>
-            <Button>
-              로그인/회원가입<Icon name='arrow right'/>
-            </Button>
-          </Link>
-        </Segment>
+        <Link to='/login'>
+          <Button>
+            로그인/회원가입<Icon name='arrow right'/>
+          </Button>
+        </Link>
         }
       </Grid>
+
       <Grid container className='home-content-main' divided relaxed stackable>
         <div className='home-quick-menu' onMouseDown={onDragStart} onMouseMove={isDrag ? onThrottleDragMove : null} onMouseUp={onDragEnd} onMouseLeave={onDragEnd} ref={scrollRef}>
           <Segment className='home-quick' color='blue'>
@@ -121,7 +119,8 @@ export default function HomePage() {
           </Segment>
         </div>
       </Grid>
-      <Grid container columns={2} className='home-content-main main-middle' divided relaxed stackable>
+
+      <Grid container columns={2} className='home-content-main' divided relaxed stackable>
         <Grid.Column>
           <Segment className="home-content-intro">
             <h2 className="home-content-intro-title">예약을 쉽고<br/><span className='pcolor'>스마트</span>하게!</h2>
@@ -144,6 +143,7 @@ export default function HomePage() {
           </Segment>
         </Grid.Column>
       </Grid>
+      
       <Grid className='home-content-main' container>
         <Grid.Column>
           <Segment className="home-content-2">

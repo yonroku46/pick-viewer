@@ -12,6 +12,10 @@
   margin-top: 2px;
 }
 
+.background {
+  background-color: def !important;
+}
+
 /* public */
 body {
   font-family: "NotoSans" !important;
@@ -974,6 +978,14 @@ table.dashboard-table input {
   margin-top: 0px !important;
   position: relative;
 }
+.home-main-title {
+  font-size: 2.5em;
+  margin-bottom: -0.5em;
+}
+.home-main-subtitle {
+  font-size: 3.5em;
+  margin-bottom: 0.25em;
+}
 .home-main-btn {
   border: #fff 2px solid !important;
   color: #fff !important;
@@ -1039,13 +1051,6 @@ table.dashboard-table input {
   background-color: #def;
   border-radius: 12px;
   z-index: 1000 !important;
-}
-
-.main-top {
-  margin-top: -20vh !important;
-}
-.main-middle {
-  margin-top: 4vh !important;
 }
 
 .home-content-1 {

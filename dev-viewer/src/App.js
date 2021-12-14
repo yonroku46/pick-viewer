@@ -179,7 +179,7 @@ export default function App() {
       <div className="app-body">
         <Sidebar.Pushable as={Segment} className="body-segment">
           <Sidebar.Pusher dimmed={visible}>
-            <Segment basic>
+            <Segment basic className='background'>
               <Switch>
                 <Route exact path="/" component={HomePage} />
                 <Route exact path="/booking/" component={BookingPage} />
