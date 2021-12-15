@@ -984,6 +984,7 @@ table.dashboard-table input {
 }
 .home-main-subtitle {
   font-size: 3.5em;
+  font-weight: bold;
   margin-bottom: 0.25em;
 }
 .home-main-btn {
@@ -1050,7 +1051,15 @@ table.dashboard-table input {
   margin-bottom: 12px !important;
   background-color: #def;
   border-radius: 12px;
-  z-index: 1000 !important;
+  z-index: 500 !important;
+  position: inherit;
+  padding: 1em 0 !important;
+}
+
+.content1 {
+  margin-top: -12vh !important;
+  margin-bottom: 4vh !important;
+  height: 10vh;
 }
 
 .home-content-1 {
