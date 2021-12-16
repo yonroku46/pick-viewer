@@ -67,6 +67,7 @@ export default function HomePage() {
     return(
     <>
       <div className="home-main">
+        <p className='home-main-title-mini'>Only for you</p>
         <p className='home-main-title'>서비스 오픈!</p>
         <p className='home-main-subtitle'>MAX 50% off</p>
         <Link to='/login'>
@@ -76,7 +77,13 @@ export default function HomePage() {
         </Link>
       </div>
 
-      <Grid container className='home-content-main' divided relaxed stackable>
+      <Grid container className='home-content-main content1' divided relaxed stackable>
+        <div className='content1-left'>
+          <p className='content1-title'>아직 등록되지 않은 매장이 있나요?</p>
+          <p className='content1-subtitle'>소개를 통해 등록된 가게와 유저분들에게는</p>
+          <p className='content1-subtitle'>다양한 혜택을 준비하고 있습니다!</p>
+        </div>
+        <div className='content1-right'>
         {isAuthorized ?
           permission === 3 ?
             <Link to='/dashboard'>
@@ -98,6 +105,7 @@ export default function HomePage() {
           </Button>
         </Link>
         }
+        </div>
       </Grid>
 
       <Grid container className='home-content-main' divided relaxed stackable>
@@ -143,7 +151,7 @@ export default function HomePage() {
           </Segment>
         </Grid.Column>
       </Grid>
-      
+
       <Grid className='home-content-main' container>
         <Grid.Column>
           <Segment className="home-content-2">

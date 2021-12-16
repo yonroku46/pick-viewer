@@ -978,6 +978,13 @@ table.dashboard-table input {
   margin-top: 0px !important;
   position: relative;
 }
+.home-main-title-mini {
+  font-size: 1em;
+  margin-bottom: 0.25em;
+  font-weight: bold;
+  color: #A291FB;
+  letter-spacing: 0.5em;
+}
 .home-main-title {
   font-size: 2.5em;
   margin-bottom: -0.5em;
@@ -985,7 +992,7 @@ table.dashboard-table input {
 .home-main-subtitle {
   font-size: 3.5em;
   font-weight: bold;
-  margin-bottom: 0.25em;
+  margin-bottom: 0.5em;
 }
 .home-main-btn {
   border: #fff 2px solid !important;
@@ -1060,6 +1067,21 @@ table.dashboard-table input {
   margin-top: -12vh !important;
   margin-bottom: 4vh !important;
   height: 10vh;
+}
+.content1-title {
+  font-size: 1.5em;
+  font-weight: bold;
+  float: left;
+}
+.content1-subtitle {
+  font-size: 1em;
+  float: left;
+}
+.content1-left {
+  align-self: center;
+}
+.content1-right {
+  align-self: center;
 }
 
 .home-content-1 {
