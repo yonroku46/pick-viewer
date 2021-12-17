@@ -973,7 +973,7 @@ table.dashboard-table input {
 }
 
 .home-main {
-  padding-top: 35vh;
+  padding-top: 30vh;
   padding-bottom: 2vh;
   margin-top: 0px !important;
   position: relative;
@@ -1064,9 +1064,10 @@ table.dashboard-table input {
 }
 
 .content1 {
-  margin-top: -12vh !important;
+  margin-top: -16vh !important;
   margin-bottom: 4vh !important;
-  height: 10vh;
+  padding: 0.5em 0.25em !important;
+  height: 14vh;
 }
 .content1-title {
   font-size: 1.5em;
@@ -1079,9 +1080,12 @@ table.dashboard-table input {
 }
 .content1-left {
   align-self: center;
+  width: 80%;
 }
 .content1-right {
   align-self: center;
+  margin-right: 0;
+  margin-left: auto;
 }
 
 .home-content-1 {
