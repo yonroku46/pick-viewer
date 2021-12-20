@@ -356,7 +356,7 @@ export default function ShopPage(props) {
       }
 
       {/* 샵 이미지 탭 */}
-      <Segment className="review-main-image" placeholder>
+      <Segment className="detailpage-main-image" placeholder>
         <Slider {...settings}>
           {shopImages.map(img =>
             <Image src={api.imgRender(img)}/>
