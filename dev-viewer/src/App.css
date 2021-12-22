@@ -23,6 +23,9 @@ body {
 h1, h2, h3, h4, h5, div, a, button {
   font-family: "NotoSans" !important;
 }
+.invert {
+  filter: invert(1) !important;
+}
 .pcolor {
   color: rgb(0, 153, 255);
   font-weight: bold;
@@ -44,7 +47,7 @@ h1, h2, h3, h4, h5, div, a, button {
   margin-top: 30px !important;
 }
 .menubar {
-  top: 51px !important;
+  top: 50px !important;
 }
 .google-map {
   position: relative !important;
@@ -72,17 +75,17 @@ h1, h2, h3, h4, h5, div, a, button {
 }
 
 .app-header {
-  position: -webkit-sticky;
   position: sticky;
   top: 0;
   z-index: 2000;
-  background: rgb(255, 255, 255);
+  background: rgb(0, 0, 0, 0.2);
   width: 100%;
   display: flex;
   color: #000;
   padding: 5px 10px;
   font-size: 20px;
-  border-bottom: rgb(200, 200,200, 0.6) 1px solid;
+  margin-bottom: -50px;
+  /* border-bottom: rgb(200, 200,200, 0.6) 1px solid; */
 }
 
 .app-body {
@@ -258,6 +261,7 @@ hr {
 
 /* LoginPage */
 .login-main {
+  margin-top: 50px;
   min-height: calc(100vh - 81px);
 }
 .login-form {
@@ -285,6 +289,7 @@ hr {
 
 /* LoginPage - signup */
 .signup-main {
+  margin-top: 50px;
   display: block;
   min-height: calc(100vh - 81px);
 }
@@ -348,6 +353,7 @@ hr {
 /* DashboardPage */
 .dashboard-main {
   display: block;
+  margin-top: 50px !important;
   margin: 1em 8vw;
   min-height: calc(100vh - 81px);
 }
@@ -642,6 +648,7 @@ table.dashboard-table input {
 /* sp */
 @media only screen and (max-width: 767px) {
   .dashboard-main {
+    margin-top: 50px;
     margin: 1em 0vw;
   }
   .dashboard-menu {
@@ -702,6 +709,7 @@ table.dashboard-table input {
 
 /* StylesPage */
 .styles-main {
+  margin-top: 50px;
   background-color: rgb(0, 0, 0, 0.1);
   background-size: cover;
   display: block;
@@ -711,6 +719,7 @@ table.dashboard-table input {
 
 /* ContactPage */
 .contact-main {
+  margin-top: 50px;
   background-color: rgb(0, 0, 0, 0.1);
   background-size: cover;
   display: block;
@@ -720,6 +729,7 @@ table.dashboard-table input {
 
 /* EmptyPage */
 .empty-main {
+  margin-top: 50px;
   background-size: cover;
   display: block;
   min-height: calc(100vh - 81px);
@@ -733,6 +743,7 @@ table.dashboard-table input {
 
 /* MyPage */
 .mypage-main {
+  margin-top: 50px;
   min-height: calc(100vh - 81px);
 }
 .mypage-booking-date {
@@ -963,22 +974,21 @@ table.dashboard-table input {
 
 /* HomePage */
 .home-main {
+  background-position: center center;
   background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.7)),url('./img/back1.jpg');
   background-repeat: no-repeat;
   background-size: cover;
   display: block;
   color: #fff;
-  min-height: calc(100vh - 51px);
+  min-height: 100vh;
   filter: saturate(100%);
-}
-
-.home-main {
-  padding-top: 30vh;
+  padding-top: 38vh;
   padding-bottom: 2vh;
   margin-top: 0px !important;
   position: relative;
 }
-.home-main-title-mini {
+
+.home-main-title-top {
   font-size: 1em;
   margin-bottom: 0.25em;
   font-weight: bold;
@@ -989,7 +999,7 @@ table.dashboard-table input {
   font-size: 2.5em;
   margin-bottom: -0.5em;
 }
-.home-main-subtitle {
+.home-main-title-bottom {
   font-size: 3.5em;
   font-weight: bold;
   margin-bottom: 0.5em;
@@ -1008,7 +1018,6 @@ table.dashboard-table input {
 }
 
 .home-quick-menu {
-  margin-top: -6px;
   display: flex;
   overflow-x: scroll;
 }
@@ -1018,12 +1027,12 @@ table.dashboard-table input {
 }
 
 .home-quick {
-  padding-top: 16px !important;
   margin-top: 0px !important;
-  margin-left: 10px !important;
-  margin-right: 10px !important;
-  width: 150px;
-  height: 80px;
+  margin-left: 0.5em !important;
+  margin-right: 0.5em !important;
+  padding: 0 !important;
+  width: 350px;
+  height: 12.5vh;
   cursor: pointer;
 }
 
@@ -1034,13 +1043,6 @@ table.dashboard-table input {
 
 .home-quick-name {
   font-weight: bold;
-  margin-top: 6px;
-}
-
-.home-robo {
-  position: absolute;
-  width: 65px;
-  margin-top: 18px;
 }
 
 .ui.segment {
@@ -1056,27 +1058,32 @@ table.dashboard-table input {
 .home-content-main {
   margin-top: 12px !important;
   margin-bottom: 12px !important;
-  background-color: #def;
+  background-color: rgb(255, 255, 255, 0.7);
+  border: rgb(220, 220, 220, 0.7) solid 1px;
   border-radius: 12px;
   z-index: 500 !important;
   position: inherit;
   padding: 1em 0 !important;
 }
 
+/* pc */
 .content1 {
-  margin-top: -16vh !important;
+  margin-top: -18vh !important;
   margin-bottom: 4vh !important;
-  padding: 0.5em 0.25em !important;
+  padding: 0.5em 1em !important;
   height: 14vh;
 }
 .content1-title {
   font-size: 1.5em;
   font-weight: bold;
-  float: left;
+  margin-bottom: 0.25em;
+  text-align: left;
 }
 .content1-subtitle {
   font-size: 1em;
-  float: left;
+  margin-left: 0.5em;
+  margin-bottom: 0;
+  text-align: left;
 }
 .content1-left {
   align-self: center;
@@ -1086,6 +1093,48 @@ table.dashboard-table input {
   align-self: center;
   margin-right: 0;
   margin-left: auto;
+}
+
+/* sp */
+@media only screen and (max-width: 767px) {
+  .ui.relaxed.grid.container.content1 {
+    margin-left: 1em !important;
+    margin-right: 1em !important;
+    margin-top: -20vh !important;
+    height: 18vh;
+  }
+  .content1-left {
+    align-self: center;
+    width: 100%;
+    padding-left: 0 !important;
+  }
+  .content1-right {
+    margin-right: 0;
+    margin-left: auto;
+    padding: 0;
+  }
+}
+
+/* pc */
+.content2 {
+  margin-top: 5vh !important;
+  padding: 0.5em 0.5em !important;
+  height: 14.5vh;
+}
+.content2-quick {
+  margin-left: -0.5em;
+  margin-right: 1em;
+  border-radius: 0.5em;
+  width: 290px;
+  height: 12.5vh;
+  border: #fff solid 1px;
+  background-position: center;
+}
+/* sp */
+@media only screen and (max-width: 767px) {
+  .content2 {
+    margin-top: 3vh !important;
+  }
 }
 
 .home-content-1 {
@@ -1100,7 +1149,7 @@ table.dashboard-table input {
   float: right;
 }
 
-/* mobile */
+/* sp */
 @media only screen and (max-width: 767px) {
   .home-content-intro { 
     text-align: center;
@@ -1115,9 +1164,6 @@ table.dashboard-table input {
   }
   .home-content-2-right {
     width: 100% !important;
-  }
-  .home-main {
-    background-image: linear-gradient(rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.5)),url('./img/back2.jpg');
   }
 }
 /* pc */
@@ -1134,13 +1180,11 @@ table.dashboard-table input {
     font-size: 18px;
     padding-bottom: 20px;
   }
-  /* .home-quick-menu {
-    justify-content: center;
-  } */
 }
 
 /* BookingPage */
 .booking-main {
+  margin-top: 50px;
   min-height: calc(100vh - 81px);
 }
 .booking-main-category {
@@ -1331,7 +1375,8 @@ table.dashboard-table input {
 
 /* sp */
 @media only screen and (max-width: 767px){
-  .detailpage{
+  .detailpage {
+    margin-top: 50px;
     padding: 0px 0px !important;
   }
   .booking-modal-exit {
@@ -1393,6 +1438,7 @@ table.dashboard-table input {
 
 /* detailpage */
 .detailpage {
+  margin-top: 50px;
   padding-left: 25vw;
   padding-right: 25vw;
   min-height: calc(100vh - 81px);
@@ -1686,10 +1732,6 @@ a.detailpage-tel:hover {
 .review-tab-icon:hover {
   cursor: pointer;
   opacity: 0.75;
-}
-.review-main-image {
-  padding: 0px !important;
-  margin-bottom: 0px !important;
 }
 .review-info {
   margin-top: -14px !important;

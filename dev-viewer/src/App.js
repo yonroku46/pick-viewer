@@ -104,9 +104,9 @@ export default function App() {
       {/* Header */}
       <div className="app-header">
         <div className="menu-left">
-          <Link to="/" ><img className="logo" src={logo}/></Link>
+          <Link to="/" ><img className="logo invert" src={logo}/></Link>
         </div>
-        <div className="menu-right">
+        <div className="menu-right invert">
           <div id="menu-icon" className={visible ? 'open': null} onClick={toggleMenu} >
             <span></span>
             <span></span>

@@ -67,10 +67,10 @@ export default function HomePage() {
     return(
     <>
       <div className="home-main">
-        <p className='home-main-title-mini'>Only for you</p>
+        <p className='home-main-title-top'>Only for you</p>
         <p className='home-main-title'>서비스 오픈!</p>
-        <p className='home-main-subtitle'>MAX 50% off</p>
-        <Link to='/login'>
+        <p className='home-main-title-bottom'>MAX 50% off</p>
+        <Link to='/booking/hairshop'>
           <Button.Content className='home-main-btn circle-h' visible>
             둘러보기
           </Button.Content>
@@ -79,52 +79,68 @@ export default function HomePage() {
 
       <Grid container className='home-content-main content1' divided relaxed stackable>
         <div className='content1-left'>
-          <p className='content1-title'>아직 등록되지 않은 매장이 있나요?</p>
-          <p className='content1-subtitle'>소개를 통해 등록된 가게와 유저분들에게는</p>
-          <p className='content1-subtitle'>다양한 혜택을 준비하고 있습니다!</p>
+          <p className='content1-title'>{isAuthorized ? '오늘도 멋진 하루 되세요!' : '아직 회원이 아니신가요?'}</p>
+          <p className='content1-subtitle'>저희 서비스는 여러분의 소중한 데이터를 바탕으로</p>
+          <p className='content1-subtitle'>보다 나은 서비스를 제공하고 있습니다.</p>
         </div>
         <div className='content1-right'>
         {isAuthorized ?
           permission === 3 ?
             <Link to='/dashboard'>
-              <Button>
+              <Button color='black'>
                 매장관리<Icon name='arrow right'/>
               </Button>
             </Link>
             :
             <Link to='/mypage'>
-              <Button>
+              <Button color='black'>
                 마이페이지<Icon name='arrow right'/>
               </Button>
             </Link>
-          // <img src={robo} className='home-robo'/>
         :
         <Link to='/login'>
-          <Button>
-            로그인/회원가입<Icon name='arrow right'/>
+          <Button color='black'>
+            로그인 / 회원가입<Icon name='arrow right'/>
           </Button>
         </Link>
         }
         </div>
       </Grid>
-
-      <Grid container className='home-content-main' divided relaxed stackable>
+      
+      <Grid container className='home-content-main content2' divided relaxed stackable>
         <div className='home-quick-menu' onMouseDown={onDragStart} onMouseMove={isDrag ? onThrottleDragMove : null} onMouseUp={onDragEnd} onMouseLeave={onDragEnd} ref={scrollRef}>
-          <Segment className='home-quick' color='blue'>
-            <div className='home-quick-name'>메뉴1</div>
-          </Segment>
-          <Segment className='home-quick' color='blue'>
-            <div className='home-quick-name'>메뉴2</div>
-          </Segment>
-          <Segment className='home-quick' color='blue'>
-            <div className='home-quick-name'>메뉴3</div>
-          </Segment>
-          <Segment className='home-quick' color='blue'>
-            <div className='home-quick-name'>메뉴4</div>
-          </Segment>
-          <Segment className='home-quick' color='blue'>
-            <div className='home-quick-name'>메뉴5</div>
-          </Segment>
+          <Link to={`/booking/`}>
+              <button className='content2-quick' style={{backgroundImage: 'linear-gradient(rgba(0, 0, 0, 0.05), rgba(0, 0, 0, 0.45))'}}>
+                  <div>
+                      test
+                  </div>
+                  <span className='shopmodal-rating'><Icon name='chevron circle right'/></span>
+              </button>
+          </Link>
+          <Link to={`/booking/`}>
+              <button className='content2-quick' style={{marginLeft: '-0.5em', marginRight: '1em', borderRadius: '0.5em', width: '290px', height: '12.5vh', backgroundPosition: 'center', backgroundImage: 'linear-gradient(rgba(0, 0, 0, 0.05), rgba(0, 0, 0, 0.45))'}}>
+                  <div>
+                      test
+                  </div>
+                  <span className='shopmodal-rating'><Icon name='chevron circle right'/></span>
+              </button>
+          </Link>
+          <Link to={`/booking/`}>
+              <button className='content2-quick' style={{marginLeft: '-0.5em', marginRight: '1em', borderRadius: '0.5em', width: '290px', height: '12.5vh', backgroundPosition: 'center', backgroundImage: 'linear-gradient(rgba(0, 0, 0, 0.05), rgba(0, 0, 0, 0.45))'}}>
+                  <div>
+                      test
+                  </div>
+                  <span className='shopmodal-rating'><Icon name='chevron circle right'/></span>
+              </button>
+          </Link>
+          <Link to={`/booking/`}>
+              <button className='content2-quick' style={{marginLeft: '-0.5em', marginRight: '1em', borderRadius: '0.5em', width: '290px', height: '12.5vh', backgroundPosition: 'center', backgroundImage: 'linear-gradient(rgba(0, 0, 0, 0.05), rgba(0, 0, 0, 0.45))'}}>
+                  <div>
+                      test
+                  </div>
+                  <span className='shopmodal-rating'><Icon name='chevron circle right'/></span>
+              </button>
+          </Link>
         </div>
       </Grid>
 
@@ -152,7 +168,7 @@ export default function HomePage() {
         </Grid.Column>
       </Grid>
 
-      <Grid className='home-content-main' container>
+      <Grid className='home-content-main' container divided relaxed stackable>
         <Grid.Column>
           <Segment className="home-content-2">
           <h4 className='sub-title'>번거로움을 줄이다</h4>
