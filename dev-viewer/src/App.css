@@ -46,9 +46,6 @@ h1, h2, h3, h4, h5, div, a, button {
 .quick-card {
   margin-top: 30px !important;
 }
-.menubar {
-  top: 50px !important;
-}
 .google-map {
   position: relative !important;
   width: 100% !important;
@@ -114,8 +111,10 @@ h1, h2, h3, h4, h5, div, a, button {
 }
 .menu-right {
   width: calc(35% - 4px);
+  z-index: 2000;
   height: 40px;
   text-align: right;
+  margin-left: 1em;
 }
 
 .menu-user {
@@ -131,8 +130,9 @@ h1, h2, h3, h4, h5, div, a, button {
 }
 
 .menu-language-text {
-  font-size: 13px;
-  margin-left: 72px !important;
+  text-align: left;
+  font-size: 12px;
+  margin-left: 12px !important;
   padding: 5px 0px;
   cursor: pointer;
 }

@@ -119,7 +119,6 @@ export default function App() {
           animation='overlay' 
           icon='labeled' 
           direction='right'
-          className='menubar'
           inverted
           onHide={() => setVisible(false)}
           vertical
@@ -127,7 +126,7 @@ export default function App() {
           width='thin'
         > 
           <Menu.Item as="div" className="menu-language" onClick={menuClose}>
-            <Link to="/wiki"><p className="menu-language-text"><Icon name='globe'/>Wiki</p></Link>
+            <Link to="/wiki"><p className="menu-language-text"><Icon name='globe'/></p></Link>
           </Menu.Item>
           <Menu.Item as="div" className="menu-user">
           {isAuthorized
