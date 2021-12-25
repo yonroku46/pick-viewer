@@ -128,8 +128,8 @@ export class MapContainer extends Component {
                 iconPosition='left'
                 icon='point'
                 action={{ icon: 'search', onClick: () => this.addressSearch(this.props.locationSearch) }}
-                value={this.props.locationSearch ? this.props.locationSearch : ''}
-                onChange={(e) => this.props.setLocationSearch(e.target.value)}
+                value={this.props.value ? this.props.value : ''}
+                onChange={(e) => this.props.changeLocation(e)}
                 />
             }
             <Map

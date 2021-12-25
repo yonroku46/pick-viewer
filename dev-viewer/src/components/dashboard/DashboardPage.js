@@ -181,11 +181,6 @@ export default function DashboardPage(props) {
         setShopImages(items);
     };
 
-    function copyLocation(e) {
-        setShop(
-            { ...shop, shop_location: locationSearch }
-        );
-    }
     function changeLocation(e) {
         setShop(
             { ...shop, shop_location: e.target.value }
@@ -466,15 +461,11 @@ export default function DashboardPage(props) {
                         매장주소 
                         <Popup size='tiny' position='right center' className='dashboard-info-popup' trigger={<Icon className='dashboard-info-icon' name='info circle'/>} header={'Tip'} content={'수정모드를 활성화 후,\n 빨간핀을 이동시켜 위치를 지정해주세요.'} inverted/>
                     </label>
-                    {editMode ? 
-                    <>
-                    <Input placeholder='주소 직접입력' value={shop.shop_location} onChange={changeLocation}/>
-                    <Icon className='dashboard-location-btn' name='chevron circle up' onClick={copyLocation}/>
-                    </>
+                    {editMode ? <></>
                     :
                     <Header className='dashboard-shopinfo-text'>{shop.shop_location}</Header>
                     }
-                    <MapContainer id='map' shop={shop} setShop={setShop} setLocationSearch={setLocationSearch} locationSearch={locationSearch} editMode={editMode} permission={permission}/>
+                    <MapContainer id='map' shop={shop} setShop={setShop} changeLocation={changeLocation} value={shop.shop_location} editMode={editMode} permission={permission}/>
                 </Form.Field>
                 <Form.Field className={editMode && 'dashboard-map-bottom'}>
                     <label>

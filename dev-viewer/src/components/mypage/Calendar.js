@@ -6,7 +6,7 @@ import TimeTable from './TimeTable';
 export default function Calendar(props) {
 
     const [getMoment, setMoment] = useState(moment());
-    const [calendarActive, setCalendarActive] = useState(false);
+    const [calendarActive, setCalendarActive] = useState(true);
 
     const today = getMoment;
     const bookingList = props.bookingList;

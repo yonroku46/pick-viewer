@@ -435,17 +435,6 @@ div.ui.segment.dashboard-viewer {
 .dashboard-info-popup {
   white-space: pre-line !important;
 }
-.dashboard-location-btn {
-  margin-top: 0.5em !important;
-  margin-bottom: 0.9em !important;
-  width: 100% !important;
-  text-align: center !important;
-  opacity: 0.5 !important;
-}
-.dashboard-location-btn:hover {
-  cursor: pointer;
-  opacity: 1 !important;
-}
 .dashboard-viewer-title {
   background-color: rgb(0, 153, 255) !important;
   color: #fff !important;
