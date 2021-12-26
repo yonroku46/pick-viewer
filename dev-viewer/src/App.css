@@ -354,7 +354,6 @@ hr {
 .dashboard-main {
   display: block;
   margin-top: 50px !important;
-  margin: 1em 8vw;
   min-height: calc(100vh - 81px);
 }
 .dashboard-dnd li {
@@ -365,7 +364,7 @@ hr {
   border-radius: 0.25em !important;
   color: #fff !important;
   background-color: rgb(0, 153, 255, 0.8)  !important;
-  margin-top: 1em !important;
+  margin-bottom: 0.5em !important;
   opacity: 0.4;
 }
 .dashboard-reset-btn:hover {
@@ -376,12 +375,9 @@ hr {
 }
 .dashboard-menu {
   float: left;
-  position: absolute;
-  z-index: 100;
-  width: 180px !important;
-  margin-top: 2em !important;
-  margin-bottom: 2em !important;
-  min-height: 1em !important;
+  width: 280px !important;
+  min-height: calc(100vh - 84px) !important;
+  margin-bottom: -10px !important;
 }
 .dashboard-menu div.header {
   padding-top: 0.5em;
@@ -391,6 +387,7 @@ hr {
   border-bottom: rgb(0, 153, 255, 0.5) 1px solid;
   color: rgb(0, 153, 255);
   border-top: rgb(0, 0, 0, 0.05) 1px solid;
+  font-size: 1.3em;
 }
 .dashboard-menu a.item {
   text-align: left;
@@ -398,22 +395,22 @@ hr {
   padding-left: 1.5em !important;
   padding-top: 0.7em !important;
   padding-bottom: 0.7em !important;
+  font-size: 1.1em !important;
 }
 .dashboard-menu a.item:hover {
   font-weight: bold;
   background-color: rgba(0,0,0,.05)!important;
 }
 .dashboard-viewer {
-  position: absolute;
   float: left;
   text-align: left;
-  min-height: 80vh;
+  min-height: calc(100vh - 84px) !important;
+  overflow: auto;
   width: 65vw;
-  margin-left: 14vw !important;
-  margin-top: 2.4em !important;
-  margin-bottom: 2.4em !important;
+  margin-top: 0 !important;
+  margin-left: 10vw !important;
   margin-right: auto !important;
-  padding-bottom: 0px !important;
+  margin-bottom: -10px !important;
 }
 div.ui.segment.dashboard-viewer {
   border: rgb(0, 0, 0, 0.1) 1px solid !important;
@@ -641,19 +638,15 @@ table.dashboard-table input {
     margin: 1em 0vw;
   }
   .dashboard-menu {
-    position: relative;
     width: 100vw !important;
-    margin-bottom: 1em !important;
-    margin-top: -1em !important;
+    min-height: 4vh !important;
   }
   .dashboard-viewer {
     width: 100vw !important;
-    min-height: calc(100vh - 51px);
-    margin-top: -1em !important;
-    margin-bottom: 0.5em !important;
+    min-height: calc(95vh - 51px) !important;
     margin-left: 0px !important;
     margin-right: 0px !important;
-    padding-bottom: 0px !important;
+    /* padding-bottom: 0px !important; */
   }
   .dashboard-viewer-inline {
     padding: 0.5em 0em !important;

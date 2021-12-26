@@ -534,11 +534,11 @@ export default function DashboardPage(props) {
                 {editMode ?
                 <>
                 <Button inverted color='blue' floated='right' onClick={() => setEditMode(false)}><Icon name='save'/>임시저장</Button>
-                <Button color='blue' floated='right' onClick={saveShopInfo}><Icon name='cloud upload'/>저장</Button>
+                <Button color='violet' floated='right' onClick={saveShopInfo}><Icon name='cloud upload'/>저장</Button>
                 </>
                 :
                 <>
-                <Button color='violet' floated='right' onClick={() => setEditMode(true)}><Icon name='edit'/>수정</Button>
+                <Button color='blue' floated='right' onClick={() => setEditMode(true)}><Icon name='edit'/>수정</Button>
                 </>
                 }
             </Label>
