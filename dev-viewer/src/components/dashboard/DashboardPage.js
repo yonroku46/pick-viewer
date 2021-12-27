@@ -247,7 +247,7 @@ export default function DashboardPage(props) {
     }
     function changeMenuCategory(e) {
         setModalMenu(
-            { ...modalMenu, menu_category: e.target.value.replace(/[ \{\}\[\]\/?.,;:|\)*~`!^\-_+┼<>@\#$%&\'\"\\\(\=]/gi, '') }
+            { ...modalMenu, menu_category: e.target.value.replace(/[\'\"\=]/gi, '') }
         );
     }
     function changeMenuName(e) {
@@ -954,49 +954,49 @@ export default function DashboardPage(props) {
             <Menu.Header><Icon name='bullhorn'/> 알림</Menu.Header>
             <Menu.Menu>
                 <Menu.Item name='notice' active={activeItem === 'notice'} onClick={handleItemClick}>
-                    - 알림확인
+                    ・ 알림확인
                 </Menu.Item>
             </Menu.Menu>
             <Menu.Header><Icon name='table'/> 매장관리</Menu.Header>
             <Menu.Menu>
                 <Menu.Item name='shopInfo' active={activeItem === 'shopInfo'} onClick={handleItemClick}>
-                    - 매장정보
+                    ・ 매장정보
                 </Menu.Item>
                 <Menu.Item name='staffInfo' active={activeItem === 'staffInfo'} onClick={handleItemClick}>
-                    - 직원정보
+                    ・ 직원정보
                 </Menu.Item>
                 <Menu.Item name='menuInfo' active={activeItem === 'menuInfo'} onClick={handleItemClick}>
-                    - 메뉴정보
+                    ・ 메뉴정보
                 </Menu.Item>
             </Menu.Menu>
             <Menu.Header><Icon name='tasks'/> 예약관리</Menu.Header>
             <Menu.Menu>
                 <Menu.Item name='bookingInfo' active={activeItem === 'bookingInfo'} onClick={handleItemClick}>
-                    - 예약정보
+                    ・ 예약정보
                 </Menu.Item>
                 <Menu.Item name='bookingData' active={activeItem === 'bookingData'} onClick={handleItemClick}>
-                    - 예약통계
+                    ・ 예약통계
                 </Menu.Item>
             </Menu.Menu>
             <Menu.Header><Icon name='gift'/> 이벤트관리</Menu.Header>
             <Menu.Menu>
                 <Menu.Item name='eventInfo' active={activeItem === 'eventInfo'} onClick={handleItemClick}>
-                    - 이벤트추가
+                    ・ 이벤트추가
                 </Menu.Item>
                 <Menu.Item name='couponInfo' active={activeItem === 'couponInfo'} onClick={handleItemClick}>
-                    - 쿠폰추가
+                    ・ 쿠폰추가
                 </Menu.Item>
             </Menu.Menu>
             <Menu.Header><Icon name='question circle outline'/> 기타</Menu.Header>
             <Menu.Menu>
                 <Menu.Item name='contract' active={activeItem === 'contract'} onClick={handleItemClick}>
-                    - 계약정보
+                    ・ 계약정보
                 </Menu.Item>
                 <Menu.Item name='system' active={activeItem === 'system'} onClick={handleItemClick}>
-                    - 시스템문의
+                    ・ 시스템문의
                 </Menu.Item>
                 <Menu.Item name='help' active={activeItem === 'help'} onClick={handleItemClick}>
-                    - 도움말
+                    ・ 도움말
                 </Menu.Item>
             </Menu.Menu>
             <Button className='dashboard-reset-btn' onClick={rollBack}><Icon name='redo'/> 수정값 초기화</Button>

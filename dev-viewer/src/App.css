@@ -375,7 +375,8 @@ hr {
 }
 .dashboard-menu {
   float: left;
-  width: 280px !important;
+  width: 16vw !important;
+  max-width: 260px !important;
   min-height: calc(100vh - 84px) !important;
   margin-bottom: -10px !important;
 }
@@ -639,6 +640,7 @@ table.dashboard-table input {
   }
   .dashboard-menu {
     width: 100vw !important;
+    max-width: none !important;
     min-height: 4vh !important;
   }
   .dashboard-viewer {
