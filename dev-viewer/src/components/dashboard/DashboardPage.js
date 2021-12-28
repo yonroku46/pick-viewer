@@ -619,7 +619,9 @@ export default function DashboardPage(props) {
                                     </Table.Cell>
                                     {editMode &&
                                     <Table.Cell className='dashboard-table-delete'>
-                                        <Icon name='x' onClick={() => staffDelete(staff.user_cd)}/>
+                                        {staff.user_cd !== userInfo.user_cd &&
+                                            <Icon name='x' onClick={() => staffDelete(staff.user_cd)}/>
+                                        }
                                     </Table.Cell>
                                     }
                                 </Table.Row>
@@ -793,13 +795,17 @@ export default function DashboardPage(props) {
     }
 
     function staffDelete(targetId) {
-        const target = shop.staff_list.find(staff => staff.user_cd === targetId);
-        const index = shop.staff_list.indexOf(target);
-        staffList.splice(index, 1);
-        setStaffList(staffList);
-        setShop(
-            { ...shop, staff_list: staffList }
-        );
+        if (window.confirm("해당 직원을 삭제하시겠습니까?")) {
+            const target = shop.staff_list.find(staff => staff.user_cd === targetId);
+            const index = shop.staff_list.indexOf(target);
+            staffList.splice(index, 1);
+            setStaffList(staffList);
+            setShop(
+                { ...shop, staff_list: staffList }
+            );
+        } else {
+            return;
+        }
     }
 
     function selectCategory (e, { value }) {
