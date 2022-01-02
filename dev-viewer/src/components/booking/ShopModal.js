@@ -45,7 +45,7 @@ export default class ShopModal extends Component {
         const origin = this.state.shopsOrigin;
         const result = origin.filter(shops => shops.shop_location.match(e.target.value));
         this.setState({shops: result, search: e.target.value});
-    } 
+    }
     
     Loading(){
         return(
@@ -62,7 +62,9 @@ export default class ShopModal extends Component {
             <div className='shopmodal-body'>
                 
                 <Menu.Item className="shopmodal-search">
-                    <Input icon='search' placeholder='위치를 입력해주세요' value={search} onChange={this.handleChange}/>
+                    <Link to={'/search'}>
+                        <Input icon='search' placeholder='위치를 입력해주세요' value={search} onChange={this.handleChange}/>
+                    </Link>
                 </Menu.Item>
                 
                 <div className="shopmodal-main">

@@ -3,6 +3,7 @@
 import React, { useEffect, useState } from 'react';
 import logo from "./img/app-icon.png";
 import HomePage from './components/home/HomePage'
+import SearchPage from './components/search/SearchPage'
 import BookingPage from './components/booking/BookingPage'
 import DetailPage from './components/booking/DetailPage';
 import ReviewPage from './components/review/ReviewPage';
@@ -181,6 +182,7 @@ export default function App() {
             <Segment basic className='background'>
               <Switch>
                 <Route exact path="/" component={HomePage} />
+                <Route exact path="/search" component={SearchPage} />
                 <Route exact path="/booking/" component={BookingPage} />
                   <Route exact path="/booking/:category" component={BookingPage} />
                     <Route path="/booking/hairshop/:shop_cd" component={DetailPage}/>
