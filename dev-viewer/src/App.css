@@ -1270,23 +1270,13 @@ table.dashboard-table input {
   margin-top: 14px;
   margin-bottom: 0px;
 }
-.booking-modal-exit {
-  height: 1em;
-  width: 1em;
-  font-size: 2em;
-  margin-top: -1.4em;
-  margin-bottom: -0.4em;
-  margin-left: -1.3em;
-}
-.booking-modal-exit:hover {
-  cursor: pointer;
-  color: rgb(0, 0, 0, 0.7);
-}
 .booking-modal-bar {
   border: 2px solid #000;
+  background-color: #000;
   height: 3px;
+  margin-top: -14px;
   margin-bottom: 14px;
-  border-radius: 10px;
+  border-radius: 14px;
 }
 .booking-modal-title {
   text-align: center;
@@ -1362,12 +1352,6 @@ table.dashboard-table input {
   .detailpage {
     margin-top: 50px;
     padding: 0px 0px !important;
-  }
-  .booking-modal-exit {
-    font-size: 1.7em;
-    margin-top: -1.2em;
-    margin-bottom: -0.4em;
-    margin-left: -1em;
   }
   .shopmodal-main button{
     width: 96vw;
@@ -1945,6 +1929,12 @@ a.detailpage-tel:hover {
 }
 .iphonex__volume--down {
   top: 142px;
+}
+
+/* SearchPage */
+.search-main {
+  margin-top: 50px;
+  min-height: calc(100vh - 81px);
 }
 
 /* WikiPage */

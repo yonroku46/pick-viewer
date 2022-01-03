@@ -277,7 +277,7 @@ export default function DetailPage(props) {
 
   function bookingOpen() {
     setFinalCheck(false);
-    dispatch({ type: 'OPEN_MODAL', dimmer: 'inverted' });
+    dispatch({ type: 'OPEN_MODAL' });
   }
 
   function bookingCheck() {
@@ -678,8 +678,7 @@ export default function DetailPage(props) {
       }
       
       {/* 예약 확인 모달 */}
-      {bookingCheck()
-      ?
+      {bookingCheck() ?
       <Modal
         className='booking-modal'
         dimmer={dimmer}
@@ -696,9 +695,6 @@ export default function DetailPage(props) {
       :
       <Modal className='booking-modal' dimmer={dimmer} open={open} onClose={() => dispatch({ type: 'CLOSE_MODAL' })}>
         <Modal.Content>
-          <div className='booking-modal-exit'>
-            <Icon name='times circle' onClick={() => dispatch({ type: 'CLOSE_MODAL' })}/>
-          </div>
           <div className='booking-modal-title'>
             <div className='booking-modal-bar'/>
             {shop.shop_name}

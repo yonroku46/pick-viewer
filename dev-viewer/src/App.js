@@ -210,13 +210,13 @@ export default function App() {
           </footer>
         </Sidebar.Pushable>
       </div>
-        <Modal size={size} open={open} onClose={() => dispatch({ type: 'close' })}>
-          <Modal.Header>로그아웃 하시겠습니까?</Modal.Header>
-            <Modal.Actions>
-              <Button negative onClick={() => dispatch({ type: 'close' })}>취소</Button>
-              <Button positive onClick={logout}>확인</Button>
-            </Modal.Actions>
-        </Modal>
+      <Modal size={size} open={open} onClose={() => dispatch({ type: 'close' })}>
+        <Modal.Header>로그아웃 하시겠습니까?</Modal.Header>
+          <Modal.Actions>
+            <Button negative onClick={() => dispatch({ type: 'close' })}>취소</Button>
+            <Button positive onClick={logout}>확인</Button>
+          </Modal.Actions>
+      </Modal>
     </div>
     :<Route component={EmptyPage}/> 
     }
