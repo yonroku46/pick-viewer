@@ -63,7 +63,10 @@ export default class ShopModal extends Component {
                 
                 <Menu.Item className="shopmodal-search">
                     <Link to={'/search'}>
-                        <Input icon='search' placeholder='위치를 입력해주세요' value={search} onChange={this.handleChange}/>
+                        <Input iconPosition='left' placeholder='위치 또는 매장명을 입력해주세요' value={search} onChange={this.handleChange}>
+                            <Icon name='search'/>
+                            <input className='search-input'/>
+                        </Input>
                     </Link>
                 </Menu.Item>
                 

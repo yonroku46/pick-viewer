@@ -1199,7 +1199,7 @@ table.dashboard-table input {
   margin-top: calc(1em - 6px) !important;
   margin-bottom: 1em !important;
 }
-.shopmodal-search input{
+.shopmodal-search input {
   width: 50vw;
   border-radius: 20px !important;
   margin-top: -1px !important;
@@ -1933,8 +1933,27 @@ a.detailpage-tel:hover {
 
 /* SearchPage */
 .search-main {
-  margin-top: 50px;
-  min-height: calc(100vh - 81px);
+  margin-top: 60px;
+  min-height: calc(100vh - 91px);
+}
+input.search-input {
+  margin-top: 0px !important;
+  width: 40vw !important;
+}
+.search-back {
+  left: 38vw !important;
+}
+.search-hashtag {
+  margin-top: 10px;
+}
+/* sp */
+@media only screen and (max-width: 767px){
+  .search-back {
+    left: 87vw !important;
+  }
+  input.search-input {
+    width: 96vw !important;
+  }
 }
 
 /* WikiPage */
