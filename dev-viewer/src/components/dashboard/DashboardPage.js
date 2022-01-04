@@ -442,9 +442,6 @@ export default function DashboardPage(props) {
         return (
             <>
             {shop.length !== 0 && <>
-            <Label className='dashboard-viewer-title' attached='top'>
-                <Icon name='cog'/>매장정보 수정/관리
-            </Label>
             <Form className='dashboard-viewer-inline'>
                 <Form.Field>
                     <label>매장명</label>
@@ -550,9 +547,6 @@ export default function DashboardPage(props) {
         return (
             <>
             {shop.length !== 0 && <>
-            <Label className='dashboard-viewer-title' attached='top'>
-                <Icon name='cog'/>직원정보 수정/관리
-            </Label>
             <Form className='dashboard-viewer-inline'>
                 <Form.Field>
                     <label>총 직원수</label>
@@ -656,9 +650,6 @@ export default function DashboardPage(props) {
         return (
             <>
             {shop.length !== 0 && <>
-            <Label className='dashboard-viewer-title' attached='top'>
-                <Icon name='cog'/>메뉴정보 수정/관리
-            </Label> 
             <Form className='dashboard-viewer-inline'>
                 <Form.Field>
                     <label>메뉴 리스트</label>
@@ -681,7 +672,7 @@ export default function DashboardPage(props) {
                                 meta={menu.menu_price ? comma(menu.menu_price) + '원' : '가격 미입력'}
                                 description={menu.menu_description ? menu.menu_description : <span className='empty'>설명 미입력</span>}
                             />
-                            {editMode && <Item className='dashboard-content-icon'><Icon name='external square alternate' onClick={() => modalOpen(menu.menu_cd)}/></Item>}
+                            {editMode && <Item className='dashboard-content-icon'><Icon name='edit' onClick={() => modalOpen(menu.menu_cd)}/></Item>}
                         </Item>
                     </Item.Group>
                     ))}
@@ -957,13 +948,7 @@ export default function DashboardPage(props) {
             <Menu.Header className='dashboard-menu-fold' onClick={() => {setMenuVisible(false)}}>
                 <Icon name='angle double up'/>
             </Menu.Header>
-            <Menu.Header><Icon name='bullhorn'/> 알림</Menu.Header>
-            <Menu.Menu>
-                <Menu.Item name='notice' active={activeItem === 'notice'} onClick={handleItemClick}>
-                    ・ 알림확인
-                </Menu.Item>
-            </Menu.Menu>
-            <Menu.Header><Icon name='table'/> 매장관리</Menu.Header>
+            <Menu.Header><Icon name='hdd'/> 매장관리</Menu.Header>
             <Menu.Menu>
                 <Menu.Item name='shopInfo' active={activeItem === 'shopInfo'} onClick={handleItemClick}>
                     ・ 매장정보
@@ -975,7 +960,7 @@ export default function DashboardPage(props) {
                     ・ 메뉴정보
                 </Menu.Item>
             </Menu.Menu>
-            <Menu.Header><Icon name='tasks'/> 예약관리</Menu.Header>
+            <Menu.Header><Icon name='calendar check'/> 예약</Menu.Header>
             <Menu.Menu>
                 <Menu.Item name='bookingInfo' active={activeItem === 'bookingInfo'} onClick={handleItemClick}>
                     ・ 예약정보
@@ -984,13 +969,13 @@ export default function DashboardPage(props) {
                     ・ 예약통계
                 </Menu.Item>
             </Menu.Menu>
-            <Menu.Header><Icon name='gift'/> 이벤트관리</Menu.Header>
+            <Menu.Header><Icon name='gift'/> 이벤트</Menu.Header>
             <Menu.Menu>
                 <Menu.Item name='eventInfo' active={activeItem === 'eventInfo'} onClick={handleItemClick}>
-                    ・ 이벤트추가
+                    ・ 이벤트관리
                 </Menu.Item>
                 <Menu.Item name='couponInfo' active={activeItem === 'couponInfo'} onClick={handleItemClick}>
-                    ・ 쿠폰추가
+                    ・ 쿠폰관리
                 </Menu.Item>
             </Menu.Menu>
             <Menu.Header><Icon name='question circle outline'/> 기타</Menu.Header>
@@ -1019,8 +1004,6 @@ export default function DashboardPage(props) {
             {loading ? <Loading/>
             :
             <>
-            {activeItem === 'notice' && sampleView()}
-
             {activeItem === 'shopInfo' && shopInfoView()}
             {activeItem === 'staffInfo' && staffInfoView()}
             {activeItem === 'menuInfo' && menuInfoView()}

@@ -23,8 +23,12 @@ export default function SearchPage(props) {
 
     function onCheckEnter(e) {
         if(e.key === 'Enter') {
-            console.log(search)
+            searching();
         }
+    }
+    
+    function searching() {
+        console.log(search);
     }
     
     return(
@@ -34,7 +38,7 @@ export default function SearchPage(props) {
                     <Input iconPosition='left' autoFocus={true} placeholder='위치 또는 매장명을 입력해주세요' value={search} onChange={(e) => setSearch(e.target.value)}>
                         <Icon className='search-back' name='times circle' onClick={backPage}/>
                         <input className='search-input'/>
-                        <Icon name='search' onClick={() => {console.log(search)}}/>
+                        <Icon className='search-btn' name='search' onClick={searching}/>
                     </Input>
                 </Form>
             </Menu.Item>

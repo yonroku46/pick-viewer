@@ -3,9 +3,6 @@ import { Label, Icon, Form, Header, Progress } from 'semantic-ui-react'
 export default function BookingData(props) {
     return(
         <>
-        <Label className='dashboard-viewer-title' attached='top'>
-            <Icon name='chart bar outline'/>예약정보 통계/분석
-        </Label>
         <Form className='dashboard-viewer-inline'>
             <Form.Field>
                 <label>최근 한달 예약수</label>

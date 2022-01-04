@@ -65,6 +65,10 @@ h1, h2, h3, h4, h5, div, a, button {
   width: 100% !important;
   height: 240px !important;
 }
+.ui.vertical.menu .active.item {
+  background-color: rgba(100, 165, 250, 0.9) !important;
+  color: #fff !important;
+}
 
 .body-segment {
   border-radius: 0px !important;
@@ -432,14 +436,6 @@ div.ui.segment.dashboard-viewer {
 }
 .dashboard-info-popup {
   white-space: pre-line !important;
-}
-.dashboard-viewer-title {
-  background-color: rgb(0, 153, 255) !important;
-  color: #fff !important;
-  font-size: 1.1em !important;
-  font-weight: 500 !important;
-  padding-top: 0.8em !important;
-  padding-bottom: 0.8em !important;
 }
 .dashboard-viewer-imgs {
   border: 1px solid rgb(0, 0, 0, 0.2);
@@ -1941,7 +1937,17 @@ input.search-input {
   width: 40vw !important;
 }
 .search-back {
+  pointer-events: auto !important;
   left: 38vw !important;
+}
+.search-back:hover {
+  cursor: pointer !important;
+}
+.search-btn {
+  pointer-events: auto !important;
+}
+.search-btn:hover {
+  cursor: pointer !important;
 }
 .search-hashtag {
   margin-top: 10px;
