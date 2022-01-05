@@ -1,5 +1,5 @@
 import { useEffect, useState, useRef } from 'react';
-import { Label, Modal, Image, Menu, Icon, Form, Segment, Input, TextArea, Header, Button, Table, List, Item, Dimmer, Loader, Select, Progress, Popup } from 'semantic-ui-react'
+import { Label, Modal, Image, Menu, Icon, Dropdown, Form, Segment, Input, TextArea, Header, Button, Table, List, Item, Dimmer, Loader, Select, Progress, Popup } from 'semantic-ui-react'
 import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd";
 import * as api from '../../rest/server'
 import MapContainer from "../booking/MapContainer";
@@ -86,6 +86,12 @@ export default function DashboardPage(props) {
         }
         navigator.clipboard.writeText(text);
         alert("코드가 복사되었습니다.");
+    }
+
+    function mobileCheck() {
+        if ( window.innerWidth < 767) {
+            alert("원활한 사용을 위해, 정보수정은 PC 또는 태블릿을 이용 바랍니다.");
+        }
     }
 
     useEffect(() => {
@@ -337,30 +343,34 @@ export default function DashboardPage(props) {
     };
 
     function saveShopInfo() {
-        setLoading(true);
-        const params = { 
-          'shop': shop,
-          'origin': shopOrigin
-        };
-        return new Promise(function(resolve, reject) {
-          axios
-            .post(api.saveShopInfo, params)
-            .then(response => resolve(response.data))
-            .catch(error => reject(error.response))
-        })
-        .then(res => {
-          if (res) {
-            alert('저장이 완료되었습니다.')
-            setEditMode(false)
-            setReload(reload + 1);
-            setCategory('all');
-          }
-          setLoading(false);
-        })
-        .catch(err => {
-          alert("현재 서버와의 연결이 원활하지 않습니다. 관리자에게 문의해주세요.");
-          setLoading(false);
-        })
+        if (window.confirm("저장 후 되돌릴 수 없습니다. 변경된 내용을 저장하시겠습니까?")) {
+            setLoading(true);
+            const params = { 
+            'shop': shop,
+            'origin': shopOrigin
+            };
+            return new Promise(function(resolve, reject) {
+            axios
+                .post(api.saveShopInfo, params)
+                .then(response => resolve(response.data))
+                .catch(error => reject(error.response))
+            })
+            .then(res => {
+            if (res) {
+                alert('저장이 완료되었습니다.')
+                setEditMode(false)
+                setReload(reload + 1);
+                setCategory('all');
+            }
+            setLoading(false);
+            })
+            .catch(err => {
+            alert("현재 서버와의 연결이 원활하지 않습니다. 관리자에게 문의해주세요.");
+            setLoading(false);
+            })
+        } else {
+            return;
+        }
     }
 
     function convertWeek(key) {
@@ -527,18 +537,6 @@ export default function DashboardPage(props) {
                 }
                 <div className='dashboard-content-final-empty'> </div>
             </Form>
-            <Label className='dashboard-viewer-btns' attached='bottom right'>
-                {editMode ?
-                <>
-                <Button inverted color='blue' floated='right' onClick={() => setEditMode(false)}><Icon name='save'/>임시저장</Button>
-                <Button color='violet' floated='right' onClick={saveShopInfo}><Icon name='cloud upload'/>저장</Button>
-                </>
-                :
-                <>
-                <Button color='blue' floated='right' onClick={() => setEditMode(true)}><Icon name='edit'/>수정</Button>
-                </>
-                }
-            </Label>
             </>}
             </>
         )
@@ -630,18 +628,6 @@ export default function DashboardPage(props) {
                     <div className='dashboard-content-final-empty'> </div>
                 </Form.Field>
             </Form>
-            <Label className='dashboard-viewer-btns' attached='bottom right'>
-                {editMode ?
-                <>
-                <Button inverted color='blue' floated='right' onClick={() => setEditMode(false)}><Icon name='save'/>임시저장</Button>
-                <Button color='blue' floated='right' onClick={saveShopInfo}><Icon name='cloud upload'/>저장</Button>
-                </>
-                :
-                <>
-                <Button color='violet' floated='right' onClick={() => setEditMode(true)}><Icon name='edit'/>수정</Button>
-                </>
-                }
-            </Label>
             </>}
             </>
         )
@@ -681,18 +667,6 @@ export default function DashboardPage(props) {
                     <div className='dashboard-content-final-empty'> </div>
                 </Form.Field>
             </Form>
-            <Label className='dashboard-viewer-btns' attached='bottom right'>
-                {editMode ?
-                <>
-                <Button inverted color='blue' floated='right' onClick={() => setEditMode(false)}><Icon name='save'/>임시저장</Button>
-                <Button color='blue' floated='right' onClick={saveShopInfo}><Icon name='cloud upload'/>저장</Button>
-                </>
-                :
-                <>
-                <Button color='violet' floated='right' onClick={() => setEditMode(true)}><Icon name='edit'/>수정</Button>
-                </>
-                }
-            </Label>
             </>}
             {modalMenu &&
             <Modal closeIcon closeOnDimmerClick={false} onClose={() => setOpen(false)} open={open}>
@@ -943,62 +917,71 @@ export default function DashboardPage(props) {
     <>
     <div className="dashboard-main">
         <Menu className='dashboard-menu' vertical>
-        {menuVisible ?
-            <>
-            <Menu.Header className='dashboard-menu-fold' onClick={() => {setMenuVisible(false)}}>
-                <Icon name='angle double up'/>
-            </Menu.Header>
-            <Menu.Header><Icon name='hdd'/> 매장관리</Menu.Header>
-            <Menu.Menu>
-                <Menu.Item name='shopInfo' active={activeItem === 'shopInfo'} onClick={handleItemClick}>
-                    ・ 매장정보
-                </Menu.Item>
-                <Menu.Item name='staffInfo' active={activeItem === 'staffInfo'} onClick={handleItemClick}>
-                    ・ 직원정보
-                </Menu.Item>
-                <Menu.Item name='menuInfo' active={activeItem === 'menuInfo'} onClick={handleItemClick}>
-                    ・ 메뉴정보
-                </Menu.Item>
-            </Menu.Menu>
-            <Menu.Header><Icon name='calendar check'/> 예약</Menu.Header>
-            <Menu.Menu>
-                <Menu.Item name='bookingInfo' active={activeItem === 'bookingInfo'} onClick={handleItemClick}>
-                    ・ 예약정보
-                </Menu.Item>
-                <Menu.Item name='bookingData' active={activeItem === 'bookingData'} onClick={handleItemClick}>
-                    ・ 예약통계
-                </Menu.Item>
-            </Menu.Menu>
-            <Menu.Header><Icon name='gift'/> 이벤트</Menu.Header>
-            <Menu.Menu>
-                <Menu.Item name='eventInfo' active={activeItem === 'eventInfo'} onClick={handleItemClick}>
-                    ・ 이벤트관리
-                </Menu.Item>
-                <Menu.Item name='couponInfo' active={activeItem === 'couponInfo'} onClick={handleItemClick}>
-                    ・ 쿠폰관리
-                </Menu.Item>
-            </Menu.Menu>
-            <Menu.Header><Icon name='question circle outline'/> 기타</Menu.Header>
-            <Menu.Menu>
-                <Menu.Item name='contract' active={activeItem === 'contract'} onClick={handleItemClick}>
-                    ・ 계약정보
-                </Menu.Item>
-                <Menu.Item name='system' active={activeItem === 'system'} onClick={handleItemClick}>
-                    ・ 시스템문의
-                </Menu.Item>
-                <Menu.Item name='help' active={activeItem === 'help'} onClick={handleItemClick}>
-                    ・ 도움말
-                </Menu.Item>
-            </Menu.Menu>
-            <Button className='dashboard-reset-btn' onClick={rollBack}><Icon name='redo'/> 수정값 초기화</Button>
-            </>
-            :
-            <>
-            <Menu.Header className='dashboard-menu-fold' onClick={() => {setMenuVisible(true)}}>
-                <Icon name='angle double down'/>
-            </Menu.Header>
-            </>
-        }
+            {menuVisible ?
+                <>
+                <Menu.Header className='dashboard-menu-fold' onClick={() => {setMenuVisible(false)}}>
+                    <Icon name='angle double up'/>
+                </Menu.Header>
+                <Menu.Header><Icon name='hdd'/> 매장관리</Menu.Header>
+                <Menu.Menu>
+                    <Menu.Item name='shopInfo' active={activeItem === 'shopInfo'} onClick={handleItemClick}>
+                        ・ 매장정보
+                    </Menu.Item>
+                    <Menu.Item name='staffInfo' active={activeItem === 'staffInfo'} onClick={handleItemClick}>
+                        ・ 직원정보
+                    </Menu.Item>
+                    <Menu.Item name='menuInfo' active={activeItem === 'menuInfo'} onClick={handleItemClick}>
+                        ・ 메뉴정보
+                    </Menu.Item>
+                    <Dropdown className='dashboard-menu-dropdown' item text='・ 수정 / 저장' onClick={mobileCheck}>
+                        <Dropdown.Menu>
+                            <Dropdown.Item icon={editMode ? 'check' : 'edit'} text={editMode ? '임시저장' : '수정모드 활성화'} onClick={() => setEditMode(!editMode)}/>
+                            <Dropdown.Item icon='save' text='저장'  onClick={saveShopInfo}/>
+                            <Dropdown.Item icon='redo' text='수정값 초기화' onClick={rollBack}/>
+                        </Dropdown.Menu>
+                    </Dropdown>
+                </Menu.Menu>
+                <Menu.Header><Icon name='calendar check'/> 예약</Menu.Header>
+                <Menu.Menu>
+                    <Menu.Item name='bookingInfo' active={activeItem === 'bookingInfo'} onClick={handleItemClick}>
+                        ・ 예약정보
+                    </Menu.Item>
+                    <Menu.Item name='bookingData' active={activeItem === 'bookingData'} onClick={handleItemClick}>
+                        ・ 예약통계
+                    </Menu.Item>
+                </Menu.Menu>
+                <Menu.Header><Icon name='gift'/> 이벤트</Menu.Header>
+                <Menu.Menu>
+                    <Menu.Item name='eventInfo' active={activeItem === 'eventInfo'} onClick={handleItemClick}>
+                        ・ 이벤트관리
+                    </Menu.Item>
+                    <Menu.Item name='couponInfo' active={activeItem === 'couponInfo'} onClick={handleItemClick}>
+                        ・ 쿠폰관리
+                    </Menu.Item>
+                </Menu.Menu>
+                <Menu.Header><Icon name='question circle outline'/> 기타</Menu.Header>
+                <Menu.Menu>
+                    <Menu.Item name='contract' active={activeItem === 'contract'} onClick={handleItemClick}>
+                        ・ 계약정보
+                    </Menu.Item>
+                    <Menu.Item name='system' active={activeItem === 'system'} onClick={handleItemClick}>
+                        ・ 시스템문의
+                    </Menu.Item>
+                    <Menu.Item name='help' active={activeItem === 'help'} onClick={handleItemClick}>
+                        ・ 도움말
+                    </Menu.Item>
+                </Menu.Menu>
+                <Menu.Menu>
+                    <Menu.Item></Menu.Item>
+                </Menu.Menu>
+                </>
+                :
+                <>
+                <Menu.Header className='dashboard-menu-fold' onClick={() => {setMenuVisible(true)}}>
+                    <Icon name='angle double down'/>
+                </Menu.Header>
+                </>
+            }
         </Menu>
         <Segment className='dashboard-viewer'>
             {loading ? <Loading/>

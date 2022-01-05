@@ -379,6 +379,7 @@ hr {
 }
 .dashboard-menu {
   float: left;
+  box-shadow: none !important;
   width: 16vw !important;
   max-width: 260px !important;
   min-height: calc(100vh - 84px) !important;
@@ -403,13 +404,20 @@ hr {
   font-size: 1.1em !important;
 }
 .dashboard-menu a.item:hover {
-  font-weight: bold;
   background-color: rgba(0,0,0,.05)!important;
+}
+.dashboard-menu div.ui.item:hover {
+  background-color: rgba(0,0,0,.05)!important;
+}
+.dashboard-menu.ui.vertical.menu .active.item.dropdown {
+  background-color: #fff !important;
+  color: #000 !important;
 }
 .dashboard-viewer {
   float: left;
   text-align: left;
   min-height: calc(100vh - 84px) !important;
+  max-height: 90vh;
   overflow: auto;
   width: 65vw;
   margin-top: 0 !important;
@@ -452,17 +460,20 @@ div.ui.segment.dashboard-viewer {
   cursor: move;
   opacity: 0.8;
 }
-.dashboard-viewer-btns {
-  background-color: #fff !important;
-  padding-top: 1em !important;
-  padding-bottom: 1em !important;
-}
 .dashboard-menu-fold {
   cursor: pointer;
   opacity: 0.3;
   text-align: center !important;
   padding: 0px !important;
   border-bottom: none !important;
+}
+.dashboard-menu-dropdown {
+  font-size: 1.1em !important;
+  color: rgb(0, 0, 0, 0.7) !important;
+  padding-left: 1.5em !important;
+  padding-top: 0.7em !important;
+  padding-bottom: 0.7em !important;
+  width: 100%;
 }
 .dashboard-viewer-email {
   margin-left: 1em;
