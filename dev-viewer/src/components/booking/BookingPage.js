@@ -22,15 +22,15 @@ export default function BookingPage(props) {
         <div className="booking-main-category">
             <Grid columns={3} divided>
                 <Grid.Row>
-                    <Grid.Column onClick={()=> {props.history.push('/booking/' + categoryList[0])}} className={category === categoryList[0] ? 'category-active' : 'category-non-active'}>
+                    <Grid.Column onClick={() => {props.history.push('/booking/' + categoryList[0])}} className={category === categoryList[0] ? 'category-active' : 'category-non-active'}>
                         <Icon name='cut' size='big'/>
                         <br/>헤어샵
                     </Grid.Column>
-                    <Grid.Column onClick={()=> {props.history.push('/booking/' + categoryList[1])}} className={category === categoryList[1] ? 'category-active' : 'category-non-active'}>
+                    <Grid.Column onClick={() => {props.history.push('/booking/' + categoryList[1])}} className={category === categoryList[1] ? 'category-active' : 'category-non-active'}>
                         <Icon name='food' size='big'/>
                         <br/>맛집
                     </Grid.Column>
-                    <Grid.Column onClick={()=> {props.history.push('/booking/' + categoryList[2])}} className={category === categoryList[2] ? 'category-active' : 'category-non-active'}>
+                    <Grid.Column onClick={() => {props.history.push('/booking/' + categoryList[2])}} className={category === categoryList[2] ? 'category-active' : 'category-non-active'}>
                         <Icon name='coffee' size='big'/>
                         <br/>카페
                     </Grid.Column>

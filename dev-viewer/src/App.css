@@ -1940,8 +1940,8 @@ a.detailpage-tel:hover {
 
 /* SearchPage */
 .search-main {
-  margin-top: 60px;
-  min-height: calc(100vh - 91px);
+  margin-top: 50px;
+  min-height: calc(100vh - 81px);
 }
 input.search-input {
   margin-top: 0px !important;

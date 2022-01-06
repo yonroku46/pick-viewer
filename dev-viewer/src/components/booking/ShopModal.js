@@ -62,7 +62,12 @@ export default class ShopModal extends Component {
             <div className='shopmodal-body'>
                 
                 <Menu.Item className="shopmodal-search">
-                    <Link to={'/search'}>
+                    <Link to={{
+                        pathname:'/search',
+                        state:{
+                            category: category
+                        }
+                        }}>
                         <Input iconPosition='left' placeholder='위치 또는 매장명을 입력해주세요' value={search} onChange={this.handleChange}>
                             <Icon name='search'/>
                             <input className='search-input'/>

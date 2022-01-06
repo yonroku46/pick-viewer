@@ -181,24 +181,24 @@ export default function App() {
           <Sidebar.Pusher dimmed={visible}>
             <Segment basic className='background'>
               <Switch>
-                <Route exact path="/" component={HomePage} />
-                <Route exact path="/search" component={SearchPage} />
-                <Route exact path="/booking/" component={BookingPage} />
-                  <Route exact path="/booking/:category" component={BookingPage} />
+                <Route exact path="/" component={HomePage}/>
+                <Route exact path="/search" component={SearchPage}/>
+                <Route exact path="/booking/" component={BookingPage}/>
+                  <Route exact path="/booking/:category" component={BookingPage}/>
                     <Route path="/booking/hairshop/:shop_cd" component={DetailPage}/>
                     <Route path="/booking/restaurant/:shop_cd" component={DetailPage}/>
                     <Route path="/booking/cafe/:shop_cd" component={DetailPage}/>
                     <Route path="/review/hairshop/:shop_cd" component={ReviewPage}/>
                     <Route path="/review/restaurant/:shop_cd" component={ReviewPage}/>
                     <Route path="/review/cafe/:shop_cd" component={ReviewPage}/>
-                <Route exact path="/styles" component={StylesPage} />
-                <Route exact path="/contact" component={ContactPage} />
-                <Route exact path="/login" component={LoginPage} />
-                <Route exact path="/signup" component={SignupPage} />
-                <Route exact path="/help" component={HelpPage} />
-                <Route exact path="/mypage" component={MyPage} />
-                <Route exact path="/dashboard" component={DashboardPage} />
-                <Route exact path="/wiki" component={WikiPage} />
+                <Route exact path="/styles" component={StylesPage}/>
+                <Route exact path="/contact" component={ContactPage}/>
+                <Route exact path="/login" component={LoginPage}/>
+                <Route exact path="/signup" component={SignupPage}/>
+                <Route exact path="/help" component={HelpPage}/>
+                <Route exact path="/mypage" component={MyPage}/>
+                <Route exact path="/dashboard" component={DashboardPage}/>
+                <Route exact path="/wiki" component={WikiPage}/>
                 <Route component={EmptyPage} />
               </Switch>
             </Segment>
