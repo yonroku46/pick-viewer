@@ -81,7 +81,6 @@ export class MapContainer extends Component {
                         lng: newLng
                     }
                 })
-                console.log(newLat,newLng)
             });
     }
 
