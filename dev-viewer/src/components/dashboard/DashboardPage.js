@@ -582,6 +582,7 @@ export default function DashboardPage(props) {
                     <Table celled unstackable selectable className='dashboard-table'>
                         <Table.Header>
                         <Table.Row>
+                            <Table.HeaderCell className='dashboard-table-no'>No</Table.HeaderCell>
                             <Table.HeaderCell className='dashboard-table-name'>이름</Table.HeaderCell>
                             <Table.HeaderCell className='dashboard-table-career'>경력/직급</Table.HeaderCell>
                             <Table.HeaderCell className='dashboard-table-info' colSpan={editMode ? '2' : '1'}>직원소개</Table.HeaderCell>
@@ -592,6 +593,9 @@ export default function DashboardPage(props) {
                         {staffList.length !== 0 ?
                             staffList.map(staff => (
                                 <Table.Row key={staff.user_cd}>
+                                    <Table.Cell className='dashboard-table-no'>
+                                        {staffList.indexOf(staff) + 1}
+                                    </Table.Cell>
                                     <Table.Cell className='dashboard-table-name'>
                                         {staff.user_name}
                                     </Table.Cell>
@@ -652,6 +656,9 @@ export default function DashboardPage(props) {
                     {menuList.map(menu => (
                     <Item.Group unstackable className='dashboard-viewer-menu' key={menu.menu_cd}>
                         <Item className='detailpage-service'>
+                        <Label circular className='dashboard-menu-label' color='black'>
+                            {menuList.indexOf(menu) + 1}
+                        </Label>
                             <Item.Image className='detailpage-service-img' src={api.imgRender(menu.menu_img === null ? menuDefault : menu.menu_img)}/>
                             <Item.Content
                                 header={menu.menu_name ? menu.menu_name : '메뉴명 미입력'}

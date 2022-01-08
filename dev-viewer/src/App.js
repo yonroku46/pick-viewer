@@ -183,7 +183,7 @@ export default function App() {
               <Switch>
                 <Route exact path="/" component={HomePage}/>
                 <Route exact path="/search" component={SearchPage}/>
-                <Route exact path="/booking/" component={BookingPage}/>
+                <Route exact path="/booking" component={BookingPage}/>
                   <Route exact path="/booking/:category" component={BookingPage}/>
                     <Route path="/booking/hairshop/:shop_cd" component={DetailPage}/>
                     <Route path="/booking/restaurant/:shop_cd" component={DetailPage}/>

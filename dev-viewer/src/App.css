@@ -435,9 +435,9 @@ div.ui.segment.dashboard-viewer {
   padding: 1em;
 }
 .dashboard-viewer-inline label {
-  padding-left: 0.5em !important;
   margin-bottom: 0.5em !important;
-  border-left: 0.2em solid rgb(0, 0, 0, 0.5);
+  color: rgb(0, 153, 255) !important;
+  font-size: 1em !important;
 }
 .dashboard-info-icon {
   margin-left: 0.3em !important;
@@ -526,6 +526,11 @@ div.ui.segment.dashboard-viewer {
 .dashboard-content-final-empty {
   margin-bottom: 8vh !important;
 }
+.dashboard-table-no {
+  width: 4em !important;
+  max-width: 4em !important;
+  text-align: center !important;
+}
 .dashboard-table-name {
   width: 6em !important;
   max-width: 6em !important;
@@ -578,6 +583,12 @@ table.dashboard-table input {
 }
 .edit-input {
   padding: 0em 0.2em !important;
+}
+.dashboard-menu-label {
+  margin-right: -1.5em !important;
+  margin-top: -0.5em !important;
+  z-index: 1;
+  height: 2em;
 }
 .dashboard-viewer-img {
   width: 125px !important;
@@ -678,6 +689,10 @@ table.dashboard-table input {
   }
   table.dashboard-table button {
     padding: 0.4em 0.15em !important;
+  }
+  .dashboard-table th.dashboard-table-no,td.dashboard-table-no {
+    padding: 0.4em 0.15em !important;
+    font-size: 0.9em !important;
   }
   .dashboard-table th.dashboard-table-name,td.dashboard-table-name {
     padding: 0.4em 0.15em !important;
