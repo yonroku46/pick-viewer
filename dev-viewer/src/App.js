@@ -51,12 +51,15 @@ export default function App() {
       })
     );
     // server check
-    fetch(api.server).then(res =>
-      res.json().then(data => {
-        data.status ? console.log("connect") : console.log("server disconnect");
+    fetch(api.server)
+      .then(res => {
+        res.json();
+        res.status && console.log("connect");
       })
-    );
-  }, []); 
+      .catch(err => {
+        console.log("server disconnect");
+      })
+    }, []); 
 
   const [visible, setVisible] = useState(false);
   const isAuthorized = sessionStorage.getItem("isAuthorized");
@@ -65,6 +68,10 @@ export default function App() {
 
   function toggleMenu() {
     setVisible(!visible);
+  };
+
+  function goBack() {
+    // props.history.goBack(1);
   };
 
   function menuClose() {
@@ -105,6 +112,9 @@ export default function App() {
       {/* Header */}
       <div className="app-header">
         <div className="menu-left">
+          <Icon className='back-btn' name='angle left' size='large' onClick={goBack}/>
+        </div>
+        <div className="menu-center">
           <Link to="/" ><img className="logo invert" src={logo}/></Link>
         </div>
         <div className="menu-right invert">
@@ -159,7 +169,7 @@ export default function App() {
             </Menu.Item>
           }
           {permission !== 3 &&
-            <Menu.Item as={Link} to='/booking/' onClick={menuClose}>
+            <Menu.Item as={Link} to='/booking/hairshop' onClick={menuClose}>
               <Icon name='inbox'/>
               예약하기
             </Menu.Item>

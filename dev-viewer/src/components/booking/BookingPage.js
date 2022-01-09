@@ -8,12 +8,8 @@ export default function BookingPage(props) {
     
     // category check
     if (!categoryList.includes(category)) {
-        if (category === undefined) {
-            props.history.push('/booking/hairshop')
-        } else {
-            alert('존재하지 않는 카테고리입니다.')
-            props.history.goBack(1);
-        }
+        alert('잘못된 접근입니다.')
+        props.history.goBack(1);
     };
 
     return(

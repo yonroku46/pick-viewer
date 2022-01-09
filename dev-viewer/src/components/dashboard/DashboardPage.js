@@ -455,29 +455,27 @@ export default function DashboardPage(props) {
             <Form className='dashboard-viewer-inline'>
                 <Form.Field>
                     <label>매장명</label>
-                    <Header className='dashboard-shopinfo-text'>{shop.shop_name}</Header>
+                    <p className='dashboard-shopinfo-text'>{shop.shop_name}</p>
                 </Form.Field>
                 <Form.Field>
                     <label>매장코드</label>
-                    <Header className='dashboard-shopinfo-text'>{shop.shop_serial}
+                    <p className='dashboard-shopinfo-text'>{shop.shop_serial}
                         <Icon className='dashboard-share-btn' name='share square' onClick={() => copy(shop.shop_serial)}/>
-                    </Header>
+                    </p>
                 </Form.Field>
                 <Form.Field>
                     <label>
                         매장주소 
-                        <Popup size='tiny' position='right center' className='dashboard-info-popup' trigger={<Icon className='dashboard-info-icon' name='info circle'/>} header={'Tip'} content={'수정모드를 활성화 후,\n 빨간핀을 이동시켜 위치를 지정해주세요.'} inverted/>
                     </label>
                     {editMode ? <></>
                     :
-                    <Header className='dashboard-shopinfo-text'>{shop.shop_location}</Header>
+                    <p className='dashboard-shopinfo-text'>{shop.shop_location}</p>
                     }
                     <MapContainer id='map' shop={shop} setShop={setShop} changeLocation={changeLocation} value={shop.shop_location} editMode={editMode} permission={permission}/>
                 </Form.Field>
                 <Form.Field className={editMode && 'dashboard-map-bottom'}>
                     <label>
                         매장 사진
-                        <Popup size='tiny' position='right center' className='dashboard-info-popup' trigger={<Icon className='dashboard-info-icon' name='info circle'/>} header={'Tip'} content={'클릭시 사진변경,\n 이동시 순서가 변경됩니다.'} inverted/>
                     </label>
                     <DragDropContext onDragEnd={handleChange}>
                         <Droppable droppableId="shopImages" direction="horizontal">
@@ -507,7 +505,7 @@ export default function DashboardPage(props) {
                         <Input className='dashboard-shopinfo-tel' placeholder='0000' value={shop.shop_tel.split('-')[2]} tabIndex='2' onChange={changeTel}/>
                         </>
                         :
-                        <Header className='dashboard-shopinfo-text'>{shop.shop_tel.length === 2 ? <span className='empty'>전화번호 미입력</span> : shop.shop_tel}</Header>
+                        <p className='dashboard-shopinfo-text'>{shop.shop_tel.length === 2 ? <span className='empty'>전화번호 미입력</span> : shop.shop_tel}</p>
                         }
                     </Form.Field>
                 </Form.Group>
@@ -521,9 +519,9 @@ export default function DashboardPage(props) {
                     :
                     <Form.Field>
                         <label>매장 운영시간</label>
-                        <Header className='dashboard-shopinfo-text'>{shop.shop_open} ~ {shop.shop_close}
+                        <p className='dashboard-shopinfo-text'>{shop.shop_open} ~ {shop.shop_close}
                             <span className='detailpage-holiday'>({shop.shop_holiday === 'none' ? '휴무일 없음' : convertWeek(shop.shop_holiday) + ' 휴무'})</span>
-                        </Header>
+                        </p>
                     </Form.Field>
                     }
                 </Form.Group>
@@ -532,7 +530,7 @@ export default function DashboardPage(props) {
                 :
                 <Form.Field>
                     <label>매장 소개</label>
-                    <Header as='h4' className='dashboard-shopinfo-text'>{shop.shop_info}</Header>
+                    <p className='dashboard-shopinfo-text'>{shop.shop_info}</p>
                 </Form.Field>
                 }
                 <div className='dashboard-content-final-empty'> </div>
@@ -548,7 +546,7 @@ export default function DashboardPage(props) {
             <Form className='dashboard-viewer-inline'>
                 <Form.Field>
                     <label>총 직원수</label>
-                    <Header className='dashboard-shopinfo-text'>{shop.staff_list.length + '명'}</Header>
+                    <p className='dashboard-shopinfo-text'>{shop.staff_list.length + '명'}</p>
                 </Form.Field>
                 <Form.Field>
                     <label>직원 신쳥현황</label>
@@ -571,9 +569,9 @@ export default function DashboardPage(props) {
                         ))}
                     </List>
                     : 
-                    <Header className='dashboard-shopinfo-text'>
+                    <p className='dashboard-shopinfo-text'>
                         신청목록 없음
-                    </Header>
+                    </p>
                     }
                 </Form.Field>
                 <Form.Field>

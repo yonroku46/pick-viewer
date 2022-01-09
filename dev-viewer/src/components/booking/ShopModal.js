@@ -82,7 +82,7 @@ export default class ShopModal extends Component {
                     const shop_img = shop.shop_img === null ? 'images/shop/default.png' : shop.shop_img.split(',')[0];
                     return(
                         <Link to={`/booking/${category}/${shop.shop_cd}`}>
-                            <button key={shop.shop_cd} style={{backgroundPosition: 'center', backgroundImage: 'linear-gradient(rgba(0, 0, 0, 0.05), rgba(0, 0, 0, 0.45)), url(' + api.imgRender(shop_img) + ')'}}>
+                            <button style={{backgroundPosition: 'center', backgroundImage: 'linear-gradient(rgba(0, 0, 0, 0.05), rgba(0, 0, 0, 0.45)), url(' + api.imgRender(shop_img) + ')'}}>
                                 <div className='shopmodal-name'>
                                     {shop.shop_name}
                                 </div>
