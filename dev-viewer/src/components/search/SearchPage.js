@@ -2,15 +2,18 @@ import { useEffect, useState, useReducer } from "react";
 import * as api from '../../rest/server'
 import axios from 'axios';
 import { Link, useParams } from 'react-router-dom';
-import { Menu, Form, Input, Dimmer, Loader, Icon, Label, Grid } from 'semantic-ui-react';
+import { Menu, Form, Input, Dimmer, Loader, Icon, Label, Grid, Search } from 'semantic-ui-react';
 
 export default function SearchPage(props) {
 
     const [search, setSearch] = useState('');
+    const [searchHistory, setSearchHistory] = useState([]);
+    const [recHistory, setRecHistory] = useState([]);
     const [shops, setShops] = useState([]);
     const [loading, setLoading] = useState(false);
     const [category, setCategory] = useState(props.location.state.category);
     const categoryList = ['hairshop', 'restaurant', 'cafe'];
+    const storage = window.localStorage;
 
     // category check
     if (!categoryList.includes(category)) {
@@ -23,6 +26,15 @@ export default function SearchPage(props) {
     };
 
     useEffect(() => {
+        const history = storage.getItem('searchHistory');
+        if (history !== null) {
+            const historyList = storage.getItem('searchHistory').split(',');
+            historyList.pop();
+            setSearchHistory(historyList);
+        }
+
+        setRecHistory(['2022트렌드','분위기 좋은 매장'])
+        
         setLoading(true);
         const params = { 
             'category': category
@@ -58,13 +70,47 @@ export default function SearchPage(props) {
     }
 
     function onCheckEnter(e) {
-        if(e.key === 'Enter') {
+        if (e.key === 'Enter') {
             searching();
         }
     }
+
+    function delHistory() {
+        storage.removeItem('searchHistory');
+        setSearchHistory([]);
+    }
+
+    function clickHistory(value) {
+        setSearch(value);
+        searching();
+    }
+
+    function delTarget(target) {
+        let past = storage.getItem('searchHistory');
+        storage.setItem('searchHistory', past.replace(target + ',', ''));
+        let historyList = storage.getItem('searchHistory').split(',');
+        historyList.pop();
+        setSearchHistory(historyList);
+    }
     
     function searching() {
-        console.log(search);
+        let past = storage.getItem('searchHistory');
+        let history = past ? past : '';
+
+        if (history.indexOf(search) === -1) {
+            history += search + ',';
+            storage.setItem('searchHistory', history);
+
+            const historyList = history.split(',');
+            historyList.pop();
+
+            if (9 < historyList.length) {
+                let past = storage.getItem('searchHistory');
+                storage.setItem('searchHistory', past.replace(historyList[0] + ',', ''));
+            }
+
+            setSearchHistory(historyList);
+        }
     }
     
     return(
@@ -90,25 +136,37 @@ export default function SearchPage(props) {
             <Menu.Item className='shopmodal-search'>
                 <Form onKeyPress={onCheckEnter}>
                     <Input iconPosition='left' autoFocus={true} placeholder='위치 또는 매장명을 입력해주세요' value={search} onChange={(e) => setSearch(e.target.value)}>
-                        {0 < search.length && <Icon className='search-back' name='times circle' onClick={delSearch}/>}
+                        {0 < search.length && <Icon className='search-del' name='times circle' onClick={delSearch}/>}
                         <input className='search-input'/>
                         <Icon className='search-btn' name='search' onClick={searching}/>
                     </Input>
                 </Form>
             </Menu.Item>
             <Menu.Item className='search-result'>
+                {0 < searchHistory.length ?
                 <div className='search-recent'>
-                    <h4 className='underline'>최근 검색</h4>
-                    <Label>
-                        검색어1
-                        <Icon name='delete'/>
-                    </Label>
-                    <Label>
-                        검색어2
-                        <Icon name='delete'/>
-                    </Label>
+                    <div className='search-recent-group'>
+                        <h4 className='underline'>최근 검색</h4>
+                        <Icon name='trash alternate outline' className='search-recent-del' onClick={delHistory}/>
+                    </div>
+                    {searchHistory.map(history =>
+                        <Label basic className='search-recent-label'>
+                            <span onClick={() => clickHistory(history)}>{history}</span>
+                            <Icon name='delete' onClick={() => delTarget(history)}/>
+                        </Label>
+                    )}
                 </div>
-                <div className='search-recommend shopmodal-main'>
+                :
+                <div className='search-recent'>
+                    <h4 className='underline'>추천 검색</h4>
+                    {recHistory.map(history =>
+                        <Label basic className='search-recent-label'>
+                            <span onClick={() => clickHistory(history)}>{history}</span>
+                        </Label>
+                    )}
+            </div>
+                }
+                <div className='search-recommend'>
                     <h4 className='underline'>추천 매장</h4>
                     {shops.map(shop => 
                         <Link to={`/booking/${category}/${shop.shop_cd}`}>

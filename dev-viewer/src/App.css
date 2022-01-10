@@ -1244,6 +1244,9 @@ table.dashboard-table input {
   margin-top: calc(1em - 6px) !important;
   margin-bottom: 1em !important;
 }
+.shopmodal-search {
+  margin-top: 0.6em;
+}
 .shopmodal-search input {
   width: 50vw !important;
   border-radius: 20px !important;
@@ -1251,7 +1254,12 @@ table.dashboard-table input {
 .shopmodal-main {
   margin: 5px 25vw;
 }
-.shopmodal-main button {
+.shopmodal-main h4 {
+  margin-top: 14px !important;
+  margin-left: 1em;
+  margin-bottom: 0.5em;
+}
+.shopmodal-shops button {
   background-size:cover;
   text-align: left;
   border: 0px;
@@ -1264,7 +1272,7 @@ table.dashboard-table input {
   border-radius: 10px;
   box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
 }
-.shopmodal-main button:hover {
+.shopmodal-shops button:hover {
   position: relative; 
   opacity: 0.9;
   box-shadow: 3px 3px 3px rgb(0,0,0,0.5); 
@@ -1290,6 +1298,15 @@ table.dashboard-table input {
   text-overflow: ellipsis;
   margin-left: 6px;
   margin-top: 4px;
+}
+.shopmodal-pick-group {
+  text-align: left;
+  margin-left: 1.5em;
+}
+.shopmodal-pick {
+  margin-top: 0.5em !important;
+  border-radius: 2em !important;
+  font-size: 0.9em !important;
 }
 
 /* booking page */
@@ -1397,7 +1414,7 @@ table.dashboard-table input {
     margin-top: 50px;
     padding: 0px 0px !important;
   }
-  .shopmodal-main button{
+  .shopmodal-shops button{
     width: 96vw;
   }
   .shopmodal-main {
@@ -1411,9 +1428,11 @@ table.dashboard-table input {
   .booking-main-category {
     width: 98vw;
   }
+  .shopmodal-search {
+    margin-top: 0;
+  }
   .shopmodal-search input{
     width: 96vw;
-    margin-top: 4px !important;
   }
   .booking-modal-shopname {
     margin-top: -46px;
@@ -1980,12 +1999,12 @@ a.detailpage-tel:hover {
   margin-top: 50px;
   min-height: calc(100vh - 81px);
 }
-.search-back {
+.search-del {
   pointer-events: auto !important;
   left: auto !important;
   right: 0 !important;
 }
-.search-back:hover {
+.search-del:hover {
   cursor: pointer !important;
 }
 .search-btn {
@@ -2006,8 +2025,23 @@ a.detailpage-tel:hover {
 }
 .search-recommend h4 {
   margin-left: -0.5em;
-  margin-bottom: 0.5em;
+  margin-bottom: calc(1em - 5px);
   text-align: left;
+}
+.search-recent-group {
+  display: flex;
+}
+.search-recent-del {
+  margin-left: 5px !important;
+  margin-top: 2px !important;
+}
+.search-recent-del:hover {
+  cursor: pointer;
+  opacity: 0.6;
+}
+.search-recent-label:hover {
+  cursor: pointer;
+  background-color: rgba(0, 0, 0, 0.05) !important;
 }
 .search-recent {
   margin-top: 14px;
@@ -2016,8 +2050,29 @@ a.detailpage-tel:hover {
 }
 .search-recent h4 {
   margin-left: -0.5em;
-  margin-bottom: 1em;
+  margin-bottom: calc(1em - 2px);;
   text-align: left;
+}
+.search-recent div.ui.label {
+  margin: 2px !important;
+}
+.search-recommend button {
+  background-size:cover;
+  text-align: left;
+  border: 0px;
+  color: #fff;
+  width: 290px; 
+  height: 200px; 
+  padding: 10px;
+  margin: 5px;
+  font-weight: bold;
+  border-radius: 10px;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+}
+.search-recommend button:hover {
+  position: relative; 
+  opacity: 0.9;
+  box-shadow: 3px 3px 3px rgb(0,0,0,0.5); 
 }
 /* sp */
 @media only screen and (max-width: 767px){
@@ -2041,6 +2096,9 @@ a.detailpage-tel:hover {
   }
   .search-recommend h4 {
     margin-left: 0.5em;
+  }
+  .search-recommend button {
+    width: 93.5vw;
   }
 }
 
