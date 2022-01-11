@@ -236,6 +236,29 @@ def resetService():
         app.logger.info("Exception:{}".format(e))
         return (jsonify({'error': 'Not found'}), 404)
 
+# searchPage
+@app.route('/api/search', methods=['GET'])
+def searchResult():
+    params = request.args
+    category = params.get('category')
+    value = params.get('value')
+    
+    categoryList = ['hairshop', 'restaurant', 'cafe']
+    if (category == categoryList[0]):
+        category = 'HS'
+    elif (category == categoryList[1]):
+        category = 'RT'
+    elif (category == categoryList[2]):
+        category = 'CF'
+
+    try:
+        query = gen.getQuery("sql/SELECT_searchResult.sql", {"category": category, "value": value})
+        rows = mng.fetch_all(query)
+        return (jsonify(rows), 200)
+    except Exception as e:
+        app.logger.info("Exception:{}".format(e))
+        return (jsonify({'error': 'Not found'}), 404)
+
 # bookingPage
 @app.route('/api/shoplist', methods=['POST'])
 def getShopList():
