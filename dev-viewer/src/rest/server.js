@@ -48,3 +48,6 @@ export const shopBookingList = "/api/shopBookingList";
 export const userRequestConfirm = "/api/userRequestConfirm";
 export const saveShopInfo = "/api/saveShopInfo";
 export const imgClear = "/api/imgClear";
+
+// SearchPage
+export const search = "/api/search";
