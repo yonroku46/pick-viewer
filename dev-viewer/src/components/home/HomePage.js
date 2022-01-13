@@ -1,10 +1,8 @@
 import React, { useState, useRef } from 'react';
 import { Link } from "react-router-dom";
-import robo from '../../img/robo.png';
-import src from '../../img/robo.png';
 import page1 from '../../img/page1.png'
 import page2 from '../../img/page2.png'
-import { Button, Segment, Icon, Accordion, Grid, Image, Header, Card, Reveal } from 'semantic-ui-react';
+import { Button, Segment, Icon, Accordion, Grid, Image, Header, Input, Reveal } from 'semantic-ui-react';
 
 export default function HomePage() {
     let isAuthorized = sessionStorage.getItem("isAuthorized");
@@ -71,9 +69,10 @@ export default function HomePage() {
         <p className='home-main-title'>서비스 오픈!</p>
         <p className='home-main-title-bottom'>MAX 50% off</p>
         <Link to='/booking/hairshop'>
-          <Button.Content className='home-main-btn circle-h' visible>
-            둘러보기
-          </Button.Content>
+           <Input iconPosition='left' className='home-main-search' placeholder='위치 또는 매장명을 입력해주세요'>
+              <Icon name='search'/>
+              <input/>
+            </Input>
         </Link>
       </div>
 
@@ -148,16 +147,16 @@ export default function HomePage() {
         <Grid.Column>
           <Segment className="home-content-intro">
             <h2 className="home-content-intro-title">예약을 쉽고<br/><span className='pcolor'>스마트</span>하게!</h2>
-            <p className="home-content-intro-inline">나에게 맞는 디자이너를 찾는 일은<br/>
+            <p className="home-content-intro-inline">원하는 매장을 찾는 일은<br/>
               항상 어렵게 느껴집니다.<br/>
               저희 <b>Pick</b>에서는 그 어려움을 해결해<br/>
               드리고 싶었습니다.<br/>
-              시술 통계 데이터 기반으로<br/>
-              각 지역에서 재예약 많은 디자이너부터<br/>
-              매장까지 똑똑하게 추천해드립니다.
+              각종 통계 데이터 기반으로<br/>
+              주변 지역의 매장 및 장소를<br/>
+              하나부터 열까지 똑똑하게 추천해드립니다.
             </p>
             <Link to='/styles'>
-              <Button inverted color='blue'>추천 헤어보기<Icon name='angle double right'/></Button>
+              <Button inverted color='blue'>추천 매장보기<Icon name='angle double right'/></Button>
             </Link>
           </Segment>
         </Grid.Column>
@@ -168,54 +167,42 @@ export default function HomePage() {
         </Grid.Column>
       </Grid>
 
-      <Grid className='home-content-main' container divided relaxed stackable>
+      <Grid className='home-content-main content4' container divided relaxed stackable>
         <Grid.Column>
-          <Segment className="home-content-2">
+          <Segment>
           <h4 className='sub-title'>번거로움을 줄이다</h4>
           <h2><span className='pcolor'>지금 바로 </span>사용하세요</h2>
-            <Accordion styled className='home-content-2-right'>
-              <Accordion.Title
-                active={activeIndex === 0}
-                index={0}
-                onClick={handleClick}
-              >
+            <Accordion styled className='content4-right'>
+              <Accordion.Title active={activeIndex === 0} index={0} onClick={handleClick}>
                 <Icon name='dropdown'/>
-                Question 1
+                서비스 정식 출시일은 언제인가요?
               </Accordion.Title>
               <Accordion.Content active={activeIndex === 0}>
                 <p>
-                  wait
+                  변수가 생길수도 있겠지만<br/>
+                  가능하면 올해 겨울중으로 생각하고 있습니다.
                 </p>
               </Accordion.Content>
 
-              <Accordion.Title
-                active={activeIndex === 1}
-                index={1}
-                onClick={handleClick}
-              >
+              <Accordion.Title active={activeIndex === 1} index={1} onClick={handleClick}>
                 <Icon name='dropdown'/>
-                Question 2
+                매장을 등록하고 싶어요! 어떻게 하나요?
               </Accordion.Title>
               <Accordion.Content active={activeIndex === 1}>
                 <p>
-                  wait
+                  출시 후 가이드맵을 보여드릴 예정입니다.
                 </p>
               </Accordion.Content>
 
-              <Accordion.Title
-                active={activeIndex === 2}
-                index={2}
-                onClick={handleClick}
-              >
+              <Accordion.Title active={activeIndex === 2} index={2} onClick={handleClick}>
                 <Icon name='dropdown'/>
-                Question 3
+                본 서비스는 무료인가요?
               </Accordion.Title>
               <Accordion.Content active={activeIndex === 2}>
                 <p>
-                  wait
-                </p>
-                <p>
-                  wait
+                  기본 무료로 서비스 예정이며,<br/>
+                  매장의 경우 서비스관리를 위하여<br/>
+                  월정액제를 생각중입니다.
                 </p>
               </Accordion.Content>
             </Accordion>

@@ -28,22 +28,22 @@ axios.defaults.headers.post['Access-Control-Allow-Origin'] = '*';
 
 export default function App() {
 
-  const [ipStat, setIpStat] = useState(true);
+  const [countryStat, setCountryStat] = useState(true);
   
   useEffect(() => {
-     // ip Check
-      fetch('https://api64.ipify.org?format=json').then(res =>
+    // ip check
+    fetch('https://api64.ipify.org?format=json').then(res =>
       res.json().then(data => {
         return data.ip
       })
       .then(ip => {
-        fetch(api.check + ip, { method: 'POST'}).then(res =>
+        fetch(api.check + ip, {method: 'POST'}).then(res =>
           res.json().then(data => {
             let countryCode = data.split(":");
             if (countryCode[5].includes('JP') || countryCode[5].includes('KR') || countryCode[5].includes('GB')) {
-              setIpStat(true);
+              setCountryStat(true);
             } else {
-              setIpStat(false);
+              setCountryStat(false);
               console.log("negative ip");
             }
         })
@@ -68,10 +68,6 @@ export default function App() {
 
   function toggleMenu() {
     setVisible(!visible);
-  };
-
-  function goBack() {
-    // props.history.goBack(1);
   };
 
   function menuClose() {
@@ -107,12 +103,12 @@ export default function App() {
 
   return (
     <>
-    {ipStat ?
+    {countryStat ?
     <div className="App">
       {/* Header */}
       <div className="app-header">
         <div className="menu-left">
-          <Icon className='back-btn' name='angle left' size='large' onClick={goBack}/>
+          <Icon className='back-btn' name='angle left' size='large'/>
         </div>
         <div className="menu-center">
           <Link to="/" ><img className="logo invert" src={logo}/></Link>
@@ -209,10 +205,9 @@ export default function App() {
                 <Route exact path="/mypage" component={MyPage}/>
                 <Route exact path="/dashboard" component={DashboardPage}/>
                 <Route exact path="/wiki" component={WikiPage}/>
-                <Route component={EmptyPage} />
+                <Route component={EmptyPage}/>
               </Switch>
             </Segment>
-
           </Sidebar.Pusher>
           {/* Footer */}
           <footer className={visible ? "app-footer push-background" : "app-footer"}>
@@ -228,7 +223,8 @@ export default function App() {
           </Modal.Actions>
       </Modal>
     </div>
-    :<Route component={EmptyPage}/> 
+    :
+    <Route component={EmptyPage}/> 
     }
   </>
   );
