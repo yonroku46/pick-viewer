@@ -211,7 +211,7 @@ export default function App() {
           </Sidebar.Pusher>
           {/* Footer */}
           <footer className={visible ? "app-footer push-background" : "app-footer"}>
-            <Icon name='copyright'/>TEAMBEPO
+            <Icon name='copyright'/>TEAMBEPO 2022
           </footer>
         </Sidebar.Pushable>
       </div>

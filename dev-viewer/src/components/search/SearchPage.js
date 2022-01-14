@@ -212,7 +212,7 @@ export default function SearchPage(props) {
                     :
                     <>
                     <h4 className='underline'>검색 결과</h4>
-                        <p>해당하는 매장을 찾지 못했습니다</p>
+                        <p className="search-non-data">해당하는 매장을 찾지 못했습니다</p>
                     <h4 className='underline'>추천 매장</h4>
                     {shops.map(shop => 
                         <Link to={`/booking/${category}/${shop.shop_cd}`}>

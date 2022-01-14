@@ -1161,8 +1161,9 @@ table.dashboard-table input {
     padding: 1em 0px !important;
   }
 
-  .ui.relaxed.grid.container.content1 {
-    text-align: center !important;
+  .content1 {
+    padding: 0.5em 2em !important;
+    height: 20vh !important;
   }
   .content1-left {
     align-self: center;
@@ -1170,9 +1171,9 @@ table.dashboard-table input {
     padding-left: 0 !important;
   }
   .content1-right {
-    margin-right: 0;
+    margin-right: auto;
     margin-left: auto;
-    padding: 0;
+    padding-right: 0 !important;
   }
 
   .content2 {
@@ -1276,7 +1277,6 @@ table.dashboard-table input {
 }
 .shopmodal-rating {
   float: right;
-  margin-top: -1.1em;
 }
 .shopmodal-location {
   width: 80%;
@@ -1989,6 +1989,9 @@ a.detailpage-tel:hover {
   pointer-events: auto !important;
   left: auto !important;
   right: 0 !important;
+}
+.search-non-data {
+  margin-left: 5px;
 }
 .search-del:hover {
   cursor: pointer !important;

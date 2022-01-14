@@ -2,6 +2,7 @@ import React, { useState, useRef } from 'react';
 import { Link } from "react-router-dom";
 import page1 from '../../img/page1.png'
 import page2 from '../../img/page2.png'
+import * as api from '../../rest/server'
 import { Button, Segment, Icon, Accordion, Grid, Image, Header, Input, Reveal } from 'semantic-ui-react';
 
 export default function HomePage() {
@@ -10,6 +11,8 @@ export default function HomePage() {
     const permission = userInfo ? userInfo.permission : null;
 
     const [activeIndex, SetActiveIndex] = useState();
+
+    const eventList = ["images/event/1.png", "images/event/2.png", "images/event/3.png", "images/event/4.png"];
 
     const handleClick = (e, titleProps) => {
       const { index } = titleProps
@@ -108,38 +111,20 @@ export default function HomePage() {
       
       <Grid container className='home-content-main content2' divided relaxed stackable>
         <div className='home-quick-menu' onMouseDown={onDragStart} onMouseMove={isDrag ? onThrottleDragMove : null} onMouseUp={onDragEnd} onMouseLeave={onDragEnd} ref={scrollRef}>
-          <Link to={`/booking/`}>
-              <button className='content2-quick' style={{backgroundImage: 'linear-gradient(rgba(0, 0, 0, 0.05), rgba(0, 0, 0, 0.45))'}}>
-                  <div>
-                      test
-                  </div>
+          {eventList.map(event => 
+            event.indexOf('/1.png') === -1 ?
+            <Link to={`/booking/hairshop`}>
+                <button className='content2-quick' style={{marginLeft: '-0.5em', marginRight: '1em', borderRadius: '0.5em', width: '290px', height: '12.5vh', backgroundPosition: 'center', backgroundImage: 'url(' + api.imgRender(event) + ')'}}>
+                    <span className='shopmodal-rating'><Icon name='chevron circle right'/></span>
+                </button>
+            </Link>
+            :
+            <Link to={`/booking/hairshop`}>
+              <button className='content2-quick' style={{backgroundImage: 'url(' + api.imgRender(event) + ')'}}>
                   <span className='shopmodal-rating'><Icon name='chevron circle right'/></span>
               </button>
-          </Link>
-          <Link to={`/booking/`}>
-              <button className='content2-quick' style={{marginLeft: '-0.5em', marginRight: '1em', borderRadius: '0.5em', width: '290px', height: '12.5vh', backgroundPosition: 'center', backgroundImage: 'linear-gradient(rgba(0, 0, 0, 0.05), rgba(0, 0, 0, 0.45))'}}>
-                  <div>
-                      test
-                  </div>
-                  <span className='shopmodal-rating'><Icon name='chevron circle right'/></span>
-              </button>
-          </Link>
-          <Link to={`/booking/`}>
-              <button className='content2-quick' style={{marginLeft: '-0.5em', marginRight: '1em', borderRadius: '0.5em', width: '290px', height: '12.5vh', backgroundPosition: 'center', backgroundImage: 'linear-gradient(rgba(0, 0, 0, 0.05), rgba(0, 0, 0, 0.45))'}}>
-                  <div>
-                      test
-                  </div>
-                  <span className='shopmodal-rating'><Icon name='chevron circle right'/></span>
-              </button>
-          </Link>
-          <Link to={`/booking/`}>
-              <button className='content2-quick' style={{marginLeft: '-0.5em', marginRight: '1em', borderRadius: '0.5em', width: '290px', height: '12.5vh', backgroundPosition: 'center', backgroundImage: 'linear-gradient(rgba(0, 0, 0, 0.05), rgba(0, 0, 0, 0.45))'}}>
-                  <div>
-                      test
-                  </div>
-                  <span className='shopmodal-rating'><Icon name='chevron circle right'/></span>
-              </button>
-          </Link>
+            </Link>
+          )}
         </div>
       </Grid>
 
