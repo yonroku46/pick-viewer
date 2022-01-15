@@ -30,6 +30,7 @@ config.read("config/System.Config")
 ALLOW_NETWORKS = ["127.0.0.1"]
 
 gen = dbGenerator.dbGenerator()
+categoryList = ['hairshop', 'restaurant', 'cafe']
 
 @app.before_request
 def before_request():
@@ -243,7 +244,6 @@ def searchResult():
     category = params.get('category')
     value = params.get('value')
     
-    categoryList = ['hairshop', 'restaurant', 'cafe']
     if (category == categoryList[0]):
         category = 'HS'
     elif (category == categoryList[1]):
@@ -265,7 +265,6 @@ def getShopList():
     params = request.get_json()
     category = params['category']
 
-    categoryList = ['hairshop', 'restaurant', 'cafe']
     if (category == categoryList[0]):
         category = 'HS'
     elif (category == categoryList[1]):
