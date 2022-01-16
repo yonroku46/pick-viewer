@@ -99,7 +99,7 @@ export default function LoginPage(props) {
       <Grid.Column style={{ maxWidth: 450 }}>
         <img src={background} className='login-background'/>
         <Form size='large' onSubmit={onSubmitHandler}>
-          <Segment stacked>
+          <Segment className='login-form-main' stacked>
             <Form.Input 
               fluid icon='user'
               iconPosition='left'

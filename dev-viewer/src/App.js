@@ -113,7 +113,7 @@ export default function App() {
         <div className="menu-center">
           <Link to="/" ><img className="logo invert" src={logo}/></Link>
         </div>
-        <div className="menu-right invert">
+        <div className="menu-right">
           <div id="menu-icon" className={visible ? 'open': null} onClick={toggleMenu} >
             <span></span>
             <span></span>

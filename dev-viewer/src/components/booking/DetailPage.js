@@ -577,6 +577,9 @@ export default function DetailPage(props) {
 
   return (
     <div className='detailpage'>
+      {/* <div className='booking-nav'>
+        test
+      </div> */}
       {shop.length === 0 &&
         <Dimmer active inverted>
           <Loader size='large'/>
