@@ -127,7 +127,12 @@ export default function SearchPage(props) {
         })
         .then(res => {
           if (res !== null) {
-            setSearchResult(res);
+            if (res.length === 0) {
+                setSearchResult(res);
+                alert('찾으시는 매장이 없습니다.')
+            } else {
+                setSearchResult(res);
+            }
             setLoading(false);
           }     
         })
@@ -205,10 +210,10 @@ export default function SearchPage(props) {
             </div>
                 }
                 <div className='search-recommend'>
-                    {0 < searchResult.length ?
+                    {searchResult.length !== 0 &&
                     <>
-                    <h4 className='underline'>검색 결과</h4>
                     {/* 검색결과 존재시 ShopModal로 결과 전송 및 페이지이동하도록 변경 */}
+                    <h4 className='underline'>검색 결과</h4>
                     {searchResult.map(shop => 
                         <Link to={`/booking/${category}/${shop.shop_cd}`}>
                             <button key={shop.shop_cd} style={{backgroundPosition: 'center', backgroundImage: 'linear-gradient(rgba(0, 0, 0, 0.05), rgba(0, 0, 0, 0.45)), url(' + api.imgRender(shop.shop_img === null ? 'images/shop/default.png' : shop.shop_img.split(',')[0]) + ')'}}>
@@ -222,11 +227,6 @@ export default function SearchPage(props) {
                             </button>
                         </Link>
                     )}
-                    </>
-                    :
-                    <>
-                    <h4 className='underline'>검색 결과</h4>
-                        <p className="search-non-data">해당하는 매장을 찾지 못했습니다...</p>
                     </>
                     }
                 </div>
