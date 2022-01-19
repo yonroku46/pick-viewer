@@ -828,6 +828,9 @@ table.dashboard-table input {
   padding-bottom: 2px !important;
   transform: translateY(-25%)
 }
+.mypage-msg {
+  z-index: 10;
+}
 .mypage-msg:hover {
   cursor: pointer;
 }
@@ -1164,7 +1167,7 @@ table.dashboard-table input {
   padding: 0.5em 0.5em !important;
   height: 14.5vh;
 }
-.content2-quick {
+.content2-quick img {
   margin-left: -0.5em;
   margin-right: 1em;
   border-radius: 0.5em;
@@ -1172,11 +1175,16 @@ table.dashboard-table input {
   height: 12.5vh;
   border:#fff solid 1px;
   background-position: center;
+  transform: scale(1);
+	-webkit-transition: .3s ease-in-out;
+	transition: .3s ease-in-out;
+  border-radius: 12px;
 }
-.content2-quick:hover {
+.content2-quick img:hover {
   cursor: pointer;
+  filter: opacity(.9);
   transition: all 0.2s linear;
-  transform: scale(0.98);
+  transform: scale(1.02);
 }
 
 .content4 {
@@ -2124,6 +2132,9 @@ a.detailpage-tel:hover {
   position: relative; 
   opacity: 0.9;
   box-shadow: 3px 3px 3px rgb(0,0,0,0.5); 
+}
+.search-msg {
+  margin-bottom: -69.188px !important;
 }
 /* sp */
 @media only screen and (max-width: 767px){

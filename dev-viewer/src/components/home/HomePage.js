@@ -112,13 +112,10 @@ export default function HomePage() {
       <Grid container className='home-content-main content2' divided relaxed stackable>
         <div className='home-quick-menu' onMouseDown={onDragStart} onMouseMove={isDrag ? onThrottleDragMove : null} onMouseUp={onDragEnd} onMouseLeave={onDragEnd} ref={scrollRef}>
           {eventList.map(event => 
-            event.indexOf('/1.png') === -1 ?
             <Link to={`/booking/hairshop`}>
-              <button className='content2-quick' style={{marginLeft: '-0.5em', marginRight: '1em', borderRadius: '0.5em', width: '290px', height: '12.5vh', backgroundPosition: 'center', backgroundImage: 'url(' + api.imgRender(event) + ')'}}></button>
-            </Link>
-            :
-            <Link to={`/booking/hairshop`}>
-              <button className='content2-quick' style={{backgroundImage: 'url(' + api.imgRender(event) + ')'}}></button>
+              <span className='content2-quick'>
+                <img src={api.imgRender(event)}/>
+              </span>
             </Link>
           )}
         </div>

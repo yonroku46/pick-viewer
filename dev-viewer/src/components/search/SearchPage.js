@@ -1,8 +1,8 @@
-import { useEffect, useState, useReducer } from "react";
+import React, { useEffect, useState, useReducer } from "react";
 import * as api from '../../rest/server'
 import axios from 'axios';
 import { Link, useParams } from 'react-router-dom';
-import { Menu, Form, Input, Dimmer, Loader, Icon, Label, Grid, Search } from 'semantic-ui-react';
+import { Menu, Form, Input, Dimmer, Loader, Icon, Label, Grid, Transition, Message } from 'semantic-ui-react';
 
 export default function SearchPage(props) {
 
@@ -15,6 +15,10 @@ export default function SearchPage(props) {
     const [category, setCategory] = useState(props.location.state.category);
     const categoryList = ['hairshop', 'restaurant', 'cafe'];
     const storage = window.localStorage;
+
+    const [visible, setVisible] = useState(false);
+    const duration = 500;
+    const animation = 'fade down';
 
     // category check
     if (!categoryList.includes(category)) {
@@ -129,7 +133,8 @@ export default function SearchPage(props) {
           if (res !== null) {
             if (res.length === 0) {
                 setSearchResult(res);
-                alert('찾으시는 매장이 없습니다.')
+                setVisible(true);
+                // alert('찾으시는 매장이 없습니다.')
             } else {
                 setSearchResult(res);
             }
@@ -144,6 +149,9 @@ export default function SearchPage(props) {
     
     return(
         <div className='search-main'>
+            <Transition animation={animation} duration={duration} visible={visible}>
+                <Message color='blue' onClick={() => setVisible(false)} className='mypage-msg search-msg' header='찾으시는 매장이 없습니다' content='매장에 서비스 등록을 요청해보세요!' />
+            </Transition>
             <div className="booking-main-category">
             <Grid columns={3} divided>
                 <Grid.Row>
