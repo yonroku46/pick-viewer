@@ -224,7 +224,7 @@ export default function SearchPage(props) {
                     <h4 className='underline'>검색 결과</h4>
                     {searchResult.map(shop => 
                         <Link to={`/booking/${category}/${shop.shop_cd}`}>
-                            <button key={shop.shop_cd} style={{backgroundPosition: 'center', backgroundImage: 'linear-gradient(rgba(0, 0, 0, 0.05), rgba(0, 0, 0, 0.45)), url(' + api.imgRender(shop.shop_img === null ? 'images/shop/default.png' : shop.shop_img.split(',')[0]) + ')'}}>
+                            <button key={shop.shop_cd} style={{backgroundSize: '105%', backgroundPosition: 'center', backgroundImage: 'linear-gradient(rgba(0, 0, 0, 0.05), rgba(0, 0, 0, 0.45)), url(' + api.imgRender(shop.shop_img === null ? 'images/shop/default.png' : shop.shop_img.split(',')[0]) + ')'}}>
                                 <div className='shopmodal-name'>
                                     {shop.shop_name}
                                 </div>
