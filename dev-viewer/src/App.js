@@ -1,6 +1,6 @@
 /* eslint-disable */
 
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useReducer, useState } from 'react';
 import logo from "./img/app-icon.png";
 import HomePage from './components/home/HomePage'
 import SearchPage from './components/search/SearchPage'
@@ -29,6 +29,8 @@ axios.defaults.headers.post['Access-Control-Allow-Origin'] = '*';
 export default function App() {
 
   const [countryStat, setCountryStat] = useState(true);
+  const [whiteFlag, setWhiteFlag] = useState(false);
+  const whiteList = ['/mypage','/dashboard'];
   
   useEffect(() => {
     // ip check
@@ -44,7 +46,7 @@ export default function App() {
               setCountryStat(true);
             } else {
               setCountryStat(false);
-              console.log("negative ip");
+              console.log("negative");
             }
         })
         )
@@ -57,9 +59,15 @@ export default function App() {
         res.status && console.log("connect");
       })
       .catch(err => {
-        console.log("server disconnect");
+        console.log("disconnect");
       })
-    }, []); 
+    }, []);
+    
+    let path = window.location.pathname;
+
+    useEffect(() => {
+      setWhiteFlag(whiteList.indexOf(path) !== -1);
+    }, [path]);
 
   const [visible, setVisible] = useState(false);
   const isAuthorized = sessionStorage.getItem("isAuthorized");
@@ -210,7 +218,7 @@ export default function App() {
             </Segment>
           </Sidebar.Pusher>
           {/* Footer */}
-          <footer className={visible ? "app-footer push-background" : "app-footer"}>
+          <footer className={visible ? "app-footer push-background" : whiteFlag ? "app-footer-white" : "app-footer"}>
             <Icon name='copyright'/>TEAMBEPO 2022
           </footer>
         </Sidebar.Pushable>

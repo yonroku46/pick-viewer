@@ -115,6 +115,13 @@ h1, h2, h3, h4, h5, div, a, button {
   padding: 5px 10px;
   font-size: 12px;
 }
+.app-footer-white {
+  width: 100%;
+  color: rgba(120, 120, 120, 0.4);
+  background-color: #fff;
+  padding: 5px 10px;
+  font-size: 12px;
+}
 
 .push-background {
   color: rgba(100, 100, 100, 0.4);
@@ -817,6 +824,7 @@ table.dashboard-table input {
 .mypage-main {
   margin-top: 50px;
   min-height: calc(100vh - 81px);
+  background-color: #fff;
 }
 .mypage-booking-date {
   position: absolute;
@@ -855,7 +863,6 @@ table.dashboard-table input {
   margin-top: 20px;
   margin-bottom: 10px;
   padding: 20px 0;
-  background-color: #fff;
   border-bottom: rgb(0, 0, 0, 0.1) 2px solid;
 }
 .mypage-user-info {
@@ -941,7 +948,6 @@ table.dashboard-table input {
 }
 .mypage-content-table {
   width: 70vw !important;
-  background-color: #fff;
   padding: 18px 25px 40px 25px;
   margin-bottom: 0px;
 }
