@@ -46,18 +46,22 @@ export default class ShopModal extends Component {
 
     handleChange = e => {
         const origin = this.state.shopsOrigin;
-        const result = origin.filter(shops => shops.shop_location.match(e.target.value));
+        const result = origin.filter(shop => shop.shop_location.match(e.target.value));
         this.setState({shops: result, search: e.target.value});
     }
 
     pickFilter(method) {
+        const origin = this.state.shopsOrigin;
+        let result = [];
         if (method === 'favorite') {
             this.setState({pickFavorite: !this.state.pickFavorite});
         } else if (method === 'rating') {
             this.setState({pickRating: !this.state.pickRating});
+            result = this.state.pickRating ? origin : origin.filter(shop => shop.ratings_ave > 4);
         } else if (method === 'promotion') {
             this.setState({pickPromotion: !this.state.pickPromotion});
         }
+        this.setState({shops: result})
     }
     
     Loading() {
@@ -95,7 +99,7 @@ export default class ShopModal extends Component {
                             <Icon name={pickFavorite ? 'like' : 'like outline'}/>즐겨찾기
                         </Button>
                         <Button basic={!pickRating} color={pickRating ? 'violet' : 'black'}  className='shopmodal-pick' onClick={() => this.pickFilter('rating')}>
-                            <Icon name={pickRating ? 'thumbs up' : 'thumbs up outline'}/>평점높은순
+                            <Icon name={pickRating ? 'thumbs up' : 'thumbs up outline'}/>고평가매장
                         </Button>
                         <Button basic={!pickPromotion} color={pickPromotion ? 'yellow' : 'black'}  className='shopmodal-pick' onClick={() => this.pickFilter('promotion')}>
                             <Icon name={pickPromotion ? 'gem' : 'gem outline'}/>프로모션중
