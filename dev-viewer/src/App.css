@@ -429,6 +429,7 @@ hr {
 /* DashboardPage */
 .dashboard-main {
   display: block;
+  background-color: #fff;
   margin-top: 50px !important;
   min-height: calc(100vh - 81px);
 }
@@ -453,8 +454,9 @@ hr {
   float: left;
   box-shadow: none !important;
   width: 16vw !important;
+  min-width: 170px !important;
   max-width: 260px !important;
-  min-height: calc(100vh - 84px) !important;
+  min-height: calc(100vh - 83px) !important;
   margin-bottom: -10px !important;
 }
 .dashboard-menu div.header {
@@ -489,12 +491,10 @@ hr {
   float: left;
   text-align: left;
   min-height: calc(100vh - 84px) !important;
-  max-height: 90vh;
-  overflow: auto;
-  width: 65vw;
+  max-height: 89vh;
+  overflow: auto !important;
+  width: 84vw;
   margin-top: 0 !important;
-  margin-left: 10vw !important;
-  margin-right: auto !important;
   margin-bottom: -10px !important;
 }
 div.ui.segment.dashboard-viewer {
@@ -722,6 +722,12 @@ table.dashboard-table input {
   width: 94%;
   float: left;
 }
+/* pc */
+@media only screen and (min-width: 766px) {
+  .dashboard-viewer {
+    padding: 2em 2em !important;
+  }
+}
 
 /* sp */
 @media only screen and (max-width: 767px) {
@@ -736,10 +742,8 @@ table.dashboard-table input {
   }
   .dashboard-viewer {
     width: 100vw !important;
-    min-height: calc(95vh - 51px) !important;
     margin-left: 0px !important;
     margin-right: 0px !important;
-    /* padding-bottom: 0px !important; */
   }
   .dashboard-viewer-inline {
     padding: 0.5em 0em !important;
