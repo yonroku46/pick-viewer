@@ -427,6 +427,11 @@ hr {
 }
 
 /* DashboardPage */
+.dashboard {
+  border-top: rgb(0, 0, 0, 0.1) 1px solid !important;
+  border-bottom: rgb(0, 0, 0, 0.1) 1px solid !important;
+  height: calc(90vh - 6px);
+}
 .dashboard-main {
   display: block;
   background-color: #fff;
@@ -488,17 +493,15 @@ hr {
   color: #000 !important;
 }
 .dashboard-viewer {
-  float: left;
   text-align: left;
   min-height: calc(100vh - 84px) !important;
   max-height: 89vh;
   overflow: auto !important;
-  width: 84vw;
+  width: 76vw;
+  margin-left: auto !important;
+  margin-right: auto !important;
   margin-top: 0 !important;
   margin-bottom: -10px !important;
-}
-div.ui.segment.dashboard-viewer {
-  border: rgb(0, 0, 0, 0.1) 1px solid !important;
 }
 .dashboard-viewer-empty {
   margin: 1em !important;
