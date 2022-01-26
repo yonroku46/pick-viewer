@@ -658,7 +658,6 @@ def saveShopInfo():
                     mng.fetch(query)
         
         for menu in newMenu:
-            # add
             menu = newMenu[menu]
             tmpFile = menu['menu_img']
             pin = random.randint(100000,999999)
