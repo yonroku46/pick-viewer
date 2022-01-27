@@ -427,11 +427,6 @@ hr {
 }
 
 /* DashboardPage */
-.dashboard {
-  border-top: rgb(0, 0, 0, 0.1) 1px solid !important;
-  border-bottom: rgb(0, 0, 0, 0.1) 1px solid !important;
-  height: calc(90vh - 6px);
-}
 .dashboard-main {
   display: block;
   background-color: #fff;
@@ -502,6 +497,9 @@ hr {
   margin-right: auto !important;
   margin-top: 0 !important;
   margin-bottom: -10px !important;
+}
+.ui.segment.dashboard-viewer {
+  border: rgb(0, 0, 0, 0.1) 1px solid !important;
 }
 .dashboard-viewer-empty {
   margin: 1em !important;
@@ -1375,7 +1373,7 @@ table.dashboard-table input {
 /* booking page */
 .booking-btn {
   margin-top: 14px !important;
-  margin-bottom: 14px !important;
+  margin-bottom: 28px !important;
   margin-right: 0px !important;
   width: 96% !important;
   max-width: 360px !important;
@@ -1602,7 +1600,10 @@ table.dashboard-table input {
 }
 .detailpage-main-image {
   padding: 0px !important;
+  margin-top: 24px !important;
   margin-bottom: 0px !important;
+  margin-left: auto !important;
+  margin-right: auto !important;
 }
 .detailpage-main-image img {
   width: 100%;
@@ -1616,13 +1617,16 @@ table.dashboard-table input {
   height: auto;
   text-align: left;
   margin-top: 0px !important;
-  padding-top: 1.5em !important;
-  padding-bottom: 1.5em !important;
+  padding-top: 2em !important;
+  padding-bottom: 2em !important;
   padding-left: 8px !important;
   padding-right: 8px !important;
   border-radius: 0px !important;
   border-top: rgb(0, 0, 0, 0.1) 1px solid !important;
   border-bottom: rgb(0, 0, 0, 0.1) 1px solid !important;
+}
+.detailpage-main .detailpage-time i,.detailpage-info i, .detailpage-location i {
+  margin-right: 0.6em !important;
 }
 .detailpage-link-btn {
   margin-right: 0px !important;
@@ -1633,7 +1637,7 @@ table.dashboard-table input {
   margin-bottom: 0.5em;
 }
 .detailpage-time {
-  margin: 5px;
+  margin: 8px;
 }
 .detailpage-call a {
   margin: 5px;
@@ -1645,7 +1649,7 @@ table.dashboard-table input {
   opacity: 1;
 }
 .detailpage-location {
-  margin: 5px;
+  margin: 8px;
 }
 .detailpage-location-empty {
   margin-top: 1.2em;
@@ -1653,7 +1657,7 @@ table.dashboard-table input {
   text-align: center;
 }
 .detailpage-info {
-  margin: 5px;
+  margin: 8px;
 }
 a.detailpage-tel {
   color: #000;
@@ -1759,7 +1763,7 @@ a.detailpage-tel:hover {
   margin-right: 4px !important;
 }
 .detailpage-menu-btn button {
-  width: 50vw;
+  width: 100%;
   background-color: #fff !important;
 }
 .detailpage-comment {
@@ -1784,7 +1788,7 @@ a.detailpage-tel:hover {
   border-style: solid;
   border-width: 1px;
   border-color: lightgray ;
-  margin-bottom: 6px;
+  margin-bottom: 8px;
   margin-right: 0px;
   padding: 12px;
 }
@@ -1829,7 +1833,7 @@ a.detailpage-tel:hover {
 /* sp */
 @media only screen and (max-width: 767px){
   .detailpage-menu-btn button {
-    width: 98vw;
+    width: 96%;
   }
   .timetable-btn-area {
     text-align: center;
@@ -1844,10 +1848,14 @@ a.detailpage-tel:hover {
 }
 .review-tab-icon:hover {
   cursor: pointer;
-  opacity: 0.75;
+  opacity: 0.8;
+}
+.review-tab-label:hover {
+  cursor: pointer;
 }
 .review-info {
   margin-top: -14px !important;
+  margin-bottom: 2.5em !important;
   border-radius: 0px 0px 14px 14px !important;
   background-color: #A291FB !important;
 }

@@ -921,7 +921,6 @@ export default function DashboardPage(props) {
     return(
     <>
     <div className="dashboard-main">
-        <div className="dashboard">
         <Menu className='dashboard-menu' vertical>
             {menuVisible ?
                 <>
@@ -1009,7 +1008,6 @@ export default function DashboardPage(props) {
             </>
             }
         </Segment>
-        </div>
     </div>
     </>
     )

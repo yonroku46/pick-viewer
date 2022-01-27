@@ -629,15 +629,15 @@ export default function DetailPage(props) {
         <Statistic.Group size='mini' widths='three' inverted>
           <Statistic>
             <Statistic.Value className='review-tab-icon' onClick={favorite}><Icon name={isFavorite ? 'like' : 'like outline'}/> {shop.favorite_num === undefined ? 0 : comma(shop.favorite_num)}</Statistic.Value>
-            <Statistic.Label>즐겨찾기</Statistic.Label>
+            <Statistic.Label className='review-tab-label' onClick={favorite}>즐겨찾기</Statistic.Label>
           </Statistic>
           <Statistic>
             <Statistic.Value className='review-tab-icon' onClick={() => props.history.push(`/review/${category}/${shop_cd}`)}><Icon name='comments outline'/> {shop.review_num === undefined ? 0 : comma(shop.review_num)}</Statistic.Value>
-            <Statistic.Label>총 리뷰수</Statistic.Label>
+            <Statistic.Label className='review-tab-label' onClick={() => props.history.push(`/review/${category}/${shop_cd}`)}>총 리뷰수</Statistic.Label>
           </Statistic>
           <Statistic>
             <Statistic.Value className='review-tab-icon' onClick={() => props.history.push(`/review/${category}/${shop_cd}`)}><Icon name='star outline'/> {shop.ratings_ave}</Statistic.Value>
-            <Statistic.Label>만족도</Statistic.Label>
+            <Statistic.Label className='review-tab-label' onClick={() => props.history.push(`/review/${category}/${shop_cd}`)}>만족도</Statistic.Label>
           </Statistic>
         </Statistic.Group>
       </Segment>
