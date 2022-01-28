@@ -53,14 +53,21 @@ export default class ShopModal extends Component {
     pickFilter(method) {
         const origin = this.state.shopsOrigin;
         let result = [];
+        
         if (method === 'favorite') {
-            this.setState({pickFavorite: !this.state.pickFavorite});
+            if (this.state.userInfo === null) {
+                return alert('먼저 로그인을 해주세요.')
+            }
+            this.setState({pickFavorite: !this.state.pickFavorite, pickRating: false, pickPromotion: false});
+            result = this.state.pickFavorite ? origin : origin.filter(shop => this.props.favoriteList.indexOf(shop.shop_cd) !== -1);
         } else if (method === 'rating') {
-            this.setState({pickRating: !this.state.pickRating});
+            this.setState({pickFavorite: false, pickRating: !this.state.pickRating, pickPromotion: false});
             result = this.state.pickRating ? origin : origin.filter(shop => shop.ratings_ave > 4);
         } else if (method === 'promotion') {
-            this.setState({pickPromotion: !this.state.pickPromotion});
+            this.setState({pickFavorite: false, pickRating: false, pickPromotion: !this.state.pickPromotion});
+            result = this.state.pickPromotion ? origin : origin.filter(shop => shop.ratings_ave > 4);
         }
+        
         this.setState({shops: result})
     }
     

@@ -1,16 +1,52 @@
 import ShopModal from "./ShopModal"
-import { useParams, Link } from "react-router-dom";
-import { Menu, Input, Dimmer, Loader, Icon, Grid } from 'semantic-ui-react';
+import { useState, useEffect } from 'react'
+import { useParams } from "react-router-dom";
+import { Icon, Grid } from 'semantic-ui-react';
+import * as api from '../../rest/server'
+import axios from 'axios';
 
 export default function BookingPage(props) {
-    const {category} = useParams();
-    const categoryList = ['hairshop', 'restaurant', 'cafe'];
     
+    const userInfo = JSON.parse(sessionStorage.getItem('userInfo'));
+    const user_cd = userInfo ? userInfo.user_cd : null;
+    const permission = userInfo ? userInfo.permission : null;
+    const {category} = useParams();
+    const [favoriteList, setFavoriteList] = useState([]);
+    const categoryList = ['hairshop', 'restaurant', 'cafe'];
+
     // category check
     if (!categoryList.includes(category)) {
         alert('잘못된 접근입니다.')
         props.history.goBack(1);
     };
+
+    useEffect(() => {
+        if (!(permission === 1 | permission === 2)) {
+          props.history.goBack(1);
+        }
+          return new Promise(function(resolve, reject) {
+            axios
+            .get(api.favoriteList, {
+                params: {
+                  'user_cd': user_cd
+                }
+            })
+            .then(response => resolve(response.data))
+            .catch(error => reject(error.response))
+          })
+          .then(res => {
+            if (res !== null) {
+                const tmp = [];
+                res.forEach(shop => {
+                    tmp.push(shop.shop_cd);
+                })
+                setFavoriteList(tmp);
+            }
+          })
+          .catch(err => {
+            alert("현재 서버와의 연결이 원활하지 않습니다. 관리자에게 문의해주세요.");
+          })
+      }, []); 
 
     return(
     <>
@@ -33,7 +69,7 @@ export default function BookingPage(props) {
                 </Grid.Row>
             </Grid>
         </div>
-        {category !== undefined && <ShopModal category={category}/>}
+        {category !== undefined && <ShopModal category={category} favoriteList={favoriteList}/>}
     </div>
     </>
     )
