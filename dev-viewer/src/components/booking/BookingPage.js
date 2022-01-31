@@ -21,7 +21,8 @@ export default function BookingPage(props) {
     };
 
     useEffect(() => {
-        if (!(permission === 1 | permission === 2)) {
+        if (permission === 3) {
+          alert('예약페이지는 일반유저로 로그인 바랍니다.')
           props.history.goBack(1);
         }
           return new Promise(function(resolve, reject) {
