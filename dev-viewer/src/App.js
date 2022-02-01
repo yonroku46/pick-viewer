@@ -31,6 +31,10 @@ export default function App() {
   const [countryStat, setCountryStat] = useState(true);
   const [whiteFlag, setWhiteFlag] = useState(false);
   const whiteList = ['/mypage','/dashboard'];
+  const [scrollPosition, setScrollPosition] = useState(0);
+  const updateScroll = () => {
+    setScrollPosition(window.scrollY || document.documentElement.scrollTop);
+  }
   
   useEffect(() => {
     // ip check
@@ -66,6 +70,7 @@ export default function App() {
     let path = window.location.pathname;
 
     useEffect(() => {
+      window.addEventListener('scroll', updateScroll);
       setWhiteFlag(whiteList.indexOf(path) !== -1);
     }, [path]);
 
@@ -114,7 +119,7 @@ export default function App() {
     {countryStat ?
     <div className="App">
       {/* Header */}
-      <div className="app-header">
+      <div className={scrollPosition < 10 ? "app-header-invisible" : "app-header"}>
         <div className="menu-left">
           <Icon className='back-btn' name='angle left' size='large'/>
         </div>

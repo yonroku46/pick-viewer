@@ -93,6 +93,20 @@ h1, h2, h3, h4, h5, div, a, button {
   position: sticky;
   top: 0;
   z-index: 100;
+  background: rgb(0, 0, 0);
+  width: 100%;
+  display: flex;
+  color: #000;
+  padding: 5px 10px;
+  font-size: 20px;
+  margin-bottom: -50px;
+  transition: background-color 0.5s;
+}
+
+.app-header-invisible {
+  position: sticky;
+  top: 0;
+  z-index: 100;
   background: rgb(0, 0, 0, 0.1);
   width: 100%;
   display: flex;
@@ -100,6 +114,7 @@ h1, h2, h3, h4, h5, div, a, button {
   padding: 5px 10px;
   font-size: 20px;
   margin-bottom: -50px;
+  transition: background-color 0.5s;
 }
 
 .app-body {
@@ -1290,6 +1305,7 @@ table.dashboard-table input {
 .category-non-active:hover {
   cursor: pointer;
   opacity: 1;
+  transition: opacity 0.2s;
 }
 .booking-nodata {
   margin-top: 4vh !important;
@@ -1303,9 +1319,12 @@ table.dashboard-table input {
 }
 .shopmodal-search {
   margin-top: 0.6em;
+  width: 50vw;
+  margin-left: auto;
+  margin-right: auto;
 }
 .shopmodal-search input {
-  width: 50vw !important;
+  width: 50vw;
   border-radius: 20px !important;
 }
 .shopmodal-main {
@@ -1368,6 +1387,21 @@ table.dashboard-table input {
   margin-top: 0.5em !important;
   border-radius: 2em !important;
   font-size: 0.9em !important;
+}
+.shopmodal-pagination {
+  margin-bottom: 35px !important;
+  border-bottom: none !important;
+}
+.shopmodal-pagination .item {
+  color: rgba(0, 0, 0, 0.8) !important;
+  border-bottom: none !important;
+  opacity: 0.8;
+}
+.shopmodal-pagination .item:hover {
+  opacity: 1;
+}
+.shopmodal-pagination .active.item {
+  color: rgba(0, 0, 0) !important;
 }
 
 /* booking page */
@@ -1505,6 +1539,7 @@ table.dashboard-table input {
   }
   .shopmodal-search {
     margin-top: 0;
+    width: 96vw;
   }
   .shopmodal-search input{
     width: 96vw;

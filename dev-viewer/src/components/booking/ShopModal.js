@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import * as api from '../../rest/server'
 import axios from 'axios';
 import { Link } from 'react-router-dom';
-import { Menu, Input, Dimmer, Loader, Icon, Button } from 'semantic-ui-react';
+import { Menu, Input, Dimmer, Loader, Icon, Button, Pagination } from 'semantic-ui-react';
 
 export default class ShopModal extends Component {
 
@@ -55,7 +55,7 @@ export default class ShopModal extends Component {
         let result = [];
         
         if (method === 'favorite') {
-            if (this.state.userInfo === null) {
+            if (this.state.userInfo === undefined) {
                 return alert('먼저 로그인을 해주세요.')
             }
             this.setState({pickFavorite: !this.state.pickFavorite, pickRating: false, pickPromotion: false});
@@ -108,7 +108,7 @@ export default class ShopModal extends Component {
                         <Button basic={!pickRating} color={pickRating ? 'violet' : 'black'}  className='shopmodal-pick' onClick={() => this.pickFilter('rating')}>
                             <Icon name={pickRating ? 'thumbs up' : 'thumbs up outline'}/>고평가매장
                         </Button>
-                        <Button basic={!pickPromotion} color={pickPromotion ? 'yellow' : 'black'}  className='shopmodal-pick' onClick={() => this.pickFilter('promotion')}>
+                        <Button basic={!pickPromotion} color={pickPromotion ? 'blue' : 'black'}  className='shopmodal-pick' onClick={() => this.pickFilter('promotion')}>
                             <Icon name={pickPromotion ? 'gem' : 'gem outline'}/>프로모션중
                         </Button>
                     </div>
@@ -135,6 +135,7 @@ export default class ShopModal extends Component {
                     }
                     </div>
                 </div>
+                <Pagination className='shopmodal-pagination' defaultActivePage={1} firstItem={null} lastItem={null} pointing secondary totalPages={3}/>
             </div>
         )
     }
