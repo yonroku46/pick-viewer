@@ -16,6 +16,7 @@
 
 .logo {
   width: 72px;
+  margin-left: 2px;
   margin-top: 2px;
 }
 
@@ -144,17 +145,6 @@ h1, h2, h3, h4, h5, div, a, button {
   transition: background-color 0.5s;
 }
 
-.back-btn {
-  color: rgb(35, 35, 35);
-  align-self: center !important;
-  filter: invert(1);
-}
-.back-btn:hover {
-  cursor: pointer;
-  color: #fff;
-  filter: none;
-}
-
 .menu-left {
   display: flex !important;
   align-self: center !important;
@@ -169,7 +159,7 @@ h1, h2, h3, h4, h5, div, a, button {
 }
 .menu-right {
   width: 30%;
-  z-index: 2000;
+  z-index: 200;
   height: 40px;
   text-align: right;
   margin-left: 1em;
@@ -234,6 +224,7 @@ h1, h2, h3, h4, h5, div, a, button {
 
 #menu-icon {
   top: 8px;
+  float: right;
   width: 37.5px;
   height: 25px;
   position: relative;

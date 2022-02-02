@@ -121,10 +121,9 @@ export default function App() {
       {/* Header */}
       <div className={scrollPosition < 10 ? "app-header-invisible" : "app-header"}>
         <div className="menu-left">
-          <Icon className='back-btn' name='angle left' size='large'/>
+          <Link to="/" ><img className="logo invert" src={logo}/></Link>
         </div>
         <div className="menu-center">
-          <Link to="/" ><img className="logo invert" src={logo}/></Link>
         </div>
         <div className="menu-right">
           <div id="menu-icon" className={visible ? 'open': null} onClick={toggleMenu} >
