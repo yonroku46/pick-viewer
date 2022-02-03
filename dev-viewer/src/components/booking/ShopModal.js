@@ -11,11 +11,15 @@ export default class ShopModal extends Component {
         pickRating: false,
         pickPromotion: false,
         isLoading: false,
+        perPage: 12,
+        activePage: 1,
         shopsOrigin: [],
         shops: [],
         search: '',
         category: this.props.category
     }
+
+    handlePaginationChange = (e, { activePage }) => this.setState({ activePage })
 
     // 첫 렌더링시 실행
     componentDidMount() {
@@ -80,7 +84,7 @@ export default class ShopModal extends Component {
     }
     
     render(){
-        const { pickFavorite, pickRating, pickPromotion, isLoading, shops, category, search } = this.state; 
+        const { pickFavorite, pickRating, pickPromotion, isLoading, perPage, activePage , shops, category, search } = this.state; 
         
         return(
             <div className='shopmodal-body'>
@@ -116,7 +120,7 @@ export default class ShopModal extends Component {
                     <div className='shopmodal-shops'>
                     {isLoading ? <this.Loading/> : 
                         shops === null ? <h3 className='booking-nodata'>해당하는 매장을 찾지 못했습니다</h3> :
-                        shops.map(shop => {
+                        shops.slice((activePage - 1) * perPage, (activePage * perPage)).map(shop => {
                         const shop_img = shop.shop_img === null ? 'images/shop/default.png' : shop.shop_img.split(',')[0];
                         return(
                             <Link to={`/booking/${category}/${shop.shop_cd}`}>
@@ -135,7 +139,14 @@ export default class ShopModal extends Component {
                     }
                     </div>
                 </div>
-                <Pagination className='shopmodal-pagination' defaultActivePage={1} firstItem={null} lastItem={null} pointing secondary totalPages={3}/>
+                <Pagination className='shopmodal-pagination' 
+                    defaultActivePage={1} 
+                    firstItem={null} 
+                    lastItem={null} 
+                    onPageChange={this.handlePaginationChange}
+                    totalPages={Math.ceil(shops.length / perPage)}
+                    pointing secondary
+                />
             </div>
         )
     }
