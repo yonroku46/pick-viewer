@@ -1,5 +1,5 @@
 import { useEffect, useState, useRef } from 'react';
-import { Label, Modal, Image, Menu, Icon, Dropdown, Form, Segment, Input, TextArea, Header, Button, Table, List, Item, Dimmer, Loader, Select, Progress, Popup } from 'semantic-ui-react'
+import { Label, Modal, Image, Menu, Icon, Dropdown, Form, Segment, Input, TextArea,  Button, Table, List, Item, Dimmer, Loader, Select, Pagination } from 'semantic-ui-react'
 import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd";
 import * as api from '../../rest/server'
 import MapContainer from "../booking/MapContainer";
@@ -19,6 +19,7 @@ export default function DashboardPage(props) {
     const [reload, setReload] = useState(0);
     const [loading, setLoading] = useState(false);
     const [open, setOpen] = useState(false);
+    const [activePage, setActivePage] = useState(1);
 
     const [count, setCount] = useState(0);
     const [locationSearch, setLocationSearch] = useState(null);
@@ -51,6 +52,9 @@ export default function DashboardPage(props) {
     function handleItemClick (e, { name }) {
         setActiveItem(name);
         window.innerWidth < 767 && setMenuVisible(false);
+    }
+    function handlePaginationChange (e, { activePage }) {
+        setActivePage(activePage);
     }
 
     const weeks = [
@@ -627,6 +631,13 @@ export default function DashboardPage(props) {
                         }
                         </Table.Body>
                     </Table>
+                    <Pagination className='dashboard-pagination' 
+                        defaultActivePage={1} 
+                        firstItem={null} 
+                        lastItem={null} 
+                        onPageChange={handlePaginationChange}
+                        totalPages={3}
+                    />
                     <div className='dashboard-content-final-empty'> </div>
                 </Form.Field>
             </Form>
@@ -669,6 +680,13 @@ export default function DashboardPage(props) {
                     ))}
                     </>
                     }
+                    <Pagination className='dashboard-pagination' 
+                        defaultActivePage={1} 
+                        firstItem={null} 
+                        lastItem={null} 
+                        onPageChange={handlePaginationChange}
+                        totalPages={3}
+                    />
                     <div className='dashboard-content-final-empty'> </div>
                 </Form.Field>
             </Form>

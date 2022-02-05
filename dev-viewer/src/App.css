@@ -439,6 +439,9 @@ hr {
   margin-top: 50px !important;
   min-height: calc(100vh - 81px);
 }
+.dashboard-pagination {
+  box-shadow: none !important;
+}
 .dashboard-dnd li {
   float: left;
 }
@@ -645,6 +648,9 @@ hr {
   cursor: pointer;
   opacity: 1;
 }
+table.dashboard-table {
+  margin-bottom: 0.55em !important;
+}
 table.dashboard-table input {
   padding: 0.4em !important;
 }
@@ -756,9 +762,6 @@ table.dashboard-table input {
     padding: 0.5em 0em !important;
   }
   .dashboard-content-final {
-    margin-bottom: 8vh !important;
-  }
-  table.dashboard-table {
     margin-bottom: 8vh !important;
   }
   table.dashboard-table .edit-input {
