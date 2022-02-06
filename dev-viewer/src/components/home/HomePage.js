@@ -2,8 +2,8 @@ import React, { useState, useRef } from 'react';
 import { Link } from "react-router-dom";
 import page1 from '../../img/page1.png'
 import page2 from '../../img/page2.png'
-import * as api from '../../rest/server'
-import { Button, Segment, Icon, Accordion, Grid, Image, Header, Input, Reveal } from 'semantic-ui-react';
+import * as api from '../../rest/api'
+import { Button, Segment, Icon, Accordion, Grid, Image, Input, Reveal } from 'semantic-ui-react';
 
 export default function HomePage() {
     let isAuthorized = sessionStorage.getItem("isAuthorized");

@@ -3,7 +3,7 @@ import axios from 'axios';
 import { Link } from "react-router-dom"
 import page1 from '../../img/page1.png'
 import page2 from '../../img/page2.png'
-import * as api from '../../rest/server'
+import * as api from '../../rest/api'
 import { Icon, Button, Form, Grid, Segment, Progress, Reveal, Label, Transition, Image } from 'semantic-ui-react'
 
 export default function SignupPage(props) {

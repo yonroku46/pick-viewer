@@ -18,7 +18,7 @@ import WikiPage from './components/WikiPage'
 import EmptyPage from './components/EmptyPage'
 import { Link, Route, Switch } from "react-router-dom"
 import { Button, Icon, Menu, Modal, Segment, Sidebar } from 'semantic-ui-react';
-import * as api from './rest/server'
+import * as api from './rest/api'
 import './App.css';
 import axios from 'axios';
 

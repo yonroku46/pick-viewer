@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useReducer } from "react";
-import * as api from '../../rest/server'
+import * as api from '../../rest/api'
 import axios from 'axios';
 import { Link, useParams } from 'react-router-dom';
 import { Menu, Form, Input, Dimmer, Loader, Icon, Label, Grid, Transition, Message } from 'semantic-ui-react';

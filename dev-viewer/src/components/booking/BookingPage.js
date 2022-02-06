@@ -2,7 +2,7 @@ import ShopModal from "./BookingModal"
 import { useState, useEffect } from 'react'
 import { useParams } from "react-router-dom";
 import { Icon, Grid } from 'semantic-ui-react';
-import * as api from '../../rest/server'
+import * as api from '../../rest/api'
 import axios from 'axios';
 
 export default function BookingPage(props) {

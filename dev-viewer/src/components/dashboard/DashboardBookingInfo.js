@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { Label, Icon, Table, Button, Header, Segment } from 'semantic-ui-react';
 import moment from 'moment';
 import axios from 'axios';
-import * as api from '../../rest/server'
+import * as api from '../../rest/api'
 
 export default function DashboardBookingInfo(props) {
 

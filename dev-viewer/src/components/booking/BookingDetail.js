@@ -3,7 +3,7 @@ import { useParams, Link } from "react-router-dom";
 import { Dimmer, Button, Item, Grid, Segment, Image, Icon, Loader, Modal, Header, Statistic, Card } from 'semantic-ui-react'
 import BookingCalendar from "./BookingCalendar";
 import BookingTimeTable from "./BookingTimeTable";
-import * as api from '../../rest/server'
+import * as api from '../../rest/api'
 import axios from 'axios';
 import MapContainer from "../public/MapContainer";
 import Slider from "react-slick";

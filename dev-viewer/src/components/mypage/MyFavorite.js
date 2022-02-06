@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import { Icon, Card, Menu, Label, Segment, Header, Button } from 'semantic-ui-react'
 import { useHistory } from "react-router-dom";
 import { Link as Scroll } from "react-scroll";
-import * as api from '../../rest/server';
+import * as api from '../../rest/api';
 
 export default function MyFavorite(props) {
 

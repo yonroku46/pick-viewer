@@ -1,5 +1,5 @@
 import { Dimmer, Button, List, Item, Grid, Segment, Image, Icon, Loader, Modal } from 'semantic-ui-react'
-import * as api from '../../rest/server'
+import * as api from '../../rest/api'
 import axios from 'axios';
 
 export default function StylesPage() {

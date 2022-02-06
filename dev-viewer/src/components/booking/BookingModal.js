@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import * as api from '../../rest/server'
+import * as api from '../../rest/api'
 import axios from 'axios';
 import { Link } from 'react-router-dom';
 import { Menu, Input, Dimmer, Loader, Icon, Button, Pagination } from 'semantic-ui-react';

@@ -4,7 +4,7 @@ import { Redirect, Link } from 'react-router-dom'
 import Calendar from "./MyCalendar";
 import Quick from "./Quick";
 import Favorite from "./MyFavorite";
-import * as api from '../../rest/server'
+import * as api from '../../rest/api'
 import axios from 'axios';
 
 export default function MyPage(props) {

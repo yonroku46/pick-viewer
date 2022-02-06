@@ -3,7 +3,7 @@ import { Link } from "react-router-dom"
 import { Button, Form, Grid, Message, Segment, Dimmer, Loader } from 'semantic-ui-react'
 import axios from 'axios';
 import background from "../../img/loginBackground.png";
-import * as api from '../../rest/server'
+import * as api from '../../rest/api'
 
 
 export default function LoginPage(props) {

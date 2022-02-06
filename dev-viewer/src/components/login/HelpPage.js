@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import { Icon, Button, Form, Grid, Header, Segment, Label, Transition } from 'semantic-ui-react'
-import * as api from '../../rest/server'
+import * as api from '../../rest/api'
 import axios from 'axios';
 
 export default function HelpPage(props) {
