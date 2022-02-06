@@ -5,7 +5,7 @@ import moment from 'moment';
 import axios from 'axios';
 import * as api from '../../rest/server'
 
-export default function BookingInfo(props) {
+export default function DashboardBookingInfo(props) {
 
     // userSelector:redux값 획득
     const value = useSelector( (state) => state );

@@ -5,7 +5,7 @@ import logo from "./img/app-icon.png";
 import HomePage from './components/home/HomePage'
 import SearchPage from './components/search/SearchPage'
 import BookingPage from './components/booking/BookingPage'
-import DetailPage from './components/booking/DetailPage';
+import BookingDetail from './components/booking/BookingDetail';
 import ReviewPage from './components/review/ReviewPage';
 import StylesPage from './components/styles/StylesPage'
 import ContactPage from './components/contact/ContactPage'
@@ -203,9 +203,9 @@ export default function App() {
                 <Route exact path="/search" component={SearchPage}/>
                 <Route exact path="/booking" component={BookingPage}/>
                   <Route exact path="/booking/:category" component={BookingPage}/>
-                    <Route path="/booking/hairshop/:shop_cd" component={DetailPage}/>
-                    <Route path="/booking/restaurant/:shop_cd" component={DetailPage}/>
-                    <Route path="/booking/cafe/:shop_cd" component={DetailPage}/>
+                    <Route path="/booking/hairshop/:shop_cd" component={BookingDetail}/>
+                    <Route path="/booking/restaurant/:shop_cd" component={BookingDetail}/>
+                    <Route path="/booking/cafe/:shop_cd" component={BookingDetail}/>
                     <Route path="/review/hairshop/:shop_cd" component={ReviewPage}/>
                     <Route path="/review/restaurant/:shop_cd" component={ReviewPage}/>
                     <Route path="/review/cafe/:shop_cd" component={ReviewPage}/>

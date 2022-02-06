@@ -1,9 +1,9 @@
 import React, { useState, useRef, useEffect } from 'react'
 import { Item, Icon, Modal, Container, Menu, Button, Input, Label, Message, Transition } from 'semantic-ui-react'
 import { Redirect, Link } from 'react-router-dom'
-import Calendar from "./Calendar";
+import Calendar from "./MyCalendar";
 import Quick from "./Quick";
-import Favorite from "./Favorite";
+import Favorite from "./MyFavorite";
 import * as api from '../../rest/server'
 import axios from 'axios';
 

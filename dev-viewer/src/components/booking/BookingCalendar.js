@@ -36,11 +36,10 @@ export default function BookingCalendar(props) {
     function dayClick(e) {
         setIsSelected(true)
         setMoment(getMoment.date(e.target.innerText));
-        const dbDate = getMoment.format('YYYY-MM-DD')
-        setDbDate(dbDate)
-        setIsSelected(true)
-        props.setDbDate(dbDate)
-        setCalendarActive(false)
+        setDbDate(getMoment.format('YYYY-MM-DD'));
+        setIsSelected(true);
+        props.setDbDate(dbDate);
+        setCalendarActive(false);
     }
 
     function lastMonth() {

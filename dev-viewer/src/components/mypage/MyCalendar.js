@@ -1,9 +1,9 @@
 import {useState} from 'react';
 import { Icon, Table, Menu, Button } from 'semantic-ui-react'
 import moment from 'moment';
-import TimeTable from './TimeTable';
+import TimeTable from './MyTimeTable';
 
-export default function Calendar(props) {
+export default function MyCalendar(props) {
 
     const [getMoment, setMoment] = useState(moment());
     const [calendarActive, setCalendarActive] = useState(true);

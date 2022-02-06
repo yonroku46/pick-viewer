@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import { Icon, Table, Segment, Button, Header } from 'semantic-ui-react'
 import moment from 'moment';
 
-export default function TimeTable(props) {
+export default function MyTimeTable(props) {
     const [getMoment, setMoment] = useState(moment());
     
     // remainder: 다음 시간까지 남은시간

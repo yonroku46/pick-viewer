@@ -1,6 +1,6 @@
 import { Label, Icon, Form, Header, Progress } from 'semantic-ui-react'
 
-export default function BookingData(props) {
+export default function DashboardBookingData(props) {
     return(
         <>
         <Form className='dashboard-viewer-inline'>

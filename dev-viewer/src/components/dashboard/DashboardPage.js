@@ -2,9 +2,9 @@ import { useEffect, useState, useRef } from 'react';
 import { Label, Modal, Image, Menu, Icon, Dropdown, Form, Segment, Input, TextArea,  Button, Table, List, Item, Dimmer, Loader, Select, Pagination } from 'semantic-ui-react'
 import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd";
 import * as api from '../../rest/server'
-import MapContainer from "../booking/MapContainer";
-import BookingInfo from "./BookingInfo";
-import BookingData from "./BookingData";
+import MapContainer from "../public/MapContainer";
+import BookingInfo from "./DashboardBookingInfo";
+import BookingData from "./DashboardBookingData";
 import moment from 'moment';
 import axios from 'axios';
 

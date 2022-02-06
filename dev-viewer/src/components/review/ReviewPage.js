@@ -1,13 +1,13 @@
 import { useEffect, useState, useReducer } from "react";
 import { useParams, Link } from "react-router-dom";
 import { Dimmer, Button, Comment, Label, Segment, Image, Icon, Loader, Form, Statistic, Rating, Modal } from 'semantic-ui-react'
-import MapContainer from "../booking/MapContainer";
+import MapContainer from "../public/MapContainer";
 import * as api from '../../rest/server';
 import axios from 'axios';
 import Slider from "react-slick";
 import { Link as Scroll } from "react-scroll";
 
-export default function ShopPage(props) {
+export default function ReviewPage(props) {
   const isAuthorized = sessionStorage.getItem("isAuthorized");
 
   const [reload, setReload] = useState(0);

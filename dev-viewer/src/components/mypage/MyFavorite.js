@@ -5,7 +5,7 @@ import { useHistory } from "react-router-dom";
 import { Link as Scroll } from "react-scroll";
 import * as api from '../../rest/server';
 
-export default function Favorite(props) {
+export default function MyFavorite(props) {
 
     let history = useHistory();
     const favoriteList = props.favoriteList;

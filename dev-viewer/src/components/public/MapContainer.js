@@ -49,7 +49,7 @@ export class MapContainer extends Component {
     }
 
     convertNumber(str) {
-        return str.replace(/[Ａ-Ｚａ-ｚ０-９]/g, function(s) {
+        return str.replace(/[A-Za-z0-9]/g, function(s) {
             return String.fromCharCode(s.charCodeAt(0) - 0xFEE0);
         });
     }

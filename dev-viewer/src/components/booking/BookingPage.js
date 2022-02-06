@@ -1,4 +1,4 @@
-import ShopModal from "./ShopModal"
+import ShopModal from "./BookingModal"
 import { useState, useEffect } from 'react'
 import { useParams } from "react-router-dom";
 import { Icon, Grid } from 'semantic-ui-react';

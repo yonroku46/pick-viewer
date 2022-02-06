@@ -5,12 +5,12 @@ import BookingCalendar from "./BookingCalendar";
 import BookingTimeTable from "./BookingTimeTable";
 import * as api from '../../rest/server'
 import axios from 'axios';
-import MapContainer from "./MapContainer";
+import MapContainer from "../public/MapContainer";
 import Slider from "react-slick";
 import { Link as Scroll } from "react-scroll";
 import moment from "moment";
 
-export default function DetailPage(props) {
+export default function BookingDetail(props) {
   const isAuthorized = sessionStorage.getItem("isAuthorized");
 
   const userInfo = JSON.parse(sessionStorage.getItem('userInfo'));

@@ -4,7 +4,7 @@ import axios from 'axios';
 import { Link } from 'react-router-dom';
 import { Menu, Input, Dimmer, Loader, Icon, Button, Pagination } from 'semantic-ui-react';
 
-export default class ShopModal extends Component {
+export default class BookingModal extends Component {
 
     state = {
         pickFavorite: false,
