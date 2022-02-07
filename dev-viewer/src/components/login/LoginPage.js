@@ -85,10 +85,10 @@ export default function LoginPage(props) {
         .post(api.getFavorite, params)
         .then(response => resolve(response.data))
         .catch(error => reject(error.response))
-    }).then(data => {
-      sessionStorage.setItem('favorites', JSON.stringify(data));
-      }
-    )
+    })
+      .then(data => {
+        sessionStorage.setItem('favorites', JSON.stringify(data));
+      })
   }
 
   return(

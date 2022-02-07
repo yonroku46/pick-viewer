@@ -146,16 +146,17 @@ export default function BookingDetail(props) {
         .post(api.booking, params)
         .then(response => resolve(response.data))
         .catch(error => reject(error.response))
-    }).then(data => {
-        if (data) {
-          dispatch({ type: 'CLOSE_MODAL' })
-          setModalLoading(false);
-        } else {
-          alert("예약에 실패하였습니다. 잠시 후 시도해주세요.")
-          setModalLoading(false);
-        }
+    })
+    .then(data => {
+      if (data) {
+        dispatch({ type: 'CLOSE_MODAL' })
+        setModalLoading(false);
       }
-    )
+    })
+    .catch(err => {
+      alert("예약에 실패하였습니다. 잠시 후 시도해주세요.")
+      setModalLoading(false);
+    })
   }
     
   function DesignerBtnClick(targetId) {
@@ -309,7 +310,8 @@ export default function BookingDetail(props) {
         .post(api.favorite, params)
         .then(response => resolve(response.data))
         .catch(error => reject(error.response))
-    }).then(data => {
+    })
+    .then(data => {
       setIsFavorite(data);
       if (data) {
         shop.favorite_num = shop.favorite_num + 1;
@@ -319,8 +321,10 @@ export default function BookingDetail(props) {
         setShop(shop)
       }
       getFavorite(user_cd);
-      }
-    )
+    })
+    .catch(err => {
+      alert('잠시 후 다시 시도하여 주세요.')
+    })
   }
 
   function getFavorite(user_cd) {
@@ -332,11 +336,13 @@ export default function BookingDetail(props) {
         .post(api.getFavorite, params)
         .then(response => resolve(response.data))
         .catch(error => reject(error.response))
-    }).then(data => {
+    })
+    .then(data => {
       sessionStorage.setItem('favorites', JSON.stringify(data));
       setClickFavorite(false);
-      }
-    )
+    })
+    .catch(err => {
+    })
   }
 
   function mapToogle() {

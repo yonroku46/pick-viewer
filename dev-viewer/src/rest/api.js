@@ -1,15 +1,15 @@
-// Public
-export const check = "/api/check/";
-export const imgUpload = "/api/imgUpload";
-export const favorite = "/api/favorite";
-export const getFavorite = "/api/getFavorites";
-
 export function imgRender(img) {
     // const render = process.env.PUBLIC_URL + img;
     const PUBLIC_URL = 'http://' + window.location.host + '/';
     const render = PUBLIC_URL + img;
     return render;
 }
+
+// Public
+export const check = "/api/check/";
+export const imgUpload = "/api/imgUpload";
+export const favorite = "/api/favorite";
+export const getFavorite = "/api/getFavorites";
 
 // HomePage
 export const server = "/api/server";
@@ -51,3 +51,6 @@ export const imgClear = "/api/imgClear";
 
 // SearchPage
 export const search = "/api/search";
+
+// ContactPage
+export const contact = "/api/contact";

@@ -360,17 +360,17 @@ export default function DashboardPage(props) {
                 .catch(error => reject(error.response))
             })
             .then(res => {
-            if (res) {
-                alert('저장이 완료되었습니다.')
-                setEditMode(false)
-                setReload(reload + 1);
-                setCategory('all');
-            }
-            setLoading(false);
+                if (res) {
+                    alert('저장이 완료되었습니다.')
+                    setEditMode(false)
+                    setReload(reload + 1);
+                    setCategory('all');
+                }
+                setLoading(false);
             })
             .catch(err => {
-            alert("현재 서버와의 연결이 원활하지 않습니다. 관리자에게 문의해주세요.");
-            setLoading(false);
+                alert("현재 서버와의 연결이 원활하지 않습니다. 관리자에게 문의해주세요.");
+                setLoading(false);
             })
         } else {
             return;
@@ -772,10 +772,10 @@ export default function DashboardPage(props) {
             .catch(error => reject(error.response))
         })
         .then(res => {
-        if (res) {
-            alert("처리가 완료되었습니다.");
-            setReload(reload + 1);
-        }
+            if (res) {
+                alert("처리가 완료되었습니다.");
+                setReload(reload + 1);
+            }
         })
         .catch(err => {
             alert("현재 서버와의 연결이 원활하지 않습니다. 관리자에게 문의해주세요.");

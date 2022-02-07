@@ -130,14 +130,14 @@ export default function SearchPage(props) {
             .catch(error => reject(error.response))
         })
         .then(res => {
-          if (res !== null) {
-            if (res.length === 0) {
-                setSearchResult(res);
-                setVisible(true);
-                // alert('찾으시는 매장이 없습니다.')
-            } else {
-                setSearchResult(res);
-            }
+            if (res !== null) {
+                if (res.length === 0) {
+                    setSearchResult(res);
+                    setVisible(true);
+                    // alert('찾으시는 매장이 없습니다.')
+                } else {
+                    setSearchResult(res);
+                }
             setLoading(false);
           }     
         })

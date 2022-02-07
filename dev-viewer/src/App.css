@@ -95,13 +95,15 @@ h1, h2, h3, h4, h5, div, a, button {
   top: 0;
   z-index: 100;
   background: rgb(0, 0, 0);
+  border-bottom: #A291FB 1px solid;
   width: 100%;
   display: flex;
   color: #000;
   padding: 5px 10px;
   font-size: 20px;
-  margin-bottom: -50px;
+  margin-bottom: -49px;
   transition: background-color 0.5s;
+  transition: border-bottom 0.5s;
 }
 
 .app-header-invisible {
@@ -812,12 +814,38 @@ table.dashboard-table input {
 
 /* ContactPage */
 .contact-main {
-  margin-top: 50px;
-  background-color: rgb(0, 0, 0, 0.1);
+  margin-top: 60px;
+  width: 50vw;
+  margin-left: auto;
+  margin-right: auto;
+  background-color: #fff;
   background-size: cover;
   display: block;
-  min-height: calc(100vh - 81px);
-  filter: saturate(100%);
+  text-align: left;
+  min-height: calc(100vh - 91px);
+  padding: 1em 2em;
+}
+.contact-main textarea {
+  min-height: 180px;
+  max-height: 340px;
+}
+.contact-title {
+  margin-top: 1em !important;
+  margin-bottom: 1.5em !important;
+}
+.contact-submit {
+  margin-top: 2.5em !important;
+  margin-bottom: 2em !important;
+  text-align: center;
+}
+.contact-submit button {
+  margin-top: 1em !important;
+}
+
+@media only screen and (max-width: 767px) {
+  .contact-main {
+    width: 100vw;
+  }
 }
 
 /* EmptyPage */
@@ -1313,7 +1341,7 @@ table.dashboard-table input {
   margin-right: auto;
 }
 .shopmodal-search input {
-  width: 50vw;
+  width: 50vw !important;
   border-radius: 20px !important;
 }
 .shopmodal-main {

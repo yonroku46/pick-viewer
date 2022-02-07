@@ -252,7 +252,8 @@ export default function ReviewPage(props) {
         .post(api.favorite, params)
         .then(response => resolve(response.data))
         .catch(error => reject(error.response))
-    }).then(data => {
+    })
+    .then(data => {
       setIsFavorite(data);
       if (data) {
         shop.favorite_num = shop.favorite_num + 1;
@@ -262,8 +263,7 @@ export default function ReviewPage(props) {
         setShop(shop)
       }
       getFavorite(user_cd);
-      }
-    )
+    })
   }
 
   function getFavorite(user_cd) {
@@ -275,11 +275,11 @@ export default function ReviewPage(props) {
         .post(api.getFavorite, params)
         .then(response => resolve(response.data))
         .catch(error => reject(error.response))
-    }).then(data => {
+    })
+    .then(data => {
       sessionStorage.setItem('favorites', JSON.stringify(data));
       setClickFavorite(false);
-      }
-    )
+    })
   }
 
   function favoriteJudge() {
