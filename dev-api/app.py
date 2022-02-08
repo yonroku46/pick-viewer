@@ -237,28 +237,6 @@ def resetService():
         app.logger.info("Exception:{}".format(e))
         return (jsonify({'error': 'Not found'}), 404)
 
-# searchPage
-@app.route('/api/search', methods=['GET'])
-def searchResult():
-    params = request.args
-    category = params.get('category')
-    value = params.get('value')
-    
-    if (category == categoryList[0]):
-        category = 'HS'
-    elif (category == categoryList[1]):
-        category = 'RT'
-    elif (category == categoryList[2]):
-        category = 'CF'
-
-    try:
-        query = gen.getQuery("sql/SELECT_searchResult.sql", {"category": category, "value": value})
-        rows = mng.fetch_all(query)
-        return (jsonify(rows), 200)
-    except Exception as e:
-        app.logger.info("Exception:{}".format(e))
-        return (jsonify({'error': 'Not found'}), 404)
-
 # bookingPage
 @app.route('/api/shoplist', methods=['POST'])
 def getShopList():
@@ -786,6 +764,45 @@ def reviewList():
 
         
         return (jsonify(rows), 200)
+    except Exception as e:
+        app.logger.info("Exception:{}".format(e))
+        return (jsonify({'error': 'Not found'}), 404)
+
+# searchPage
+@app.route('/api/search', methods=['GET'])
+def searchResult():
+    params = request.args
+    category = params.get('category')
+    value = params.get('value')
+    
+    if (category == categoryList[0]):
+        category = 'HS'
+    elif (category == categoryList[1]):
+        category = 'RT'
+    elif (category == categoryList[2]):
+        category = 'CF'
+
+    try:
+        query = gen.getQuery("sql/SELECT_searchResult.sql", {"category": category, "value": value})
+        rows = mng.fetch_all(query)
+        return (jsonify(rows), 200)
+    except Exception as e:
+        app.logger.info("Exception:{}".format(e))
+        return (jsonify({'error': 'Not found'}), 404)
+
+# contactPage
+@app.route('/api/contact', methods=['POST'])
+def contact():
+    params = request.get_json()
+    name = params['name']
+    email = params['email']
+    category = params['category']
+    detail = params['detail']
+
+    try:
+        query = gen.getQuery("sql/INSERT_contact.sql", {"name": name, "email": email, "category": category, "detail": detail})
+        mng.fetch(query)
+        return (jsonify(True), 200)
     except Exception as e:
         app.logger.info("Exception:{}".format(e))
         return (jsonify({'error': 'Not found'}), 404)
