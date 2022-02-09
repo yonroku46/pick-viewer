@@ -356,18 +356,19 @@ hr {
 /* LoginPage - signup */
 .signup-main {
   margin-top: 50px;
+  border-radius: 12px;
+  border: 4px rgb(125, 125, 125, 0.1) solid;
+  margin-left: 30vw;
+  margin-right: 30vw;
+  background-color: #fff;
+  background-size: cover;
   display: block;
   min-height: calc(100vh - 81px);
+  padding: 1em 2em;
 }
 .signup-progress {
   margin-left: auto !important;
   margin-right: auto !important;
-}
-.signup-main-content {
-  height: calc(100vh - 81px);
-  background-color: #fff;
-  border-radius: 12px;
-  border: 4px rgb(125, 125, 125, 0.1) solid;
 }
 .signup-main h2 {
   text-align: center;
@@ -378,6 +379,7 @@ hr {
   width: 120px;
 }
 .signup-main h1 {
+  text-align: center;
   padding-bottom: 6vh;
   margin-top: 0vh;
   position: relative;
@@ -393,12 +395,7 @@ hr {
 .signup-step1 i {
   padding-right: 20%;
 }
-.submit-step3 {
-  margin-top: 0px !important;
-  margin-bottom: 20px !important;
-}
 .signup-login {
-  margin-right: 0px !important;
   width: 220px;
 }
 
@@ -421,16 +418,17 @@ hr {
   .signup-progress {
     width: 100%;
   }
-  .signup-main-content {
-    margin: 0 auto;
-    max-width: 530px;
-  }
 }
 /* sp */
 @media only screen and (max-width: 767px) {
   .help-main-content {
     margin-left: 0;
     margin-right: 0;
+  }
+  .signup-main {
+    margin-left: 0;
+    margin-right: 0;
+    padding: 0;
   }
 }
 
@@ -471,19 +469,18 @@ hr {
   margin-bottom: -10px !important;
 }
 .dashboard-menu div.header {
-  padding-top: 0.5em;
-  padding-bottom: 0.5em;
   text-align: left;
-  padding-left: 0.5em;
-  border-bottom: rgb(0, 153, 255, 0.5) 1px solid;
+  padding-left: 1em;
   color: rgb(0, 153, 255);
   border-top: rgb(0, 0, 0, 0.05) 1px solid;
+  padding-top: 0.6em;
+  padding-bottom: 0.6em;
   font-size: 1.3em;
 }
 .dashboard-menu a.item {
   text-align: left;
   color: rgb(0, 0, 0, 0.7) !important;
-  padding-left: 1.5em !important;
+  padding-left: 2em !important;
   padding-top: 0.7em !important;
   padding-bottom: 0.7em !important;
   font-size: 1.1em !important;
@@ -555,7 +552,8 @@ hr {
 .dashboard-menu-dropdown {
   font-size: 1.1em !important;
   color: rgb(0, 0, 0, 0.7) !important;
-  padding-left: 1.5em !important;
+  padding-left: 2em !important;
+  padding-right: 0.5em !important;
   padding-top: 0.7em !important;
   padding-bottom: 0.7em !important;
   width: 100%;
@@ -804,26 +802,100 @@ table.dashboard-table input {
 
 /* StylesPage */
 .styles-main {
-  margin-top: 50px;
-  background-color: rgb(0, 0, 0, 0.1);
-  background-size: cover;
-  display: block;
+  margin-top: calc(1em + 50px);
   min-height: calc(100vh - 81px);
-  filter: saturate(100%);
+  margin-left: 25vw;
+  margin-right: 25vw;
+}
+.styles-posts .ui.padded.segment {
+  border-top-left-radius: 12px;
+  border-top-right-radius: 12px;
+  border: 1px solid rgba(34, 36, 38, 0.15) !important;
+  border-bottom: none !important;
+  margin-bottom: -2.2rem ;
+  padding: 0;
+}
+.styles-posts div.label {
+  background: none;
+  padding: 0.5em !important;
+  font-size: 1.5em;
+  color: rgb(240, 240, 240);
+  z-index: 1;
+}
+.styles-post {
+  margin-bottom: -1em;
+}
+.styles-post:hover {
+  cursor: pointer;
+  opacity: 0.9;
+  transition: opacity 0.2s;
+}
+.styles-post img {
+  border-top-left-radius: 12px;
+  border-top-right-radius: 12px;
+  margin-left: auto;
+  margin-right: auto;
+  min-width: 20vw;
+}
+.styles-post-contents {
+  padding: 1em;
+  background-color: #fff;
+  border: 1px solid rgba(34, 36, 38, 0.15);
+  border-top: none;
+  border-bottom-left-radius: 12px;
+  border-bottom-right-radius: 12px;
+}
+.styles-post-contents p,b {
+  display: block;
+  white-space : nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.styles-post-writer {
+  font-size: 0.8em;
+  opacity: 0.5;
+  padding-top: 1em;
+}
+.styles-content-final-empty {
+  margin-bottom: 4vh !important;
+}
+
+@media only screen and (max-width: 767px) {
+  .styles-main {
+    margin-left: 0;
+    margin-right: 0;
+  }
+  .styles-posts .ui.padded.segment {
+    width: calc(100vw - 2em);
+    margin-left: auto;
+    margin-right: auto;
+  }
+  .styles-post img {
+    width: calc(100vw - 2em);
+    margin-left: auto;
+    margin-right: auto;
+  }
+  .styles-posts div.label {
+    margin-left: 0.7em !important;
+  }
+  .styles-post-contents .ui.container {
+    margin-left: 0;
+  }
 }
 
 /* ContactPage */
 .contact-main {
-  margin-top: 60px;
-  width: 50vw;
-  margin-left: auto;
-  margin-right: auto;
+  margin-top: 50px;
+  border-radius: 12px;
+  border: 4px rgb(125, 125, 125, 0.1) solid;
+  margin-left: 30vw;
+  margin-right: 30vw;
   background-color: #fff;
   background-size: cover;
   display: block;
   text-align: left;
-  min-height: calc(100vh - 91px);
-  padding: 1em 2em;
+  min-height: calc(100vh - 81px);
+  padding: 1.5em 3em;
 }
 .contact-main textarea {
   min-height: 180px;

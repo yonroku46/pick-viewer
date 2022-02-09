@@ -175,7 +175,6 @@ export default function SignupPage(props) {
   return(
     <>
     <div className="signup-main">
-      <div className="signup-main-content">
       <Progress percent={percent} className='signup-progress' indicating/>
       {percent === 0 ?
       <>
@@ -294,7 +293,6 @@ export default function SignupPage(props) {
       </Link>
       </>
       }
-      </div>
     </div>
     </>
     )
