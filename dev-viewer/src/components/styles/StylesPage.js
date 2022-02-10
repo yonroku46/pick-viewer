@@ -6,13 +6,14 @@ import axios from 'axios';
 export default function StylesPage(props) {
 
     const [consent, setConsent] = useState(false);
+    const postCd = '1';
 
     return(
         <>
         <div className='styles-main'>
             <div className='styles-posts'>
                 <Grid columns={1}>
-                    <Grid.Column className='styles-post'>
+                    <Grid.Column className='styles-post' onClick={() => props.history.push(`/styles/${postCd}`)}>
                         <Segment padded>
                             <Label attached='bottom left'><Icon name='camera'/></Label>
                             <Image src={api.imgRender('images/shop/default.png')}/>
