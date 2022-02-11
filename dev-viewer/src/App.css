@@ -928,10 +928,21 @@ table.dashboard-table input {
   min-height: calc(100vh - 81px);
   filter: saturate(100%);
 }
+.empty-main-img {
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 20vh;
+  width: 320px;
+}
+.empty-home-btn {
+  margin-left: auto !important;
+  margin-right: 10px !important;
+  margin-top: 40px !important;
+}
 .empty-back-btn {
-  position: absolute;
-  margin-top: -80px !important;
-  margin-left: -70px !important;
+  margin-left: auto !important;
+  margin-right: auto !important;
+  margin-top: 40px !important;
 }
 
 /* MyPage */
