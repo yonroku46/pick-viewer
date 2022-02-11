@@ -1752,8 +1752,8 @@ table.dashboard-table input {
   height: auto;
   text-align: left;
   margin-top: 0px !important;
-  padding-top: 2em !important;
-  padding-bottom: 2em !important;
+  padding-top: 1.5em !important;
+  padding-bottom: 1.5em !important;
   padding-left: 8px !important;
   padding-right: 8px !important;
   border-radius: 0px !important;
@@ -1772,7 +1772,7 @@ table.dashboard-table input {
   margin-bottom: 0.5em;
 }
 .detailpage-time {
-  margin: 8px;
+  margin: 6px;
 }
 .detailpage-call a {
   margin: 5px;
@@ -1784,7 +1784,7 @@ table.dashboard-table input {
   opacity: 1;
 }
 .detailpage-location {
-  margin: 8px;
+  margin: 6px;
 }
 .detailpage-location-empty {
   margin-top: 1.2em;
@@ -1792,7 +1792,7 @@ table.dashboard-table input {
   text-align: center;
 }
 .detailpage-info {
-  margin: 8px;
+  margin: 6px;
 }
 a.detailpage-tel {
   color: #000;
@@ -1996,7 +1996,8 @@ a.detailpage-tel:hover {
 }
 .review-comment-area {
   text-align: left;
-  margin: 0px auto !important;
+  margin: 0px 1.5vw !important;
+  max-width: none !important;
 }
 .review-write-area {
   text-align: left !important;
@@ -2014,8 +2015,8 @@ a.detailpage-tel:hover {
 }
 .review-comment-label {
   margin-left: 0.5em !important;
-  margin-right: 0.5em !important;
   margin-bottom: -1em !important;
+  opacity: 0.2;
 }
 .review-comment-label-setting {
   background-color: rgb(0, 0, 0, 0) !important;
@@ -2048,31 +2049,28 @@ a.detailpage-tel:hover {
   padding: 0em 0em 0em 0.5em !important;
   margin-top: 0.7em !important;
   margin-bottom: 0.3em !important;
+  max-width: none !important;
 }
 .review-style {
-  padding: 0.8em !important;
+  padding: 0.8em 0.5em !important;
   margin: 0.4em !important;
-  border: rgb(0, 0, 0, 0.1) 1px solid !important;
-  border-radius: 1em;
   min-width: 30vw;
   white-space: pre-line;
 }
 .review-style-deleted {
-  padding: 0.6em !important;
+  padding: 0.5em 0.8em !important;
   margin: 0.4em !important;
   border: rgb(0, 0, 0, 0.1) 1px solid !important;
   background-color: rgb(0, 0, 0, 0.03)!important;
   color: rgb(0, 0, 0, 0.5);
-  border-radius: 1em;
+  border-radius: 0.8em;
   min-width: 30vw;
 }
 .reply-style {
-  padding: 0.8em !important;
-  margin-top: -0.4em !important;
+  padding: 0.8em 1em !important;
   margin-right: 0.2em !important;
-  margin-left: 0.4em !important;
-  border: rgb(0, 0, 0, 0.1) 1px solid !important;
-  border-radius: 1em;
+  margin-left: 1.4em !important;
+  border-left: rgb(0, 0, 0, 0.1) 1px dotted !important;
   min-width: 28vw;
   white-space: pre-line;
 }
@@ -2081,6 +2079,7 @@ a.detailpage-tel:hover {
   padding-bottom: 0.5em !important;
   padding-left: 1em !important;
   padding-right: 1em !important;
+  margin-bottom: -0.45em !important;
   border: rgb(0, 0, 0, 0.1) 1px solid !important;
   border-bottom: rgb(0, 0, 0, 0.1) 0.3em solid !important;
   background-color: rgb(0, 0, 0, 0.03)!important;

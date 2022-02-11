@@ -302,20 +302,25 @@ export default function ReviewPage(props) {
       return '방금전';
     }
     if (betweenTime < 60) {
-      return `${betweenTime}분전`;
+      return `${betweenTime}분 전`;
     }
 
     const betweenTimeHour = Math.floor(betweenTime / 60);
     if (betweenTimeHour < 24) {
-      return `${betweenTimeHour}시간전`;
+      return `${betweenTimeHour}시간 전`;
     }
 
     const betweenTimeDay = Math.floor(betweenTime / 60 / 24);
-    if (betweenTimeDay < 365) {
-      return `${betweenTimeDay}일전`;
+    if (betweenTimeDay < 31) {
+      return `${betweenTimeDay}일 전`;
     }
 
-    return `${Math.floor(betweenTimeDay / 365)}년전`;
+    const betweenTimeMonth = Math.floor(betweenTime / 60 / 24 / 30);
+    if (betweenTimeMonth < 13) {
+      return `${betweenTimeMonth}개월 전`;
+    }
+
+    return `${Math.floor(betweenTimeDay / 365)}년 전`;
   }
 
   function comma(number) {
@@ -428,10 +433,12 @@ export default function ReviewPage(props) {
             <Comment.Content>
               <Rating icon='star' defaultRating={review.ratings} maxRating={5} size='mini' disabled/><br/>
               <Comment.Author as='a'>{review.user_name}</Comment.Author>
-              {mypostJudge(review.user_cd) && 
-              <Label className='review-comment-label-setting' attached='top right' onClick={() => reviewEdit(review.review_cd)}><Icon name='cog'/></Label>
-              }
               <Comment.Metadata>{timeForToday(review.review_time)}</Comment.Metadata>
+              {mypostJudge(review.user_cd) && 
+                <Label className='review-comment-label-setting' onClick={() => reviewEdit(review.review_cd)}>
+                  <Icon name='ellipsis vertical'/>
+                </Label>
+              }
               <Comment.Text className='review-comment-text'>
                 {review.review_text}
               </Comment.Text>
@@ -462,10 +469,12 @@ export default function ReviewPage(props) {
             <Comment.Content>
               <Rating icon='star' defaultRating={review.ratings} maxRating={5} size='mini' disabled/><br/>
               <Comment.Author as='a'>{review.user_name}</Comment.Author>
-              {mypostJudge(review.user_cd) && 
-              <Label className='review-comment-label-setting' attached='top right' onClick={() => reviewEdit(review.review_cd)}><Icon name='cog'/></Label>
-              }
               <Comment.Metadata>{timeForToday(review.review_time)}</Comment.Metadata>
+              {mypostJudge(review.user_cd) && 
+                <Label className='review-comment-label-setting' onClick={() => reviewEdit(review.review_cd)}>
+                  <Icon name='ellipsis vertical'/>
+                </Label>
+              }
               <Comment.Text className='review-comment-text'>
                 {review.review_text}
               </Comment.Text>
@@ -488,10 +497,12 @@ export default function ReviewPage(props) {
                   <Comment.Content>
                     <Comment.Author as='a'>{reply.user_name}</Comment.Author>
                     <Label className='review-comment-label' color='violet' size='mini' horizontal>STAFF</Label>
-                    {mypostJudge(reply.user_cd) && 
-                    <Label className='review-comment-label-setting' attached='top right' onClick={() => reviewEdit(reply.review_cd)}><Icon name='cog'/></Label>
-                    }
                     <Comment.Metadata>{timeForToday(reply.review_time)}</Comment.Metadata>
+                    {mypostJudge(reply.user_cd) && 
+                      <Label className='review-comment-label-setting' onClick={() => reviewEdit(reply.review_cd)}>
+                        <Icon name='ellipsis vertical'/>
+                      </Label>
+                    }
                     <Comment.Text className='review-comment-text'>
                       {reply.review_text}
                     </Comment.Text>
