@@ -149,10 +149,11 @@ export default function ReviewPage(props) {
       if (res) {
         alert("리뷰가 작성되었습니다.");
         setReload(reload + 1);
+        setComment('');
       } else {
         alert("리뷰 작성에 실패하였습니다. 지속시 관리자에게 문의해주세요.");
-        setSendLoading(false);
       }
+      setSendLoading(false);
     })
     .catch(err => {
       alert("현재 서버와의 연결이 원활하지 않습니다. 관리자에게 문의해주세요.");
@@ -181,8 +182,8 @@ export default function ReviewPage(props) {
         setReload(reload + 1);
       } else {
         alert("리뷰 삭제에 실패하였습니다. 지속시 관리자에게 문의해주세요.");
-        setSendLoading(false);
       }
+      setSendLoading(false);
     })
     .catch(err => {
       alert("현재 서버와의 연결이 원활하지 않습니다. 관리자에게 문의해주세요.");

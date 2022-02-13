@@ -54,6 +54,7 @@ export default function SearchPage(props) {
             if (res !== null) {
                 setShops(res);
                 setLoading(false);
+                searching();
             }
         })
         .catch(err => {
@@ -153,22 +154,22 @@ export default function SearchPage(props) {
                 <Message color='blue' onClick={() => setVisible(false)} className='mypage-msg search-msg' header='찾으시는 매장이 없습니다' content='매장에 서비스 등록을 요청해보세요!' />
             </Transition>
             <div className="booking-main-category">
-            <Grid columns={3} divided>
-                <Grid.Row>
-                    <Grid.Column onClick={() => setCategory(categoryList[0])} className={category === categoryList[0] ? 'category-active' : 'category-non-active'}>
-                        <Icon name='cut' size='big'/>
-                        <br/>헤어샵
-                    </Grid.Column>
-                    <Grid.Column onClick={() => setCategory(categoryList[1])} className={category === categoryList[1] ? 'category-active' : 'category-non-active'}>
-                        <Icon name='food' size='big'/>
-                        <br/>맛집
-                    </Grid.Column>
-                    <Grid.Column onClick={() => setCategory(categoryList[2])} className={category === categoryList[2] ? 'category-active' : 'category-non-active'}>
-                        <Icon name='coffee' size='big'/>
-                        <br/>카페
-                    </Grid.Column>
-                </Grid.Row>
-            </Grid>
+                <Grid columns={3} divided>
+                    <Grid.Row>
+                        <Grid.Column onClick={() => setCategory(categoryList[0])} className={category === categoryList[0] ? 'category-active' : 'category-non-active'}>
+                            <Icon name='cut' size='big'/>
+                            <br/>헤어샵
+                        </Grid.Column>
+                        <Grid.Column onClick={() => setCategory(categoryList[1])} className={category === categoryList[1] ? 'category-active' : 'category-non-active'}>
+                            <Icon name='food' size='big'/>
+                            <br/>맛집
+                        </Grid.Column>
+                        <Grid.Column onClick={() => setCategory(categoryList[2])} className={category === categoryList[2] ? 'category-active' : 'category-non-active'}>
+                            <Icon name='coffee' size='big'/>
+                            <br/>카페
+                        </Grid.Column>
+                    </Grid.Row>
+                </Grid>
             </div>
             <Menu.Item className='shopmodal-search'>
                 <Form onKeyPress={onCheckEnter}>
@@ -180,7 +181,7 @@ export default function SearchPage(props) {
                 </Form>
             </Menu.Item>
             <Menu.Item className='search-result'>
-                {0 < searchHistory.length ?
+            {0 < searchHistory.length ?
                 <div className='search-recent'>
                     <div className='search-recent-group'>
                         <h4 className='underline'>최근 검색</h4>
@@ -194,6 +195,7 @@ export default function SearchPage(props) {
                     )}
                 </div>
                 :
+                <>
                 <div className='search-recent'>
                     <h4 className='underline'>추천 검색</h4>
                     {recHistory.map(history =>
@@ -201,7 +203,10 @@ export default function SearchPage(props) {
                             <span onClick={() => clickHistory(history)}>{history}</span>
                         </Label>
                     )}
-                <h4 className='underline'>추천 매장</h4>
+                </div>
+                {searchResult.length === 0 &&
+                <div className="search-recommend">
+                    <h4 className='underline'>추천 매장</h4>
                     {shops.map(shop => 
                         <Link to={`/booking/${category}/${shop.shop_cd}`}>
                             <button key={shop.shop_cd} style={{backgroundPosition: 'center', backgroundImage: 'linear-gradient(rgba(0, 0, 0, 0.05), rgba(0, 0, 0, 0.45)), url(' + api.imgRender(shop.shop_img === null ? 'images/shop/default.png' : shop.shop_img.split(',')[0]) + ')'}}>
@@ -215,12 +220,14 @@ export default function SearchPage(props) {
                             </button>
                         </Link>
                     )}
-            </div>
+                </div>
                 }
+                </>
+            }
+            {searchResult.length !== 0 &&
+                <>
+                {/* 검색결과 존재시 ShopModal로 결과 전송 및 페이지이동하도록 변경 */}
                 <div className='search-recommend'>
-                    {searchResult.length !== 0 &&
-                    <>
-                    {/* 검색결과 존재시 ShopModal로 결과 전송 및 페이지이동하도록 변경 */}
                     <h4 className='underline'>검색 결과</h4>
                     {searchResult.map(shop => 
                         <Link to={`/booking/${category}/${shop.shop_cd}`}>
@@ -235,9 +242,9 @@ export default function SearchPage(props) {
                             </button>
                         </Link>
                     )}
-                    </>
-                    }
                 </div>
+                </>
+            }
             </Menu.Item>
         </div>
     )
