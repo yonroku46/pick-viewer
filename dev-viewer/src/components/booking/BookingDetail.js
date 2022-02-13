@@ -1,14 +1,12 @@
 import { useEffect, useState, useReducer } from "react";
 import { useParams, Link } from "react-router-dom";
-import { Dimmer, Button, Item, Grid, Segment, Image, Icon, Loader, Modal, Header, Statistic, Card } from 'semantic-ui-react'
-import BookingCalendar from "./BookingCalendar";
-import BookingTimeTable from "./BookingTimeTable";
-import * as api from '../../rest/api'
-import axios from 'axios';
-import MapContainer from "../public/MapContainer";
-import Slider from "react-slick";
+import { Dimmer, Button, Item, Grid, Segment, Image, Icon, Loader, Modal, Header, Table, Statistic, Card } from 'semantic-ui-react'
 import { Link as Scroll } from "react-scroll";
 import moment from "moment";
+import MapContainer from "../public/MapContainer";
+import Slider from "react-slick";
+import * as api from '../../rest/api'
+import axios from 'axios';
 
 export default function BookingDetail(props) {
   const isAuthorized = sessionStorage.getItem("isAuthorized");
@@ -25,6 +23,28 @@ export default function BookingDetail(props) {
   const shopDefault = 'images/shop/default.png';
   const staffDefault = 'images/user/default.png';
   const menuDefault = 'images/menu/default.png';
+
+  const [getMoment, setMoment] = useState(moment());
+  const [calendarActive, setCalendarActive] = useState(false);
+  const [timeActive, setTimeActive] = useState(false);
+
+  const weekArr = ["일", "월", "화", "수", "목", "금", "토"];
+  const today = getMoment;
+  const firstWeek = today.clone().startOf('month').week();
+  const lastWeek = today.clone().endOf('month').week() === 1 ? 53 : today.clone().endOf('month').week();
+  const originYear = parseInt(moment().format('YYYY'));
+  const originMonth = parseInt(moment().format('MM'));
+  const originDay = parseInt(moment().format('DD'));
+  const originToday = moment().format('YYYY-MM-DD');
+
+  const timeArr = [];
+  new Array(24).fill().forEach((acc, index) => {
+      timeArr.push(moment( {hour: index} ).format('HH:mm'));
+      // timeArr.push(moment({ hour: index, minute: 30 }).format('HH:mm'));
+  })
+  const thisHour = parseInt(getMoment.format('HH'));
+  const [startHour, setStartHour] = useState(9);
+  const [endHour, setEndHour] = useState(24);
 
   const customersList = [
     {'customers_cd':1, 'customers':'1명'},
@@ -67,6 +87,8 @@ export default function BookingDetail(props) {
       if (res !== null) {
         setShop(res);
         makeImageList(res.shop_img);
+        setStartHour(parseInt(res.shop_open.substring(0,2)));
+        setEndHour(parseInt(res.shop_close.substring(0,2)));
       }
     })
     .catch(err => {
@@ -77,9 +99,9 @@ export default function BookingDetail(props) {
   function makeImageList(shop_img) {
     const result = [];
     for (let index = 0; index < 4; index++) {
-        result.push(shop_img[index] ? shop_img[index] : shopDefault);
-      }
-      setShopImages(result);
+      result.push(shop_img[index] ? shop_img[index] : shopDefault);
+    }
+    setShopImages(result);
   }
 
   const [showCoupon, setShowCoupon] = useState(false);
@@ -95,27 +117,26 @@ export default function BookingDetail(props) {
   const [showShopMenu, setShowShopMenu] = useState(false);
   const [shopMenuSelected, setShopMenuSelected] = useState(false);
 
+  const [calendarSelected, setCalendarSelected] = useState(false);
+
+  const [timetableSelected, setTimetableSelected] = useState(false);
+
   // for Viewer
   const [designer, setDesigner] = useState(null); 
-
   const [customers, setCustomers] = useState(null); 
   const [shopMenu, setShopMenu] = useState(null); 
-
   const [resultPrice, setResultPrice] = useState(null);
   const [discount, setDiscount] = useState(100);
   
   // for DB
   const [dbDesigner, setDbDesigner] = useState(null);
-
   const [dbCustomers, setDbCustomers] = useState(null);
-
   const [dbDate, setDbDate] = useState(null);
   const [dbTime, setDbTime] = useState(null);
 
   // for Title
   const designerTitle = '찾으시는 디자이너가 있으신가요?';
   const hairShopMenuTitle = '어떤 스타일을 원하시나요?';
-
   const shopCustomersTitle = '방문하실 인원수를 알려 주시겠어요?';
   const shopMenuTitle = '어떤 메뉴를 원하시나요?';
 
@@ -278,7 +299,15 @@ export default function BookingDetail(props) {
 
   function bookingOpen() {
     setFinalCheck(false);
+    allClose();
     dispatch({ type: 'OPEN_MODAL' });
+  }
+  function allClose() {
+    setShowCustomers(false);
+    setShowDesigner(false);
+    setShowShopMenu(false);
+    setCalendarActive(false);
+    setTimeActive(false);
   }
 
   function bookingCheck() {
@@ -527,6 +556,186 @@ export default function BookingDetail(props) {
     );
   }
 
+  function calendarToogle() {
+    setCalendarActive(!calendarActive);
+  }
+
+  function dayClick(e) {
+    setMoment(getMoment.date(e.target.innerText));
+    setDbDate(getMoment.format('YYYY-MM-DD'));
+    setCalendarSelected(true)
+    setDbTime(null);
+    setTimetableSelected(false);
+  }
+
+  function lastMonth() {
+    if(moment(getMoment.clone().subtract(1, 'month')).isBefore(moment())) {
+      setMoment(moment());
+      setDbDate(moment().format('YYYY-MM-DD'));
+    } else {
+      setMoment(getMoment.clone().subtract(1, 'month'));
+      setDbDate(getMoment.clone().subtract(1, 'month').format('YYYY-MM-DD'));
+    }
+    setDbTime(null);
+    setTimetableSelected(false);
+  }
+  function nextMonth() {
+    setMoment(getMoment.clone().add(1, 'month'));
+    setDbDate(getMoment.clone().add(1, 'month').format('YYYY-MM-DD'));
+    setDbTime(null);
+    setTimetableSelected(false);
+  }
+
+  function calendarHeadRender() {
+    const result = [];
+    for (let i = 0; i < weekArr.length; i++) {
+        result.push(
+            <Table.HeaderCell>{weekArr[i]}</Table.HeaderCell>
+        );
+    }
+    return result;
+  };
+
+  function calendarRender() {
+    let result = [];
+    let week = firstWeek;
+    for (week; week <= lastWeek; week++) {
+        result = result.concat(
+        <Table.Row className='center'> {
+            Array(7).fill(0).map((_data, index) => {
+            let days = today.clone().startOf('year').week(week).startOf('week').add(index, 'day');
+
+            if (getMoment.format('YYYYMMDD') === days.format('YYYYMMDD')) {
+              return(
+                <Table.Cell onClick={dayClick} className='mypage-table-active table-today'>
+                  <span>{days.format('D')}</span>
+                </Table.Cell>
+              );
+            } else if (days.format('MM') !== today.format('MM')) {
+              return(
+                <Table.Cell className='table-other-month'>
+                  <span>{days.format('D')}</span>
+                </Table.Cell>
+              );
+            } else {
+              if ( (parseInt(today.format('YYYY')) === originYear && parseInt(days.format('MM')) <= originMonth) && (parseInt(days.format('D')) < originDay) ) {
+                return(
+                  <Table.Cell className='table-other-month'>
+                    <span>{days.format('D')}</span>
+                  </Table.Cell>
+                );
+              } else {
+                return(
+                  <Table.Cell onClick={dayClick} className='mypage-table-active'>
+                    <span>{days.format('D')}</span>
+                  </Table.Cell>
+                );
+              }
+            }
+        })}
+      </Table.Row>
+      );
+    }
+    return result;
+  }
+
+  function calendarContent() {
+    return (
+      <>
+      <Grid.Column>
+          <Scroll to='calendar' offset={-56} spy={true} smooth={true}>
+          <Button id='calendar' className={calendarSelected ? 'detailpage-menu-btn-bg' :'detailpage-menu-btn-sub'} onClick={calendarToogle}>
+            <Icon name={calendarSelected ? 'chevron right' : 'chevron down'}/>
+            {calendarSelected ? today.format('MM월 DD일') : '예약일자를 선택하세요' }
+          </Button>
+          </Scroll>
+      </Grid.Column>
+      {calendarActive &&
+      <>
+      <Table unstackable className='booking-table'>
+          <Table.Header>
+              <Table.Row>
+                <Table.HeaderCell colSpan='7' className='mypage-table-month'>
+                  <h4>
+                  {parseInt(today.format('YYYY')) === originYear && parseInt(today.format('MM')) <= originMonth
+                  ? <Icon name='chevron left' className='mypage-table-btn1-disable'/>
+                  : <Icon name='chevron left' className='mypage-table-btn1' onClick={lastMonth}/>
+                  }
+                  {today.format('YYYY / MM')}
+                  <Icon name='chevron right' className='mypage-table-btn2' onClick={nextMonth}/>
+                  </h4>
+                </Table.HeaderCell>
+              </Table.Row>
+              <Table.Row className='center'>
+                {calendarHeadRender()}
+              </Table.Row>
+          </Table.Header>
+
+          <Table.Body>
+            {calendarRender()}
+          </Table.Body>
+      </Table>
+      </>
+      }
+      </>
+    );
+  }
+
+  function timeClick(e) {
+    const timeValue = e.target.value;
+    const render = parseInt(e.target.value.split(':')[0]) <= 12 ? '오전 ' + timeValue : '오후 ' + timeValue;
+    setDbTime(render);
+    setTimeActive(false);
+    setTimetableSelected(true);
+  }
+
+  function bookingTimeToggle() {
+      setTimeActive(!timeActive);
+  }
+
+  function timetableContent() {
+    for (let i = 0; i < startHour; i++) {
+      timeArr.shift();
+    }
+    for (let i = 0; i <  23 - endHour; i++) {
+      timeArr.pop();
+    }
+    return (
+      <Grid.Column>
+        <Scroll to='timeTable' offset={-56} spy={true} smooth={true}>
+        <Button id='timeTable' className={timetableSelected ? 'detailpage-menu-btn-bg' :'detailpage-menu-btn-sub'} onClick={bookingTimeToggle}>
+            <Icon name={timetableSelected ? 'chevron right' : 'chevron down'}/>
+            {timetableSelected ? dbTime: '예약시간을 선택하세요' }
+        </Button>
+        </Scroll>
+        <div className='timetable-btn-area'>
+          {timeActive && <p><Icon name='sun outline'/>오전</p>}
+          {timeActive 
+            && timeArr.map(time => (
+              (parseInt(time.substring(0,2)) <= 12)
+              ? (originToday === dbDate && (parseInt(time.substring(0,2)) <= thisHour))
+                ? <Button disabled className='timetable-btn'>{time}</Button>
+                : <Button className='timetable-btn' value={time} onClick={timeClick}>{time}</Button>
+              : <></>
+            ))
+          }
+        </div>
+        <div className='timetable-btn-area'>
+        {timeActive && <p><Icon name='moon outline'/>오후</p>}
+        {timeActive 
+          && timeArr.map(time => (
+            (parseInt(time.substring(0,2)) <= 12)
+            ? <></>
+            : (originToday === dbDate && (parseInt(time.substring(0,2)) <= thisHour))
+              ? <Button disabled className='timetable-btn'>{time}</Button>
+              : <Button className='timetable-btn' value={time} onClick={timeClick}>{time}</Button>
+          ))
+        }
+        </div>
+      </Grid.Column>
+    );
+  }
+
   function couponContent() {
     return (
       <Grid.Column>
@@ -583,9 +792,6 @@ export default function BookingDetail(props) {
 
   return (
     <div className='detailpage'>
-      {/* <div className='booking-nav'>
-        test
-      </div> */}
       {shop.length === 0 &&
         <Dimmer active inverted>
           <Loader size='large'/>
@@ -651,22 +857,13 @@ export default function BookingDetail(props) {
       {/* 메뉴 탭 */}
       <Grid columns={1} className='detailpage-menu-btn'>
         <Grid.Row>
-          
-          {couponContent()}
-
+          {/* {couponContent()} */}
           {category === 'hairshop' && designerContent()}
           {category === 'restaurant' && customersContent()}
           {category === 'cafe' && customersContent()}
-
           {shopMenuContent()}
-
-          <BookingCalendar setDbDate={setDbDate}/>
-
-          {shop !== undefined 
-          ? <BookingTimeTable setDbTime={setDbTime} shop={shop} dbDate={dbDate}/>
-          : <BookingTimeTable setDbTime={setDbTime}/>
-          }
-
+          {calendarContent()}
+          {timetableContent()}
         </Grid.Row>
       </Grid>
       

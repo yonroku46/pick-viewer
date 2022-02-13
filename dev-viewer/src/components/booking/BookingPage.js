@@ -1,4 +1,4 @@
-import ShopModal from "./BookingModal"
+import BookingModal from "./BookingModal"
 import { useState, useEffect } from 'react'
 import { useParams } from "react-router-dom";
 import { Icon, Grid } from 'semantic-ui-react';
@@ -14,7 +14,6 @@ export default function BookingPage(props) {
     const [favoriteList, setFavoriteList] = useState([]);
     const categoryList = ['hairshop', 'restaurant', 'cafe'];
 
-    // category check
     if (!categoryList.includes(category)) {
         alert('잘못된 접근입니다.')
         props.history.goBack(1);
@@ -70,7 +69,9 @@ export default function BookingPage(props) {
                 </Grid.Row>
             </Grid>
         </div>
-        {category !== undefined && <ShopModal category={category} favoriteList={favoriteList}/>}
+        {category !== undefined && 
+          <BookingModal category={category} favoriteList={favoriteList}/>
+        }
     </div>
     </>
     )
