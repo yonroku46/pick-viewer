@@ -732,7 +732,7 @@ export default function DashboardPage(props) {
     function Loading() {
         return(
             <Dimmer active inverted>
-              <Loader size='large'>로딩중</Loader>
+              <Loader size='large'></Loader>
             </Dimmer>
           )
     }
