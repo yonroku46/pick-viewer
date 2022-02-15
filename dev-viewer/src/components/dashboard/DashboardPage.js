@@ -100,6 +100,7 @@ export default function DashboardPage(props) {
 
     useEffect(() => {
         if (permission !== 3) {
+            alert("잘못된 접근입니다.")
             props.history.goBack(1);
         }
         setLoading(true);

@@ -9,7 +9,6 @@ export default function BookingPage(props) {
     
     const userInfo = JSON.parse(sessionStorage.getItem('userInfo'));
     const user_cd = userInfo ? userInfo.user_cd : null;
-    const permission = userInfo ? userInfo.permission : null;
     const {category} = useParams();
     const [favoriteList, setFavoriteList] = useState([]);
     const categoryList = ['hairshop', 'restaurant', 'cafe'];
@@ -20,32 +19,28 @@ export default function BookingPage(props) {
     };
 
     useEffect(() => {
-        if (permission === 3) {
-          alert('예약페이지는 일반유저로 로그인 바랍니다.')
-          props.history.goBack(1);
-        }
-          return new Promise(function(resolve, reject) {
-            axios
-            .get(api.favoriteList, {
-                params: {
-                  'user_cd': user_cd
-                }
-            })
-            .then(response => resolve(response.data))
-            .catch(error => reject(error.response))
+        return new Promise(function(resolve, reject) {
+          axios
+          .get(api.favoriteList, {
+              params: {
+                'user_cd': user_cd
+              }
           })
-          .then(res => {
-            if (res !== null) {
-                const tmp = [];
-                res.forEach(shop => {
-                    tmp.push(shop.shop_cd);
-                })
-                setFavoriteList(tmp);
-            }
-          })
-          .catch(err => {
-            alert("현재 서버와의 연결이 원활하지 않습니다. 관리자에게 문의해주세요.");
-          })
+          .then(response => resolve(response.data))
+          .catch(error => reject(error.response))
+        })
+        .then(res => {
+          if (res !== null) {
+              const tmp = [];
+              res.forEach(shop => {
+                  tmp.push(shop.shop_cd);
+              })
+              setFavoriteList(tmp);
+          }
+        })
+        .catch(err => {
+          alert("현재 서버와의 연결이 원활하지 않습니다. 관리자에게 문의해주세요.");
+        })
       }, []); 
 
     return(

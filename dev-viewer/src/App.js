@@ -163,25 +163,22 @@ export default function App() {
             <Icon name='home'/>
             홈
           </Menu.Item>
-          {
-          isAuthorized && (permission === 1 | permission === 2) ?
-            <Menu.Item as={Link} to='/mypage' onClick={menuClose}>
-              <Icon name='user'/>
-              마이페이지
-            </Menu.Item>
-          :
-          isAuthorized && (permission === 3) &&
-            <Menu.Item as={Link} to='/dashboard' onClick={menuClose}>
-              <Icon name='sitemap'/>
-              매장관리
-            </Menu.Item>
+          {isAuthorized &&
+          <Menu.Item as={Link} to='/mypage' onClick={menuClose}>
+            <Icon name='user'/>
+            마이페이지
+          </Menu.Item>
           }
-          {permission !== 3 &&
-            <Menu.Item as={Link} to='/booking/hairshop' onClick={menuClose}>
-              <Icon name='inbox'/>
-              예약하기
-            </Menu.Item>
+          {isAuthorized && (permission === 3) &&
+          <Menu.Item as={Link} to='/dashboard' onClick={menuClose}>
+            <Icon name='sitemap'/>
+            매장관리
+          </Menu.Item>
           }
+          <Menu.Item as={Link} to='/booking/hairshop' onClick={menuClose}>
+            <Icon name='inbox'/>
+            예약하기
+          </Menu.Item>
           <Menu.Item as={Link} to='/styles' onClick={menuClose}>
             <Icon name='winner'/>
             스타일
@@ -221,11 +218,13 @@ export default function App() {
               </Switch>
             </Segment>
           </Sidebar.Pusher>
+          
           {/* Footer */}
           <footer className={visible ? "app-footer push-background" : whiteFlag ? "app-footer-white" : "app-footer"}>
             <Icon name='copyright'/>TEAMBEPO 2022
           </footer>
         </Sidebar.Pushable>
+
       </div>
       <Modal size={size} open={open} onClose={() => dispatch({ type: 'close' })}>
         <Modal.Header>로그아웃 하시겠습니까?</Modal.Header>

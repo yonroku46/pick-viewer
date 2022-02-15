@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { Label, Icon, Table, Button, Header, Segment } from 'semantic-ui-react';
+import { Form, Icon, Table, Button, Header, Segment } from 'semantic-ui-react';
 import moment from 'moment';
 import axios from 'axios';
 import * as api from '../../rest/api'
@@ -60,7 +60,7 @@ export default function DashboardBookingInfo(props) {
         // timeArr.push(moment({ hour: index, minute: 30 }).format('HH:mm'));
     })
 
-    const startHour = 9;
+    const startHour = 0;
     const endHour = 24;
 
     for (let i = 0; i < startHour; i++) {
@@ -71,9 +71,6 @@ export default function DashboardBookingInfo(props) {
     }
 
     const today = getMoment;
-    const originYear = parseInt(moment().format('YYYY'));
-    const originMonth = parseInt(moment().format('MM'));
-    const originDay = parseInt(moment().format('DD'));
 
     const firstWeek = today.clone().startOf('month').week();
     const lastWeek = today.clone().endOf('month').week() === 1 ? 53 : today.clone().endOf('month').week();
@@ -90,9 +87,7 @@ export default function DashboardBookingInfo(props) {
     };
 
     function dayClick(e) {
-        setMoment(getMoment.date(e.target.innerText));
-        console.log(getMoment)
-        const dbDate = getMoment.format('YYYY-MM-DD')
+        setMoment(getMoment.clone().date(e.target.innerText));
     }
     
     function lastMonth() {
@@ -113,31 +108,35 @@ export default function DashboardBookingInfo(props) {
                 let days = today.clone().startOf('year').week(week).startOf('week').add(index, 'day');
 
                 if (getMoment.format('YYYYMMDD') === days.format('YYYYMMDD')) {
+                    // 오늘날짜
                     return(
-                        <Table.Cell onClick={dayClick} className='mypage-table-active table-today'>
+                        <Table.Cell onClick={dayClick} className='mypage-table-active table-today' key={index}>
                             <span>{days.format('D')}</span>
+                            {bookingList.filter(booking => booking.booking_time.substr(0,8) === days.format('YYYYMMDD')).length !== 0 &&
+                                <Button disabled className='mypage-booking-date' size='mini' icon='star'/>
+                            }
                         </Table.Cell>
                     );
                 } else if (days.format('MM') !== today.format('MM')) {
+                    // 다른달 날짜
                     return(
-                        <Table.Cell className='table-other-month'>
+                        <Table.Cell key={index} className='table-other-month'>
                             <span>{days.format('D')}</span>
+                            {bookingList.filter(booking => booking.booking_time.substr(0,8) === days.format('YYYYMMDD')).length !== 0 &&
+                                <Button disabled className='mypage-booking-date-other' size='mini' icon='star'/>
+                            }
                         </Table.Cell>
                     );
                 } else {
-                    if ( (parseInt(today.format('YYYY')) === originYear && parseInt(days.format('MM')) <= originMonth) && (parseInt(days.format('D')) < originDay) ) {
-                        return(
-                            <Table.Cell className='table-other-month'>
-                                <span>{days.format('D')}</span>
-                            </Table.Cell>
-                        );
-                    } else {
-                        return(
-                            <Table.Cell onClick={dayClick} className='mypage-table-active'>
-                                <span>{days.format('D')}</span>
-                            </Table.Cell>
-                        );
-                    }
+                    // 이번달 오늘제외 날짜
+                    return(
+                        <Table.Cell onClick={dayClick} className='mypage-table-active' key={index}>
+                            <span>{days.format('D')}</span>
+                            {bookingList.filter(booking => booking.booking_time.substr(0,8) === days.format('YYYYMMDD')).length !== 0 &&
+                                <Button disabled className='mypage-booking-date' size='mini' icon='star'/>
+                            }
+                        </Table.Cell>
+                    );
                 }
                 })
             }
@@ -150,7 +149,7 @@ export default function DashboardBookingInfo(props) {
     function timeRender() {
         let result = [];
 
-        const target = bookingList.filter(booking => booking.booking_time.match(props.today));
+        const target = bookingList.filter(booking => booking.booking_time.match(today.format("YYYYMMDD")));
         let cnt = target.length;
 
         if (cnt !== 0) {
@@ -158,7 +157,7 @@ export default function DashboardBookingInfo(props) {
                 result = result.concat(
                     timeArr.map(time => (
                     <Table.Row className='center'>
-                        {target[i].booking_time.substr(9).split(":")[0] ===  time.split(":")[0] &&
+                        {target[i].booking_time.substr(9).split(":")[0] ===  time.split(":")[0] ?
                         <>
                         <Table.Cell className='mypage-tt-time'>
                             <span>{time}</span>
@@ -185,6 +184,10 @@ export default function DashboardBookingInfo(props) {
                             <Icon name='angle double right' className='mypage-tt-info' onClick={() => bookingInfo(target[i].booking_cd)}/>
                         </Table.Cell>
                         </>
+                        :
+                        <Table.Cell className='mypage-tt-time'>
+                            <span>{time}</span>
+                        </Table.Cell>
                         }
                     </Table.Row> 
                     )
@@ -209,18 +212,18 @@ export default function DashboardBookingInfo(props) {
 
     return(
         <>
-        <div style={{marginBottom:'4em'}}></div>
-        <Button onClick={() => add('test')}>add</Button>
-        <Button onClick={() => check()}>check</Button>
+        <Form className='dashboard-viewer-inline'>
+            <Form.Field>
+                <label>예약캘린더</label>
+            </Form.Field>
+        {/* <Button onClick={() => add('test')}>add</Button>
+        <Button onClick={() => check()}>check</Button> */}
         <Table unstackable>
             <Table.Header>
                 <Table.Row>
                     <Table.HeaderCell colSpan='7' className='mypage-table-month'>
                         <h4>
-                        {parseInt(today.format('YYYY')) === originYear && parseInt(today.format('MM')) <= originMonth
-                        ? <Icon name='chevron left' className='mypage-table-btn1-disable'/>
-                        : <Icon name='chevron left' className='mypage-table-btn1' onClick={lastMonth}/>
-                        }
+                        <Icon name='chevron left' className='mypage-table-btn1' onClick={lastMonth}/>
                         {today.format('YYYY / MM')}
                         <Icon name='chevron right' className='mypage-table-btn2' onClick={nextMonth}/>
                         </h4>
@@ -248,6 +251,7 @@ export default function DashboardBookingInfo(props) {
             {timeRender()}
         </Table.Body>
     </Table>
+    </Form>
     </>
     );
 }

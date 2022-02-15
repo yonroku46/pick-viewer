@@ -6,7 +6,7 @@ export default function DashboardBookingData(props) {
         <Form className='dashboard-viewer-inline'>
             <Form.Field>
                 <label>최근 한달 예약수</label>
-                <Header className='dashboard-shopinfo-text'>00건</Header>
+                <Header className='dashboard-shopinfo-text'>0건</Header>
             </Form.Field>
             <Form.Field>
                 <label>예약 분석차트</label>

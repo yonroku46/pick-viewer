@@ -144,6 +144,7 @@ export default function BookingDetail(props) {
     setModalLoading(true);
     setModalOpen(true);
     const timeStamp = dbDate + " " + dbTime + ":00";
+    console.log(timeStamp)
     const booking_detail = {};
     if (category === 'hairshop') {
       booking_detail.designer = dbDesigner;
@@ -684,7 +685,7 @@ export default function BookingDetail(props) {
   function timeClick(e) {
     const timeValue = e.target.value;
     const render = parseInt(e.target.value.split(':')[0]) <= 12 ? '오전 ' + timeValue : '오후 ' + timeValue;
-    setDbTime(render);
+    setDbTime(timeValue);
     setTimeActive(false);
     setTimetableSelected(true);
   }

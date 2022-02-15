@@ -23,7 +23,7 @@ export default function MyTimeTable(props) {
         // timeArr.push(moment({ hour: index, minute: 30 }).format('HH:mm'));
     })
 
-    const startHour = 9;
+    const startHour = 0;
     const endHour = 24;
 
     for (let i = 0; i < startHour; i++) {
@@ -44,7 +44,7 @@ export default function MyTimeTable(props) {
                 result = result.concat(
                     timeArr.map(time => (
                     <Table.Row className='center'>
-                        {target[i].booking_time.substr(9).split(":")[0] ===  time.split(":")[0] &&
+                        {target[i].booking_time.substr(9).split(":")[0] ===  time.split(":")[0] ?
                         <>
                         <Table.Cell className='mypage-tt-time'>
                             <span>{time}</span>
@@ -71,6 +71,10 @@ export default function MyTimeTable(props) {
                             <Icon name='angle double right' className='mypage-tt-info' onClick={() => bookingInfo(target[i].booking_cd)}/>
                         </Table.Cell>
                         </>
+                        :
+                        <Table.Cell className='mypage-tt-time'>
+                            <span>{time}</span>
+                        </Table.Cell>
                         }
                     </Table.Row> 
                     )

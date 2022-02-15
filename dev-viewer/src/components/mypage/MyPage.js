@@ -39,9 +39,6 @@ export default function MyPage(props) {
   const [favoriteList, setFavoriteList] = useState([]);
 
   useEffect(() => {
-    if (!(permission === 1 | permission === 2)) {
-      props.history.goBack(1);
-    }
     const params = { 
         'user_cd': user_cd
       };
@@ -224,7 +221,7 @@ export default function MyPage(props) {
     {!isAuthorized ? <Redirect to="/login" /> :
     <>
     <div className='mypage-main'>
-    {(employment === null && permission !== 1) &&
+    {(employment === null && permission === 2) &&
     <Transition animation={animation} duration={duration} visible={visible}>
       <Message color='blue' onClick={() => dispatch2({ type2: 'open' })} className='mypage-msg' header='직원이신가요?' content='이 메세지를 눌러 소속을 정해주세요' />
     </Transition>
