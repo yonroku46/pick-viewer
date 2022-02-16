@@ -144,7 +144,6 @@ export default function BookingDetail(props) {
     setModalLoading(true);
     setModalOpen(true);
     const timeStamp = dbDate + " " + dbTime + ":00";
-    console.log(timeStamp)
     const booking_detail = {};
     if (category === 'hairshop') {
       booking_detail.designer = dbDesigner;

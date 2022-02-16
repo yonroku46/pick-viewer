@@ -462,28 +462,39 @@ hr {
 .dashboard-menu {
   float: left;
   box-shadow: none !important;
-  width: 16vw !important;
-  min-width: 170px !important;
-  max-width: 260px !important;
+  width: 184px !important;
   min-height: calc(100vh - 83px) !important;
   margin-bottom: -10px !important;
+  transition: margin-left 0.5s;
 }
 .dashboard-menu div.header {
   text-align: left;
   padding-left: 1em;
   color: rgb(0, 153, 255);
   border-top: rgb(0, 0, 0, 0.05) 1px solid;
-  padding-top: 0.6em;
-  padding-bottom: 0.6em;
-  font-size: 1.3em;
+  padding-top: 0.5em;
+  padding-bottom: 0.5em;
+  font-size: 1.1em;
 }
 .dashboard-menu a.item {
   text-align: left;
   color: rgb(0, 0, 0, 0.7) !important;
   padding-left: 2em !important;
-  padding-top: 0.7em !important;
-  padding-bottom: 0.7em !important;
-  font-size: 1.1em !important;
+  padding-top: 0.6em !important;
+  padding-bottom: 0.6em !important;
+  font-size: 1em !important;
+}
+.dashboard-menu .header-title {
+  margin-top: 0.5em;
+}
+.dashboard-menu-dropdown {
+  text-align: left;
+  color: rgb(0, 0, 0, 0.7) !important;
+  padding-right: 0.5em !important;
+  padding-left: 2em !important;
+  padding-top: 0.6em !important;
+  padding-bottom: 0.6em !important;
+  font-size: 1em !important;;
 }
 .dashboard-menu a.item:hover {
   background-color: rgba(0,0,0,.05)!important;
@@ -517,9 +528,9 @@ hr {
 }
 .dashboard-viewer-inline label {
   margin-bottom: 0.5em !important;
-  font-size: 1em !important;
-  display: table !important;
-  box-shadow: inset 0 -0.3em 0 rgba(0, 153, 255, 0.5);
+  font-size: 1.1em !important;
+  /* display: table !important;
+  box-shadow: inset 0 -0.1em 0 rgba(145, 145, 145, 0.5); */
 }
 .dashboard-info-icon {
   margin-left: 0.3em !important;
@@ -549,15 +560,6 @@ hr {
   padding: 0px !important;
   border-bottom: none !important;
 }
-.dashboard-menu-dropdown {
-  font-size: 1.1em !important;
-  color: rgb(0, 0, 0, 0.7) !important;
-  padding-left: 2em !important;
-  padding-right: 0.5em !important;
-  padding-top: 0.7em !important;
-  padding-bottom: 0.7em !important;
-  width: 100%;
-}
 .dashboard-viewer-email {
   margin-left: 1em;
   font-size: 0.6em;
@@ -575,6 +577,17 @@ hr {
 .dashboard-viewer-menu div.description {
   margin-left: 6px;
 }
+.dashboard-viewer-menu-img {
+  width: 125px !important;
+  height: 125px !important;
+  filter: saturate(100%);
+}
+.dashboard-viewer-menu-img img {
+  width: 125px !important;
+  height: 125px !important;
+  border-radius: 6px !important;
+  border: 2px solid rgb(90, 90, 90) !important;
+}
 .dashboard-shopinfo-tel {
   max-width: 100px;
   margin-right: 8px;
@@ -585,18 +598,8 @@ hr {
 }
 .dashboard-shopinfo-text {
   margin-top: 0px !important;
-  margin-left: 1em !important;
+  margin-left: 2em !important;
   font-size: 1.1em !important;
-}
-.dashboard-share-btn {
-  cursor: pointer;
-  font-size: 1em !important;
-  margin-left: 0.5em !important;
-  margin-bottom: 0.5em !important;
-  opacity: 0.4 !important;
-}
-.dashboard-share-btn:hover {
-  opacity: 1 !important;
 }
 .dashboard-viewer-page {
   border: none !important;
@@ -673,6 +676,9 @@ table.dashboard-table input {
 .dashboard-menu-label {
   margin-right: -1.5em !important;
   margin-top: -0.5em !important;
+  padding-bottom: 20px !important;
+  color: #fff !important;
+  background-color: rgb(90, 90, 90) !important;
   z-index: 1;
   height: 2em;
 }
@@ -739,6 +745,34 @@ table.dashboard-table input {
 @media only screen and (min-width: 766px) {
   .dashboard-viewer {
     padding: 2em 2em !important;
+  }
+  .dashboard-viewer::-webkit-scrollbar {
+    display: block !important;
+    width: 4px;
+  }
+  .dashboard-viewer::-webkit-scrollbar-thumb {
+    background-color: #dadada6d !important;
+    border-radius: 10px;
+  }
+  .dashboard-viewer::-webkit-scrollbar-track {
+    background-color: #ffffff00;
+  }
+  .dashboard-pc {
+    height: 100%;
+    left: 184px;
+    position: absolute;
+    transition: margin-left 0.5s;
+  }
+  .dashboard-pc:hover {
+    opacity: 0.8;
+  }
+  .dashboard-pc i {
+    margin-top: 40vh !important;
+    margin-left: 2px !important;
+  }
+  .non-visible {
+    margin-left: -184px !important;
+    transition: margin-left 0.5s;
   }
 }
 

@@ -214,7 +214,7 @@ export default function DashboardBookingInfo(props) {
         <>
         <Form className='dashboard-viewer-inline'>
             <Form.Field>
-                <label>예약캘린더</label>
+                <label><Icon name='angle right'/>예약캘린더</label>
             </Form.Field>
         {/* <Button onClick={() => add('test')}>add</Button>
         <Button onClick={() => check()}>check</Button> */}

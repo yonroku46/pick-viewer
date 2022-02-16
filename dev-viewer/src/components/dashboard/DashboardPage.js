@@ -89,11 +89,11 @@ export default function DashboardPage(props) {
             return alert("해당 브라우저에서 클립보드를 지원하지 않습니다.");
         }
         navigator.clipboard.writeText(text);
-        alert("코드가 복사되었습니다.");
+        alert("매장코드가 복사되었습니다.\n[ " + text + " ]");
     }
 
     function mobileCheck() {
-        if ( window.innerWidth < 767) {
+        if (window.innerWidth < 767) {
             alert("원활한 사용을 위해, 정보수정은 PC 또는 태블릿을 이용 바랍니다.");
         }
     }
@@ -459,19 +459,16 @@ export default function DashboardPage(props) {
             {shop.length !== 0 && <>
             <Form className='dashboard-viewer-inline'>
                 <Form.Field>
-                    <label>매장명</label>
+                    <Menu floated='right' onClick={() => copy(shop.shop_serial)}>
+                        <Menu.Item as='a' icon>
+                            <Icon name='qrcode'/>
+                        </Menu.Item>
+                    </Menu>
+                    <label><Icon name='angle right'/>매장명</label>
                     <p className='dashboard-shopinfo-text'>{shop.shop_name}</p>
                 </Form.Field>
                 <Form.Field>
-                    <label>매장코드</label>
-                    <p className='dashboard-shopinfo-text'>{shop.shop_serial}
-                        <Icon className='dashboard-share-btn' name='share square' onClick={() => copy(shop.shop_serial)}/>
-                    </p>
-                </Form.Field>
-                <Form.Field>
-                    <label>
-                        매장주소 
-                    </label>
+                    <label><Icon name='angle right'/>매장주소</label>
                     {editMode ? <></>
                     :
                     <p className='dashboard-shopinfo-text'>{shop.shop_location}</p>
@@ -479,9 +476,7 @@ export default function DashboardPage(props) {
                     <MapContainer id='map' shop={shop} setShop={setShop} changeLocation={changeLocation} value={shop.shop_location} editMode={editMode} permission={permission}/>
                 </Form.Field>
                 <Form.Field className={editMode && 'dashboard-map-bottom'}>
-                    <label>
-                        매장 사진
-                    </label>
+                    <label><Icon name='angle right'/>매장 사진</label>
                     <DragDropContext onDragEnd={handleChange}>
                         <Droppable droppableId="shopImages" direction="horizontal">
                         {(provided, snapshot) => (
@@ -502,7 +497,7 @@ export default function DashboardPage(props) {
                 </Form.Field>
                 <Form.Group  widths='equal'>
                     <Form.Field>
-                        <label>매장 전화번호</label>
+                        <label><Icon name='angle right'/>매장 전화번호</label>
                         {editMode ? 
                         <>
                         <Input className='dashboard-shopinfo-tel' placeholder='000' value={shop.shop_tel.split('-')[0]} tabIndex='0' onChange={changeTel}/>
@@ -523,7 +518,7 @@ export default function DashboardPage(props) {
                     </>
                     :
                     <Form.Field>
-                        <label>매장 운영시간</label>
+                        <label><Icon name='angle right'/>매장 운영시간</label>
                         <p className='dashboard-shopinfo-text'>{shop.shop_open} ~ {shop.shop_close}
                             <span className='detailpage-holiday'>({shop.shop_holiday === 'none' ? '휴무일 없음' : convertWeek(shop.shop_holiday) + ' 휴무'})</span>
                         </p>
@@ -534,7 +529,7 @@ export default function DashboardPage(props) {
                 <Form.Field className='dashboard-content-final' control={TextArea} label='매장 소개' placeholder='매장 소개를 입력해보세요. (최대 100자)' value={shop.shop_info} onChange={changeShopInfo}/>
                 :
                 <Form.Field>
-                    <label>매장 소개</label>
+                    <label><Icon name='angle right'/>매장 소개</label>
                     <p className='dashboard-shopinfo-text'>{shop.shop_info}</p>
                 </Form.Field>
                 }
@@ -550,11 +545,11 @@ export default function DashboardPage(props) {
             {shop.length !== 0 && <>
             <Form className='dashboard-viewer-inline'>
                 <Form.Field>
-                    <label>총 직원수</label>
+                    <label><Icon name='angle right'/>총 직원수</label>
                     <p className='dashboard-shopinfo-text'>{shop.staff_list.length + '명'}</p>
                 </Form.Field>
                 <Form.Field>
-                    <label>직원 신쳥현황</label>
+                    <label><Icon name='angle right'/>직원 신쳥현황</label>
                     {requestList.length !== 0 ?
                     <List selection verticalAlign='middle'>
                         {requestList.map(request => (
@@ -580,7 +575,7 @@ export default function DashboardPage(props) {
                     }
                 </Form.Field>
                 <Form.Field>
-                    <label>직원 리스트</label>
+                    <label><Icon name='angle right'/>직원 리스트</label>
                     <Input icon='search' className='dashboard-staff-search' placeholder='직원명으로 검색' value={searchValue} onChange={staffSearch}/>
                     <Table celled unstackable selectable className='dashboard-table'>
                         <Table.Header>
@@ -652,7 +647,7 @@ export default function DashboardPage(props) {
             {shop.length !== 0 && <>
             <Form className='dashboard-viewer-inline'>
                 <Form.Field>
-                    <label>메뉴 리스트</label>
+                    <label><Icon name='angle right'/>메뉴 리스트</label>
                     <Select className='dashboard-viewer-category' placeholder='전체선택' value={category} options={categoryList} onChange={selectCategory}/>
                     {editMode && 
                     <Button.Group basic>
@@ -666,10 +661,10 @@ export default function DashboardPage(props) {
                     {menuList.map(menu => (
                     <Item.Group unstackable className='dashboard-viewer-menu' key={menu.menu_cd}>
                         <Item className='detailpage-service'>
-                        <Label circular className='dashboard-menu-label' color='black'>
+                        <Label className='dashboard-menu-label'>
                             {menuList.indexOf(menu) + 1}
                         </Label>
-                            <Item.Image className='detailpage-service-img' src={api.imgRender(menu.menu_img === null ? menuDefault : menu.menu_img)}/>
+                            <Item.Image className='dashboard-viewer-menu-img' src={api.imgRender(menu.menu_img === null ? menuDefault : menu.menu_img)}/>
                             <Item.Content
                                 header={menu.menu_name ? menu.menu_name : '메뉴명 미입력'}
                                 meta={menu.menu_price ? comma(menu.menu_price) + '원' : '가격 미입력'}
@@ -940,24 +935,24 @@ export default function DashboardPage(props) {
     return(
     <>
     <div className="dashboard-main">
-        <Menu className='dashboard-menu' vertical>
+        <Menu className={menuVisible ? 'dashboard-menu' : 'dashboard-menu non-visible'}vertical>
             {menuVisible ?
                 <>
-                <Menu.Header className='dashboard-menu-fold' onClick={() => {setMenuVisible(false)}}>
-                    <Icon name='angle double up'/>
+                <Menu.Header className={window.innerWidth < 767 ? 'dashboard-menu-fold' : 'dashboard-menu-fold dashboard-pc'} onClick={() => {setMenuVisible(false)}}>
+                    <Icon name={window.innerWidth < 767 ? 'angle double up' : 'angle double left'}/>
                 </Menu.Header>
                 <Menu.Header><Icon name='hdd'/> 매장관리</Menu.Header>
                 <Menu.Menu>
                     <Menu.Item name='shopInfo' active={activeItem === 'shopInfo'} onClick={handleItemClick}>
-                        ・ 매장정보
+                        매장정보
                     </Menu.Item>
                     <Menu.Item name='staffInfo' active={activeItem === 'staffInfo'} onClick={handleItemClick}>
-                        ・ 직원정보
+                        직원정보
                     </Menu.Item>
                     <Menu.Item name='menuInfo' active={activeItem === 'menuInfo'} onClick={handleItemClick}>
-                        ・ 메뉴정보
+                        메뉴정보
                     </Menu.Item>
-                    <Dropdown className='dashboard-menu-dropdown' item text='・ 수정 / 저장' onClick={mobileCheck}>
+                    <Dropdown className='dashboard-menu-dropdown' item text='수정 / 저장' onClick={mobileCheck}>
                         <Dropdown.Menu>
                             <Dropdown.Item icon={editMode ? 'check' : 'edit'} text={editMode ? '임시저장' : '수정모드 활성화'} onClick={() => setEditMode(!editMode)}/>
                             <Dropdown.Item icon='save' text='저장'  onClick={saveShopInfo}/>
@@ -965,34 +960,34 @@ export default function DashboardPage(props) {
                         </Dropdown.Menu>
                     </Dropdown>
                 </Menu.Menu>
-                <Menu.Header><Icon name='calendar check'/> 예약</Menu.Header>
+                <Menu.Header className='header-title'><Icon name='calendar check'/> 예약</Menu.Header>
                 <Menu.Menu>
                     <Menu.Item name='bookingInfo' active={activeItem === 'bookingInfo'} onClick={handleItemClick}>
-                        ・ 예약정보
+                        예약정보
                     </Menu.Item>
                     <Menu.Item name='bookingData' active={activeItem === 'bookingData'} onClick={handleItemClick}>
-                        ・ 예약통계
+                        예약통계
                     </Menu.Item>
                 </Menu.Menu>
-                <Menu.Header><Icon name='gift'/> 이벤트</Menu.Header>
+                <Menu.Header className='header-title'><Icon name='gift'/> 이벤트</Menu.Header>
                 <Menu.Menu>
                     <Menu.Item name='eventInfo' active={activeItem === 'eventInfo'} onClick={handleItemClick}>
-                        ・ 이벤트관리
+                        이벤트관리
                     </Menu.Item>
                     <Menu.Item name='couponInfo' active={activeItem === 'couponInfo'} onClick={handleItemClick}>
-                        ・ 쿠폰관리
+                        쿠폰관리
                     </Menu.Item>
                 </Menu.Menu>
-                <Menu.Header><Icon name='question circle outline'/> 기타</Menu.Header>
+                <Menu.Header className='header-title'><Icon name='question circle outline'/> 기타</Menu.Header>
                 <Menu.Menu>
                     <Menu.Item name='contract' active={activeItem === 'contract'} onClick={handleItemClick}>
-                        ・ 계약정보
+                        계약정보
                     </Menu.Item>
                     <Menu.Item name='system' active={activeItem === 'system'} onClick={handleItemClick}>
-                        ・ 시스템문의
+                        시스템문의
                     </Menu.Item>
                     <Menu.Item name='help' active={activeItem === 'help'} onClick={handleItemClick}>
-                        ・ 도움말
+                        도움말
                     </Menu.Item>
                 </Menu.Menu>
                 <Menu.Menu>
@@ -1000,11 +995,9 @@ export default function DashboardPage(props) {
                 </Menu.Menu>
                 </>
                 :
-                <>
-                <Menu.Header className='dashboard-menu-fold' onClick={() => {setMenuVisible(true)}}>
-                    <Icon name='angle double down'/>
+                <Menu.Header className={window.innerWidth < 767 ? 'dashboard-menu-fold' : menuVisible ? 'dashboard-menu-fold dashboard-pc' : 'dashboard-menu-fold dashboard-pc non-visible'}  onClick={() => {setMenuVisible(true)}}>
+                    <Icon name={window.innerWidth < 767 ? 'angle double down' : 'angle double right'}/>
                 </Menu.Header>
-                </>
             }
         </Menu>
         <Segment className='dashboard-viewer'>
