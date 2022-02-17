@@ -439,6 +439,9 @@ hr {
   margin-top: 50px !important;
   min-height: calc(100vh - 81px);
 }
+.dashboard-pagination-box {
+  text-align: center;
+}
 .dashboard-pagination {
   box-shadow: none !important;
 }
@@ -529,8 +532,6 @@ hr {
 .dashboard-viewer-inline label {
   margin-bottom: 0.5em !important;
   font-size: 1.1em !important;
-  /* display: table !important;
-  box-shadow: inset 0 -0.1em 0 rgba(145, 145, 145, 0.5); */
 }
 .dashboard-info-icon {
   margin-left: 0.3em !important;
@@ -566,7 +567,7 @@ hr {
   color: rgb(0, 0, 0, 0.3);
 }
 .dashboard-viewer-menu {
-  margin: 5px 0px !important;
+  margin: 7.7px 0px !important;
   padding: 13px 6px !important;
   border: 1px lightgray solid;
   border-radius: 6px;
@@ -613,8 +614,8 @@ hr {
   margin-bottom: 8vh !important;
 }
 .dashboard-table-no {
-  width: 4em !important;
-  max-width: 4em !important;
+  width: 3em !important;
+  max-width: 3em !important;
   text-align: center !important;
 }
 .dashboard-table-name {
@@ -741,6 +742,12 @@ table.dashboard-table input {
   width: 94%;
   float: left;
 }
+.dashboard-bokking-select {
+  border: 1px solid rgba(34,36,38,.15);
+  padding: 0.5em 1em;
+  border-radius: 0.3em;
+  margin-bottom: -15px !important;
+}
 /* pc */
 @media only screen and (min-width: 766px) {
   .dashboard-viewer {
@@ -792,11 +799,11 @@ table.dashboard-table input {
     margin-left: 0px !important;
     margin-right: 0px !important;
   }
+  .dashboard-viewer .form-interval {
+    margin-top: 1.5em !important;
+  }
   .dashboard-viewer-inline {
     padding: 0.5em 0em !important;
-  }
-  .dashboard-content-final {
-    margin-bottom: 8vh !important;
   }
   table.dashboard-table .edit-input {
     padding: 0em 0.2em !important;

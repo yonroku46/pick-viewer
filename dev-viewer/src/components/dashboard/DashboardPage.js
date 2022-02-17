@@ -495,7 +495,7 @@ export default function DashboardPage(props) {
                         </Droppable>
                     </DragDropContext>
                 </Form.Field>
-                <Form.Group  widths='equal'>
+                <Form.Group>
                     <Form.Field>
                         <label><Icon name='angle right'/>매장 전화번호</label>
                         {editMode ? 
@@ -509,15 +509,24 @@ export default function DashboardPage(props) {
                         }
                     </Form.Field>
                 </Form.Group>
-                <Form.Group widths='equal'>
+                <Form.Group>
                     {editMode ? 
                     <>
-                    <Form.Select className='dashboard-shopinfo-hours' label='오픈시간' placeholder='09:00' value={shop.shop_open} options={hours} onChange={changeOpen}/>
-                    <Form.Select className='dashboard-shopinfo-hours' label='마감시간' placeholder='18:00' value={shop.shop_close} options={hours} onChange={changeClose}/>
-                    <Form.Select className='dashboard-shopinfo-hours' label='휴무일' placeholder='휴무없음' value={shop.shop_holiday} options={weeks} onChange={changeHoliday}/>
+                    <Form.Field className='form-interval'>
+                        <label><Icon name='angle right'/>오픈시간</label>
+                        <Select className='dashboard-shopinfo-hours' placeholder='09:00' value={shop.shop_open} options={hours} onChange={changeOpen}/>
+                    </Form.Field>
+                    <Form.Field className='form-interval'>
+                        <label><Icon name='angle right'/>마감시간</label>
+                        <Select className='dashboard-shopinfo-hours' placeholder='18:00' value={shop.shop_close} options={hours} onChange={changeClose}/>
+                    </Form.Field>
+                    <Form.Field className='form-interval'>
+                        <label><Icon name='angle right'/>휴무일</label>
+                        <Select className='dashboard-shopinfo-hours' placeholder='휴무없음' value={shop.shop_holiday} options={weeks} onChange={changeHoliday}/>
+                    </Form.Field>
                     </>
                     :
-                    <Form.Field>
+                    <Form.Field className='form-interval'>
                         <label><Icon name='angle right'/>매장 운영시간</label>
                         <p className='dashboard-shopinfo-text'>{shop.shop_open} ~ {shop.shop_close}
                             <span className='detailpage-holiday'>({shop.shop_holiday === 'none' ? '휴무일 없음' : convertWeek(shop.shop_holiday) + ' 휴무'})</span>
@@ -526,9 +535,12 @@ export default function DashboardPage(props) {
                     }
                 </Form.Group>
                 {editMode ? 
-                <Form.Field className='dashboard-content-final' control={TextArea} label='매장 소개' placeholder='매장 소개를 입력해보세요. (최대 100자)' value={shop.shop_info} onChange={changeShopInfo}/>
+                <Form.Field className='form-interval'>
+                    <label><Icon name='angle right'/>매장 소개</label>
+                    <TextArea placeholder='매장 소개를 입력해보세요. (최대 100자)' value={shop.shop_info} onChange={changeShopInfo}/>
+                </Form.Field>
                 :
-                <Form.Field>
+                <Form.Field className='form-interval'>
                     <label><Icon name='angle right'/>매장 소개</label>
                     <p className='dashboard-shopinfo-text'>{shop.shop_info}</p>
                 </Form.Field>
@@ -570,7 +582,7 @@ export default function DashboardPage(props) {
                     </List>
                     : 
                     <p className='dashboard-shopinfo-text'>
-                        신청목록 없음
+                        신청 없음
                     </p>
                     }
                 </Form.Field>
@@ -627,13 +639,15 @@ export default function DashboardPage(props) {
                         }
                         </Table.Body>
                     </Table>
-                    <Pagination className='dashboard-pagination' 
-                        defaultActivePage={1} 
-                        firstItem={null} 
-                        lastItem={null} 
-                        onPageChange={handlePaginationChange}
-                        totalPages={3}
-                    />
+                    <div className='dashboard-pagination-box'>
+                        <Pagination className='dashboard-pagination' 
+                            defaultActivePage={1}
+                            firstItem={null}
+                            lastItem={null}
+                            onPageChange={handlePaginationChange}
+                            totalPages={3}
+                        />
+                    </div>
                     <div className='dashboard-content-final-empty'> </div>
                 </Form.Field>
             </Form>
@@ -676,13 +690,15 @@ export default function DashboardPage(props) {
                     ))}
                     </>
                     }
-                    <Pagination className='dashboard-pagination' 
-                        defaultActivePage={1} 
-                        firstItem={null} 
-                        lastItem={null} 
-                        onPageChange={handlePaginationChange}
-                        totalPages={3}
-                    />
+                    <div className='dashboard-pagination-box'>
+                        <Pagination className='dashboard-pagination' 
+                            defaultActivePage={1}
+                            firstItem={null}
+                            lastItem={null}
+                            onPageChange={handlePaginationChange}
+                            totalPages={3}
+                        />
+                    </div>
                     <div className='dashboard-content-final-empty'> </div>
                 </Form.Field>
             </Form>

@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { Form, Icon, Table, Button, Header, Segment } from 'semantic-ui-react';
+import { Form, Icon, Table, Button, Header, Segment, Label, Image } from 'semantic-ui-react';
 import moment from 'moment';
 import axios from 'axios';
 import * as api from '../../rest/api'
@@ -233,11 +233,27 @@ export default function DashboardBookingInfo(props) {
                     {calendarHeadRender()}
                 </Table.Row>
             </Table.Header>
-
             <Table.Body>
                 {calendarRender()}
             </Table.Body>
         </Table>
+
+        {bookingList.filter(booking => booking.booking_time.match(today.format("YYYYMMDD"))).length > 0 &&
+        <Form.Field className='dashboard-bokking-select'>
+            <Label as='a'>
+                <Image avatar spaced='right' src='https://react.semantic-ui.com/images/avatar/small/elliot.jpg' />
+                직원A
+            </Label>
+            <Label as='a'>
+                <Image avatar spaced='right' src='https://react.semantic-ui.com/images/avatar/small/stevie.jpg' />
+                직원B
+            </Label>
+            <Label as='a'>
+                <Image avatar spaced='right' src='https://react.semantic-ui.com/images/avatar/small/jenny.jpg' />
+                직원C
+            </Label>
+        </Form.Field>
+        }
 
         <Table unstackable>
         <Table.Header>
