@@ -1024,7 +1024,7 @@ export default function DashboardPage(props) {
             {activeItem === 'staffInfo' && staffInfoView()}
             {activeItem === 'menuInfo' && menuInfoView()}
 
-            {activeItem === 'bookingInfo' && <BookingInfo/>}
+            {activeItem === 'bookingInfo' && <BookingInfo shop={shop}/>}
             {activeItem === 'bookingData' && <BookingData/>}
 
             {activeItem === 'eventInfo' && sampleView()}
