@@ -7,24 +7,30 @@ import * as api from '../../rest/api'
 
 export default function DashboardBookingInfo(props) {
 
-    // userSelector:redux값 획득
-    const value = useSelector( (state) => state );
-    // dispatch:값변경요청등 수행
-    const dispatch = useDispatch();
-    // 처리만하고 결과값은 리턴하지않음
+    // // userSelector:redux값 획득
+    // const value = useSelector( (state) => state );
+    // // dispatch:값변경요청등 수행
+    // const dispatch = useDispatch();
+    // // 처리만하고 결과값은 리턴하지않음
 
-    function add() {
-        dispatch({type: 'add'})
-    }
-    function check() {
-        console.log(value);
-    }
+    // function add() {
+    //     dispatch({type: 'add'})
+    // }
+    // function check() {
+    //     console.log(value);
+    // }
 
+    const [shop, setShop] = useState(props.shop);
     const [loading, setLoading] = useState(false);
     const [getMoment, setMoment] = useState(moment());
     const [bookingList, setBookingList] = useState([]);
 
+    const userimgDefault =  'images/user/default.png';
+
     const categoryList = ['hairshop', 'restaurant', 'cafe'];
+    const shopCategory = props.shop.shop_serial.substr(0, 2) === 'HS' ? categoryList[0] : 
+                         props.shop.shop_serial.substr(0, 2) === 'RT' ? categoryList[1] :
+                         props.shop.shop_serial.substr(0, 2) === 'CF' ? categoryList[2] : undefined;
 
     useEffect(() => {
         setLoading(true);
@@ -32,7 +38,7 @@ export default function DashboardBookingInfo(props) {
           axios
             .get(api.shopBookingList, {
               params: {
-                'shop_cd': '1'
+                'shop_cd': props.shop.shop_cd
               }
             })
             .then(response => resolve(response.data))
@@ -146,13 +152,52 @@ export default function DashboardBookingInfo(props) {
       return result;
     }
 
+    function staffRender() {
+        let result = [];
+        
+        const target = bookingList.filter(booking => booking.booking_time.match(today.format("YYYYMMDD")));
+        const cnt = target.length;
+        let targetList = [];
+        
+        if (cnt > 0) {
+            if (shopCategory === categoryList[0]) {
+                // 헤어샵의경우 매니저별
+                target.forEach(booking => targetList.push(booking.designer))
+                const targetStaff = shop.staff_list.filter(staff => targetList.indexOf(staff.user_cd.toString()) !== -1)
+
+                result = result.concat(
+                    <Form.Field className='dashboard-bokking-select'>
+                        {targetStaff.map(staff =>
+                        <Label as='a'>
+                            <Image avatar spaced='right' src={api.imgRender(staff.user_img === null ? userimgDefault : staff.user_img)}/>
+                            {staff.user_name}
+                        </Label>
+                        )}
+                    </Form.Field>
+                );
+            } else {
+                // 카페,레스토랑의 경우 테이블별
+                result = result.concat(
+                <Form.Field className='dashboard-bokking-select'>
+                    <Label as='a'>
+                        <Icon name='calendar outline'/>
+                        테이블1
+                    </Label>
+                </Form.Field>
+                )
+            }
+        }
+        return result;
+    }
+
+
     function timeRender() {
         let result = [];
 
         const target = bookingList.filter(booking => booking.booking_time.match(today.format("YYYYMMDD")));
-        let cnt = target.length;
+        const cnt = target.length;
 
-        if (cnt !== 0) {
+        if (cnt > 0) {
             for (let i = 0; i < cnt; i++) {
                 result = result.concat(
                     timeArr.map(time => (
@@ -237,23 +282,8 @@ export default function DashboardBookingInfo(props) {
                 {calendarRender()}
             </Table.Body>
         </Table>
-
-        {bookingList.filter(booking => booking.booking_time.match(today.format("YYYYMMDD"))).length > 0 &&
-        <Form.Field className='dashboard-bokking-select'>
-            <Label as='a'>
-                <Image avatar spaced='right' src='https://react.semantic-ui.com/images/avatar/small/elliot.jpg' />
-                직원A
-            </Label>
-            <Label as='a'>
-                <Image avatar spaced='right' src='https://react.semantic-ui.com/images/avatar/small/stevie.jpg' />
-                직원B
-            </Label>
-            <Label as='a'>
-                <Image avatar spaced='right' src='https://react.semantic-ui.com/images/avatar/small/jenny.jpg' />
-                직원C
-            </Label>
-        </Form.Field>
-        }
+        
+        {staffRender()}
 
         <Table unstackable>
         <Table.Header>

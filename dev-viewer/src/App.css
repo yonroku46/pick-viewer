@@ -748,6 +748,10 @@ table.dashboard-table input {
   border-radius: 0.3em;
   margin-bottom: -15px !important;
 }
+.dashboard-bokking-select i {
+  color: #000;
+  margin-right: 0.45em !important;
+}
 /* pc */
 @media only screen and (min-width: 766px) {
   .dashboard-viewer {
