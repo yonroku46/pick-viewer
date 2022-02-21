@@ -26,6 +26,7 @@ export default function DashboardBookingInfo(props) {
     const [bookingList, setBookingList] = useState([]);
 
     const userimgDefault =  'images/user/default.png';
+    const tableimgDefault = 'images/menu/default.png';
 
     const categoryList = ['hairshop', 'restaurant', 'cafe'];
     const shopCategory = props.shop.shop_serial.substr(0, 2) === 'HS' ? categoryList[0] : 
@@ -180,7 +181,7 @@ export default function DashboardBookingInfo(props) {
                 result = result.concat(
                 <Form.Field className='dashboard-bokking-select'>
                     <Label as='a'>
-                        <Icon name='calendar outline'/>
+                        <Image avatar spaced='right' src={api.imgRender(tableimgDefault)}/>
                         테이블1
                     </Label>
                 </Form.Field>

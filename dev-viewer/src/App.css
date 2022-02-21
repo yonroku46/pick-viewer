@@ -743,14 +743,15 @@ table.dashboard-table input {
   float: left;
 }
 .dashboard-bokking-select {
-  border: 1px solid rgba(34,36,38,.15);
-  padding: 0.5em 1em;
-  border-radius: 0.3em;
+  padding: 0.5em 0;
   margin-bottom: -15px !important;
 }
-.dashboard-bokking-select i {
-  color: #000;
-  margin-right: 0.45em !important;
+.dashboard-bokking-select img.ui.avatar.image {
+  width: 2em !important;
+}
+.dashboard-bokking-select a.ui.label {
+  background-color: #fff;
+  border: 1px solid rgba(34,36,38,.15);
 }
 /* pc */
 @media only screen and (min-width: 766px) {
