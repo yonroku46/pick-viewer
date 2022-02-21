@@ -74,7 +74,7 @@ export default function DashboardPage(props) {
         hours.push({ key: time, value: time, text: time });
         // hours.push(moment({ hour: index, minute: 30 }).format('HH:mm'));
     })
-    const startHour = 9;
+    const startHour = 0;
     const endHour = 24;
 
     for (let i = 0; i < startHour; i++) {

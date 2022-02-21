@@ -87,8 +87,8 @@ export default function BookingDetail(props) {
       if (res !== null) {
         setShop(res);
         makeImageList(res.shop_img);
-        setStartHour(parseInt(res.shop_open.substring(0,2)));
-        setEndHour(parseInt(res.shop_close.substring(0,2)));
+        setStartHour(Number(res.shop_open.substring(0,2)));
+        setEndHour(Number(res.shop_close.substring(0,2)));
       }
     })
     .catch(err => {
@@ -979,7 +979,7 @@ export default function BookingDetail(props) {
               <Icon name='home'/> 홈으로
             </Button>
           </Link>
-          <Link to='/booking'>
+          <Link to='/search'>
             <Button inverted>
               <Icon name='search'/> 둘러보기
             </Button>

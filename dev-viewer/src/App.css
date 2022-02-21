@@ -742,16 +742,20 @@ table.dashboard-table input {
   width: 94%;
   float: left;
 }
-.dashboard-bokking-select {
+.dashboard-booking-select {
   padding: 0.5em 0;
   margin-bottom: -15px !important;
 }
-.dashboard-bokking-select img.ui.avatar.image {
+.dashboard-booking-select img.ui.avatar.image {
   width: 2em !important;
 }
-.dashboard-bokking-select a.ui.label {
+.dashboard-booking-select a.ui.label {
   background-color: #fff;
-  border: 1px solid rgba(34,36,38,.15);
+  border: 1px solid rgba(34, 36, 38, 0.15);
+}
+.dashboard-booking-selected {
+  background-color: #a391fb2f !important;
+  color: #A291FB !important;
 }
 /* pc */
 @media only screen and (min-width: 766px) {

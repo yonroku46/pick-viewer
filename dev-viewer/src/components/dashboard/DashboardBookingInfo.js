@@ -24,6 +24,7 @@ export default function DashboardBookingInfo(props) {
     const [loading, setLoading] = useState(false);
     const [getMoment, setMoment] = useState(moment());
     const [bookingList, setBookingList] = useState([]);
+    const [activeStaff, setActiveStaff] = useState(null);
 
     const userimgDefault =  'images/user/default.png';
     const tableimgDefault = 'images/menu/default.png';
@@ -67,8 +68,8 @@ export default function DashboardBookingInfo(props) {
         // timeArr.push(moment({ hour: index, minute: 30 }).format('HH:mm'));
     })
 
-    const startHour = 0;
-    const endHour = 24;
+    const startHour = Number(shop.shop_open.substring(0,2));
+    const endHour = Number(shop.shop_close.substring(0,2));
 
     for (let i = 0; i < startHour; i++) {
         timeArr.shift()
@@ -167,9 +168,9 @@ export default function DashboardBookingInfo(props) {
                 const targetStaff = shop.staff_list.filter(staff => targetList.indexOf(staff.user_cd.toString()) !== -1)
 
                 result = result.concat(
-                    <Form.Field className='dashboard-bokking-select'>
+                    <Form.Field className='dashboard-booking-select'>
                         {targetStaff.map(staff =>
-                        <Label as='a'>
+                        <Label as='a' className={staff.user_cd === activeStaff && 'dashboard-booking-selected'} onClick={() => activeStaff !== staff.user_cd ? setActiveStaff(staff.user_cd) : setActiveStaff(null)}>
                             <Image avatar spaced='right' src={api.imgRender(staff.user_img === null ? userimgDefault : staff.user_img)}/>
                             {staff.user_name}
                         </Label>
@@ -179,7 +180,7 @@ export default function DashboardBookingInfo(props) {
             } else {
                 // 카페,레스토랑의 경우 테이블별
                 result = result.concat(
-                <Form.Field className='dashboard-bokking-select'>
+                <Form.Field className='dashboard-booking-select'>
                     <Label as='a'>
                         <Image avatar spaced='right' src={api.imgRender(tableimgDefault)}/>
                         테이블1
@@ -191,55 +192,48 @@ export default function DashboardBookingInfo(props) {
         return result;
     }
 
-
     function timeRender() {
         let result = [];
 
-        const target = bookingList.filter(booking => booking.booking_time.match(today.format("YYYYMMDD")));
+        const activeList = activeStaff !== null ? bookingList.filter(booking => booking.designer.match(activeStaff)) : bookingList;
+        const target = activeList.filter(booking => booking.booking_time.match(today.format("YYYYMMDD")));
         const cnt = target.length;
 
         if (cnt > 0) {
-            for (let i = 0; i < cnt; i++) {
-                result = result.concat(
-                    timeArr.map(time => (
-                    <Table.Row className='center'>
-                        {target[i].booking_time.substr(9).split(":")[0] ===  time.split(":")[0] ?
-                        <>
-                        <Table.Cell className='mypage-tt-time'>
-                            <span>{time}</span>
-                        </Table.Cell>
-                        <Table.Cell style={{fontWeight:'bold', textAlign:'left'}}>
-                            {target[i].booking_category === categoryList[0] &&
-                            <span>
-                                <Icon className='mypage-tt-icon' name='cut'/>
-                                {target[i].shop_name}
-                            </span>
-                            }
-                            {target[i].booking_category === categoryList[1] &&
-                            <span>
-                                <Icon className='mypage-tt-icon' name='food'/>
-                                {target[i].shop_name} ({target[i].customers}명)
-                            </span>
-                            }
-                            {target[i].booking_category === categoryList[2] &&
-                            <span>
-                                <Icon className='mypage-tt-icon' name='coffee'/>
-                                {target[i].shop_name} ({target[i].customers}명)
-                            </span>
-                            }
-                            <Icon name='angle double right' className='mypage-tt-info' onClick={() => bookingInfo(target[i].booking_cd)}/>
-                        </Table.Cell>
-                        </>
-                        :
-                        <Table.Cell className='mypage-tt-time'>
-                            <span>{time}</span>
-                        </Table.Cell>
+            result = result.concat(
+                timeArr.map(time => (
+                <Table.Row className='center'>
+                    <Table.Cell className='mypage-tt-time'>
+                        <span>{time}</span>
+                    </Table.Cell>
+
+                    {target.map(booking => 
+                    booking.booking_time.substr(9).split(":")[0] ===  time.split(":")[0] &&
+                    <Table.Cell style={{fontWeight:'bold', textAlign:'left'}}>
+                        {booking.booking_category === categoryList[0] &&
+                        <span>
+                            <Icon className='mypage-tt-icon' name='cut'/>
+                            {booking.shop_name}
+                        </span>
                         }
-                    </Table.Row> 
-                    )
+                        {booking.booking_category === categoryList[1] &&
+                        <span>
+                            <Icon className='mypage-tt-icon' name='food'/>
+                            {booking.shop_name} ({booking.customers}명)
+                        </span>
+                        }
+                        {booking.booking_category === categoryList[2] &&
+                        <span>
+                            <Icon className='mypage-tt-icon' name='coffee'/>
+                            {booking.shop_name} ({booking.customers}명)
+                        </span>
+                        }
+                        <Icon name='angle double right' className='mypage-tt-info' onClick={() => bookingInfo(booking.booking_cd)}/>
+                    </Table.Cell>
+                    )}
+                </Table.Row> 
                 )
-                );
-            }
+            ));
         } else {
             result = result.concat(
             <Table.Cell colSpan='2' className='mypage-tt-time'>
