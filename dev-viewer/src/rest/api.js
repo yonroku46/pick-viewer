@@ -30,6 +30,7 @@ export const resetService = "/api/resetService";
 export const shopList = "/api/shoplist";
 export const shopInfo = "/api/shopInfo";
 export const booking = "/api/booking";
+export const bookingCheck = "/api/booking/check";
 
 // ReviewPage
 export const sendReview = "/api/sendReview";

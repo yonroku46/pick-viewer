@@ -142,40 +142,63 @@ export default function BookingDetail(props) {
 
   function sendBooking() {
     setModalLoading(true);
-    setModalOpen(true);
     const timeStamp = dbDate + " " + dbTime + ":00";
     const booking_detail = {};
-    if (category === 'hairshop') {
-      booking_detail.designer = dbDesigner;
-      booking_detail.style = orderList[0].menu_cd;
-      booking_detail.discount = discount;
-    } else {
-      booking_detail.customers = dbCustomers;
-      booking_detail.orders = orderList;
-      booking_detail.discount = discount;
-    }
-    const params = { 
+
+    const checkParams = { 
       'user_cd': user_cd,
-      'shop_cd': shop_cd,
-      'booking_time': timeStamp,
-      'booking_detail': booking_detail,
-      'booking_price': resultPrice,
-      'category': category
+      'booking_time': timeStamp
     };
-    return new Promise(function(resolve, reject) {
+    new Promise(function(resolve, reject) {
       axios
-        .post(api.booking, params)
+        .post(api.bookingCheck, checkParams)
         .then(response => resolve(response.data))
         .catch(error => reject(error.response))
     })
     .then(data => {
-      if (data) {
-        dispatch({ type: 'CLOSE_MODAL' })
+      if (!data) {
+        alert("해당 시간에 고객님의 다른 일정이 확인되었습니다.\n일정 확인 후 시도해주세요.");
         setModalLoading(false);
+        return;
+      } else {
+        setModalOpen(true);
+        if (category === 'hairshop') {
+          booking_detail.designer = dbDesigner;
+          booking_detail.style = orderList[0].menu_cd;
+          booking_detail.discount = discount;
+        } else {
+          booking_detail.customers = dbCustomers;
+          booking_detail.orders = orderList;
+          booking_detail.discount = discount;
+        }
+        const params = { 
+          'user_cd': user_cd,
+          'shop_cd': shop_cd,
+          'booking_time': timeStamp,
+          'booking_detail': booking_detail,
+          'booking_price': resultPrice,
+          'category': category
+        };
+        return new Promise(function(resolve, reject) {
+          axios
+            .post(api.booking, params)
+            .then(response => resolve(response.data))
+            .catch(error => reject(error.response))
+        })
+        .then(data => {
+          if (data) {
+            dispatch({ type: 'CLOSE_MODAL' })
+            setModalLoading(false);
+          }
+        })
+        .catch(err => {
+          alert("예약에 실패하였습니다. 잠시 후 시도해주세요.")
+          setModalLoading(false);
+        })
       }
     })
     .catch(err => {
-      alert("예약에 실패하였습니다. 잠시 후 시도해주세요.")
+      alert("예약에 실패하였습니다. 잠시 후 시도해주세요.");
       setModalLoading(false);
     })
   }
