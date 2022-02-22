@@ -368,6 +368,22 @@ def booking():
         app.logger.info("Exception:{}".format(e))
         return (jsonify({'error': 'Not found'}), 404)
 
+@app.route('/api/booking/check', methods=['POST'])
+def bookingCheck():
+    params = request.get_json()
+    user_cd = params['user_cd']
+    booking_time = params['booking_time']
+    try:
+        query = gen.getQuery("sql/SELECT_bookingCheck.sql", {"user_cd": user_cd, "booking_time": booking_time})
+        row = mng.fetch(query)
+        if row['count'] == 0:
+            return (jsonify(True), 200)
+        else:
+            return (jsonify(False), 200)
+    except Exception as e:
+        app.logger.info("Exception:{}".format(e))
+        return (jsonify({'error': 'Not found'}), 404)
+
 @app.route('/api/googleMap', methods=['GET'])
 def googleMap():
     key = 'AIzaSyCEP8l9Pe7skIiL1KiXd54DZUHKSn8aTg0'
