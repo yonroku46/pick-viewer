@@ -745,6 +745,7 @@ table.dashboard-table input {
 .dashboard-booking-select {
   padding: 0.5em 0;
   margin-bottom: -15px !important;
+  user-select: none;
 }
 .dashboard-booking-select img.ui.avatar.image {
   width: 2em !important;
@@ -1437,6 +1438,7 @@ table.dashboard-table input {
 .booking-main {
   margin-top: 50px;
   min-height: calc(100vh - 81px);
+  background-color: #fff;
 }
 .booking-main-category {
   height: 8vh;
@@ -2257,6 +2259,7 @@ a.detailpage-tel:hover {
 .search-main {
   margin-top: 50px;
   min-height: calc(100vh - 81px);
+  background-color: #fff;
 }
 .search-del {
   pointer-events: auto !important;
@@ -2377,7 +2380,18 @@ a.detailpage-tel:hover {
 
 /* WikiPage */
 .wiki {
+  min-height: calc(100vh - 81px);
   text-align: left;
+  margin-top: 50px;
+  margin-left: auto;
+  margin-right: auto;
+  padding-top: 20px;
+  width: 60vw;
+}
+@media only screen and (max-width: 767px) {
+  .wiki {
+    width: 98vw;
+  }
 }
 .wiki-header {
   font-size: 20px;

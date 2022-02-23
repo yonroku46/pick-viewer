@@ -10,7 +10,7 @@ export default function WikiPage() {
             <List.Item>
                 <List.Content>
                 <div className="wiki-header"><List.Header><Icon inverted color='grey' name='box'/> 테스트환경</List.Header></div>
-                <div className="wiki-content"><a href="http://3.36.69.67/" target="_blank" rel="noreferrer">페이지 바로가기</a></div>
+                <div className="wiki-content"><a href="http://ppik.shop/" target="_blank" rel="noreferrer">http://ppik.shop/</a></div>
                 </List.Content>
             </List.Item>
             <List.Item>
@@ -42,8 +42,7 @@ export default function WikiPage() {
                 <div className="wiki-header"><List.Header><Icon inverted color='grey' name='bullhorn'/> 기타 참고사항</List.Header></div>
                 <div className="wiki-content">
                     <div>
-                        # 2021.10.19<br/>
-                        <div className="code"><p>현재 없음</p></div></div>
+                        <div className="code"><p>Nothing...</p></div></div>
                     </div>
                 </List.Content>
             </List.Item>
