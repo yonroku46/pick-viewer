@@ -8,10 +8,12 @@ import BookingPage from './components/booking/BookingPage'
 import BookingDetail from './components/booking/BookingDetail';
 import ReviewPage from './components/review/ReviewPage';
 import StylesPage from './components/styles/StylesPage'
-import ContactPage from './components/contact/ContactPage'
 import LoginPage from './components/login/LoginPage'
 import SignupPage from './components/login/SignupPage'
-import HelpPage from './components/login/HelpPage'
+import ContactPage from './components/help/ContactPage'
+import HelpPage from './components/help/HelpPage'
+import HelpPwdPage from './components/help/HelpPwdPage'
+import NoticePage from './components/help/NoticePage'
 import MyPage from './components/mypage/MyPage'
 import DashboardPage from './components/dashboard/DashboardPage'
 import WikiPage from './components/WikiPage'
@@ -30,7 +32,7 @@ export default function App() {
 
   const [countryStat, setCountryStat] = useState(true);
   const [whiteFlag, setWhiteFlag] = useState(false);
-  const whiteList = ['/mypage','/dashboard'];
+  const whiteList = ['/mypage','/dashboard','/booking/hairshop','/booking/restaurant','/booking/cafe','/search'];
   const [scrollPosition, setScrollPosition] = useState(0);
   const updateScroll = () => {
     setScrollPosition(window.scrollY || document.documentElement.scrollTop);
@@ -183,7 +185,7 @@ export default function App() {
             <Icon name='winner'/>
             스타일
           </Menu.Item>
-          <Menu.Item as={Link} to='/contact' onClick={menuClose}>
+          <Menu.Item as={Link} to='/help/contact' onClick={menuClose}>
             <Icon name='mail'/>
             문의
           </Menu.Item>
@@ -207,10 +209,12 @@ export default function App() {
                     <Route path="/review/restaurant/:shop_cd" component={ReviewPage}/>
                     <Route path="/review/cafe/:shop_cd" component={ReviewPage}/>
                 <Route exact path="/styles" component={StylesPage}/>
-                <Route exact path="/contact" component={ContactPage}/>
+                <Route exact path="/help" component={HelpPage}/>
+                  <Route exact path="/help/contact" component={ContactPage}/>
+                  <Route exact path="/help/notice" component={NoticePage}/>
+                  <Route exact path="/help/pwd" component={HelpPwdPage}/>
                 <Route exact path="/login" component={LoginPage}/>
                 <Route exact path="/signup" component={SignupPage}/>
-                <Route exact path="/help" component={HelpPage}/>
                 <Route exact path="/mypage" component={MyPage}/>
                 <Route exact path="/dashboard" component={DashboardPage}/>
                 <Route exact path="/wiki" component={WikiPage}/>

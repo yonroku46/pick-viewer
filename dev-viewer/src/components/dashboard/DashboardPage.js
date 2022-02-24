@@ -86,7 +86,7 @@ export default function DashboardPage(props) {
 
     function copy(text) {
         if (!navigator.clipboard) {
-            return alert("해당 브라우저에서 클립보드를 지원하지 않습니다.");
+            return alert("해당 브라우저에서 클립보드를 지원하지 않습니다.\n아래 코드를 캡쳐 후 사용 바랍니다.\n[ " + text + " ]");
         }
         navigator.clipboard.writeText(text);
         alert("매장코드가 복사되었습니다.\n[ " + text + " ]");

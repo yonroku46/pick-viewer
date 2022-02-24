@@ -119,7 +119,7 @@ export default function LoginPage(props) {
           </Segment>
         </Form>
         <Message className='login-form-bottom'>
-          <Link className="login-form-message" to="/help">비밀번호 찾기</Link>
+          <Link className="login-form-message" to="/help/pwd">비밀번호 찾기</Link>
           <span className="login-form-message-sp">/</span>
           <Link className="login-form-message" to="/signup">회원가입</Link>
         </Message>

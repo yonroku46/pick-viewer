@@ -3,7 +3,7 @@ import { Icon, Button, Form, Grid, Header, Segment, Label, Transition } from 'se
 import * as api from '../../rest/api'
 import axios from 'axios';
 
-export default function HelpPage(props) {
+export default function HelpPwdPage(props) {
 
   const [apiload, setApiload] = useState(false);
   const [email, setEmail] = useState('');
