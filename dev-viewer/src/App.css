@@ -94,7 +94,7 @@ h1, h2, h3, h4, h5, div, a, button {
   position: sticky;
   top: 0;
   z-index: 100;
-  background: rgb(0, 0, 0);
+  background: rgb(255, 255, 255);
   border-bottom: #A291FB 1px solid;
   width: 100%;
   display: flex;
@@ -110,7 +110,8 @@ h1, h2, h3, h4, h5, div, a, button {
   position: sticky;
   top: 0;
   z-index: 100;
-  background: rgb(0, 0, 0, 0.3);
+  background: rgb(255, 255, 255);
+  border-bottom: #525252 1px solid;
   width: 100%;
   display: flex;
   color: #000;
@@ -247,7 +248,7 @@ h1, h2, h3, h4, h5, div, a, button {
   position: absolute;
   height: 4px;
   width: 100%;
-  background: rgb(255, 255, 255);
+  background: rgb(0, 0, 0);
   border-radius: 4px;
   opacity: 1;
   left: 0;
@@ -397,20 +398,6 @@ hr {
 }
 .signup-login {
   width: 220px;
-}
-
-/* LoginPage - help */
-.help-main-content {
-  margin-top: 50px;
-  height: calc(100vh - 81px);
-  background-color: #fff;
-  border-radius: 12px;
-  border: 4px rgb(125, 125, 125, 0.1) solid;
-  margin-left: 30vw;
-  margin-right: 30vw;
-}
-.help-form {
-  margin-top: 26vh !important;
 }
 
 /* pc */
@@ -2128,6 +2115,25 @@ a.detailpage-tel:hover {
 }
 .review-style-replyview p {
   margin-left: 0.5em;
+}
+
+/* HelpPage */
+.help-main {
+  margin-top: 50px;
+  min-height: calc(100vh - 81px);
+}
+
+.help-main-content {
+  margin-top: 50px;
+  height: calc(100vh - 81px);
+  background-color: #fff;
+  border-radius: 12px;
+  border: 4px rgb(125, 125, 125, 0.1) solid;
+  margin-left: 30vw;
+  margin-right: 30vw;
+}
+.help-form {
+  margin-top: 26vh !important;
 }
 
 /* IphoneX */
