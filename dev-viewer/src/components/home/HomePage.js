@@ -69,8 +69,8 @@ export default function HomePage() {
     <>
       <div className="home-main">
         <p className='home-main-title-top'>Only for you</p>
-        <p className='home-main-title'>서비스 오픈!</p>
-        <p className='home-main-title-bottom'>MAX 50% off</p>
+        <p className='home-main-title'>서비스 오픈 </p>
+        <p className='home-main-title-bottom'>나만의 특가를 찾아보세요!</p>
         <Link to='/booking/hairshop'>
            <Input iconPosition='left' className='home-main-search' placeholder='위치 또는 매장명을 입력해주세요'>
               <Icon name='search'/>

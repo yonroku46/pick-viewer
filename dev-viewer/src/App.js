@@ -121,7 +121,7 @@ export default function App() {
     {countryStat ?
     <div className="App">
       {/* Header */}
-      <div className={scrollPosition < 10 ? "app-header-invisible" : "app-header"}>
+      <div className={scrollPosition < 10 ? "app-header invisible" : "app-header"}>
         <div className="menu-left">
           <Link to="/" ><img className="logo" src={logo}/></Link>
         </div>

@@ -94,30 +94,21 @@ h1, h2, h3, h4, h5, div, a, button {
   position: sticky;
   top: 0;
   z-index: 100;
-  background: rgb(255, 255, 255);
+  background-color: rgb(255, 255, 255);
   border-bottom: #A291FB 1px solid;
   width: 100%;
   display: flex;
   color: #000;
-  padding: 5px 10px;
+  padding: 4px 10px;
   font-size: 20px;
   margin-bottom: -49px;
   transition: background-color 0.5s;
   transition: border-bottom 0.5s;
 }
 
-.app-header-invisible {
-  position: sticky;
-  top: 0;
-  z-index: 100;
-  background: rgb(255, 255, 255);
-  border-bottom: #525252 1px solid;
-  width: 100%;
-  display: flex;
-  color: #000;
-  padding: 5px 10px;
-  font-size: 20px;
-  margin-bottom: -50px;
+.invisible {
+  background-color: rgb(255, 255, 255, 0) !important;
+  border-bottom: #52525200 1px solid !important;
   transition: background-color 0.5s;
 }
 
@@ -1219,37 +1210,35 @@ table.dashboard-table input {
 /* HomePage */
 .home-main {
   background-position: center center;
-  background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.7)),url('./img/back1.jpg');
+  background-image: linear-gradient(rgba(0, 0, 0, 0.25), rgba(0, 0, 0, 0.8)),url('./img/home.jpg');
   background-repeat: no-repeat;
   background-size: cover;
   display: block;
   color: #fff;
   min-height: 100vh;
   filter: saturate(100%);
-  padding-top: 38vh;
+  padding-top: 36vh;
   padding-bottom: 2vh;
   margin-top: 0px !important;
   position: relative;
 }
 
 .home-main-title-top {
-  font-size: 1em;
-  margin-bottom: 0.25em;
-  font-weight: bold;
+  font-size: 1.1em;
+  margin-bottom: 0em;
   color: #A291FB;
-  letter-spacing: 0.3em;
+  letter-spacing: 0.4em;
 }
 .home-main-title {
-  font-size: 2.5em;
-  margin-bottom: -0.5em;
+  font-size: 3em;
+  margin-bottom: -0.2em;
 }
 .home-main-title-bottom {
-  font-size: 3.5em;
-  font-weight: bold;
-  margin-bottom: 0.5em;
+  font-size: 2em;
+  margin-bottom: 0.6em;
 }
 .home-main-search {
-  background-color: rgb(0, 0, 0, 1) !important;
+  text-align: left;
   border: #fff 2px solid !important;
   color: #fff !important;
   font-size: 1.2em !important;
@@ -1257,7 +1246,7 @@ table.dashboard-table input {
   width: 40vw;
 }
 .home-main-search input {
-  background-color: rgb(0, 0, 0, 1) !important;
+  background-color: rgba(0, 0, 0, 0) !important;
   border-radius: 30px !important;
 }
 .home-main-search i {
