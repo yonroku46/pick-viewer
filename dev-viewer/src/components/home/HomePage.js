@@ -5,7 +5,7 @@ import page2 from '../../img/page2.png'
 import * as api from '../../rest/api'
 import { Button, Segment, Icon, Accordion, Grid, Image, Input, Reveal } from 'semantic-ui-react';
 
-export default function HomePage() {
+export default function HomePage(props) {
     let isAuthorized = sessionStorage.getItem("isAuthorized");
     const userInfo = JSON.parse(sessionStorage.getItem('userInfo'));
     const permission = userInfo ? userInfo.permission : null;
@@ -65,18 +65,25 @@ export default function HomePage() {
     const onThrottleDragMove = throttle(onDragMove, delay);
     //// scroll func end
 
+    function searching(e) {
+      if (e.key === 'Enter') {
+        props.history.push({
+          pathname: '/search',
+          state: { searchValue: e.target.value}
+        })
+      }
+    }
+
     return(
     <>
       <div className="home-main">
         <p className='home-main-title-top'>Only for you</p>
         <p className='home-main-title'>서비스 오픈 </p>
         <p className='home-main-title-bottom'>나만의 특가를 찾아보세요!</p>
-        <Link to='/booking/hairshop'>
-           <Input iconPosition='left' className='home-main-search' placeholder='위치 또는 매장명을 입력해주세요'>
-              <Icon name='search'/>
-              <input/>
-            </Input>
-        </Link>
+        <Input iconPosition='left' className='home-main-search' placeholder='위치 또는 매장명을 입력해주세요'>
+          <Icon name='search' onClick={() => searching()}/>
+          <input onKeyPress={searching}/>
+        </Input>
       </div>
 
       <Grid container className='home-content-main content1' divided relaxed stackable>
@@ -109,7 +116,7 @@ export default function HomePage() {
         </div>
       </Grid>
       
-      <Grid container className='home-content-main content2' divided relaxed stackable>
+      {/* <Grid container className='home-content-main content2' divided relaxed stackable>
         <div className='home-quick-menu' onMouseDown={onDragStart} onMouseMove={isDrag ? onThrottleDragMove : null} onMouseUp={onDragEnd} onMouseLeave={onDragEnd} ref={scrollRef}>
           {eventList.map(event => 
             <Link to={`/booking/hairshop`}>
@@ -119,7 +126,7 @@ export default function HomePage() {
             </Link>
           )}
         </div>
-      </Grid>
+      </Grid> */}
 
       <Grid container columns={2} className='home-content-main' divided relaxed stackable>
         <Grid.Column>

@@ -31,8 +31,6 @@ axios.defaults.headers.post['Access-Control-Allow-Origin'] = '*';
 export default function App() {
 
   const [countryStat, setCountryStat] = useState(true);
-  const [whiteFlag, setWhiteFlag] = useState(false);
-  const whiteList = ['/mypage','/dashboard','/booking/hairshop','/booking/restaurant','/booking/cafe','/search'];
   const [scrollPosition, setScrollPosition] = useState(0);
   const updateScroll = () => {
     setScrollPosition(window.scrollY || document.documentElement.scrollTop);
@@ -70,11 +68,6 @@ export default function App() {
     }, []);
     
     let path = window.location.pathname;
-
-    useEffect(() => {
-      window.addEventListener('scroll', updateScroll);
-      setWhiteFlag(whiteList.indexOf(path) !== -1);
-    }, [path]);
 
   const [visible, setVisible] = useState(false);
   const isAuthorized = sessionStorage.getItem("isAuthorized");
@@ -224,7 +217,7 @@ export default function App() {
           </Sidebar.Pusher>
           
           {/* Footer */}
-          <footer className={visible ? "app-footer push-background" : whiteFlag ? "app-footer-white" : "app-footer"}>
+          <footer className={visible ? "app-footer push-background" : "app-footer"}>
             <Icon name='copyright'/>TEAMBEPO 2022
           </footer>
         </Sidebar.Pushable>

@@ -6,7 +6,7 @@ import { Menu, Form, Input, Dimmer, Loader, Icon, Label, Grid, Transition, Messa
 
 export default function SearchPage(props) {
 
-    const [search, setSearch] = useState('');
+    const [search, setSearch] = useState(props.location.state.searchValue ? props.location.state.searchValue : '');
     const [searchHistory, setSearchHistory] = useState([]);
     const [searchResult, setSearchResult] = useState([]);
     const [recHistory, setRecHistory] = useState([]);
