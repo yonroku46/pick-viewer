@@ -99,14 +99,12 @@ h1, h2, h3, h4, h5, div, a, button {
   padding: 4px 10px;
   font-size: 20px;
   margin-bottom: -49px;
-  transition: background-color 0.5s;
-  transition: border-bottom 0.5s;
+  transition: 0.5s;
 }
 
 .invisible {
-  background-color: rgb(255, 255, 255, 0) !important;
-  border-bottom: #52525200 1px solid !important;
-  transition: background-color 0.5s;
+  background-color: rgb(255, 255, 255, 0.3) !important;
+  border-bottom: #52525210 1px solid !important;
 }
 
 .app-body {
@@ -1199,13 +1197,16 @@ table.dashboard-table input {
   background-image: linear-gradient(rgba(0, 0, 0, 0.25), rgba(0, 0, 0, 0.8)),url('./img/home.jpg');
   background-repeat: no-repeat;
   background-size: cover;
+  border-bottom-left-radius: 48px;
+  border-bottom-right-radius: 48px;
   display: block;
   color: #fff;
-  min-height: 100vh;
+  min-height: 105vh;
   filter: saturate(100%);
   padding-top: 36vh;
   padding-bottom: 2vh;
-  margin-top: 0px !important;
+  margin-top: 0px;
+  margin-bottom: -5vh;
   position: relative;
 }
 
@@ -1691,13 +1692,18 @@ table.dashboard-table input {
   border-radius: 12px;
   box-shadow: 1px 1px 14px rgba(157, 157, 157, 0.5); 
   background-color: #fff;
-  margin-left: 24vw;
-  margin-right: 24vw;
+  margin-left: auto;
+  margin-right: auto;
+  max-width: 760px;
   padding: 0.1vw 1vw;
   min-height: calc(100vh - 81px);
 }
+.slick-list {
+  border-radius: 12px;
+}
 .slick-dots {
   bottom: 0 !important;
+  border-radius: 12px;
 }
 .detailpage-icon-menu {
   padding: 0 14px !important;
@@ -1753,6 +1759,7 @@ table.dashboard-table input {
   max-height: 46vh;
   background-position: center !important;
   object-fit: cover;
+  border-radius: 12px;
 }
 .segment.detailpage-main {
   display: flow-root;
@@ -1764,7 +1771,6 @@ table.dashboard-table input {
   padding-left: 8px !important;
   padding-right: 8px !important;
   border-radius: 0px !important;
-  border-top: rgb(0, 0, 0, 0.1) 1px solid !important;
   border-bottom: rgb(0, 0, 0, 0.1) 1px solid !important;
 }
 .detailpage-main .detailpage-time i,.detailpage-info i, .detailpage-location i {

@@ -134,7 +134,7 @@ export default function HomePage(props) {
             <h2 className="home-content-intro-title">예약을 쉽고<br/><span className='pcolor'>스마트</span>하게!</h2>
             <p className="home-content-intro-inline">원하는 매장을 찾는 일은<br/>
               항상 어렵게 느껴집니다.<br/>
-              저희 <b>Pick</b>에서는 그 어려움을 해결해<br/>
+              저희 <span className='pcolor'>Pick</span>에서는 그 어려움을 해결해<br/>
               드리고 싶었습니다.<br/>
               각종 통계 데이터 기반으로<br/>
               주변 지역의 매장 및 장소를<br/>

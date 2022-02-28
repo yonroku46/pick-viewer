@@ -66,8 +66,12 @@ export default function App() {
         console.log("disconnect");
       })
     }, []);
+
+    useEffect(() => {
+      let path = window.location.pathname;
+      window.addEventListener('scroll', updateScroll);
+    }, []);
     
-    let path = window.location.pathname;
 
   const [visible, setVisible] = useState(false);
   const isAuthorized = sessionStorage.getItem("isAuthorized");
