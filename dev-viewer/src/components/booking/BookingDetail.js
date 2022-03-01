@@ -814,7 +814,8 @@ export default function BookingDetail(props) {
   };
 
   return (
-    <div className='detailpage'>
+    <div className='detail-main'>
+      <div className='detail-content'>
       {shop.length === 0 &&
         <Dimmer active inverted>
           <Loader size='large'/>
@@ -1011,6 +1012,7 @@ export default function BookingDetail(props) {
       </>
       }
       </Modal>
+    </div>
   </div>
   )
 }

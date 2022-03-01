@@ -3,6 +3,8 @@ import axios from 'axios';
 import { Link } from "react-router-dom"
 import page1 from '../../img/page1.png'
 import page2 from '../../img/page2.png'
+import userIcon from '../../img/user-icon.svg'
+import shopIcon from '../../img/shop-icon.svg'
 import * as api from '../../rest/api'
 import { Icon, Button, Form, Grid, Segment, Progress, Reveal, Label, Transition, Image } from 'semantic-ui-react'
 
@@ -180,10 +182,10 @@ export default function SignupPage(props) {
       <>
          <h2>1 / 4</h2>
          <h1>권한선택</h1>
-         <Button.Group vertical fluid className='signup-step1'>
-          <Button primary value='1' onClick={step1}><Icon name='cube' size='big'/>일반</Button>
-          <Button basic color='blue' value='2' onClick={step1}><Icon name='cubes' size='big'/>스태프 / 매니저</Button>
-        </Button.Group>
+         <div vertical fluid className='signup-step1'>
+          <button value='1' className='step1-normal' onClick={step1}><img src={userIcon}/><br/>일반</button>
+          <button value='2' className='step1-staff' onClick={step1}><img src={shopIcon}/><br/>매장/스태프</button>
+        </div>
       </>
       :
       percent === 25 ?

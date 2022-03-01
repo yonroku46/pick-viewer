@@ -349,7 +349,7 @@ export default function ReviewPage(props) {
   };
 
   return (
-    <div className='detailpage'>
+    <div className='detail-main'>
       {reviewLoading  &&
         <Dimmer active inverted>
           <Loader size='large'/>

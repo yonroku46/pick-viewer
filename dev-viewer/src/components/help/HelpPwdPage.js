@@ -144,7 +144,7 @@ export default function HelpPwdPage(props) {
 
   return(
     <>
-    <div className="help-main-content">
+    <div className="help-main">
     <Grid className="help-form" textAlign='center' verticalAlign='middle'>
       <Grid.Column style={{ maxWidth: 450 }}>
         {resetStep ?

@@ -103,8 +103,8 @@ h1, h2, h3, h4, h5, div, a, button {
 }
 
 .invisible {
-  background-color: rgb(255, 255, 255, 0.3) !important;
-  border-bottom: #52525210 1px solid !important;
+  background-color: rgb(255, 255, 255, 0) !important;
+  border-bottom: #52525200 1px solid !important;
 }
 
 .app-body {
@@ -122,7 +122,7 @@ h1, h2, h3, h4, h5, div, a, button {
 
 .push-background {
   color: rgba(100, 100, 100, 0.4);
-  background-color: rgb(0, 0, 0, 0.425);
+  background-color: rgb(0, 0, 0, 0.4);
   transition: background-color 0.5s;
 }
 
@@ -288,13 +288,12 @@ hr {
 
 /* LoginPage */
 .login-main {
-  margin-top: 50px;
+  margin-top: 49px;
   min-height: calc(100vh - 81px);
-  background-color: #fff;
+  border-top: #52525210 1px solid !important;
   border-radius: 12px;
-  border: 4px rgb(125, 125, 125, 0.1) solid;
-  margin-left: 30vw;
-  margin-right: 30vw;
+  padding-left: 30vw;
+  padding-right: 30vw;
 }
 .login-form {
   margin-top: 0px !important;
@@ -324,31 +323,29 @@ hr {
 /* sp */
 @media only screen and (max-width: 767px) {
   .login-main {
-    margin-left: 0;
-    margin-right: 0;
+    padding-left: 0;
+    padding-right: 0;
   }
 }
 
 /* LoginPage - signup */
 .signup-main {
-  margin-top: 50px;
-  border-radius: 12px;
-  border: 4px rgb(125, 125, 125, 0.1) solid;
-  margin-left: 30vw;
-  margin-right: 30vw;
-  background-color: #fff;
-  background-size: cover;
-  display: block;
+  margin-top: 49px;
   min-height: calc(100vh - 81px);
+  border-top: #52525210 1px solid !important;
   padding: 1em 2em;
+  padding-left: 30vw;
+  padding-right: 30vw;
 }
 .signup-progress {
   margin-left: auto !important;
   margin-right: auto !important;
+  margin-top: -14px !important;
 }
 .signup-main h2 {
   text-align: center;
-  padding-top: 4vh;
+  padding-top: 12vh;
+  padding-bottom: 14px; 
   border-bottom: 2px #000 solid;
   margin-left: auto;
   margin-right: auto;
@@ -361,12 +358,39 @@ hr {
   position: relative;
   font-size: 2em;
 }
+.signup-step1 img {
+  width: 55px;
+  margin-bottom: 6px;
+}
 .signup-step1 button {
-  align-items: center;
-  font-size: 2.5vh !important;
-  height: 10vh;
-  font-weight: bold !important;
-  margin: 5px 12px !important;
+  font-size: 22px;
+  height: 160px;
+  width: 160px;
+  font-weight: bold;
+  margin: 12px;
+  border-radius: 50%;
+  padding: 10px;
+}
+.signup-step1 button:hover {
+  cursor: pointer;
+  opacity: 0.8;
+  transition: 0.4s;
+}
+.signup-step1 .step1-normal {
+  background-color: #2185d0;
+  color: #fff;
+  border: 2px solid #2185d0;
+}
+.signup-step1 .step1-normal img {
+  filter: invert(100%);
+}
+.signup-step1 .step1-staff {
+  background-color: #fff;
+  color: #2185d0;
+  border: 2px solid #2185d0;
+}
+.signup-step1 .step1-staff img {
+  filter: invert(46%) sepia(68%) saturate(812%) hue-rotate(170deg) brightness(84%) contrast(93%);
 }
 .signup-step1 i {
   padding-right: 20%;
@@ -383,23 +407,22 @@ hr {
 }
 /* sp */
 @media only screen and (max-width: 767px) {
-  .help-main-content {
+  .help-main {
     margin-left: 0;
     margin-right: 0;
   }
   .signup-main {
-    margin-left: 0;
-    margin-right: 0;
-    padding: 0;
+    padding-left: 0;
+    padding-right: 0;
   }
 }
 
 /* DashboardPage */
 .dashboard-main {
-  display: block;
-  background-color: #fff;
-  margin-top: 50px !important;
+  margin-top: 49px !important;
   min-height: calc(100vh - 81px);
+  border-top: #52525210 1px solid !important;
+  display: block;
 }
 .dashboard-pagination-box {
   text-align: center;
@@ -422,7 +445,7 @@ hr {
   opacity: 1;
 }
 .dashboard-map-bottom {
-  margin-top: 50px !important;
+  margin-top: 55px !important;
 }
 .dashboard-menu {
   float: left;
@@ -472,9 +495,9 @@ hr {
   color: #000 !important;
 }
 .dashboard-viewer {
-  text-align: left;
   min-height: calc(100vh - 84px) !important;
   max-height: 89vh;
+  text-align: left;
   overflow: auto !important;
   width: 76vw;
   margin-left: auto !important;
@@ -758,7 +781,6 @@ table.dashboard-table input {
 /* sp */
 @media only screen and (max-width: 767px) {
   .dashboard-main {
-    margin-top: 50px;
     margin: 1em 0vw;
   }
   .dashboard-menu {
@@ -815,16 +837,18 @@ table.dashboard-table input {
 
 /* StylesPage */
 .styles-main {
-  margin-top: calc(1em + 50px);
+  margin-top: 49px;
   min-height: calc(100vh - 81px);
-  margin-left: 25vw;
-  margin-right: 25vw;
+  border-top: #52525210 1px solid !important;
+  padding-left: 25vw;
+  padding-right: 25vw;
 }
 .styles-posts .ui.padded.segment {
   border-top-left-radius: 12px;
   border-top-right-radius: 12px;
   border: 1px solid rgba(34, 36, 38, 0.15) !important;
   border-bottom: none !important;
+  margin-top: 2.2rem ;
   margin-bottom: -2.2rem ;
   padding: 0;
 }
@@ -875,8 +899,8 @@ table.dashboard-table input {
 
 @media only screen and (max-width: 767px) {
   .styles-main {
-    margin-left: 0;
-    margin-right: 0;
+    padding-left: 0;
+    padding-right: 0;
   }
   .styles-posts .ui.padded.segment {
     width: calc(100vw - 2em);
@@ -896,50 +920,11 @@ table.dashboard-table input {
   }
 }
 
-/* ContactPage */
-.contact-main {
-  margin-top: 50px;
-  border-radius: 12px;
-  border: 4px rgb(125, 125, 125, 0.1) solid;
-  margin-left: 30vw;
-  margin-right: 30vw;
-  background-color: #fff;
-  background-size: cover;
-  display: block;
-  text-align: left;
-  min-height: calc(100vh - 81px);
-  padding: 1.5em 3em;
-}
-.contact-main textarea {
-  min-height: 180px;
-  max-height: 340px;
-}
-.contact-title {
-  margin-top: 1em !important;
-  margin-bottom: 1.5em !important;
-}
-.contact-submit {
-  margin-top: 2.5em !important;
-  margin-bottom: 2em !important;
-  text-align: center;
-}
-.contact-submit button {
-  margin-top: 1em !important;
-}
-
-@media only screen and (max-width: 767px) {
-  .contact-main {
-    width: 100vw;
-  }
-}
-
 /* EmptyPage */
 .empty-main {
-  margin-top: 50px;
-  background-size: cover;
-  display: block;
+  margin-top: 49px;
   min-height: calc(100vh - 81px);
-  filter: saturate(100%);
+  border-top: #52525210 1px solid !important;
 }
 .empty-main-img {
   margin-left: auto;
@@ -960,9 +945,9 @@ table.dashboard-table input {
 
 /* MyPage */
 .mypage-main {
-  margin-top: 50px;
+  margin-top: 49px;
   min-height: calc(100vh - 81px);
-  background-color: #fff;
+  border-top: #52525210 1px solid !important;
 }
 .mypage-booking-date {
   position: absolute;
@@ -1404,9 +1389,9 @@ table.dashboard-table input {
 
 /* BookingPage */
 .booking-main {
-  margin-top: 50px;
+  margin-top: 49px;
   min-height: calc(100vh - 81px);
-  background-color: #fff;
+  border-top: #52525210 1px solid !important;
 }
 .booking-main-category {
   height: 8vh;
@@ -1626,7 +1611,6 @@ table.dashboard-table input {
 /* sp */
 @media only screen and (max-width: 767px){
   .detailpage {
-    margin-top: 50px;
     padding: 0 !important;
     margin-left: 0 !important;
     margin-right: 0 !important;
@@ -1686,17 +1670,19 @@ table.dashboard-table input {
 }
 
 /* detailpage */
-.detailpage {
-  margin-top: 50px;
+.detail-main {
+  margin-top: 49px;
+  min-height: calc(100vh - 81px);
+  border-top: #52525210 1px solid !important;
+}
+.detail-content {
   margin-bottom: 14px;
   border-radius: 12px;
   box-shadow: 1px 1px 14px rgba(157, 157, 157, 0.5); 
-  background-color: #fff;
   margin-left: auto;
   margin-right: auto;
-  max-width: 760px;
+  max-width: 720px;
   padding: 0.1vw 1vw;
-  min-height: calc(100vh - 81px);
 }
 .slick-list {
   border-radius: 12px;
@@ -2105,21 +2091,46 @@ a.detailpage-tel:hover {
 
 /* HelpPage */
 .help-main {
-  margin-top: 50px;
+  margin-top: 49px;
   min-height: calc(100vh - 81px);
-}
-
-.help-main-content {
-  margin-top: 50px;
-  height: calc(100vh - 81px);
-  background-color: #fff;
-  border-radius: 12px;
-  border: 4px rgb(125, 125, 125, 0.1) solid;
-  margin-left: 30vw;
-  margin-right: 30vw;
+  border-top: #52525210 1px solid !important;
 }
 .help-form {
   margin-top: 26vh !important;
+}
+
+/* ContactPage */
+.contact-main {
+  margin-top: 49px;
+  min-height: calc(100vh - 81px);
+  border-top: #52525210 1px solid !important;
+  padding-left: 30vw;
+  padding-right: 30vw;
+  text-align: left;
+}
+.contact-main textarea {
+  min-height: 180px;
+  max-height: 340px;
+}
+.contact-title {
+  margin-top: 1em !important;
+  margin-bottom: 1.5em !important;
+}
+.contact-submit {
+  margin-top: 2.5em !important;
+  margin-bottom: 2em !important;
+  text-align: center;
+}
+.contact-submit button {
+  margin-top: 1em !important;
+}
+
+/* sp */
+@media only screen and (max-width: 767px){
+  .contact-main {
+    padding-left: 0;
+    padding-right: 0;
+  }
 }
 
 /* IphoneX */
@@ -2249,9 +2260,9 @@ a.detailpage-tel:hover {
 
 /* SearchPage */
 .search-main {
-  margin-top: 50px;
+  margin-top: 49px;
   min-height: calc(100vh - 81px);
-  background-color: #fff;
+  border-top: #52525210 1px solid !important;
 }
 .search-del {
   pointer-events: auto !important;
@@ -2372,17 +2383,18 @@ a.detailpage-tel:hover {
 
 /* WikiPage */
 .wiki {
+  margin-top: 49px;
   min-height: calc(100vh - 81px);
+  border-top: #52525210 1px solid !important;
   text-align: left;
-  margin-top: 50px;
-  margin-left: auto;
-  margin-right: auto;
+  padding-left: 20vw;
+  padding-right: 20vw;
   padding-top: 20px;
-  width: 60vw;
 }
 @media only screen and (max-width: 767px) {
   .wiki {
-    width: 98vw;
+    padding-left: 0;
+    padding-right: 0;
   }
 }
 .wiki-header {
