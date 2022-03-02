@@ -350,235 +350,236 @@ export default function ReviewPage(props) {
 
   return (
     <div className='detail-main'>
-      {reviewLoading  &&
-        <Dimmer active inverted>
-          <Loader size='large'/>
-        </Dimmer>
-      }
-      {shop.length === 0 &&
-        <Dimmer active inverted>
-          <Loader size='large'/>
-        </Dimmer>
-      }
-
-      {/* 샵 이미지 탭 */}
-      <Segment className="detailpage-main-image" placeholder>
-        <Slider {...settings}>
-          {shopImages.map(img =>
-            <Image src={api.imgRender(img)}/>
-          )}
-        </Slider>
-      </Segment>
-
-      {/* 샵 정보 탭 */}
-      <Segment className='detailpage-main'>
-        <p className='detailpage-name'>{shop.shop_name}
-          <span className='detailpage-call'>
-            <a href={`tel:${shop.shop_tel}`}><Icon name='phone square'/></a>
-          </span>
-          <span className='detailpage-review'>
-            <Link to={`/booking/${category}/${shop_cd}`}>
-              <Button className='detailpage-link-btn' color='violet'>예약하기 <Icon name='angle double right'/></Button>
-            </Link>
-          </span>
-        </p>
-        <p className='detailpage-time'><Icon name='clock outline'/>{shop.shop_open}~{shop.shop_close}</p>
-        <p className='detailpage-info'><Icon name='list alternate outline'/>{shop.shop_info}</p>
-        <p className='detailpage-location'><Icon name='map outline'/>{shop.shop_location} 
-          <Scroll className='detailpage-icon' to='map' offset={-56} spy={true} smooth={true}>
-            <Icon id='map' onClick={mapToogle} name={mapOpen ? 'angle up' : 'angle down'}/>
-          </Scroll>
-        </p>
-        {mapOpen && 
-          (shop.location_lat === 0 && shop.location_lng === 0
-          ? <h4 className='detailpage-location-empty'>위치정보 미등록 매장입니다</h4>
-          : <MapContainer shop={shop}/>
-          )
+      <div className='detail-content'>
+        {reviewLoading  &&
+          <Dimmer active inverted>
+            <Loader size='large'/>
+          </Dimmer>
         }
-      </Segment>
-
-      {/* 리뷰 정보 탭*/}
-      <Segment className='review-info'>
-        <Statistic.Group size='mini' widths='three' inverted>
-          <Statistic>
-            <Statistic.Value className='review-tab-icon' onClick={favorite}><Icon name={isFavorite ? 'like' : 'like outline'}/> {shop.favorite_num === undefined ? 0 : comma(shop.favorite_num)}</Statistic.Value>
-            <Statistic.Label>즐겨찾기</Statistic.Label>
-          </Statistic>
-          <Statistic>
-            <Statistic.Value><Icon name='comments outline'/> {shop.review_num === undefined ? 0 : comma(shop.review_num)}</Statistic.Value>
-            <Statistic.Label>총 리뷰수</Statistic.Label>
-          </Statistic>
-          <Statistic>
-            <Statistic.Value><Icon name='star outline'/> {shop.ratings_ave}</Statistic.Value>
-            <Statistic.Label>만족도</Statistic.Label>
-          </Statistic>
-        </Statistic.Group>
-      </Segment>
-      
-      {/* 리뷰 탭 */}
-      {/* 0. 아직 댓글 없음 */}
-      {reviewList.length === 0 &&
-      <div className='review-no-comment'>
-        <Icon name='comment alternate' size='huge'/>
-        <h4>아직 댓글이 없습니다</h4>
-      </div>
-      }
-      <Comment.Group className='review-comment-area'>
-        {reviewList.map(review => (
-          review.reply_list.length === 0 ?
-          <>
-          {/* 1. 댓글 없는 리뷰 */}
-          {review.user_name !== null ?
-          <Comment className='review-style'>
-            <Comment.Avatar src={api.imgRender(review.user_img === null ? userimgDefault : review.user_img)}/>
-            <Comment.Content>
-              <Rating icon='star' defaultRating={review.ratings} maxRating={5} size='mini' disabled/><br/>
-              <Comment.Author as='a'>{review.user_name}</Comment.Author>
-              <Comment.Metadata>{timeForToday(review.review_time)}</Comment.Metadata>
-              {mypostJudge(review.user_cd) && 
-                <Label className='review-comment-label-setting' onClick={() => reviewEdit(review.review_cd)}>
-                  <Icon name='ellipsis vertical'/>
-                </Label>
-              }
-              <Comment.Text className='review-comment-text'>
-                {review.review_text}
-              </Comment.Text>
-              {isStaff && 
-              <Scroll to='reply' spy={true} smooth={true}>
-                <Comment.Actions onClick={() => clickReply(review.review_cd)}>
-                  <Comment.Action>답글달기</Comment.Action>
-                </Comment.Actions>
-              </Scroll>
-              }
-            </Comment.Content>
-          </Comment>
-          :
-          // 1_1. 삭제된 댓글 알림표시
-          <Comment className='review-style-deleted'>
-            <Comment.Content>
-              <p>{review.review_text}</p>
-            </Comment.Content>
-          </Comment>
-          }
-          </>
-          :
-          <>
-          {/* 2. 댓글 있는 리뷰 */}
-          {review.user_name !== null ?
-          <Comment className='review-style'>
-            <Comment.Avatar src={api.imgRender(review.user_img === null ? userimgDefault : review.user_img)}/>
-            <Comment.Content>
-              <Rating icon='star' defaultRating={review.ratings} maxRating={5} size='mini' disabled/><br/>
-              <Comment.Author as='a'>{review.user_name}</Comment.Author>
-              <Comment.Metadata>{timeForToday(review.review_time)}</Comment.Metadata>
-              {mypostJudge(review.user_cd) && 
-                <Label className='review-comment-label-setting' onClick={() => reviewEdit(review.review_cd)}>
-                  <Icon name='ellipsis vertical'/>
-                </Label>
-              }
-              <Comment.Text className='review-comment-text'>
-                {review.review_text}
-              </Comment.Text>
-              {isStaff && 
-              <Scroll to='reply' spy={true} smooth={true}>
-                <Comment.Actions onClick={() => clickReply(review.review_cd)}>
-                  <Comment.Action>답글달기</Comment.Action>
-                </Comment.Actions>
-              </Scroll>
-              }
-            </Comment.Content>
-
-            {/* 3. 리뷰 대댓글 */}
-            <div className='reply-style-top'>
-            {review.reply_list.map(reply => (
-              reply.user_name !== null ?
-              <Comment.Group className='reply-style-outline'>
-                <Comment className='reply-style'>
-                  <Comment.Avatar src={api.imgRender(reply.user_img === null ? userimgDefault : reply.user_img)}/>
-                  <Comment.Content>
-                    <Comment.Author as='a'>{reply.user_name}</Comment.Author>
-                    <Label className='review-comment-label' color='violet' size='mini' horizontal>STAFF</Label>
-                    <Comment.Metadata>{timeForToday(reply.review_time)}</Comment.Metadata>
-                    {mypostJudge(reply.user_cd) && 
-                      <Label className='review-comment-label-setting' onClick={() => reviewEdit(reply.review_cd)}>
-                        <Icon name='ellipsis vertical'/>
-                      </Label>
-                    }
-                    <Comment.Text className='review-comment-text'>
-                      {reply.review_text}
-                    </Comment.Text>
-                  </Comment.Content>
-                </Comment>
-              </Comment.Group>
-              :
-              // 3_1. 삭제된 대댓글 미표시
-              <></>
-            ))}
-            </div>
-          </Comment>
-          :
-          // 2_1. 삭제된 댓글 알림표시(대댓글도 미표시)
-          <Comment className='review-style-deleted'>
-            <Comment.Content>
-              <p>{review.review_text}</p>
-            </Comment.Content>
-          </Comment>
-          }
-          </>
-        ))}
-      </Comment.Group>
-
-      <Form className='review-write-area' id='reply' reply>
-        {isStaff ?
-        targetReply &&
-        <Form.Field className='review-rating'>
-          <label><Icon name='angle double left'/><span className='pcolor'>{targetReply.user_name}</span> 님에게 답글</label>
-          <Comment className='review-style-replyview'>
-            <Comment.Content>
-              <Rating icon='star' rating={targetReply.ratings} maxRating={5} size='mini' disabled/><br/>
-              <p>{targetReply.review_text}</p>
-            </Comment.Content>
-          </Comment>
-        </Form.Field>
-        :
-        <Form.Field className='review-rating'>
-          <label>만족도</label>
-          <Rating icon='star' defaultRating={4} maxRating={5} size='huge' onRate={handleRate}/>
-        </Form.Field>
+        {shop.length === 0 &&
+          <Dimmer active inverted>
+            <Loader size='large'/>
+          </Dimmer>
         }
-        <Form.Field>
-          <Form.TextArea placeholder={isStaff ? '이용자에게 답글을 남겨보세요!' : '여러분의 솔직한 평가를 남겨주세요!'} value={comment} onChange={commentInput}/>
-          <span className='review-comment-length'>{comment.length} / 300</span>
-        </Form.Field>
 
-        <Form.Field className='review-submit-btn'>
-          {isAuthorized ? 
-            sendLoading ?
-            <Button loading secondary disabled className='booking-btn'>
-              로딩중
-            </Button>
+        {/* 샵 이미지 탭 */}
+        <Segment className="detailpage-main-image" placeholder>
+          <Slider {...settings}>
+            {shopImages.map(img =>
+              <Image src={api.imgRender(img)}/>
+            )}
+          </Slider>
+        </Segment>
+
+        {/* 샵 정보 탭 */}
+        <Segment className='detailpage-main'>
+          <p className='detailpage-name'>{shop.shop_name}
+            <span className='detailpage-call'>
+              <a href={`tel:${shop.shop_tel}`}><Icon name='phone square'/></a>
+            </span>
+            <span className='detailpage-review'>
+              <Link to={`/booking/${category}/${shop_cd}`}>
+                <Button className='detailpage-link-btn' color='violet'>예약하기 <Icon name='angle double right'/></Button>
+              </Link>
+            </span>
+          </p>
+          <p className='detailpage-time'><Icon name='clock outline'/>{shop.shop_open}~{shop.shop_close}</p>
+          <p className='detailpage-info'><Icon name='list alternate outline'/>{shop.shop_info}</p>
+          <p className='detailpage-location'><Icon name='map outline'/>{shop.shop_location} 
+            <Scroll className='detailpage-icon' to='map' offset={-56} spy={true} smooth={true}>
+              <Icon id='map' onClick={mapToogle} name={mapOpen ? 'angle up' : 'angle down'}/>
+            </Scroll>
+          </p>
+          {mapOpen && 
+            (shop.location_lat === 0 && shop.location_lng === 0
+            ? <h4 className='detailpage-location-empty'>위치정보 미등록 매장입니다</h4>
+            : <MapContainer shop={shop}/>
+            )
+          }
+        </Segment>
+
+        {/* 리뷰 정보 탭*/}
+        <Segment className='review-info'>
+          <Statistic.Group size='mini' widths='three' inverted>
+            <Statistic>
+              <Statistic.Value className='review-tab-icon' onClick={favorite}><Icon name={isFavorite ? 'like' : 'like outline'}/> {shop.favorite_num === undefined ? 0 : comma(shop.favorite_num)}</Statistic.Value>
+              <Statistic.Label>즐겨찾기</Statistic.Label>
+            </Statistic>
+            <Statistic>
+              <Statistic.Value><Icon name='comments outline'/> {shop.review_num === undefined ? 0 : comma(shop.review_num)}</Statistic.Value>
+              <Statistic.Label>총 리뷰수</Statistic.Label>
+            </Statistic>
+            <Statistic>
+              <Statistic.Value><Icon name='star outline'/> {shop.ratings_ave}</Statistic.Value>
+              <Statistic.Label>만족도</Statistic.Label>
+            </Statistic>
+          </Statistic.Group>
+        </Segment>
+        
+        {/* 리뷰 탭 */}
+        {/* 0. 아직 댓글 없음 */}
+        {reviewList.length === 0 &&
+        <div className='review-no-comment'>
+          <Icon name='comment alternate' size='huge'/>
+          <h4>아직 댓글이 없습니다</h4>
+        </div>
+        }
+        <Comment.Group className='review-comment-area'>
+          {reviewList.map(review => (
+            review.reply_list.length === 0 ?
+            <>
+            {/* 1. 댓글 없는 리뷰 */}
+            {review.user_name !== null ?
+            <Comment className='review-style'>
+              <Comment.Avatar src={api.imgRender(review.user_img === null ? userimgDefault : review.user_img)}/>
+              <Comment.Content>
+                <Rating icon='star' defaultRating={review.ratings} maxRating={5} size='mini' disabled/><br/>
+                <Comment.Author as='a'>{review.user_name}</Comment.Author>
+                <Comment.Metadata>{timeForToday(review.review_time)}</Comment.Metadata>
+                {mypostJudge(review.user_cd) && 
+                  <Label className='review-comment-label-setting' onClick={() => reviewEdit(review.review_cd)}>
+                    <Icon name='ellipsis vertical'/>
+                  </Label>
+                }
+                <Comment.Text className='review-comment-text'>
+                  {review.review_text}
+                </Comment.Text>
+                {isStaff && 
+                <Scroll to='reply' spy={true} smooth={true}>
+                  <Comment.Actions onClick={() => clickReply(review.review_cd)}>
+                    <Comment.Action>답글달기</Comment.Action>
+                  </Comment.Actions>
+                </Scroll>
+                }
+              </Comment.Content>
+            </Comment>
             :
-            <Button secondary className='booking-btn' onClick={sendReview}>
-              작성하기
-            </Button>
-          :
-          <Link to='/login'>
-            <Button secondary className='booking-btn'>
-              <Button.Content visible>로그인이 필요합니다</Button.Content>
-            </Button>
-          </Link>
-          }
-        </Form.Field>
-      </Form>
+            // 1_1. 삭제된 댓글 알림표시
+            <Comment className='review-style-deleted'>
+              <Comment.Content>
+                <p>{review.review_text}</p>
+              </Comment.Content>
+            </Comment>
+            }
+            </>
+            :
+            <>
+            {/* 2. 댓글 있는 리뷰 */}
+            {review.user_name !== null ?
+            <Comment className='review-style'>
+              <Comment.Avatar src={api.imgRender(review.user_img === null ? userimgDefault : review.user_img)}/>
+              <Comment.Content>
+                <Rating icon='star' defaultRating={review.ratings} maxRating={5} size='mini' disabled/><br/>
+                <Comment.Author as='a'>{review.user_name}</Comment.Author>
+                <Comment.Metadata>{timeForToday(review.review_time)}</Comment.Metadata>
+                {mypostJudge(review.user_cd) && 
+                  <Label className='review-comment-label-setting' onClick={() => reviewEdit(review.review_cd)}>
+                    <Icon name='ellipsis vertical'/>
+                  </Label>
+                }
+                <Comment.Text className='review-comment-text'>
+                  {review.review_text}
+                </Comment.Text>
+                {isStaff && 
+                <Scroll to='reply' spy={true} smooth={true}>
+                  <Comment.Actions onClick={() => clickReply(review.review_cd)}>
+                    <Comment.Action>답글달기</Comment.Action>
+                  </Comment.Actions>
+                </Scroll>
+                }
+              </Comment.Content>
 
-      <Modal size={size} open={open} onClose={() => dispatch({ type: 'close' })}>
-        <Modal.Header>정말로 삭제하시겠습니까?</Modal.Header>
-          <Modal.Actions>
-            <Button negative onClick={() => dispatch({ type: 'close' })}>취소</Button>
-            <Button positive onClick={() => deleteReview(targetReview)}>확인</Button>
-          </Modal.Actions>
-      </Modal>
-    
+              {/* 3. 리뷰 대댓글 */}
+              <div className='reply-style-top'>
+              {review.reply_list.map(reply => (
+                reply.user_name !== null ?
+                <Comment.Group className='reply-style-outline'>
+                  <Comment className='reply-style'>
+                    <Comment.Avatar src={api.imgRender(reply.user_img === null ? userimgDefault : reply.user_img)}/>
+                    <Comment.Content>
+                      <Comment.Author as='a'>{reply.user_name}</Comment.Author>
+                      <Label className='review-comment-label' color='violet' size='mini' horizontal>STAFF</Label>
+                      <Comment.Metadata>{timeForToday(reply.review_time)}</Comment.Metadata>
+                      {mypostJudge(reply.user_cd) && 
+                        <Label className='review-comment-label-setting' onClick={() => reviewEdit(reply.review_cd)}>
+                          <Icon name='ellipsis vertical'/>
+                        </Label>
+                      }
+                      <Comment.Text className='review-comment-text'>
+                        {reply.review_text}
+                      </Comment.Text>
+                    </Comment.Content>
+                  </Comment>
+                </Comment.Group>
+                :
+                // 3_1. 삭제된 대댓글 미표시
+                <></>
+              ))}
+              </div>
+            </Comment>
+            :
+            // 2_1. 삭제된 댓글 알림표시(대댓글도 미표시)
+            <Comment className='review-style-deleted'>
+              <Comment.Content>
+                <p>{review.review_text}</p>
+              </Comment.Content>
+            </Comment>
+            }
+            </>
+          ))}
+        </Comment.Group>
+
+        <Form className='review-write-area' id='reply' reply>
+          {isStaff ?
+          targetReply &&
+          <Form.Field className='review-rating'>
+            <label><Icon name='angle double left'/><span className='pcolor'>{targetReply.user_name}</span> 님에게 답글</label>
+            <Comment className='review-style-replyview'>
+              <Comment.Content>
+                <Rating icon='star' rating={targetReply.ratings} maxRating={5} size='mini' disabled/><br/>
+                <p>{targetReply.review_text}</p>
+              </Comment.Content>
+            </Comment>
+          </Form.Field>
+          :
+          <Form.Field className='review-rating'>
+            <label>만족도</label>
+            <Rating icon='star' defaultRating={4} maxRating={5} size='huge' onRate={handleRate}/>
+          </Form.Field>
+          }
+          <Form.Field>
+            <Form.TextArea placeholder={isStaff ? '이용자에게 답글을 남겨보세요!' : '여러분의 솔직한 평가를 남겨주세요!'} value={comment} onChange={commentInput}/>
+            <span className='review-comment-length'>{comment.length} / 300</span>
+          </Form.Field>
+
+          <Form.Field className='review-submit-btn'>
+            {isAuthorized ? 
+              sendLoading ?
+              <Button loading secondary disabled className='booking-btn'>
+                로딩중
+              </Button>
+              :
+              <Button secondary className='booking-btn' onClick={sendReview}>
+                작성하기
+              </Button>
+            :
+            <Link to='/login'>
+              <Button secondary className='booking-btn'>
+                <Button.Content visible>로그인이 필요합니다</Button.Content>
+              </Button>
+            </Link>
+            }
+          </Form.Field>
+        </Form>
+
+        <Modal size={size} open={open} onClose={() => dispatch({ type: 'close' })}>
+          <Modal.Header>정말로 삭제하시겠습니까?</Modal.Header>
+            <Modal.Actions>
+              <Button negative onClick={() => dispatch({ type: 'close' })}>취소</Button>
+              <Button positive onClick={() => deleteReview(targetReview)}>확인</Button>
+            </Modal.Actions>
+        </Modal>
+      </div>
     </div>
   )
 }

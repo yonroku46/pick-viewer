@@ -1989,7 +1989,7 @@ a.detailpage-tel:hover {
 }
 .review-info {
   margin-top: -14px !important;
-  margin-bottom: 2.5em !important;
+  margin-bottom: 28px !important;
   border-radius: 0px 0px 14px 14px !important;
   background-color: #A291FB !important;
 }
@@ -2051,10 +2051,12 @@ a.detailpage-tel:hover {
   max-width: none !important;
 }
 .review-style {
-  padding: 0.8em 0.5em !important;
+  padding: 0.8em 1em !important;
   margin: 0.4em !important;
   min-width: 30vw;
   white-space: pre-line;
+  border: rgb(0, 0, 0, 0.1) 1px solid !important;
+  border-radius: 0.8em;
 }
 .review-style-deleted {
   padding: 0.5em 0.8em !important;
