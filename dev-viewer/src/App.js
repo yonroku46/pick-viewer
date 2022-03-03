@@ -10,6 +10,7 @@ import ReviewPage from './components/review/ReviewPage';
 import StylesPage from './components/styles/StylesPage'
 import LoginPage from './components/login/LoginPage'
 import SignupPage from './components/login/SignupPage'
+import AboutPage from './components/help/AboutPage'
 import ContactPage from './components/help/ContactPage'
 import HelpPage from './components/help/HelpPage'
 import HelpPwdPage from './components/help/HelpPwdPage'
@@ -207,6 +208,7 @@ export default function App() {
                     <Route path="/review/cafe/:shop_cd" component={ReviewPage}/>
                 <Route exact path="/styles" component={StylesPage}/>
                 <Route exact path="/help" component={HelpPage}/>
+                  <Route exact path="/help/about" component={AboutPage}/>
                   <Route exact path="/help/contact" component={ContactPage}/>
                   <Route exact path="/help/notice" component={NoticePage}/>
                   <Route exact path="/help/pwd" component={HelpPwdPage}/>
