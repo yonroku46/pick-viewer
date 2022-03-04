@@ -1,59 +1,58 @@
 import React, { useEffect, useState, useReducer } from "react";
 import * as api from '../../rest/api'
 import axios from 'axios';
-import { Menu, Segment, Dimmer, Loader, Icon } from 'semantic-ui-react';
+import NoticePage from "./NoticePage";
+import ContactPage from "./ContactPage";
+import AboutPage from "./AboutPage";
+import { Menu, Container } from 'semantic-ui-react';
 
 export default function HelpPage(props) {
 
     const [loading, setLoading] = useState(false);
-    const [activeItem, setActiveItem] = useState('shopInfo');
+    const [visible, setVisible] = useState(false);
+    const [activeItem, setActiveItem] = useState('notice');
 
     function handleItemClick (e, { name }) {
         setActiveItem(name);
-    }
-
-    function testView() {
-        return (
-            <>
-            testView
-            </>
-        )
-    }
-
-    function Loading() {
-        return(
-            <Dimmer active inverted>
-              <Loader size='large'></Loader>
-            </Dimmer>
-          )
+        setVisible(false);
     }
 
     return (
     <div className="help-main">
-        <Menu className='dashboard-menu' vertical>
-            <>
-            <Menu.Header><Icon name='hdd'/> Help</Menu.Header>
-            <Menu.Menu>
-                <Menu.Item name='notice' active={activeItem === 'notice'} onClick={handleItemClick}>
-                    공지사항
-                </Menu.Item>
-                <Menu.Item name='contact' active={activeItem === 'contact'} onClick={handleItemClick}>
-                    문의
-                </Menu.Item>
-                <Menu.Item name='etc' active={activeItem === 'etc'} onClick={handleItemClick}>
-                    기타
-                </Menu.Item>
-            </Menu.Menu>
-            </>
+        {/* <Sidebar as={Menu}
+          animation='overlay'
+          direction='top'
+          icon='labeled'
+          onHide={() => setVisible(false)}
+          visible={visible}
+          className='help-main-menu'
+        > */}
+        <Menu>
+            <Menu.Item name='notice' active={activeItem === 'notice'} onClick={handleItemClick}>
+                공지사항
+            </Menu.Item>
+            <Menu.Item name='contact' active={activeItem === 'contact'} onClick={handleItemClick}>
+                문의
+            </Menu.Item>
+            <Menu.Item name='about' active={activeItem === 'about'} onClick={handleItemClick}>
+                Pick
+            </Menu.Item>
         </Menu>
-        <Segment className='dashboard-viewer'>
-            {loading ? <Loading/>
+        {/* </Sidebar> */}
+
+        <Container className="mypage-content-table">
+            {
+            activeItem === 'notice'? <NoticePage/>
             :
-            <>
-            {activeItem === 'notice' && testView()}
-            </>
-            }
-        </Segment>
+            activeItem === 'contact'? <ContactPage/>
+            :
+            activeItem === 'about'? <AboutPage/>
+            :
+            <></>
+             }
+        </Container>
+
+        <button onClick={() => setVisible(!visible)}/>
     </div>
     )
   };

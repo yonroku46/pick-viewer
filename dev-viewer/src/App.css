@@ -1691,6 +1691,9 @@ table.dashboard-table input {
   bottom: 0 !important;
   border-radius: 12px;
 }
+.slick-dots li button:before {
+  color: #fff !important;
+}
 .detailpage-icon-menu {
   padding: 0 14px !important;
   margin-top: -14px !important;
@@ -1745,7 +1748,6 @@ table.dashboard-table input {
   max-height: 46vh;
   background-position: center !important;
   object-fit: cover;
-  border-radius: 12px;
 }
 .segment.detailpage-main {
   display: flow-root;
@@ -2100,6 +2102,26 @@ a.detailpage-tel:hover {
 .help-form {
   margin-top: 26vh !important;
 }
+.help-main .ui.menu {
+  box-shadow: none;
+  border-radius: 0;
+}
+.help-main .ui.menu .item {
+  min-width: 110px;
+  justify-content: center;
+}
+.help-main .ui.menu .item:hover {
+  color: rgb(0, 153, 255) !important;
+}
+.help-main .ui.menu .active.item {
+  color: rgb(0, 153, 255);
+  background-color: #fff;
+}
+/* .help-main .ui.labeled.icon.menu .item {
+  justify-content: center;
+  flex-direction: none;
+  padding: 0.4em;
+} */
 
 /* ContactPage */
 .contact-main {
