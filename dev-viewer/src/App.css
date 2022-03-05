@@ -835,15 +835,15 @@ table.dashboard-table input {
   }
 }
 
-/* StylesPage */
-.styles-main {
+/* CommonPage */
+.common-main {
   margin-top: 49px;
   min-height: calc(100vh - 81px);
   border-top: #52525210 1px solid !important;
   padding-left: 25vw;
   padding-right: 25vw;
 }
-.styles-posts .ui.padded.segment {
+.common-posts .ui.padded.segment {
   border-top-left-radius: 12px;
   border-top-right-radius: 12px;
   border: 1px solid rgba(34, 36, 38, 0.15) !important;
@@ -852,29 +852,30 @@ table.dashboard-table input {
   margin-bottom: -2.2rem ;
   padding: 0;
 }
-.styles-posts div.label {
+.common-posts div.label {
   background: none;
   padding: 0.5em !important;
   font-size: 1.5em;
   color: rgb(240, 240, 240);
   z-index: 1;
 }
-.styles-post {
+.common-post {
   margin-bottom: -1em;
+  padding: 0 0.5em !important;
 }
-.styles-post:hover {
+.common-post:hover {
   cursor: pointer;
   opacity: 0.9;
   transition: opacity 0.2s;
 }
-.styles-post img {
+.common-post img {
   border-top-left-radius: 12px;
   border-top-right-radius: 12px;
   margin-left: auto;
   margin-right: auto;
   min-width: 20vw;
 }
-.styles-post-contents {
+.common-post-contents {
   padding: 1em;
   background-color: #fff;
   border: 1px solid rgba(34, 36, 38, 0.15);
@@ -882,40 +883,40 @@ table.dashboard-table input {
   border-bottom-left-radius: 12px;
   border-bottom-right-radius: 12px;
 }
-.styles-post-contents p,b {
+.common-post-contents p,b {
   display: block;
   white-space : nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
 }
-.styles-post-writer {
+.common-post-writer {
   font-size: 0.8em;
   opacity: 0.5;
   padding-top: 1em;
 }
-.styles-content-final-empty {
+.common-content-final-empty {
   margin-bottom: 4vh !important;
 }
 
 @media only screen and (max-width: 767px) {
-  .styles-main {
+  .common-main {
     padding-left: 0;
     padding-right: 0;
   }
-  .styles-posts .ui.padded.segment {
+  .common-posts .ui.padded.segment {
     width: calc(100vw - 2em);
     margin-left: auto;
     margin-right: auto;
   }
-  .styles-post img {
+  .common-post img {
     width: calc(100vw - 2em);
     margin-left: auto;
     margin-right: auto;
   }
-  .styles-posts div.label {
+  .common-posts div.label {
     margin-left: 0.7em !important;
   }
-  .styles-post-contents .ui.container {
+  .common-post-contents .ui.container {
     margin-left: 0;
   }
 }

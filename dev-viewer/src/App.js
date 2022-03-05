@@ -7,7 +7,7 @@ import SearchPage from './components/search/SearchPage'
 import BookingPage from './components/booking/BookingPage'
 import BookingDetail from './components/booking/BookingDetail';
 import ReviewPage from './components/review/ReviewPage';
-import StylesPage from './components/styles/StylesPage'
+import CommonPage from './components/common/CommonPage'
 import LoginPage from './components/login/LoginPage'
 import SignupPage from './components/login/SignupPage'
 import AboutPage from './components/help/AboutPage'
@@ -179,9 +179,9 @@ export default function App() {
             <Icon name='inbox'/>
             예약하기
           </Menu.Item>
-          <Menu.Item as={Link} to='/styles' onClick={menuClose}>
-            <Icon name='winner'/>
-            스타일
+          <Menu.Item as={Link} to='/common' onClick={menuClose}>
+            <Icon name='talk'/>
+            커뮤니티
           </Menu.Item>
           <Menu.Item as={Link} to='/help/contact' onClick={menuClose}>
             <Icon name='mail'/>
@@ -206,7 +206,7 @@ export default function App() {
                     <Route path="/review/hairshop/:shop_cd" component={ReviewPage}/>
                     <Route path="/review/restaurant/:shop_cd" component={ReviewPage}/>
                     <Route path="/review/cafe/:shop_cd" component={ReviewPage}/>
-                <Route exact path="/styles" component={StylesPage}/>
+                <Route exact path="/common" component={CommonPage}/>
                 <Route exact path="/help" component={HelpPage}/>
                   <Route exact path="/help/about" component={AboutPage}/>
                   <Route exact path="/help/contact" component={ContactPage}/>
