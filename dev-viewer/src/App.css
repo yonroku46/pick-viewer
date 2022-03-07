@@ -920,6 +920,14 @@ table.dashboard-table input {
     margin-left: 0;
   }
 }
+/* PostPage */
+.post-main {
+  margin-top: 49px;
+  min-height: calc(100vh - 81px);
+  border-top: #52525210 1px solid !important;
+  padding-left: 25vw;
+  padding-right: 25vw;
+}
 
 /* EmptyPage */
 .empty-main {

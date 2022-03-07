@@ -8,6 +8,7 @@ import BookingPage from './components/booking/BookingPage'
 import BookingDetail from './components/booking/BookingDetail';
 import ReviewPage from './components/review/ReviewPage';
 import CommonPage from './components/common/CommonPage'
+import PostPage from './components/common/PostPage'
 import LoginPage from './components/login/LoginPage'
 import SignupPage from './components/login/SignupPage'
 import AboutPage from './components/help/AboutPage'
@@ -207,6 +208,7 @@ export default function App() {
                     <Route path="/review/restaurant/:shop_cd" component={ReviewPage}/>
                     <Route path="/review/cafe/:shop_cd" component={ReviewPage}/>
                 <Route exact path="/common" component={CommonPage}/>
+                  <Route path="/common/:post_cd" component={PostPage}/>
                 <Route exact path="/help" component={HelpPage}/>
                   <Route exact path="/help/about" component={AboutPage}/>
                   <Route exact path="/help/contact" component={ContactPage}/>
