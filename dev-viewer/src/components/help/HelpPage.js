@@ -1,58 +1,59 @@
 import React, { useEffect, useState, useReducer } from "react";
 import * as api from '../../rest/api'
 import axios from 'axios';
+import { useParams, useHistory } from "react-router-dom";
 import NoticePage from "./NoticePage";
 import ContactPage from "./ContactPage";
 import AboutPage from "./AboutPage";
-import { Menu, Container } from 'semantic-ui-react';
+import { Menu, Container, Grid, Segment } from 'semantic-ui-react';
 
 export default function HelpPage(props) {
 
+    let history = useHistory();
     const [loading, setLoading] = useState(false);
-    const [visible, setVisible] = useState(false);
-    const [activeItem, setActiveItem] = useState('notice');
+    const {item} = useParams();
+    const [activeItem, setActiveItem] = useState('');
+
+    useEffect(() => {
+        setActiveItem(item);
+    }, [item])
 
     function handleItemClick (e, { name }) {
-        setActiveItem(name);
-        setVisible(false);
+        history.push(`/help/${name}`);
     }
 
     return (
     <div className="help-main">
-        {/* <Sidebar as={Menu}
-          animation='overlay'
-          direction='top'
-          icon='labeled'
-          onHide={() => setVisible(false)}
-          visible={visible}
-          className='help-main-menu'
-        > */}
-        <Menu>
-            <Menu.Item name='notice' active={activeItem === 'notice'} onClick={handleItemClick}>
-                공지사항
-            </Menu.Item>
-            <Menu.Item name='contact' active={activeItem === 'contact'} onClick={handleItemClick}>
-                문의
-            </Menu.Item>
-            <Menu.Item name='about' active={activeItem === 'about'} onClick={handleItemClick}>
-                Pick
-            </Menu.Item>
-        </Menu>
-        {/* </Sidebar> */}
+        <Grid>
+            <Grid.Column width={2}>
+            <Menu fluid vertical tabular>
+                <Menu.Item name='about' active={activeItem === 'about'} onClick={handleItemClick}>
+                    Pick
+                </Menu.Item>
+                <Menu.Item name='notice' active={activeItem === 'notice'} onClick={handleItemClick}>
+                    공지사항
+                </Menu.Item>
+                <Menu.Item name='contact' active={activeItem === 'contact'} onClick={handleItemClick} >
+                    문의
+                </Menu.Item>
+            </Menu>
+            </Grid.Column>
 
-        <Container className="mypage-content-table">
-            {
-            activeItem === 'notice'? <NoticePage/>
-            :
-            activeItem === 'contact'? <ContactPage/>
-            :
-            activeItem === 'about'? <AboutPage/>
-            :
-            <></>
-             }
-        </Container>
+            <Grid.Column stretched width={14} className='help-contents'>
+                <Segment>
+                    {
+                    activeItem === 'notice' ? <NoticePage/>
+                    :
+                    activeItem === 'contact' ? <ContactPage/>
+                    :
+                    activeItem === 'about' ? <AboutPage/>
+                    :
+                    <></>
+                    }
+                </Segment>
+            </Grid.Column>
 
-        <button onClick={() => setVisible(!visible)}/>
+        </Grid>
     </div>
     )
   };

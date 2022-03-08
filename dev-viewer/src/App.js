@@ -11,11 +11,8 @@ import CommonPage from './components/common/CommonPage'
 import PostPage from './components/common/PostPage'
 import LoginPage from './components/login/LoginPage'
 import SignupPage from './components/login/SignupPage'
-import AboutPage from './components/help/AboutPage'
-import ContactPage from './components/help/ContactPage'
 import HelpPage from './components/help/HelpPage'
 import HelpPwdPage from './components/help/HelpPwdPage'
-import NoticePage from './components/help/NoticePage'
 import MyPage from './components/mypage/MyPage'
 import DashboardPage from './components/dashboard/DashboardPage'
 import WikiPage from './components/WikiPage'
@@ -184,9 +181,9 @@ export default function App() {
             <Icon name='talk'/>
             커뮤니티
           </Menu.Item>
-          <Menu.Item as={Link} to='/help/contact' onClick={menuClose}>
-            <Icon name='mail'/>
-            문의
+          <Menu.Item as={Link} to='/help/about' onClick={menuClose}>
+            <Icon name='handshake'/>
+            Pick
           </Menu.Item>
         </Sidebar>
       </div>
@@ -209,11 +206,8 @@ export default function App() {
                     <Route path="/review/cafe/:shop_cd" component={ReviewPage}/>
                 <Route exact path="/common" component={CommonPage}/>
                   <Route path="/common/:post_cd" component={PostPage}/>
-                <Route exact path="/help" component={HelpPage}/>
-                  <Route exact path="/help/about" component={AboutPage}/>
-                  <Route exact path="/help/contact" component={ContactPage}/>
-                  <Route exact path="/help/notice" component={NoticePage}/>
-                  <Route exact path="/help/pwd" component={HelpPwdPage}/>
+                <Route exact path="/help/pwd" component={HelpPwdPage}/>
+                <Route exact path="/help/:item" component={HelpPage}/>
                 <Route exact path="/login" component={LoginPage}/>
                 <Route exact path="/signup" component={SignupPage}/>
                 <Route exact path="/mypage" component={MyPage}/>

@@ -54,7 +54,7 @@ export default function ContactPage(props) {
     <>
     <div className="contact-main">
         <h2 className="contact-title">
-            <Icon name='leaf'/>문의페이지
+            <Icon name='mail'/>문의페이지
         </h2>
         <Form onSubmit={handleSubmit}>
             <Form.Field>

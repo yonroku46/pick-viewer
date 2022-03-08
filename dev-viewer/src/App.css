@@ -2102,43 +2102,60 @@ a.detailpage-tel:hover {
   margin-left: 0.5em;
 }
 
+/* AboutPage */
+.about-main {
+  padding-left: 10vw;
+  padding-right: 10vw;
+  text-align: left;
+}
+.about-main p:last-child {
+  margin-bottom: 25px;
+}
+.about-title {
+  margin-top: 1em !important;
+  margin-bottom: 1.5em !important;
+}
+
+/* NoticePage */
+.notice-main {
+  padding-left: 10vw;
+  padding-right: 10vw;
+  text-align: left;
+}
+.notice-title {
+  margin-top: 1em !important;
+  margin-bottom: 1.5em !important;
+}
+.notice-table-writer {
+  width: 100px;
+  text-align: center !important;
+}
+.notice-table-time {
+  width: 100px;
+  text-align: center !important;
+}
+
 /* HelpPage */
 .help-main {
   margin-top: 49px;
   min-height: calc(100vh - 81px);
   border-top: #52525210 1px solid !important;
 }
-.help-form {
+.help-pwd-form {
   margin-top: 26vh !important;
-}
-.help-main .ui.menu {
-  box-shadow: none;
-  border-radius: 0;
-}
-.help-main .ui.menu .item {
-  min-width: 110px;
-  justify-content: center;
 }
 .help-main .ui.menu .item:hover {
   color: rgb(0, 153, 255) !important;
 }
-.help-main .ui.menu .active.item {
-  color: rgb(0, 153, 255);
-  background-color: #fff;
+.help-contents {
+  min-height: calc(100vh - 81px);
+  margin-top: 12px;
 }
-/* .help-main .ui.labeled.icon.menu .item {
-  justify-content: center;
-  flex-direction: none;
-  padding: 0.4em;
-} */
 
 /* ContactPage */
 .contact-main {
-  margin-top: 49px;
-  min-height: calc(100vh - 81px);
-  border-top: #52525210 1px solid !important;
-  padding-left: 30vw;
-  padding-right: 30vw;
+  padding-left: 10vw;
+  padding-right: 10vw;
   text-align: left;
 }
 .contact-main textarea {
