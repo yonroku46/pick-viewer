@@ -52,35 +52,33 @@ export default function ContactPage(props) {
 
     return(
     <>
-    <div className="contact-main">
-        <h2 className="contact-title">
-            <Icon name='mail'/>문의페이지
-        </h2>
-        <Form onSubmit={handleSubmit}>
-            <Form.Field>
-                <label>성함</label>
-                <input onChange={(e) => setName(e.target.value)}/>
-            </Form.Field>
-            <Form.Field>
-                <label>E-Mail</label>
-                <input type='email' onChange={(e) => setEmail(e.target.value)}/>
-            </Form.Field>
-            <Form.Field>
-                <Form.Field 
-                    control={Select} 
-                    value={category} 
-                    options={categoryOptions} 
-                    label={{ children: '카테고리'}}
-                    placeholder={categoryOptions[0]}
-                    onChange={(e, { value }) => setCategory(value)}/>
-            </Form.Field>
-            <Form.TextArea label='상세내용' onChange={(e) => setDetail(e.target.value)}/>
-            <Form.Field className="contact-submit">
-                <Checkbox value={consent} onChange={() => setConsent(!consent)} label='메일 수신을 위한 개인정보 제공에 동의합니다'/><br/>
-                <Button disabled={!consent} secondary type='submit'>전송하기</Button>
-            </Form.Field>
-        </Form>
-    </div>
+    <h2 className="contact-title">
+        <Icon name='mail'/>문의페이지
+    </h2>
+    <Form onSubmit={handleSubmit}>
+        <Form.Field>
+            <label>성함</label>
+            <input onChange={(e) => setName(e.target.value)}/>
+        </Form.Field>
+        <Form.Field>
+            <label>E-Mail</label>
+            <input type='email' onChange={(e) => setEmail(e.target.value)}/>
+        </Form.Field>
+        <Form.Field>
+            <Form.Field 
+                control={Select} 
+                value={category} 
+                options={categoryOptions} 
+                label={{ children: '카테고리'}}
+                placeholder={categoryOptions[0]}
+                onChange={(e, { value }) => setCategory(value)}/>
+        </Form.Field>
+        <Form.TextArea label='상세내용' onChange={(e) => setDetail(e.target.value)}/>
+        <Form.Field className="contact-submit">
+            <Checkbox value={consent} onChange={() => setConsent(!consent)} label='메일 수신을 위한 개인정보 제공에 동의합니다'/><br/>
+            <Button disabled={!consent} secondary type='submit'>전송하기</Button>
+        </Form.Field>
+    </Form>
     </>
     )
   };

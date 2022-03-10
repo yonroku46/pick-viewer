@@ -25,31 +25,33 @@ export default function HelpPage(props) {
     return (
     <div className="help-main">
         <Grid>
-            <Grid.Column width={2}>
-            <Menu fluid vertical tabular>
-                <Menu.Item name='about' active={activeItem === 'about'} onClick={handleItemClick}>
-                    Pick
-                </Menu.Item>
-                <Menu.Item name='notice' active={activeItem === 'notice'} onClick={handleItemClick}>
-                    공지사항
-                </Menu.Item>
-                <Menu.Item name='contact' active={activeItem === 'contact'} onClick={handleItemClick} >
-                    문의
-                </Menu.Item>
-            </Menu>
+            <Grid.Column className='help-menu' width={2}>
+                <Menu className='help-menu-item' fluid vertical tabular>
+                    <Menu.Item name='about' active={activeItem === 'about'} onClick={handleItemClick}>
+                        Pick
+                    </Menu.Item>
+                    <Menu.Item name='notice' active={activeItem === 'notice'} onClick={handleItemClick}>
+                        공지사항
+                    </Menu.Item>
+                    <Menu.Item name='contact' active={activeItem === 'contact'} onClick={handleItemClick} >
+                        문의
+                    </Menu.Item>
+                </Menu>
             </Grid.Column>
 
             <Grid.Column stretched width={14} className='help-contents'>
                 <Segment>
-                    {
-                    activeItem === 'notice' ? <NoticePage/>
-                    :
-                    activeItem === 'contact' ? <ContactPage/>
-                    :
-                    activeItem === 'about' ? <AboutPage/>
-                    :
-                    <></>
-                    }
+                    <div className='help-contents-active'>
+                        {
+                        activeItem === 'notice' ? <NoticePage/>
+                        :
+                        activeItem === 'contact' ? <ContactPage/>
+                        :
+                        activeItem === 'about' ? <AboutPage/>
+                        :
+                        <></>
+                        }  
+                    </div>
                 </Segment>
             </Grid.Column>
 
