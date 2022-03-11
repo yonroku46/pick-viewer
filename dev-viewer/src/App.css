@@ -119,11 +119,8 @@ h1, h2, h3, h4, h5, div, a, button {
   padding: 5px 10px;
   font-size: 12px;
 }
-
-.push-background {
-  color: rgba(100, 100, 100, 0.4);
-  background-color: rgb(0, 0, 0, 0.4);
-  transition: background-color 0.5s;
+.footer-border {
+  border-top: #52525210 1px solid !important;
 }
 
 .menu-left {
@@ -2110,7 +2107,7 @@ a.detailpage-tel:hover {
 }
 .help-menu {
   margin-top: 14px !important;
-  border-right: 1px solid #d4d4d5 !important;
+  border-right: 1px solid #d4d4d550 !important;
   padding-right: 0px !important;
   max-width: 184px !important;
 }

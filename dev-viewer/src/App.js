@@ -31,6 +31,7 @@ export default function App() {
 
   const [countryStat, setCountryStat] = useState(true);
   const [scrollPosition, setScrollPosition] = useState(0);
+  const spList = ['/help/about','/help/notice','/help/contact','/dashboard']
   const updateScroll = () => {
     setScrollPosition(window.scrollY || document.documentElement.scrollTop);
   }
@@ -67,7 +68,6 @@ export default function App() {
     }, []);
 
     useEffect(() => {
-      let path = window.location.pathname;
       window.addEventListener('scroll', updateScroll);
     }, []);
     
@@ -216,12 +216,11 @@ export default function App() {
                 <Route component={EmptyPage}/>
               </Switch>
             </Segment>
+            {/* Footer */}
+            <footer className={spList.indexOf(window.location.pathname) !== -1 ? 'app-footer footer-border' : 'app-footer'}>
+              <Icon name='copyright'/>TEAMBEPO 2022
+            </footer>
           </Sidebar.Pusher>
-          
-          {/* Footer */}
-          <footer className={visible ? "app-footer push-background" : "app-footer"}>
-            <Icon name='copyright'/>TEAMBEPO 2022
-          </footer>
         </Sidebar.Pushable>
 
       </div>
