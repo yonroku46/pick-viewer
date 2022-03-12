@@ -77,10 +77,6 @@ h1, h2, h3, h4, h5, div, a, button {
   width: 100% !important;
   height: 240px !important;
 }
-.ui.vertical.menu .active.item {
-  background-color: rgba(100, 165, 250, 0.9) !important;
-  color: #fff !important;
-}
 
 .body-segment {
   border-radius: 0px !important;
@@ -451,6 +447,9 @@ hr {
   min-height: calc(100vh - 83px) !important;
   margin-bottom: -10px !important;
   transition: margin-left 0.5s;
+  border: none !important;
+  border-right: 1px solid rgba(34,36,38,.15) !important;
+  border-radius: 0 !important;
 }
 .dashboard-menu div.header {
   text-align: left;
@@ -492,7 +491,7 @@ hr {
   color: #000 !important;
 }
 .dashboard-viewer {
-  min-height: calc(100vh - 84px) !important;
+  min-height: calc(100vh - 83px) !important;
   max-height: 89vh;
   text-align: left;
   overflow: auto !important;
@@ -503,7 +502,9 @@ hr {
   margin-bottom: -10px !important;
 }
 .ui.segment.dashboard-viewer {
-  border: rgb(0, 0, 0, 0.1) 1px solid !important;
+  border-left: rgb(0, 0, 0, 0.1) 1px solid !important;
+  border-right: rgb(0, 0, 0, 0.1) 1px solid !important;
+  border-radius: 0 !important;
 }
 .dashboard-viewer-empty {
   margin: 1em !important;
@@ -784,11 +785,16 @@ table.dashboard-table input {
     width: 100vw !important;
     max-width: none !important;
     min-height: 4vh !important;
+    border: none !important;
   }
   .dashboard-viewer {
     width: 100vw !important;
     margin-left: 0px !important;
     margin-right: 0px !important;
+  }
+  .ui.segment.dashboard-viewer {
+    border: none !important;
+    border-top: 1px solid rgba(34,36,38,.15) !important;
   }
   .dashboard-viewer .form-interval {
     margin-top: 1.5em !important;
@@ -2133,7 +2139,7 @@ a.detailpage-tel:hover {
 /* sp */
 @media only screen and (max-width: 767px){
   .help-menu {
-    display: none !important;
+    /* display: none !important; */
   }
   .help-contents-active {
     padding-left: 0;

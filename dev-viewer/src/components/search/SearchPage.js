@@ -135,7 +135,7 @@ export default function SearchPage(props) {
                 if (res.length === 0) {
                     setSearchResult(res);
                     setVisible(true);
-                    // alert('찾으시는 매장이 없습니다.')
+                    setTimeout(() => { setVisible(false) }, 2500);
                 } else {
                     setSearchResult(res);
                 }
