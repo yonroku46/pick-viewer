@@ -5,17 +5,19 @@ import { useParams, useHistory } from "react-router-dom";
 import NoticePage from "./NoticePage";
 import ContactPage from "./ContactPage";
 import AboutPage from "./AboutPage";
-import { Menu, Container, Grid, Segment } from 'semantic-ui-react';
+import { Menu, Icon, Grid, Segment } from 'semantic-ui-react';
 
 export default function HelpPage(props) {
 
     let history = useHistory();
     const [loading, setLoading] = useState(false);
+    const [sp, setSp] = useState(false);
     const {item} = useParams();
     const [activeItem, setActiveItem] = useState('');
 
     useEffect(() => {
         setActiveItem(item);
+        setSp(window.innerWidth < 767);
     }, [item])
 
     function handleItemClick (e, { name }) {
@@ -28,13 +30,13 @@ export default function HelpPage(props) {
             <Grid.Column className='help-menu' width={2}>
                 <Menu className='help-menu-item' fluid vertical tabular>
                     <Menu.Item name='about' active={activeItem === 'about'} onClick={handleItemClick}>
-                        Pick
+                        {sp ? <Icon name='pinterest'/> : 'Pick'}
                     </Menu.Item>
                     <Menu.Item name='notice' active={activeItem === 'notice'} onClick={handleItemClick}>
-                        공지사항
+                        {sp ? <Icon name='thumbtack'/> : '공지사항'}
                     </Menu.Item>
                     <Menu.Item name='contact' active={activeItem === 'contact'} onClick={handleItemClick} >
-                        문의
+                        {sp ? <Icon name='mail'/> : '문의'}
                     </Menu.Item>
                 </Menu>
             </Grid.Column>

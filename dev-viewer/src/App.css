@@ -2113,12 +2113,18 @@ a.detailpage-tel:hover {
 }
 .help-menu {
   margin-top: 14px !important;
-  border-right: 1px solid #d4d4d550 !important;
+  border-right: 1px solid #d4d4d5 !important;
   padding-right: 0px !important;
   max-width: 184px !important;
 }
 .help-menu-item {
   border-right: none !important;
+}
+.help-menu-item a {
+  padding: 1em 0 !important;
+}
+.help-menu-item i {
+  display: contents !important;
 }
 .help-pwd-form {
   margin-top: 26vh !important;
@@ -2128,7 +2134,7 @@ a.detailpage-tel:hover {
 }
 .help-contents {
   min-height: calc(100vh - 81px);
-  margin-top: 12px;
+  padding: 1em 1em 0 0 !important;
 }
 .help-contents-active {
   text-align: left !important;
@@ -2152,7 +2158,7 @@ a.detailpage-tel:hover {
   margin-bottom: 25px;
 }
 .about-title {
-  margin-top: 1em !important;
+  margin-top: 0.5em !important;
   margin-bottom: 1.5em !important;
 }
 .about-title i {
@@ -2170,7 +2176,7 @@ a.detailpage-tel:hover {
   margin-top: 1px !important;
 }
 .notice-title {
-  margin-top: 1em !important;
+  margin-top: 0.5em !important;
   margin-bottom: 1.5em !important;
 }
 .notice-title i {
@@ -2194,7 +2200,7 @@ a.detailpage-tel:hover {
   max-height: 340px;
 }
 .contact-title {
-  margin-top: 1em !important;
+  margin-top: 0.5em !important;
   margin-bottom: 1.5em !important;
 }
 .contact-title i {
