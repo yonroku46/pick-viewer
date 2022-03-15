@@ -24,10 +24,10 @@ class Config(object):
         setsession=[],  #  list of commands executed before starting the session. such as ：["set datestyle to ...", "set time zone ..."]
         ping=0,
         # ping MySQL server to check if the service is available 。#  such as ：0 = None = never, 1 = default = whenever it is requested, 2 = when a cursor is created, 4 = when a query is executed, 7 = always
-        # host=config.get("Connect","Host"),
-        # user=config.get("Connect","User"),
-        host=config.get("Connect","DevHost"),
-        user=config.get("Connect","DevUser"),
+        host=config.get("Connect","Host"),
+        user=config.get("Connect","User"),
+        # host=config.get("Connect","DevHost"),
+        # user=config.get("Connect","DevUser"),
         port=3306,
         password=config.get("Connect","Password"),
         database=config.get("Connect","DBName"),
