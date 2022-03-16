@@ -52,7 +52,11 @@ def after_request(response):
 # server status to check
 @app.route("/api/server")
 def server():
-    return (jsonify({'status': True}), 200)
+    try:
+        return (jsonify({'status': True}), 200)
+    except Exception as e:
+        app.logger.info("Exception:{}".format(e))
+        return (jsonify({'error': 'Not found'}), 404)
 
 # server status to check
 @app.route("/api/check/<ip>", methods=["POST"])
@@ -492,10 +496,10 @@ def infoUpdate():
         app.logger.info("Exception:{}".format(e))
         return (jsonify({'error': 'Not found'}), 404)
 
-@app.route('/api/favoriteList', methods=['GET'])
+@app.route('/api/favoriteList', methods=['POST'])
 def favoriteList():
-    params = request.args
-    user_cd = params.get('user_cd')
+    params = request.get_json()
+    user_cd = params['user_cd']
     try:
         query = gen.getQuery("sql/SELECT_favoriteList.sql", {"user_cd": user_cd})
         rows = mng.fetch_all(query)
