@@ -35,7 +35,6 @@ categoryList = ['hairshop', 'restaurant', 'cafe']
 @app.before_request
 def before_request():
     remoteIp = ipaddress.ip_address(request.remote_addr)
-
     for allow in ALLOW_NETWORKS:
         ipNetwork = ipaddress.ip_network(allow)
         if remoteIp in ipNetwork:
