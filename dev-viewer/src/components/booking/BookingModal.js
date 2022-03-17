@@ -1,8 +1,9 @@
 import React, { Component } from 'react';
 import * as api from '../../rest/api'
 import axios from 'axios';
+import nodata from '../../img/nodata.png'
 import { Link } from 'react-router-dom';
-import { Menu, Input, Dimmer, Loader, Icon, Button, Pagination } from 'semantic-ui-react';
+import { Menu, Input, Dimmer, Loader, Icon, Button, Pagination, Image } from 'semantic-ui-react';
 
 export default class BookingModal extends Component {
 
@@ -16,6 +17,7 @@ export default class BookingModal extends Component {
         shopsOrigin: [],
         shops: [],
         search: '',
+        userInfo: JSON.parse(sessionStorage.getItem('userInfo')),
         category: this.props.category
     }
 
@@ -118,7 +120,13 @@ export default class BookingModal extends Component {
                     </div>
                 <h4 className='underline'>주변 매장</h4>
                     <div className='shopmodal-shops'>
-                    {isLoading ? <this.Loading/> : 
+                    {shops.length === 0 ?
+                        <div>
+                            <Image src={nodata} className='shopmodal-nodata'/>
+                            <h4>필터링 결과가 존재하지 않습니다</h4>
+                        </div>
+                        :
+                        isLoading ? <this.Loading/> : 
                         shops === null ? <h3 className='booking-nodata'>해당하는 매장을 찾지 못했습니다</h3> :
                         shops.slice((activePage - 1) * perPage, (activePage * perPage)).map(shop => {
                         const shop_img = shop.shop_img === null ? 'images/shop/default.png' : shop.shop_img.split(',')[0];
@@ -139,14 +147,16 @@ export default class BookingModal extends Component {
                     }
                     </div>
                 </div>
-                <Pagination className='shopmodal-pagination' 
-                    defaultActivePage={1} 
-                    firstItem={null} 
-                    lastItem={null} 
-                    onPageChange={this.handlePaginationChange}
-                    totalPages={Math.ceil(shops.length / perPage)}
-                    pointing secondary
-                />
+                {shops.length !== 0 &&
+                    <Pagination className='shopmodal-pagination' 
+                        defaultActivePage={1} 
+                        firstItem={null} 
+                        lastItem={null} 
+                        onPageChange={this.handlePaginationChange}
+                        totalPages={Math.ceil(shops.length / perPage)}
+                        pointing secondary
+                    />
+                }
             </div>
         )
     }

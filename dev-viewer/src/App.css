@@ -1452,6 +1452,9 @@ table.dashboard-table input {
   margin-left: 1em;
   margin-bottom: 0.5em;
 }
+.shopmodal-nodata {
+  margin: 2em auto;
+}
 .shopmodal-shops button {
   background-size:cover;
   text-align: left;

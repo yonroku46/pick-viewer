@@ -61,14 +61,13 @@ export default function MyPage(props) {
 
   function getFavoriteList() {
     return new Promise(function(resolve, reject) {
+      const params = { 
+        'user_cd': user_cd
+      };
       axios
-        .get(api.favoriteList, {
-            params: {
-              'user_cd': user_cd
-            }
-        })
-        .then(response => resolve(response.data))
-        .catch(error => reject(error.response))
+      .post(api.favoriteList, params)
+      .then(response => resolve(response.data))
+      .catch(error => reject(error.response))
     })
     .then(res => {
       if (res !== null) {

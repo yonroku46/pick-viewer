@@ -20,12 +20,11 @@ export default function BookingPage(props) {
 
     useEffect(() => {
         return new Promise(function(resolve, reject) {
+          const params = { 
+            'user_cd': user_cd
+          };
           axios
-          .get(api.favoriteList, {
-              params: {
-                'user_cd': user_cd
-              }
-          })
+          .post(api.favoriteList, params)
           .then(response => resolve(response.data))
           .catch(error => reject(error.response))
         })
