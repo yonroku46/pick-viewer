@@ -7,7 +7,6 @@ from werkzeug.utils import secure_filename
 from datetime import datetime
 from src import dbGenerator
 import urllib.request as urlreq
-import configparser
 import ipaddress
 import smtplib
 import shutil
@@ -19,13 +18,12 @@ import glob
 from io import StringIO
 from PIL import Image
 from src.utils import SQLHelper as mng
+from src.setting import conf
 
 app = Flask(__name__)
 app.config['JSON_AS_ASCII'] = False
+app.config.from_object(conf[os.environ['FLASK_ENV']])
 CORS(app, support_credentials=True)
-
-config = configparser.ConfigParser()
-config.read("config/System.Config")
 
 ALLOW_NETWORKS = ["127.0.0.1"]
 
@@ -134,8 +132,8 @@ def mailService():
         app.logger.info("Exception:{}".format(e))
         return (jsonify({'error': 'Not found'}), 404)
 
-    ID = config.get("SMTP","Id")
-    KEY = config.get("SMTP","Key")
+    ID = app.config.get('SMTP_ID')
+    KEY = app.config.get('SMTP_KEY')
     TO = user_email
     pin = random.randint(100000,999999)
 
@@ -195,8 +193,8 @@ def helpService():
         count = rows['count']
 
         if count == 1:
-            ID = config.get("SMTP","Id")
-            KEY = config.get("SMTP","Key")
+            ID = app.config.get('SMTP_ID')
+            KEY = app.config.get('SMTP_KEY')
             TO = user_email
             pin = random.randint(100000,999999)
 

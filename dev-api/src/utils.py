@@ -1,11 +1,14 @@
+import os
 import pymysql
-from src.setting import Config
+from src.setting import conf
+
+confing = conf[os.environ['FLASK_ENV']]
 
 class SQLHelper(object):
 
     @staticmethod
     def open(cursor):
-        POOL = Config.PYMYSQL_POOL
+        POOL = confing.PYMYSQL_POOL
         conn = POOL.connection()
         cursor = conn.cursor(cursor=cursor)
         return conn,cursor
