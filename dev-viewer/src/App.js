@@ -183,7 +183,7 @@ export default function App() {
           </Menu.Item>
           <Menu.Item as={Link} to='/help/about' onClick={menuClose}>
             <Icon name='handshake'/>
-            Pick
+            공지/문의
           </Menu.Item>
         </Sidebar>
       </div>

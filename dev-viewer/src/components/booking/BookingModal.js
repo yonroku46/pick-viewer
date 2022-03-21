@@ -17,7 +17,7 @@ export default class BookingModal extends Component {
         shopsOrigin: [],
         shops: [],
         search: '',
-        userInfo: JSON.parse(sessionStorage.getItem('userInfo')),
+        userInfo: JSON.parse(sessionStorage.getItem('userInfo')) ? JSON.parse(sessionStorage.getItem('userInfo')) : undefined,
         category: this.props.category
     }
 

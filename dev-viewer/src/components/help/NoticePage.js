@@ -27,22 +27,22 @@ export default function NoticePage(props) {
             <Icon name='plus'/>
         </Button>
     </div>
-    <Table singleLine selectable>
+    <Table unstackable singleLine selectable>
         <Table.Header>
             <Table.Row>
                 <Table.HeaderCell>타이틀</Table.HeaderCell>
-                <Table.HeaderCell className='notice-table-writer'>작성자</Table.HeaderCell>
+                <Table.HeaderCell className={props.sp ? 'notice-table-sp' : 'notice-table-writer'}>작성자</Table.HeaderCell>
                 <Table.HeaderCell className='notice-table-time'>등록일</Table.HeaderCell>
             </Table.Row>
         </Table.Header>
 
-        <Table.Body>
+        <Table.Body className='notice-table-body'>
             <Table.Row>
                 <Table.Cell>
                     <Label color='blue' horizontal>{categoryList[1]}</Label>
                     1.0.0 패치노트
                 </Table.Cell>
-                <Table.Cell className='notice-table-writer'>
+                <Table.Cell className={props.sp ? 'notice-table-sp' : 'notice-table-writer'}>
                     관리자
                 </Table.Cell>
                 <Table.Cell className='notice-table-time'>
@@ -52,12 +52,12 @@ export default function NoticePage(props) {
             <Table.Row>
                 <Table.Cell>
                     <Label color='teal' horizontal>{categoryList[2]}</Label>
-                    Pick이 오픈기념 이벤트
+                    Pick이 오픈기념 이벤트 초초초특가!
                 </Table.Cell>
-                <Table.Cell className='notice-table-writer'>
+                <Table.Cell className={props.sp ? 'notice-table-sp' : 'notice-table-writer'}>
                     관리자
                 </Table.Cell>
-                <Table.Cell className='notice-table-writer'>
+                <Table.Cell className='notice-table-time'>
                     2022.03.08
                 </Table.Cell>
             </Table.Row>
@@ -66,10 +66,10 @@ export default function NoticePage(props) {
                     <Label color='purple' horizontal>{categoryList[0]}</Label>
                     Pick이 오픈하였습니다!
                 </Table.Cell>
-                <Table.Cell className='notice-table-writer'>
+                <Table.Cell className={props.sp ? 'notice-table-sp' : 'notice-table-writer'}>
                     관리자
                 </Table.Cell>
-                <Table.Cell className='notice-table-writer'>
+                <Table.Cell className='notice-table-time'>
                     2022.03.08
                 </Table.Cell>
             </Table.Row>

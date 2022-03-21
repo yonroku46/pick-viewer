@@ -45,7 +45,7 @@ export default function HelpPage(props) {
                 <Segment>
                     <div className='help-contents-active'>
                         {
-                        activeItem === 'notice' ? <NoticePage/>
+                        activeItem === 'notice' ? <NoticePage sp={sp}/>
                         :
                         activeItem === 'contact' ? <ContactPage/>
                         :
