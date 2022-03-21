@@ -228,7 +228,7 @@ export default function SignupPage(props) {
         <Grid.Column style={{ maxWidth: 450 }}>
           <Form size='large' onSubmit={step3}>
             <Segment stacked>
-              <Form.Input fluid icon='key' name='certifi' iconPosition='left' fluid placeholder='인증번호 입력' value={certifi} onChange={certifiInput}/>
+              <Form.Input fluid icon='key' name='certifi' iconPosition='left' placeholder='인증번호 입력' value={certifi} onChange={certifiInput}/>
               {apiload ?
               <Button loading primary disabled fluid size='large'>
                 로딩중

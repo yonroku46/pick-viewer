@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useReducer } from "react";
-import { Label, Button, Container, Divider, Grid, Segment, Image, Icon, Loader, Modal } from 'semantic-ui-react'
+import { Label, Container, Divider, Grid, Segment, Image, Icon } from 'semantic-ui-react'
 import * as api from '../../rest/api'
 import axios from 'axios';
 
