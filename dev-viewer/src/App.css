@@ -846,8 +846,18 @@ table.dashboard-table input {
   padding-left: 5vw;
   padding-right: 5vw;
 }
-.common-posts {
+.common-search {
   margin: 1em 0;
+  width: 50vw;
+  margin-left: auto;
+  margin-right: auto;
+}
+.common-search input {
+  width: 50vw !important;
+  border-radius: 20px !important;
+}
+.common-posts {
+  margin-bottom: 1em;
 }
 .common-posts figure {
   display: block;
@@ -865,6 +875,7 @@ table.dashboard-table input {
   width: 100%;
   height: auto;
   vertical-align: top;
+  border-radius: 10px;
   transition: 0.5s;
 }
 .common-posts figcaption {
@@ -914,18 +925,17 @@ table.dashboard-table input {
   margin-bottom: 4vh !important;
 }
 
+/* sp */
 @media only screen and (max-width: 767px) {
   .common-main {
     padding-left: 0;
     padding-right: 0;
   }
-  .common-post img {
-    width: calc(100vw - 2em);
-    margin-left: auto;
-    margin-right: auto;
+  .common-search {
+    width: 96vw;
   }
-  .common-post-contents .ui.container {
-    margin-left: 0;
+  .common-search input{
+    width: 96vw;
   }
 }
 /* PostPage */
@@ -1875,9 +1885,15 @@ a.detailpage-tel:hover {
   margin-right: auto !important;
   margin-top: calc(1em - 6px) !important;
 }
+.detailpage-service-customers img {
+  width: 32px;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  margin-bottom: 8px;
+}
 .detailpage-service-customers button {
   width: 24% !important;
-  height: 58px !important;
   margin: 0px 2px !important;
   border: lightgray solid 1px !important;
   margin-bottom: 1em !important;

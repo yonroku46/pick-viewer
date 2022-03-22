@@ -1,5 +1,9 @@
 import { useEffect, useState, useReducer } from "react";
 import { useParams, Link } from "react-router-dom";
+import person1 from '../../img/person1.png'
+import person2 from '../../img/person2.png'
+import person3 from '../../img/person3.png'
+import person5 from '../../img/person5.png'
 import { Dimmer, Button, Item, Grid, Segment, Image, Icon, Loader, Modal, Header, Table, Statistic, Card } from 'semantic-ui-react'
 import { Link as Scroll } from "react-scroll";
 import moment from "moment";
@@ -501,7 +505,13 @@ export default function BookingDetail(props) {
   const visibleCustomers = showCustomers &&
     <Item.Group unstackable className='detailpage-service-customers'>
       {customersList.map(customers =>
-        <Button onClick={() => CustomersBtnClick(customers.customers_cd)}>{customers.customers}</Button>
+        <Button onClick={() => CustomersBtnClick(customers.customers_cd)}>
+          {customers.customers_cd === 1 && <img src={person1}/>}
+          {customers.customers_cd === 2 && <img src={person2}/>}
+          {customers.customers_cd === 3 && <img src={person3}/>}
+          {customers.customers_cd === 5 && <img src={person5}/>}
+          {customers.customers}
+        </Button>
       )}
     </Item.Group>
 
