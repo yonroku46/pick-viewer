@@ -1,7 +1,7 @@
 import React, { useEffect, useState, useReducer } from "react";
 import * as api from '../../rest/api'
 import axios from 'axios';
-import { Form, Checkbox, Button, Select, Icon } from 'semantic-ui-react';
+import { Form, Checkbox, Button, Select, Icon, Header } from 'semantic-ui-react';
 
 export default function ContactPage(props) {
 
@@ -52,9 +52,9 @@ export default function ContactPage(props) {
 
     return(
     <>
-    <h2 className="contact-title">
+    <Header as='h3' className="contact-title">
         <Icon name='mail'/>문의페이지
-    </h2>
+    </Header>
     <Form onSubmit={handleSubmit}>
         <Form.Field>
             <label>성함</label>

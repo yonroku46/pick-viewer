@@ -1,7 +1,7 @@
 import React, { useEffect, useState, useReducer } from "react";
 import * as api from '../../rest/api'
 import axios from 'axios';
-import { Table, Icon, Label, Button, Input, Pagination } from 'semantic-ui-react';
+import { Table, Icon, Label, Button, Input, Header, Pagination } from 'semantic-ui-react';
 
 export default function NoticePage(props) {
 
@@ -15,9 +15,9 @@ export default function NoticePage(props) {
 
     return(
     <>
-    <h2 className="notice-title">
+    <Header as='h3' className="notice-title">
         <Icon name='thumbtack'/>공지사항
-    </h2>
+    </Header>
     <div>
         <Input className='notice-search' iconPosition='left' placeholder='공지사항 검색' value={search} onChange={(e) => setSearch(e.target.value)}>
             <Icon className='search-btn' name='search'/>

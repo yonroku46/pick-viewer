@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useReducer } from "react";
-import { Menu, Form, Input, Grid, Segment, Image, Icon } from 'semantic-ui-react'
+import { Menu, Form, Input, Loader, Icon } from 'semantic-ui-react'
 import StackGrid from 'react-stack-grid';
 import * as api from '../../rest/api'
 import axios from 'axios';
@@ -114,7 +114,12 @@ export default function CommonPage(props) {
                         <img src='http://localhost:3000/images/menu/default.png'/>
                         <figcaption>image3</figcaption>
                     </figure>
+                    <figure>
+                        <img src='http://localhost:3000/images/menu/default.png'/>
+                        <figcaption>image3</figcaption>
+                    </figure>
                 </StackGrid>
+                <Loader active={true} inline='centered' size='small' className='common-loader'/>
                 <div className='common-content-final-empty'> </div>
             </div>
         </div>
