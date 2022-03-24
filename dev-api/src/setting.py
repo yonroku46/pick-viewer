@@ -29,10 +29,8 @@ class ProductionConfig(Config):
         maxusage=None,  #  the maximum number of times a link can be reused, None express unlimited 
         setsession=[],  #  list of commands executed before starting the session. such as ：["set datestyle to ...", "set time zone ..."]
         ping=0,
-        # host=config.get("Connect","Host"),
-        # user=config.get("Connect","User"),
-        host=config.get("Connect","DevHost"),
-        user=config.get("Connect","DevUser"),
+        host=config.get("Connect","Host"),
+        user=config.get("Connect","User"),
         port=3306,
         password=config.get("Connect","Password"),
         database=config.get("Connect","DBName"),

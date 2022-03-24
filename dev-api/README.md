@@ -11,13 +11,15 @@ In the project directory, you can run:
 + **Local**
 
 ```
-python app.py
+set FLASK_ENV=development
+flask run
 ```
 
 + **Server**
 
 ```
-nohup python3 app.py > output.log
+export FLASK_ENV=production
+nohup flask run > output.log
 ```
 
 ### `api stop`
