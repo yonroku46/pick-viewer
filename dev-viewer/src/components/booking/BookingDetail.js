@@ -983,9 +983,9 @@ export default function BookingDetail(props) {
         <Modal.Actions className='booking-modal-bottom'>
             <p>상세내역을 확인하신 후 예약을 눌러주세요</p>
             {finalCheck ? 
-            <Button primary onClick={sendBooking}>예약하기</Button>
+            <Button color='violet' onClick={sendBooking}>예약하기</Button>
             :
-            <Button secondary onClick={() => {setFinalCheck(true)}}>
+            <Button secondary className='booking-modal-btn' onClick={() => {setFinalCheck(true)}}>
                <Icon name='checkmark'/> 확인하였습니다
             </Button>
             }

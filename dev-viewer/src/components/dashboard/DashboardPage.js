@@ -968,7 +968,7 @@ export default function DashboardPage(props) {
                     <Menu.Item name='menuInfo' active={activeItem === 'menuInfo'} onClick={handleItemClick}>
                         메뉴정보
                     </Menu.Item>
-                    <Dropdown className='dashboard-menu-dropdown' item text='수정 / 저장' onClick={mobileCheck}>
+                    <Dropdown className='dashboard-menu-dropdown' icon={editMode ? 'toggle on' : 'toggle off'} item text='수정 / 저장' onClick={mobileCheck}>
                         <Dropdown.Menu>
                             <Dropdown.Item icon={editMode ? 'check' : 'edit'} text={editMode ? '임시저장' : '수정모드 활성화'} onClick={() => setEditMode(!editMode)}/>
                             <Dropdown.Item icon='save' text='저장'  onClick={saveShopInfo}/>

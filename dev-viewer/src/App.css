@@ -1610,17 +1610,23 @@ table.dashboard-table input {
 }
 .booking-modal-bottom {
   text-align: center !important;
-  color: rgb(0, 0, 0, 0.3);
+  color: rgb(0, 0, 0, 0.5);
   font-weight: bold;
   margin-top: -4px;
   margin-bottom: -4px;
   font-size: 1em;
+  padding: 1.5em 1em !important;
 }
 .booking-modal-bottom button {
   width: 60%;
-  border: solid rgb(50, 67, 216, 0.6) 2px !important;
+  border: solid rgb(0, 0, 0, 0.5) 2px !important;
   margin-left: 0px !important;
   margin-right: 0px !important;
+  opacity: 0.6;
+}
+.booking-modal-bottom button:hover {
+  opacity: 1;
+  transition: 0.5s;
 }
 .booking-modal-detail ol {
   margin-top: 0px;
@@ -1638,7 +1644,7 @@ table.dashboard-table input {
 }
 .booking-modal-total {
   text-align: right;
-  padding: 20px 14px;
+  padding: 1.5em 1em;
   font-weight: bold;
   font-size: 1.3em;
   border-top: rgb(125, 125, 125, 0.15) 1px solid;
