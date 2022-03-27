@@ -2,7 +2,7 @@ import React, { useState, useRef, useEffect } from 'react'
 import { Item, Icon, Modal, Container, Menu, Button, Input, Label, Message, Transition } from 'semantic-ui-react'
 import { Redirect, Link } from 'react-router-dom'
 import Calendar from "./MyCalendar";
-import Quick from "./Quick";
+import Talk from "./MyTalk";
 import Favorite from "./MyFavorite";
 import * as api from '../../rest/api'
 import axios from 'axios';
@@ -292,10 +292,10 @@ export default function MyPage(props) {
         <Icon name='table' size='large' className='mypage-icon-sp'/><span className='mypage-menu-sp'>예약관리</span>
       </Menu.Item>
       <Menu.Item
-        name='quick'
-        active={activeItem === 'quick'}
+        name='talk'
+        active={activeItem === 'talk'}
         onClick={handleItemClick}>
-        <Icon name='bolt' size='large' className='mypage-icon-sp'/><span className='mypage-menu-sp'>퀵카드</span>
+        <Icon name='comments' size='large' className='mypage-icon-sp'/><span className='mypage-menu-sp'>메세지</span>
       </Menu.Item>
       <Menu.Item
         name='favorite'
@@ -310,8 +310,8 @@ export default function MyPage(props) {
       activeItem === 'schdule'?
         <Calendar bookingList={bookingList}/>
       :
-      activeItem === 'quick'?
-        <Quick/>
+      activeItem === 'talk'?
+        <Talk/>
       :
       activeItem === 'favorite'?
         <Favorite favoriteList={favoriteList}/>
