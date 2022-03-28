@@ -1,12 +1,18 @@
-import {useState} from 'react';
+import { useState } from 'react';
+import { Link, withRouter } from "react-router-dom";
 import { Image, List, Label } from 'semantic-ui-react'
 
-export default function MyTalk() {
+function MyTalk(props) {
+
+    function talkInfo(targetId) {
+        const target = targetId;
+        props.history.push('/mypage/talk/' + target);
+    }
 
     return (
-        <>    
+        <>
         <List celled className='mytalk-list'>
-            <List.Item>
+            <List.Item onClick={() => talkInfo('1')}>
                 <Image avatar className='mytalk-user-icon' src='https://react.semantic-ui.com/images/avatar/small/helen.jpg' />
                 <List.Content>
                     <List.Header>고객1</List.Header>
@@ -36,3 +42,5 @@ export default function MyTalk() {
         </>
     );
 }
+
+export default withRouter(MyTalk);

@@ -14,6 +14,8 @@ import SignupPage from './components/login/SignupPage'
 import HelpPage from './components/help/HelpPage'
 import HelpPwdPage from './components/help/HelpPwdPage'
 import MyPage from './components/mypage/MyPage'
+import SchedulePage from './components/mypage/SchedulePage';
+import TalkPage from './components/mypage/TalkPage';
 import DashboardPage from './components/dashboard/DashboardPage'
 import WikiPage from './components/WikiPage'
 import EmptyPage from './components/EmptyPage'
@@ -211,6 +213,8 @@ export default function App() {
                 <Route exact path="/login" component={LoginPage}/>
                 <Route exact path="/signup" component={SignupPage}/>
                 <Route exact path="/mypage" component={MyPage}/>
+                 <Route path="/mypage/schedule/:booking_cd" component={SchedulePage}/>
+                 <Route path="/mypage/talk/:talk_cd" component={TalkPage}/>
                 <Route exact path="/dashboard" component={DashboardPage}/>
                 <Route exact path="/wiki" component={WikiPage}/>
                 <Route component={EmptyPage}/>

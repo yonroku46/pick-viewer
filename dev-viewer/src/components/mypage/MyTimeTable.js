@@ -1,9 +1,9 @@
 import { useState } from 'react';
-import { Link } from "react-router-dom";
+import { Link, withRouter } from "react-router-dom";
 import { Icon, Table, Segment, Button, Header } from 'semantic-ui-react'
 import moment from 'moment';
 
-export default function MyTimeTable(props) {
+function MyTimeTable(props) {
     const [getMoment, setMoment] = useState(moment());
     
     // remainder: 다음 시간까지 남은시간
@@ -15,6 +15,7 @@ export default function MyTimeTable(props) {
     
     function bookingInfo(targetId) {
         const target = bookingList.filter(booking => booking.booking_cd === targetId);
+        props.history.push('/mypage/schedule/' + target[0].booking_cd);
     }
 
     const timeArr = [];
@@ -47,8 +48,7 @@ export default function MyTimeTable(props) {
                         <span>{time}</span>
                     </Table.Cell>
 
-                    {target.map(booking => 
-                    booking.booking_time.substr(9).split(":")[0] ===  time.split(":")[0] &&
+                    {target.map(booking => booking.booking_time.substr(9).split(":")[0] ===  time.split(":")[0] &&
                     <Table.Cell style={{fontWeight:'bold', textAlign:'left'}}>
                         {booking.booking_category === categoryList[0] &&
                         <span>
@@ -110,3 +110,5 @@ export default function MyTimeTable(props) {
     </>
   );
 }
+
+export default withRouter(MyTimeTable);

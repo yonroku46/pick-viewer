@@ -1226,7 +1226,7 @@ table.dashboard-table input {
   margin-right: auto !important;
 }
 .mytalk-list .item {
-  padding: 1em !important;
+  padding: 1.25em 1em !important;
 }
 .mytalk-list .item:hover {
   cursor: pointer;
@@ -1249,6 +1249,61 @@ table.dashboard-table input {
   .mytalk-list {
     width: 96vw;
   }
+}
+
+/* SchedulePage */
+.schedule-main {
+  margin-top: 49px;
+  min-height: calc(100vh - 81px);
+  border-top: #52525210 1px solid !important;
+  margin-left: auto;
+  margin-right: auto;
+}
+.schedule-header {
+  margin-bottom: 6px;
+  border-radius: 12px;
+  box-shadow: 1px 1px 14px rgba(157, 157, 157, 0.5); 
+  margin-left: auto;
+  margin-right: auto;
+  max-width: 720px;
+  height: 42px;
+  line-height: 42px;
+  padding-left: 10px;
+  background-color: rgb(74, 201, 74);
+  color: #fff;
+  font-size: 18px;
+}
+.schedule-header.warning {
+  background-color: rgb(255, 99, 71) !important;
+}
+.schedule-header .left {
+  float: left;
+}
+.schedule-header .right {
+  float: right;
+}
+.schedule-header .right:hover {
+  cursor: pointer;
+  opacity: 0.7;
+}
+.schedule-content {
+  margin-bottom: 14px;
+  border-radius: 12px;
+  box-shadow: 1px 1px 14px rgba(157, 157, 157, 0.5); 
+  margin-left: auto;
+  margin-right: auto;
+  max-width: 720px;
+  padding: 0.1vw 1vw;
+  text-align: left;
+}
+
+/* TalkPage */
+.talk-main {
+  margin-top: 49px;
+  min-height: calc(100vh - 81px);
+  border-top: #52525210 1px solid !important;
+  margin-left: auto;
+  margin-right: auto;
 }
 
 /* HomePage */
@@ -1418,6 +1473,10 @@ table.dashboard-table input {
 
 /* sp */
 @media only screen and (max-width: 767px) {
+  .home-main {
+    border-bottom-left-radius: 24px;
+    border-bottom-right-radius: 24px;
+  }
   .home-main-search {
     width: 84vw;
   }
