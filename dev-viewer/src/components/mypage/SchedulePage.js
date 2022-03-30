@@ -11,14 +11,31 @@ export default function SchedulePage(props) {
     }
     const {booking_cd} = useParams();
     const userInfo = JSON.parse(sessionStorage.getItem('userInfo'));
+    const user_cd = userInfo ? userInfo.user_cd : null;
     let [scheduleStat, setScheduleStat] = useState(true);;
+    let [bookingInfo, setBookingInfo] = useState({});;
 
     useEffect(() => {
       // 사용자의 스케쥴이 아닌경우 접근거부
-      if (booking_cd === null) {
-        alert('잘못된 접근입니다.')
+      const params = { 
+        'user_cd': user_cd,
+        'booking_cd': booking_cd
+      };
+      return new Promise(function(resolve, reject) {
+        axios
+          .post(api.getSchedule, params)
+          .then(response => resolve(response.data))
+          .catch(error => reject(error.response))
+      })
+      .then(res => {
+        if (res) {
+          setBookingInfo(res)
+        }
+      })
+      .catch(err => {
+        alert("해당 예약정보를 찾을 수 없습니다. 지속시 문의 바랍니다.");
         props.history.goBack(1);
-      }
+      })
     }, [])
 
     return(
@@ -36,7 +53,7 @@ export default function SchedulePage(props) {
           </div>
 
           <div className='schedule-content'>
-            <label><Icon name='angle right'/>미추헤어샵</label>
+            <label><Icon name='angle right'/>{bookingInfo.shop_cd}</label>
           </div>
         </div>
         </>

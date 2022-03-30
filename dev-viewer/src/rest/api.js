@@ -42,6 +42,7 @@ export const infoUpdate = "/api/infoUpdate";
 export const bookingList = "/api/bookingList";
 export const submitEmployment = "/api/submitEmployment";
 export const favoriteList = "/api/favoriteList";
+export const getSchedule = "/api/getSchedule";
 
 // DashBoard
 export const shopRequestList = "/api/shopRequestList";
