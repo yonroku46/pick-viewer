@@ -34,6 +34,9 @@ h1, h2, h3, h4, h5, div, a, button {
 .invert {
   filter: invert(1) !important;
 }
+.none {
+  display: none !important;
+}
 .pcolor {
   color: rgb(0, 153, 255);
   font-weight: bold;
@@ -1101,6 +1104,20 @@ table.dashboard-table input {
   width: 160px !important;
   text-align: center !important;
   border-right: rgb(80, 80, 80, 0.1) 1px solid !important;
+}
+.mypage-tt-header-right i {
+  float: right;
+}
+.mypage-tt-header-right i:hover {
+  cursor: pointer;
+  opacity: 0.7;
+}
+.mypage-tt-schedule {
+  text-align: left !important;
+  font-weight: bold;
+}
+.mypage-tt-empty {
+  background-color: rgba(34,36,38,.1);
 }
 .mypage-content-table {
   width: 70vw !important;

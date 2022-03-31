@@ -1,10 +1,11 @@
 import { useState } from 'react';
 import { Link, withRouter } from "react-router-dom";
+import { Link as Scroll } from "react-scroll";
 import { Icon, Table, Segment, Button, Header } from 'semantic-ui-react'
 import moment from 'moment';
 
 function MyTimeTable(props) {
-    const [getMoment, setMoment] = useState(moment());
+    let [tableStat, setTableStat] = useState(true);;
     
     // remainder: 다음 시간까지 남은시간
     // const remainder = 60 - (getMoment.minute() % 30);
@@ -28,10 +29,14 @@ function MyTimeTable(props) {
     const endHour = 24;
 
     for (let i = 0; i < startHour; i++) {
-        timeArr.shift()
+        timeArr.shift();
     }
     for (let i = 0; i <  23 - endHour; i++) {
-        timeArr.pop()
+        timeArr.pop();
+    }
+
+    function emptySort() {
+        setTableStat(!tableStat)
     }
 
     function timeRender() {
@@ -43,35 +48,42 @@ function MyTimeTable(props) {
         if (cnt !== 0) {
             result = result.concat(
                 timeArr.map(time => (
-                <Table.Row className='center'>
-                    <Table.Cell className='mypage-tt-time'>
-                        <span>{time}</span>
-                    </Table.Cell>
-
-                    {target.map(booking => booking.booking_time.substr(9).split(":")[0] ===  time.split(":")[0] &&
-                    <Table.Cell style={{fontWeight:'bold', textAlign:'left'}}>
-                        {booking.booking_category === categoryList[0] &&
-                        <span>
-                            <Icon className='mypage-tt-icon' name='cut'/>
-                            {booking.shop_name}
-                        </span>
-                        }
-                        {booking.booking_category === categoryList[1] &&
-                        <span>
-                            <Icon className='mypage-tt-icon' name='food'/>
-                            {booking.shop_name} ({booking.customers}명)
-                        </span>
-                        }
-                        {booking.booking_category === categoryList[2] &&
-                        <span>
-                            <Icon className='mypage-tt-icon' name='coffee'/>
-                            {booking.shop_name} ({booking.customers}명)
-                        </span>
-                        }
-                        <Icon name='angle double right' className='mypage-tt-info' onClick={() => bookingInfo(booking.booking_cd)}/>
-                    </Table.Cell>
-                    )}
-                </Table.Row> 
+                target.map(booking => booking.booking_time.substr(9).split(":")[0] ===  time.split(":")[0] ?
+                    <Table.Row className='center'>
+                        <Table.Cell className='mypage-tt-time'>
+                            <span>{time}</span>
+                        </Table.Cell>
+                        <Table.Cell className='mypage-tt-schedule'>
+                            {booking.booking_category === categoryList[0] &&
+                            <span>
+                                <Icon className='mypage-tt-icon' name='cut'/>
+                                {booking.shop_name}
+                            </span>
+                            }
+                            {booking.booking_category === categoryList[1] &&
+                            <span>
+                                <Icon className='mypage-tt-icon' name='food'/>
+                                {booking.shop_name} ({booking.customers}명)
+                            </span>
+                            }
+                            {booking.booking_category === categoryList[2] &&
+                            <span>
+                                <Icon className='mypage-tt-icon' name='coffee'/>
+                                {booking.shop_name} ({booking.customers}명)
+                            </span>
+                            }
+                            <Icon name='angle double right' className='mypage-tt-info' onClick={() => bookingInfo(booking.booking_cd)}/>
+                        </Table.Cell>
+                    </Table.Row> 
+                    :
+                    <Table.Row className='center'>
+                        <Table.Cell className={tableStat ? 'mypage-tt-time none' : 'mypage-tt-time'}>
+                            <span>{time}</span>
+                        </Table.Cell>
+                        <Table.Cell className={tableStat ? 'mypage-tt-empty none' : 'mypage-tt-empty'}>
+                        </Table.Cell> 
+                    </Table.Row>
+                )
                 )
             ));
         } else {
@@ -95,11 +107,17 @@ function MyTimeTable(props) {
 
   return (
     <>
+    <Scroll to='tt' offset={-56} spy={true} smooth={true}>
     <Table unstackable>
         <Table.Header>
-            <Table.Row>
-                <Table.HeaderCell className='mypage-tt-header'>시간대</Table.HeaderCell>
-                <Table.HeaderCell>예약일정</Table.HeaderCell>
+            <Table.Row id='tt'>
+                <Table.HeaderCell className='mypage-tt-header'>
+                    시간대
+                </Table.HeaderCell>
+                <Table.HeaderCell className='mypage-tt-header-right'>
+                    예약일정
+                    <Icon name={tableStat ? 'sort amount down' : 'sort amount up'} onClick={emptySort}/>
+                </Table.HeaderCell>
             </Table.Row>
         </Table.Header>
 
@@ -107,6 +125,7 @@ function MyTimeTable(props) {
             {timeRender()}
         </Table.Body>
     </Table>
+    </Scroll>
     </>
   );
 }

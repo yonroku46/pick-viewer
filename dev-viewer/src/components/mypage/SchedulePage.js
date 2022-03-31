@@ -42,6 +42,7 @@ export default function SchedulePage(props) {
         <>
         <div className='schedule-main'>
 
+          {/* 예약상황 */}
           <div className={scheduleStat ? 'schedule-header' : 'schedule-header warning'}>
             <span className='left'>
               <Icon name={scheduleStat ? 'check circle outline' : 'warning circle'}/>
@@ -53,8 +54,21 @@ export default function SchedulePage(props) {
           </div>
 
           <div className='schedule-content'>
+            {/* 예약정보 - 샵정보 */}
             <label><Icon name='angle right'/>{bookingInfo.shop_cd}</label>
+            <div>
+              {/* 예약가게 사진
+              예약일
+              예약가게
+              예약가게 전화번호 */}
+            </div>
+            <div>
+            {/* 예약정보 - 예약내역 */}
+            {/* 예약정보(상세)
+            가격(할인있으면 할인내역) */}
+            </div>
           </div>
+
         </div>
         </>
     )
