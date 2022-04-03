@@ -807,6 +807,23 @@ def searchResult():
         app.logger.info("Exception:{}".format(e))
         return (jsonify({'error': 'Not found'}), 404)
 
+# schedulePage
+@app.route('/api/getSchedule', methods=['POST'])
+def getSchedule():
+    params = request.get_json()
+    user_cd = params['user_cd']
+    booking_cd = params['booking_cd']
+
+    try:
+        query = gen.getQuery("sql/SELECT_getSchedule.sql", {"user_cd": user_cd, "booking_cd": booking_cd})
+        rows = mng.fetch(query)
+        if rows['user_cd'] == user_cd:
+            return (jsonify(rows), 200)
+
+    except Exception as e:
+        app.logger.info("Exception:{}".format(e))
+        return (jsonify({'error': 'Not found'}), 404)
+
 # contactPage
 @app.route('/api/contact', methods=['POST'])
 def contact():
