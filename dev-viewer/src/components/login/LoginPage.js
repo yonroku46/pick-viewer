@@ -64,13 +64,14 @@ export default function LoginPage(props) {
   }
 
   function login(body) {
-    const params = { 
-      'user_email': body.email,
-      'user_pw': body.password
-    };
     return new Promise(function(resolve, reject) {
       axios
-        .post(api.login, params)
+        .get(api.login, {
+          params: {
+            'userEmail': body.email,
+            'userPw': body.password
+          }
+        })
         .then(response => resolve(response.data))
         .catch(error => reject(error.response))
     });

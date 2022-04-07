@@ -20,7 +20,7 @@ class SQLHelper(object):
         conn.close()
 
     @classmethod
-    def fetch(cls,sql,cursor =pymysql.cursors.DictCursor):
+    def fetch(cls,sql,cursor=pymysql.cursors.DictCursor):
         conn,cursor = cls.open(cursor)
         cursor.execute(sql)
         obj = cursor.fetchone()
@@ -28,7 +28,7 @@ class SQLHelper(object):
         return obj
 
     @classmethod
-    def fetch_all(cls,sql,cursor =pymysql.cursors.DictCursor):
+    def fetch_all(cls,sql,cursor=pymysql.cursors.DictCursor):
         conn, cursor = cls.open(cursor)
         cursor.execute(sql)
         obj = cursor.fetchall()

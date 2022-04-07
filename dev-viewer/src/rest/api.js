@@ -10,12 +10,10 @@ export const check = "/api/check/";
 export const imgUpload = "/api/imgUpload";
 export const favorite = "/api/favorite";
 export const getFavorite = "/api/getFavorites";
+export const login = "/api/login";
 
 // HomePage
 export const server = "/api/server";
-
-// LoginPage
-export const login = "/api/login";
 
 // SignupPage
 export const mailService = "/api/mailService";

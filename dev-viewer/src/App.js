@@ -39,25 +39,6 @@ export default function App() {
   }
   
   useEffect(() => {
-    // ip check
-    fetch('https://api64.ipify.org?format=json').then(res =>
-      res.json().then(data => {
-        return data.ip
-      })
-      .then(ip => {
-        fetch(api.check + ip, {method: 'POST'}).then(res =>
-          res.json().then(data => {
-            let countryCode = data.split(":");
-            if (countryCode[5].includes('JP') || countryCode[5].includes('KR') || countryCode[5].includes('GB')) {
-              setCountryStat(true);
-            } else {
-              setCountryStat(false);
-              console.log("negative");
-            }
-        })
-        )
-      })
-    );
     // server check
     fetch(api.server)
       .then(res => {
