@@ -12,9 +12,6 @@ export const favorite = "/api/favorite";
 export const getFavorite = "/api/getFavorites";
 export const login = "/api/login";
 
-// HomePage
-export const server = "/api/server";
-
 // SignupPage
 export const mailService = "/api/mailService";
 export const certifiService = "/api/certifiService";
@@ -37,9 +34,9 @@ export const reviewList = "/api/reviewList";
 
 // MyPage
 export const infoUpdate = "/api/infoUpdate";
-export const bookingList = "/api/bookingList";
+export const bookingList = "/api/mypage/bookingList";
 export const submitEmployment = "/api/submitEmployment";
-export const favoriteList = "/api/favoriteList";
+export const favoriteList = "/api/mypage/favoriteList";
 export const getSchedule = "/api/getSchedule";
 
 // DashBoard

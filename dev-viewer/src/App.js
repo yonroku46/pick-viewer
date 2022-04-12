@@ -37,22 +37,10 @@ export default function App() {
   const updateScroll = () => {
     setScrollPosition(window.scrollY || document.documentElement.scrollTop);
   }
-  
-  useEffect(() => {
-    // server check
-    fetch(api.server)
-      .then(res => {
-        res.json();
-        res.status && console.log("connect");
-      })
-      .catch(err => {
-        console.log("disconnect");
-      })
-    }, []);
 
-    useEffect(() => {
-      window.addEventListener('scroll', updateScroll);
-    }, []);
+  useEffect(() => {
+    window.addEventListener('scroll', updateScroll);
+  }, []);
     
 
   const [visible, setVisible] = useState(false);

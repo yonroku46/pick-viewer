@@ -47,9 +47,9 @@ export default function MyFavorite(props) {
                 activeItem === 'All' ?
                 favoriteList.map(shop => 
                     <Card
-                    image={api.imgRender(shop.shop_img === null ? shopDefault : shop.shop_img.split(",")[0])}
-                    header={shop.shop_name}
-                    meta={shop.shop_location}
+                    image={api.imgRender(shop.shopImg === null ? shopDefault : shop.shopImg.split(",")[0])}
+                    header={shop.shopName}
+                    meta={shop.shopLocation}
                     color={shop.category === 'hairshop' ? 'violet' : shop.category === 'restaurant' ? 'teal' : 'blue'}
                     description={<Label className='mypage-favorite-label'><Icon name='archive'/>프로모션 진행중</Label>}
                     onClick={() => {history.push(`/booking/${shop.category}/${shop.shop_cd}`)}}
@@ -60,9 +60,9 @@ export default function MyFavorite(props) {
                 favoriteList.filter(shop => shop.category === activeItem).length !== 0 ?
                 favoriteList.filter(shop => shop.category === activeItem).map(shop => 
                     <Card
-                    image={api.imgRender(shop.shop_img === null ? shopDefault : shop.shop_img.split(",")[0])}
-                    header={shop.shop_name}
-                    meta={shop.shop_location}
+                    image={api.imgRender(shop.shopImg === null ? shopDefault : shop.shopImg.split(",")[0])}
+                    header={shop.shopName}
+                    meta={shop.shopLocation}
                     color={shop.category === 'hairshop' ? 'violet' : shop.category === 'restaurant' ? 'teal' : 'blue'}
                     description={<Label className='mypage-favorite-label'><Icon name='archive'/>프로모션 진행중</Label>}
                     onClick={() => {history.push(`/booking/${shop.category}/${shop.shop_cd}`)}}

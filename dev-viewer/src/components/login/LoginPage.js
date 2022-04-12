@@ -43,9 +43,8 @@ export default function LoginPage(props) {
     }
     
     login(body).then(res => {
-      let userInfo = res;
-      if (userInfo !== null) {
-        // json형으로 변환해서 넣기 : JSON.stringify
+      if (res.success) {
+        let userInfo = res.data;
         sessionStorage.setItem('isAuthorized', true);
         sessionStorage.setItem('userInfo', JSON.stringify(userInfo));
         getFavorite(userInfo.user_cd);

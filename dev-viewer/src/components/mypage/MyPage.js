@@ -17,61 +17,67 @@ export default function MyPage(props) {
   const [reload, setReload] = useState(0);
 
   const userInfo = JSON.parse(sessionStorage.getItem('userInfo'));
-  const userName = userInfo['user_name'] ?? '';
-  const email = userInfo['user_email'] ?? '';
-  const userIcon = userInfo['user_img'] ?? 'images/user/default.png';
-  const userinfo = userInfo['user_info'] ?? '자기소개를 입력해보세요!';
-  const user_cd = userInfo ? userInfo.user_cd : null;
+  const userName = userInfo['userName'] ?? '';
+  const email = userInfo['userEmail'] ?? '';
+  const userIcon = userInfo['userImg'] ?? 'images/user/default.png';
+  const userIntro = userInfo['userInfo'] ?? '자기소개를 입력해보세요!';
+  const userCd = userInfo ? userInfo['userCd'] : null;
   const employment = userInfo ? userInfo.employment : null;
-  const permission = userInfo ? userInfo.permission : null;
+  const permission = userInfo ? userInfo['permission'] : null;
 
   const [icon, setIcon] = useState(userIcon);
-  const [info, setInfo] = useState(userinfo);
+  const [intro, setIntro] = useState(userIntro);
   const [submitShopCd, setSubmitShopCd] = useState(null);
   const inputRef = useRef(null);
 
   const fileType=['image/png','image/jpg','image/jpeg'];
 
   const [activeItem, setActiveItem] = useState('schdule');
-  const [newInfo, setNewInfo] = useState(info);
+  const [newInfo, setNewInfo] = useState(intro);
 
   const [bookingList, setBookingList] = useState([]);
   const [favoriteList, setFavoriteList] = useState([]);
 
   useEffect(() => {
-    const params = { 
-        'user_cd': user_cd
-      };
-      return new Promise(function(resolve, reject) {
-        axios
-          .post(api.bookingList, params)
-          .then(response => resolve(response.data))
-          .catch(error => reject(error.response))
-      })
-      .then(res => {
-        if (res !== null) {
-            setBookingList(res);
-            getFavoriteList();
-        }
-      })
-      .catch(err => {
-        alert("현재 서버와의 연결이 원활하지 않습니다. 관리자에게 문의해주세요.");
-      })
+    return new Promise(function(resolve, reject) {
+      axios
+        .get(api.bookingList, {
+          params: {
+            'userCd': userCd
+          }
+        })
+        .then(response => resolve(response.data))
+        .catch(error => reject(error.response))
+    })
+    .then(res => {
+      if (res.success) {
+        setBookingList(res.dataList);
+        getFavoriteList();
+      } else {
+        alert("정보를 받아오는데에 실패하였습니다. 잠시 후 시도해주세요.")
+      }
+    })
+    .catch(err => {
+      alert("현재 서버와의 연결이 원활하지 않습니다. 관리자에게 문의해주세요.");
+    })
   }, [reload]); 
 
   function getFavoriteList() {
     return new Promise(function(resolve, reject) {
-      const params = { 
-        'user_cd': user_cd
-      };
       axios
-      .post(api.favoriteList, params)
+      .get(api.favoriteList, {
+        params: {
+          'userCd': userCd
+        }
+      })
       .then(response => resolve(response.data))
       .catch(error => reject(error.response))
     })
     .then(res => {
-      if (res !== null) {
-        setFavoriteList(res);
+      if (res.success) {
+        setFavoriteList(res.dataList);
+      } else {
+        alert("정보를 받아오는데에 실패하였습니다. 잠시 후 시도해주세요.")
       }
     })
     .catch(err => {
@@ -137,7 +143,7 @@ export default function MyPage(props) {
     if (fileType.indexOf(type) !== -1) {
       const params = new FormData();
       params.append('file', e.target.files[0]);
-      params.append('user_cd', user_cd);
+      params.append('user_cd', userCd);
       params.append('call', 'user');
       axios
         .post(api.imgUpload, params)
@@ -174,7 +180,7 @@ export default function MyPage(props) {
         if (res.data === true) {
           userInfo['user_info'] = newInfo;
           sessionStorage.setItem('userInfo', JSON.stringify(userInfo));
-          setInfo(newInfo);
+          setIntro(newInfo);
           dispatch({ type: 'close' });
         } else {
           alert("업데이트에 실패하였습니다. 잠시 후 시도해주세요.");
@@ -243,7 +249,7 @@ export default function MyPage(props) {
               <span>{email}</span>
             </Item.Meta>
             <Item.Description className='mypage-user-intro'>
-              {info}
+              {intro}
             </Item.Description>
 
             <Modal size={'tiny'} open={open} onClose={() => dispatch({ type: 'close' })}>

@@ -48,7 +48,7 @@ export default function MyCalendar(props) {
                     return(
                         <Table.Cell onClick={dayClick} className='mypage-table-active table-today' key={index}>
                             <span>{days.format('D')}</span>
-                            {bookingList.filter(booking => booking.booking_time.substr(0,8) === days.format('YYYYMMDD')).length !== 0 &&
+                            {bookingList.filter(booking => booking.bookingTime.substr(0,10) === days.format('YYYY-MM-DD')).length !== 0 &&
                                 <Button disabled className='mypage-booking-date' size='mini' icon='star'/>
                             }
                         </Table.Cell>
@@ -58,7 +58,7 @@ export default function MyCalendar(props) {
                     return(
                         <Table.Cell key={index} className='table-other-month'>
                             <span>{days.format('D')}</span>
-                            {bookingList.filter(booking => booking.booking_time.substr(0,8) === days.format('YYYYMMDD')).length !== 0 &&
+                            {bookingList.filter(booking => booking.bookingTime.substr(0,10) === days.format('YYYY-MM-DD')).length !== 0 &&
                                 <Button disabled className='mypage-booking-date-other' size='mini' icon='star'/>
                             }
                         </Table.Cell>
@@ -68,7 +68,7 @@ export default function MyCalendar(props) {
                     return(
                         <Table.Cell onClick={dayClick} className='mypage-table-active' key={index}>
                             <span>{days.format('D')}</span>
-                            {bookingList.filter(booking => booking.booking_time.substr(0,8) === days.format('YYYYMMDD')).length !== 0 &&
+                            {bookingList.filter(booking => booking.bookingTime.substr(0,10) === days.format('YYYY-MM-DD')).length !== 0 &&
                                 <Button disabled className='mypage-booking-date' size='mini' icon='star'/>
                             }
                         </Table.Cell>
@@ -127,7 +127,7 @@ export default function MyCalendar(props) {
     </Table>
     </>
     }
-    <TimeTable today={today.format('YYYYMMDD')} bookingList={bookingList}/>
+    <TimeTable today={today.format('YYYY-MM-DD')} bookingList={bookingList}/>
     </>
   );
 }

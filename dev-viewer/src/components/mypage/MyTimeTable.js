@@ -15,8 +15,8 @@ function MyTimeTable(props) {
     const bookingList = props.bookingList;
     
     function bookingInfo(targetId) {
-        const target = bookingList.filter(booking => booking.booking_cd === targetId);
-        props.history.push('/mypage/schedule/' + target[0].booking_cd);
+        const target = bookingList.filter(booking => booking.bookingCd === targetId);
+        props.history.push('/mypage/schedule/' + target[0].bookingCd);
     }
 
     const timeArr = [];
@@ -42,37 +42,36 @@ function MyTimeTable(props) {
     function timeRender() {
         let result = [];
 
-        const target = bookingList.filter(booking => booking.booking_time.match(props.today));
+        const target = bookingList.filter(booking => booking.bookingTime.match(props.today));
         const cnt = target.length;
-
         if (cnt !== 0) {
             result = result.concat(
                 timeArr.map(time => (
-                target.map(booking => booking.booking_time.substr(9).split(":")[0] ===  time.split(":")[0] ?
+                target.map(booking => booking.bookingTime.substr(11).split(":")[0] === time.split(":")[0] ?
                     <Table.Row className='center'>
                         <Table.Cell className='mypage-tt-time'>
                             <span>{time}</span>
                         </Table.Cell>
                         <Table.Cell className='mypage-tt-schedule'>
-                            {booking.booking_category === categoryList[0] &&
+                            {booking.bookingCategory === categoryList[0] &&
                             <span>
                                 <Icon className='mypage-tt-icon' name='cut'/>
-                                {booking.shop_name}
+                                {booking.shopName}
                             </span>
                             }
-                            {booking.booking_category === categoryList[1] &&
+                            {booking.bookingCategory === categoryList[1] &&
                             <span>
                                 <Icon className='mypage-tt-icon' name='food'/>
-                                {booking.shop_name} ({booking.customers}명)
+                                {booking.shopName} ({booking.customers}명)
                             </span>
                             }
-                            {booking.booking_category === categoryList[2] &&
+                            {booking.bookingCategory === categoryList[2] &&
                             <span>
                                 <Icon className='mypage-tt-icon' name='coffee'/>
-                                {booking.shop_name} ({booking.customers}명)
+                                {booking.shopName} ({booking.customers}명)
                             </span>
                             }
-                            <Icon name='angle double right' className='mypage-tt-info' onClick={() => bookingInfo(booking.booking_cd)}/>
+                            <Icon name='angle double right' className='mypage-tt-info' onClick={() => bookingInfo(booking.bookingCd)}/>
                         </Table.Cell>
                     </Table.Row> 
                     :
@@ -84,8 +83,8 @@ function MyTimeTable(props) {
                         </Table.Cell> 
                     </Table.Row>
                 )
-                )
-            ));
+            )
+        ));
         } else {
             result = result.concat(
             <Table.Cell colSpan='2' className='mypage-tt-time'>
