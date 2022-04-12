@@ -19,7 +19,7 @@ export class MapContainer extends Component {
     }
 
     componentDidMount() {
-        if (this.state.shop.location_lat === 0 && this.state.shop.location_lng === 0 && this.props.permission === 3) {
+        if (this.state.shop.location_lat === 0 && this.state.shop.location_lng === 0 && this.props.role === 3) {
             if(navigator.geolocation) {
                 navigator.geolocation.getCurrentPosition(position => {
                     this.setState({

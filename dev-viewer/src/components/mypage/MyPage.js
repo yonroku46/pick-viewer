@@ -23,7 +23,7 @@ export default function MyPage(props) {
   const userIntro = userInfo['userInfo'] ?? '자기소개를 입력해보세요!';
   const userCd = userInfo ? userInfo['userCd'] : null;
   const employment = userInfo ? userInfo.employment : null;
-  const permission = userInfo ? userInfo['permission'] : null;
+  const role = userInfo ? userInfo['role'] : null;
 
   const [icon, setIcon] = useState(userIcon);
   const [intro, setIntro] = useState(userIntro);
@@ -196,7 +196,7 @@ export default function MyPage(props) {
     let body = {
       user_cd: userInfo.user_cd,
       submit_shop_cd: submitShopCd,
-      permission: permission
+      role: role
     }
     axios
       .post(api.submitEmployment, body)
@@ -226,7 +226,7 @@ export default function MyPage(props) {
     {!isAuthorized ? <Redirect to="/login" /> :
     <>
     <div className='mypage-main'>
-    {(employment === null && permission === 2) &&
+    {(employment === null && role === 2) &&
     <Transition animation={animation} duration={duration} visible={visible}>
       <Message color='blue' onClick={() => dispatch2({ type2: 'open' })} className='mypage-msg' header='직원이신가요?' content='이 메세지를 눌러 소속을 정해주세요' />
     </Transition>

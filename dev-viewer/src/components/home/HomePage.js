@@ -8,7 +8,7 @@ import { Button, Segment, Icon, Accordion, Grid, Image, Input, Reveal } from 'se
 export default function HomePage(props) {
     let isAuthorized = sessionStorage.getItem("isAuthorized");
     const userInfo = JSON.parse(sessionStorage.getItem('userInfo'));
-    const permission = userInfo ? userInfo.permission : null;
+    const role = userInfo ? userInfo.role : null;
 
     const [activeIndex, SetActiveIndex] = useState();
 
@@ -94,7 +94,7 @@ export default function HomePage(props) {
         </div>
         <div className='content1-right'>
         {isAuthorized ?
-          permission === 3 ?
+          role === 3 ?
             <Link to='/dashboard'>
               <Button color='black'>
                 매장관리<Icon name='arrow right'/>

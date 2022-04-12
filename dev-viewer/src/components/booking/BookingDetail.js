@@ -18,7 +18,7 @@ export default function BookingDetail(props) {
   const userInfo = JSON.parse(sessionStorage.getItem('userInfo'));
   const favorites = JSON.parse(sessionStorage.getItem('favorites'));
   const user_cd = userInfo ? userInfo.user_cd : null;
-  const permission = userInfo ? userInfo.permission : null;
+  const role = userInfo ? userInfo.role : null;
   const [couponList, setCouponList] = useState([]);
   const [orderList, setOrderList] = useState([]);
   const [useCouponList, setUseCouponList] = useState([]);
@@ -79,7 +79,7 @@ export default function BookingDetail(props) {
     }
     const params = { 
       'shop_cd': shop_cd,
-      'permission': permission
+      'role': role
     };
     return new Promise(function(resolve, reject) {
       axios

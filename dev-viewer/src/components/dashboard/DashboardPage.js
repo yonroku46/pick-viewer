@@ -11,7 +11,7 @@ import axios from 'axios';
 export default function DashboardPage(props) {
     const isAuthorized = sessionStorage.getItem('isAuthorized');
     const userInfo = JSON.parse(sessionStorage.getItem('userInfo'));
-    const permission = userInfo ? userInfo.permission : null;
+    const role = userInfo ? userInfo.role : null;
     if (isAuthorized === null) {
         props.history.goBack(1);
     }
@@ -99,14 +99,14 @@ export default function DashboardPage(props) {
     }
 
     useEffect(() => {
-        if (permission !== 3) {
+        if (role !== 3) {
             alert("잘못된 접근입니다.")
             props.history.goBack(1);
         }
         setLoading(true);
         const params = { 
           'shop_cd': shop_cd,
-          'permission': permission
+          'role': role
         };
         return new Promise(function(resolve, reject) {
           axios
@@ -473,7 +473,7 @@ export default function DashboardPage(props) {
                     :
                     <p className='dashboard-shopinfo-text'>{shop.shop_location}</p>
                     }
-                    <MapContainer id='map' shop={shop} setShop={setShop} changeLocation={changeLocation} value={shop.shop_location} editMode={editMode} permission={permission}/>
+                    <MapContainer id='map' shop={shop} setShop={setShop} changeLocation={changeLocation} value={shop.shop_location} editMode={editMode} role={role}/>
                 </Form.Field>
                 <Form.Field className={editMode && 'dashboard-map-bottom'}>
                     <label><Icon name='angle right'/>매장 사진</label>

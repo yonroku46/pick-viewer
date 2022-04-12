@@ -22,7 +22,7 @@ export default function SignupPage(props) {
   const [certifi, setCertifi] = useState('');
 
   const [email, setEmail] = useState('');
-  const [permission, setPermission] = useState('');
+  const [role, setrole] = useState('');
   const [name, setName] = useState('');
   const [pw, setPw] = useState('');
   const [pwCheck, setPwCheck] = useState('');
@@ -54,7 +54,7 @@ export default function SignupPage(props) {
   // 권한선택
   function step1(e) {
     toggleVisibility();
-    setPermission(parseInt(e.target.value));
+    setrole(parseInt(e.target.value));
     nextStep();
   }
 
@@ -66,7 +66,7 @@ export default function SignupPage(props) {
     if (reg.test(email)) {
       setError(null);
       setApiload(true);
-      mailService(permission, email).then(res => {
+      mailService(role, email).then(res => {
         if (res) {
           alert("인증 이메일을 전송하였습니다. 인증번호를 확인해주세요")
           setApiload(false);
@@ -134,10 +134,10 @@ export default function SignupPage(props) {
     });
   }
 
-  function mailService(permission, email) {
+  function mailService(role, email) {
     const params = { 
       'user_email': email,
-      'permission': permission
+      'role': role
     };
     return new Promise(function(resolve, reject) {
       axios

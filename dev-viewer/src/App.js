@@ -46,7 +46,7 @@ export default function App() {
   const [visible, setVisible] = useState(false);
   const isAuthorized = sessionStorage.getItem("isAuthorized");
   const userInfo = JSON.parse(sessionStorage.getItem('userInfo'));
-  const permission = userInfo ? userInfo['permission'] : null;
+  const role = userInfo ? userInfo['role'] : null;
 
   function toggleMenu() {
     setVisible(!visible);
@@ -138,7 +138,7 @@ export default function App() {
             마이페이지
           </Menu.Item>
           }
-          {isAuthorized && (permission === 3) &&
+          {isAuthorized && (role === 3) &&
           <Menu.Item as={Link} to='/dashboard' onClick={menuClose}>
             <Icon name='sitemap'/>
             매장관리
