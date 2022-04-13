@@ -43,16 +43,17 @@ export default class BookingModal extends Component {
 
     getShops = async () => {
         this.setState({isLoading: true, search: ''});
-        const params = { 
-            'category': this.props.category
-        };
-        const { data } = await axios.post(api.shopList, params);
-        this.setState({isLoading: false, shopsOrigin: data, shops: data });
+        const data = await axios.get(api.shopList, {
+            params: {
+                'category': this.props.category
+            }
+        }).then(res => res.data);
+        this.setState({isLoading: false, shopsOrigin: data.dataList, shops: data.dataList });
     }
 
     handleChange = e => {
         const origin = this.state.shopsOrigin;
-        const result = origin.filter(shop => shop.shop_location.match(e.target.value));
+        const result = origin.filter(shop => shop.shopLocation.match(e.target.value));
         this.setState({shops: result, search: e.target.value});
     }
 
@@ -65,13 +66,13 @@ export default class BookingModal extends Component {
                 return alert('먼저 로그인을 해주세요.')
             }
             this.setState({pickFavorite: !this.state.pickFavorite, pickRating: false, pickPromotion: false});
-            result = this.state.pickFavorite ? origin : origin.filter(shop => this.props.favoriteList.indexOf(shop.shop_cd) !== -1);
+            result = this.state.pickFavorite ? origin : origin.filter(shop => this.props.favoriteList.indexOf(shop.shopCd) !== -1);
         } else if (method === 'rating') {
             this.setState({pickFavorite: false, pickRating: !this.state.pickRating, pickPromotion: false});
-            result = this.state.pickRating ? origin : origin.filter(shop => shop.ratings_ave > 4);
+            result = this.state.pickRating ? origin : origin.filter(shop => shop.ratingsAve > 4);
         } else if (method === 'promotion') {
             this.setState({pickFavorite: false, pickRating: false, pickPromotion: !this.state.pickPromotion});
-            result = this.state.pickPromotion ? origin : origin.filter(shop => shop.ratings_ave > 4);
+            result = this.state.pickPromotion ? origin : origin.filter(shop => shop.ratingsAve > 4);
         }
         
         this.setState({shops: result})
@@ -129,17 +130,17 @@ export default class BookingModal extends Component {
                         isLoading ? <this.Loading/> : 
                         shops === null ? <h3 className='booking-nodata'>해당하는 매장을 찾지 못했습니다</h3> :
                         shops.slice((activePage - 1) * perPage, (activePage * perPage)).map(shop => {
-                        const shop_img = shop.shop_img === null ? 'images/shop/default.png' : shop.shop_img.split(',')[0];
+                        const shopImg = shop.shopImg === null ? 'images/shop/default.png' : shop.shopImg.split(',')[0];
                         return(
-                            <Link to={`/booking/${category}/${shop.shop_cd}`}>
-                                <button style={{backgroundPosition: 'center', backgroundImage: 'linear-gradient(rgba(0, 0, 0, 0.05), rgba(0, 0, 0, 0.45)), url(' + api.imgRender(shop_img) + ')'}}>
+                            <Link to={`/booking/${category}/${shop.shopCd}`}>
+                                <button style={{backgroundPosition: 'center', backgroundImage: 'linear-gradient(rgba(0, 0, 0, 0.05), rgba(0, 0, 0, 0.45)), url(' + api.imgRender(shopImg) + ')'}}>
                                     <div className='shopmodal-name'>
-                                        {shop.shop_name}
+                                        {shop.shopName}
                                     </div>
                                     <div className='shopmodal-location'>
-                                        {shop.shop_location}
+                                        {shop.shopLocation}
                                     </div>
-                                    <span className='shopmodal-rating'><Icon name='star'/>{shop.ratings_ave}</span>
+                                    <span className='shopmodal-rating'><Icon name='star'/>{shop.ratingsAve}</span>
                                 </button>
                             </Link>
                         ) 

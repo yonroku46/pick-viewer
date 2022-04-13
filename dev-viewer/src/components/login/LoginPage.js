@@ -47,7 +47,7 @@ export default function LoginPage(props) {
         let userInfo = res.data;
         sessionStorage.setItem('isAuthorized', true);
         sessionStorage.setItem('userInfo', JSON.stringify(userInfo));
-        getFavorite(userInfo.user_cd);
+        myFavorites(userInfo.userCd);
         props.history.goBack(1);
       } else {
         setLoading(false);
@@ -76,18 +76,19 @@ export default function LoginPage(props) {
     });
   }
 
-  function getFavorite(user_cd) {
-    const params = { 
-      'user_cd': user_cd
-    };
+  function myFavorites(userCd) {
     return new Promise(function(resolve, reject) {
       axios
-        .post(api.getFavorite, params)
+        .get(api.myFavorites, {
+          params: {
+            'userCd': userCd
+          }
+        })
         .then(response => resolve(response.data))
         .catch(error => reject(error.response))
     })
       .then(data => {
-        sessionStorage.setItem('favorites', JSON.stringify(data));
+        sessionStorage.setItem('favorites', JSON.stringify(data.dataList));
       })
   }
 

@@ -14,7 +14,7 @@ export default function ReviewPage(props) {
 
   const userInfo = JSON.parse(sessionStorage.getItem('userInfo'));
   const favorites = JSON.parse(sessionStorage.getItem('favorites'));
-  const user_cd = userInfo ? userInfo.user_cd : null;
+  const userCd = userInfo ? userInfo.userCd : null;
   const role = userInfo ? userInfo.role : null;
 
   // 공통 default
@@ -23,7 +23,7 @@ export default function ReviewPage(props) {
   
   const [shop, setShop] = useState([]);
   const [isStaff, setIsStaff] = useState(false);
-  const {shop_cd} = useParams();
+  const {shopCd} = useParams();
   const category = (props.location.pathname).split('/')[2];
   const [shopImages, setShopImages] = useState([]);
 
@@ -44,7 +44,7 @@ export default function ReviewPage(props) {
       favoriteJudge();
     }
     const params = { 
-      'shop_cd': shop_cd,
+      'shopCd': shopCd,
       'role': role
     };
     return new Promise(function(resolve, reject) {
@@ -57,7 +57,7 @@ export default function ReviewPage(props) {
       if (res !== null) {
         setShop(res);
         staffJudge(res);
-        getReviewList(res.shop_cd);
+        getReviewList(res.shopCd);
         makeImageList(res.shop_img);
       }
     })
@@ -78,21 +78,21 @@ export default function ReviewPage(props) {
     let staffList = [];
     if (res.staff_list != null) {
       for (let staff of res.staff_list) {
-        staffList.push(staff.user_cd);
+        staffList.push(staff.userCd);
       }
-      setIsStaff(staffList.indexOf(user_cd) !== -1);
+      setIsStaff(staffList.indexOf(userCd) !== -1);
     } else {
       return;
     }
   }
 
-  function getReviewList(shop_cd) {
+  function getReviewList(shopCd) {
     setReviewLoading(true);
     return new Promise(function(resolve, reject) {
       axios
         .get(api.reviewList, {
           params: {
-            'shop_cd': shop_cd
+            'shopCd': shopCd
           }
         })
         .then(response => resolve(response.data))
@@ -121,8 +121,8 @@ export default function ReviewPage(props) {
 
     const params = {
       'isStaff': isStaff,
-      'user_cd': user_cd,
-      'shop_cd': shop_cd,
+      'userCd': userCd,
+      'shopCd': shopCd,
       'review_text': comment
     };
 
@@ -165,8 +165,8 @@ export default function ReviewPage(props) {
     setSendLoading(true);
 
     const params = { 
-      'user_cd': user_cd,
-      'shop_cd': shop_cd,
+      'userCd': userCd,
+      'shopCd': shopCd,
       'review_cd': review_cd
     };
     return new Promise(function(resolve, reject) {
@@ -205,7 +205,7 @@ export default function ReviewPage(props) {
   }
 
   function mypostJudge(viewer) {
-    return viewer === user_cd;
+    return viewer === userCd;
   }
 
   function reviewEdit(targetId) {
@@ -238,14 +238,14 @@ export default function ReviewPage(props) {
     if (clickFavorite === true) {
       return;
     }
-    if (user_cd === null) {
+    if (userCd === null) {
       alert('로그인이 필요합니다');
       return;
     }
     setClickFavorite(true);
     const params = { 
-      'user_cd': user_cd,
-      'shop_cd': shop_cd,
+      'userCd': userCd,
+      'shopCd': shopCd,
       'isFavorite': isFavorite
     };
     return new Promise(function(resolve, reject) {
@@ -263,17 +263,18 @@ export default function ReviewPage(props) {
         shop.favorite_num = shop.favorite_num - 1;
         setShop(shop)
       }
-      getFavorite(user_cd);
+      myFavorites(userCd);
     })
   }
 
-  function getFavorite(user_cd) {
-    const params = { 
-      'user_cd': user_cd
-    };
+  function myFavorites(userCd) {
     return new Promise(function(resolve, reject) {
       axios
-        .post(api.getFavorite, params)
+        .get(api.myFavorites, {
+          params: {
+            'userCd': userCd
+          }
+        })
         .then(response => resolve(response.data))
         .catch(error => reject(error.response))
     })
@@ -285,7 +286,7 @@ export default function ReviewPage(props) {
 
   function favoriteJudge() {
     favorites.map(favorite => {
-      if (shop_cd === String(favorite.shop_cd)) {
+      if (shopCd === String(favorite.shopCd)) {
         setIsFavorite(true);
         return;
       }
@@ -378,7 +379,7 @@ export default function ReviewPage(props) {
               <a href={`tel:${shop.shop_tel}`}><Icon name='phone square'/></a>
             </span>
             <span className='detailpage-review'>
-              <Link to={`/booking/${category}/${shop_cd}`}>
+              <Link to={`/booking/${category}/${shopCd}`}>
                 <Button className='detailpage-link-btn' color='violet'>예약하기 <Icon name='angle double right'/></Button>
               </Link>
             </span>
@@ -436,7 +437,7 @@ export default function ReviewPage(props) {
                 <Rating icon='star' defaultRating={review.ratings} maxRating={5} size='mini' disabled/><br/>
                 <Comment.Author as='a'>{review.user_name}</Comment.Author>
                 <Comment.Metadata>{timeForToday(review.review_time)}</Comment.Metadata>
-                {mypostJudge(review.user_cd) && 
+                {mypostJudge(review.userCd) && 
                   <Label className='review-comment-label-setting' onClick={() => reviewEdit(review.review_cd)}>
                     <Icon name='ellipsis vertical'/>
                   </Label>
@@ -472,7 +473,7 @@ export default function ReviewPage(props) {
                 <Rating icon='star' defaultRating={review.ratings} maxRating={5} size='mini' disabled/><br/>
                 <Comment.Author as='a'>{review.user_name}</Comment.Author>
                 <Comment.Metadata>{timeForToday(review.review_time)}</Comment.Metadata>
-                {mypostJudge(review.user_cd) && 
+                {mypostJudge(review.userCd) && 
                   <Label className='review-comment-label-setting' onClick={() => reviewEdit(review.review_cd)}>
                     <Icon name='ellipsis vertical'/>
                   </Label>
@@ -500,7 +501,7 @@ export default function ReviewPage(props) {
                       <Comment.Author as='a'>{reply.user_name}</Comment.Author>
                       <Label className='review-comment-label' color='violet' size='mini' horizontal>STAFF</Label>
                       <Comment.Metadata>{timeForToday(reply.review_time)}</Comment.Metadata>
-                      {mypostJudge(reply.user_cd) && 
+                      {mypostJudge(reply.userCd) && 
                         <Label className='review-comment-label-setting' onClick={() => reviewEdit(reply.review_cd)}>
                           <Icon name='ellipsis vertical'/>
                         </Label>

@@ -46,7 +46,7 @@ export default function SearchPage(props) {
         };
         return new Promise(function(resolve, reject) {
             axios
-            .post(api.shopList, params)
+            .get(api.shopList, params)
             .then(response => resolve(response.data))
             .catch(error => reject(error.response))
         })

@@ -17,7 +17,7 @@ export default function BookingDetail(props) {
 
   const userInfo = JSON.parse(sessionStorage.getItem('userInfo'));
   const favorites = JSON.parse(sessionStorage.getItem('favorites'));
-  const user_cd = userInfo ? userInfo.user_cd : null;
+  const userCd = userInfo ? userInfo.userCd : null;
   const role = userInfo ? userInfo.role : null;
   const [couponList, setCouponList] = useState([]);
   const [orderList, setOrderList] = useState([]);
@@ -59,7 +59,7 @@ export default function BookingDetail(props) {
   
   const [shop, setShop] = useState([]);
   const [shopImages, setShopImages] = useState([]);
-  const {shop_cd} = useParams();
+  const {shopCd} = useParams();
   const category = (props.location.pathname).split('/')[2];
 
   const [isFavorite, setIsFavorite] = useState(false);
@@ -77,13 +77,13 @@ export default function BookingDetail(props) {
     if (favorites) {
       favoriteJudge();
     }
-    const params = { 
-      'shop_cd': shop_cd,
-      'role': role
-    };
     return new Promise(function(resolve, reject) {
       axios
-        .post(api.shopInfo, params)
+        .get(api.shopInfo,  {
+          params: {
+            'shopCd': shopCd
+          }
+        })
         .then(response => resolve(response.data))
         .catch(error => reject(error.response))
     })
@@ -150,7 +150,7 @@ export default function BookingDetail(props) {
     const booking_detail = {};
 
     const checkParams = { 
-      'user_cd': user_cd,
+      'user_cd': userCd,
       'booking_time': timeStamp
     };
     new Promise(function(resolve, reject) {
@@ -176,8 +176,8 @@ export default function BookingDetail(props) {
           booking_detail.discount = discount;
         }
         const params = { 
-          'user_cd': user_cd,
-          'shop_cd': shop_cd,
+          'user_cd': userCd,
+          'shopCd': shopCd,
           'booking_time': timeStamp,
           'booking_detail': booking_detail,
           'booking_price': resultPrice,
@@ -351,14 +351,14 @@ export default function BookingDetail(props) {
     if (clickFavorite === true) {
       return;
     }
-    if (user_cd === null) {
+    if (userCd === null) {
       alert('로그인이 필요합니다');
       return;
     }
     setClickFavorite(true);
     const params = { 
-      'user_cd': user_cd,
-      'shop_cd': shop_cd,
+      'user_cd': userCd,
+      'shopCd': shopCd,
       'isFavorite': isFavorite
     };
     return new Promise(function(resolve, reject) {
@@ -376,20 +376,21 @@ export default function BookingDetail(props) {
         shop.favorite_num = shop.favorite_num - 1;
         setShop(shop)
       }
-      getFavorite(user_cd);
+      myFavorites(userCd);
     })
     .catch(err => {
       alert('잠시 후 다시 시도하여 주세요.')
     })
   }
 
-  function getFavorite(user_cd) {
-    const params = { 
-      'user_cd': user_cd
-    };
+  function myFavorites(userCd) {
     return new Promise(function(resolve, reject) {
       axios
-        .post(api.getFavorite, params)
+        .get(api.myFavorites, {
+          params: {
+            'userCd': userCd
+          }
+        })
         .then(response => resolve(response.data))
         .catch(error => reject(error.response))
     })
@@ -407,7 +408,7 @@ export default function BookingDetail(props) {
 
   function favoriteJudge() {
     favorites.map(favorite => {
-      if (shop_cd === String(favorite.shop_cd)) {
+      if (shopCd === String(favorite.shopCd)) {
         setIsFavorite(true);
         return;
       }
@@ -848,7 +849,7 @@ export default function BookingDetail(props) {
             <a href={`tel:${shop.shop_tel}`}><Icon name='phone square'/></a>
           </span>
           <span className='detailpage-review'>
-            <Link to={`/review/${category}/${shop_cd}`}>
+            <Link to={`/review/${category}/${shopCd}`}>
               <Button className='detailpage-link-btn' inverted color='violet'>리뷰보기 <Icon name='angle double right'/></Button>
             </Link>
           </span>
@@ -878,12 +879,12 @@ export default function BookingDetail(props) {
             <Statistic.Label className='review-tab-label' onClick={favorite}>즐겨찾기</Statistic.Label>
           </Statistic>
           <Statistic>
-            <Statistic.Value className='review-tab-icon' onClick={() => props.history.push(`/review/${category}/${shop_cd}`)}><Icon name='comments outline'/> {shop.review_num === undefined ? 0 : comma(shop.review_num)}</Statistic.Value>
-            <Statistic.Label className='review-tab-label' onClick={() => props.history.push(`/review/${category}/${shop_cd}`)}>총 리뷰수</Statistic.Label>
+            <Statistic.Value className='review-tab-icon' onClick={() => props.history.push(`/review/${category}/${shopCd}`)}><Icon name='comments outline'/> {shop.review_num === undefined ? 0 : comma(shop.review_num)}</Statistic.Value>
+            <Statistic.Label className='review-tab-label' onClick={() => props.history.push(`/review/${category}/${shopCd}`)}>총 리뷰수</Statistic.Label>
           </Statistic>
           <Statistic>
-            <Statistic.Value className='review-tab-icon' onClick={() => props.history.push(`/review/${category}/${shop_cd}`)}><Icon name='star outline'/> {shop.ratings_ave}</Statistic.Value>
-            <Statistic.Label className='review-tab-label' onClick={() => props.history.push(`/review/${category}/${shop_cd}`)}>만족도</Statistic.Label>
+            <Statistic.Value className='review-tab-icon' onClick={() => props.history.push(`/review/${category}/${shopCd}`)}><Icon name='star outline'/> {shop.ratings_ave}</Statistic.Value>
+            <Statistic.Label className='review-tab-label' onClick={() => props.history.push(`/review/${category}/${shopCd}`)}>만족도</Statistic.Label>
           </Statistic>
         </Statistic.Group>
       </Segment>

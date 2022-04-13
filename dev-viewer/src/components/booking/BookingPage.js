@@ -8,7 +8,7 @@ import axios from 'axios';
 export default function BookingPage(props) {
     
     const userInfo = JSON.parse(sessionStorage.getItem('userInfo'));
-    const user_cd = userInfo ? userInfo.user_cd : null;
+    const userCd = userInfo ? userInfo.userCd : null;
     const {category} = useParams();
     const [favoriteList, setFavoriteList] = useState([]);
     const categoryList = ['hairshop', 'restaurant', 'cafe'];
@@ -20,19 +20,20 @@ export default function BookingPage(props) {
 
     useEffect(() => {
         return new Promise(function(resolve, reject) {
-          const params = { 
-            'user_cd': user_cd
-          };
           axios
-          .post(api.favoriteList, params)
+          .get(api.myFavorites, {
+            params: {
+              'userCd': userCd
+            }
+          })
           .then(response => resolve(response.data))
           .catch(error => reject(error.response))
         })
         .then(res => {
-          if (res !== null) {
+          if (res.success) {
               const tmp = [];
-              res.forEach(shop => {
-                  tmp.push(shop.shop_cd);
+              res.dataList.forEach(shop => {
+                  tmp.push(shop.shopCd);
               })
               setFavoriteList(tmp);
           }
