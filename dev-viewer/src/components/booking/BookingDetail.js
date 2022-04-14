@@ -51,10 +51,10 @@ export default function BookingDetail(props) {
   const [endHour, setEndHour] = useState(24);
 
   const customersList = [
-    {'customers_cd':1, 'customers':'1명'},
-    {'customers_cd':2, 'customers':'2명'},
-    {'customers_cd':3, 'customers':'3 ~ 4명'},
-    {'customers_cd':5, 'customers':'5명 이상'}
+    {'customersCd':1, 'customers':'1명'},
+    {'customersCd':2, 'customers':'2명'},
+    {'customersCd':3, 'customers':'3 ~ 4명'},
+    {'customersCd':5, 'customers':'5명 이상'}
   ]
   
   const [shop, setShop] = useState([]);
@@ -88,11 +88,11 @@ export default function BookingDetail(props) {
         .catch(error => reject(error.response))
     })
     .then(res => {
-      if (res !== null) {
-        setShop(res);
-        makeImageList(res.shop_img);
-        setStartHour(Number(res.shop_open.substring(0,2)));
-        setEndHour(Number(res.shop_close.substring(0,2)));
+      if (res.success) {
+        setShop(res.data);
+        makeImageList(res.data.shopImg);
+        setStartHour(Number(res.data.shopOpen.substring(0,2)));
+        setEndHour(Number(res.data.shopClose.substring(0,2)));
       }
     })
     .catch(err => {
@@ -100,10 +100,11 @@ export default function BookingDetail(props) {
     })
   }, [])
 
-  function makeImageList(shop_img) {
+  function makeImageList(shopImg) {
+    const imgList = shopImg.split(',');
     const result = [];
     for (let index = 0; index < 4; index++) {
-      result.push(shop_img[index] ? shop_img[index] : shopDefault);
+      result.push(imgList[index] ? imgList[index] : shopDefault);
     }
     setShopImages(result);
   }
@@ -147,11 +148,11 @@ export default function BookingDetail(props) {
   function sendBooking() {
     setModalLoading(true);
     const timeStamp = dbDate + " " + dbTime + ":00";
-    const booking_detail = {};
+    const bookingDetail = {};
 
     const checkParams = { 
-      'user_cd': userCd,
-      'booking_time': timeStamp
+      'userCd': userCd,
+      'bookingTime': timeStamp
     };
     new Promise(function(resolve, reject) {
       axios
@@ -167,20 +168,20 @@ export default function BookingDetail(props) {
       } else {
         setModalOpen(true);
         if (category === 'hairshop') {
-          booking_detail.designer = dbDesigner;
-          booking_detail.style = orderList[0].menu_cd;
-          booking_detail.discount = discount;
+          bookingDetail.designer = dbDesigner;
+          bookingDetail.style = orderList[0].menuCd;
+          bookingDetail.discount = discount;
         } else {
-          booking_detail.customers = dbCustomers;
-          booking_detail.orders = orderList;
-          booking_detail.discount = discount;
+          bookingDetail.customers = dbCustomers;
+          bookingDetail.orders = orderList;
+          bookingDetail.discount = discount;
         }
         const params = { 
-          'user_cd': userCd,
+          'userCd': userCd,
           'shopCd': shopCd,
-          'booking_time': timeStamp,
-          'booking_detail': booking_detail,
-          'booking_price': resultPrice,
+          'bookingTime': timeStamp,
+          'bookingDetail': bookingDetail,
+          'bookingPrice': resultPrice,
           'category': category
         };
         return new Promise(function(resolve, reject) {
@@ -208,17 +209,17 @@ export default function BookingDetail(props) {
   }
     
   function DesignerBtnClick(targetId) {
-    const target = shop.staff_list.find(staff => staff.user_cd === targetId);
-    setDesigner(target.user_name);
-    setDbDesigner(target.user_cd);
+    const target = shop.staffList.find(staff => staff.userCd === targetId);
+    setDesigner(target.userName);
+    setDbDesigner(target.userCd);
     setDesignerSelected(true);
     setShowDesigner(false);
   }
 
   function hairShopMenuBtnClick(targetId) {
-    const target = shop.menu_list.find(menu => menu.menu_cd === targetId);
-    const price = target.menu_price;
-    const orderTarget =  orderList.find(order => order.menu_cd === targetId);
+    const target = shop.menuList.find(menu => menu.menuCd === targetId);
+    const price = target.menuPrice;
+    const orderTarget =  orderList.find(order => order.menuCd === targetId);
     if (orderTarget === undefined) {
       setResultPrice(resultPrice + price);
       orderList.push(target);
@@ -240,16 +241,16 @@ export default function BookingDetail(props) {
   }
 
   function CustomersBtnClick(targetId) {
-    const target = customersList.find(customers => customers.customers_cd === targetId);
+    const target = customersList.find(customers => customers.customersCd === targetId);
     setCustomers(target.customers);
-    setDbCustomers(target.customers_cd);
+    setDbCustomers(target.customersCd);
     setCustomersSelected(true);
     setShowCustomers(false);
   }
 
   function shopMenuBtnClick(targetId) {
-    const target = shop.menu_list.find(menu => menu.menu_cd === targetId);
-    const price = target.menu_price;
+    const target = shop.menuList.find(menu => menu.menuCd === targetId);
+    const price = target.menuPrice;
     setResultPrice(resultPrice + price);
     if (orderList.indexOf(target) === -1) {
       orderList.push(target);
@@ -263,8 +264,8 @@ export default function BookingDetail(props) {
   }
 
   function shopMenuBtnMinusClick(targetId) {
-    const target = shop.menu_list.find(menu => menu.menu_cd === targetId);
-    const price = target.menu_price;
+    const target = shop.menuList.find(menu => menu.menuCd === targetId);
+    const price = target.menuPrice;
     setResultPrice(resultPrice - price);
     if (orderList.indexOf(target) !== -1) {
       orderList[orderList.indexOf(target)].num -= 1;
@@ -278,22 +279,22 @@ export default function BookingDetail(props) {
   }
 
   function CouponClick(targetId) {
-    const coupon = couponList.find(coupon => coupon.coupon_cd === targetId);
+    const coupon = couponList.find(coupon => coupon.couponCd === targetId);
     couponList[couponList.indexOf(coupon)].use = !couponList[couponList.indexOf(coupon)].use;
     setCouponList(couponList);
     
     if (coupon.use) {
-      useCouponList.push(coupon.coupon_cd);
-      setResultPrice(resultPrice - coupon.coupon_discount);
+      useCouponList.push(coupon.couponCd);
+      setResultPrice(resultPrice - coupon.couponDiscount);
     } else {
-      useCouponList.splice(useCouponList.indexOf(coupon.coupon_cd), 1);
-      setResultPrice(resultPrice + coupon.coupon_discount);
+      useCouponList.splice(useCouponList.indexOf(coupon.couponCd), 1);
+      setResultPrice(resultPrice + coupon.couponDiscount);
     }
     setUseCouponList(useCouponList);
   }
 
   function designerToggle() {
-    {shop.staff_list === null || shop.staff_list.length === 0
+    {shop.staffList === null || shop.staffList.length === 0
     ? setDesignerError(!designerError)
     : setShowDesigner(!showDesigner)
     }
@@ -307,7 +308,7 @@ export default function BookingDetail(props) {
   }
 
   function shopMenuToggle() {
-    {shop.menu_list === null || shop.menu_list.length === 0
+    {shop.menuList === null || shop.menuList.length === 0
     ? setShopMenuError(!shopMenuError)
     : setShowShopMenu(!showShopMenu)
     }
@@ -356,11 +357,11 @@ export default function BookingDetail(props) {
       return;
     }
     setClickFavorite(true);
-    const params = { 
-      'user_cd': userCd,
+    const params = {
+      'userCd': userCd,
       'shopCd': shopCd,
       'isFavorite': isFavorite
-    };
+    }
     return new Promise(function(resolve, reject) {
       axios
         .post(api.favorite, params)
@@ -368,18 +369,24 @@ export default function BookingDetail(props) {
         .catch(error => reject(error.response))
     })
     .then(data => {
-      setIsFavorite(data);
-      if (data) {
-        shop.favorite_num = shop.favorite_num + 1;
-        setShop(shop)
+      if (data.success) {
+        setIsFavorite(data);
+        if (data) {
+          shop.favoriteNum = shop.favoriteNum + 1;
+          setShop(shop)
+        } else {
+          shop.favoriteNum = shop.favoriteNum - 1;
+          setShop(shop)
+        }
+        myFavorites(userCd);
       } else {
-        shop.favorite_num = shop.favorite_num - 1;
-        setShop(shop)
+        alert('잠시 후 다시 시도하여 주세요.')
+        setClickFavorite(false);
       }
-      myFavorites(userCd);
     })
     .catch(err => {
       alert('잠시 후 다시 시도하여 주세요.')
+      setClickFavorite(false);
     })
   }
 
@@ -395,7 +402,7 @@ export default function BookingDetail(props) {
         .catch(error => reject(error.response))
     })
     .then(data => {
-      sessionStorage.setItem('favorites', JSON.stringify(data));
+      sessionStorage.setItem('favorites', JSON.stringify(data.dataList));
       setClickFavorite(false);
     })
     .catch(err => {
@@ -461,15 +468,15 @@ export default function BookingDetail(props) {
     <h4>표시할 정보가 없습니다</h4>
   </div>
 
-  const visibleDesigner = showDesigner && (shop.staff_list.map(staff =>
+  const visibleDesigner = showDesigner && (shop.staffList.map(staff =>
     <>
-    <Item.Group unstackable className={dbDesigner === staff.user_cd ? 'detailpage-service-menu detailpage-selected' : 'detailpage-service-menu'} key={staff.user_cd} onClick={() => DesignerBtnClick(staff.user_cd)}>
+    <Item.Group unstackable className={dbDesigner === staff.userCd ? 'detailpage-service-menu detailpage-selected' : 'detailpage-service-menu'} key={staff.userCd} onClick={() => DesignerBtnClick(staff.userCd)}>
       <Item className='detailpage-service'>
-        <Item.Image className='detailpage-service-img' src={api.imgRender(staff.user_img === null ? staffDefault : staff.user_img)}/>
-        <Item.Content header={staff.user_name + ' (' + staff.career +') '} meta={staff.info}/>
+        <Item.Image className='detailpage-service-img' src={api.imgRender(staff.userImg === null ? staffDefault : staff.userImg)}/>
+        <Item.Content header={staff.userName + ' (' + staff.career +') '} meta={staff.info}/>
       </Item>
     </Item.Group>
-    {dbDesigner === staff.user_cd &&
+    {dbDesigner === staff.userCd &&
       <Item className='detailpage-service-num'>
         <Icon color='violet' className='detailpage-service-minus' name='check circle'/>
       </Item>
@@ -477,19 +484,19 @@ export default function BookingDetail(props) {
     </>
     ));
 
-  const visibleHairShopMenu = showShopMenu && (shop.menu_categorys.map(category => 
+  const visibleHairShopMenu = showShopMenu && (shop.menuCategories.map(category => 
     <>
     <Header as='h3' className='detailpage-service-header' dividing>
       <Icon name='slack hash'/>
       <Header.Content>{category}</Header.Content>
     </Header>
     {
-    shop.menu_list.filter(list => list.menu_category.match(category)).map(menu => 
+    shop.menuList.filter(list => list.menuCategory.match(category)).map(menu => 
       <>
-      <Item.Group unstackable className={0 < menu.num ? 'detailpage-service-menu detailpage-selected' : 'detailpage-service-menu'} key={menu.menu_cd}>
-        <Item className='detailpage-service' onClick={() => hairShopMenuBtnClick(menu.menu_cd)}>
-          <Item.Image className='detailpage-service-img' src={api.imgRender(menu.menu_img === null ? menuDefault : menu.menu_img)}/>
-          <Item.Content header={menu.menu_name} meta={comma(menu.menu_price) + '원'} description={menu.menu_description === null ? '' : menu.menu_description}/>
+      <Item.Group unstackable className={0 < menu.num ? 'detailpage-service-menu detailpage-selected' : 'detailpage-service-menu'} key={menu.menuCd}>
+        <Item className='detailpage-service' onClick={() => hairShopMenuBtnClick(menu.menuCd)}>
+          <Item.Image className='detailpage-service-img' src={api.imgRender(menu.menuImg === null ? menuDefault : menu.menuImg)}/>
+          <Item.Content header={menu.menuName} meta={comma(menu.menuPrice) + '원'} description={menu.menuDescription === null ? '' : menu.menuDescription}/>
         </Item>
       </Item.Group>
       {0 < menu.num &&
@@ -506,36 +513,36 @@ export default function BookingDetail(props) {
   const visibleCustomers = showCustomers &&
     <Item.Group unstackable className='detailpage-service-customers'>
       {customersList.map(customers =>
-        <Button onClick={() => CustomersBtnClick(customers.customers_cd)}>
-          {customers.customers_cd === 1 && <img src={person1}/>}
-          {customers.customers_cd === 2 && <img src={person2}/>}
-          {customers.customers_cd === 3 && <img src={person3}/>}
-          {customers.customers_cd === 5 && <img src={person5}/>}
+        <Button onClick={() => CustomersBtnClick(customers.customersCd)}>
+          {customers.customersCd === 1 && <img src={person1}/>}
+          {customers.customersCd === 2 && <img src={person2}/>}
+          {customers.customersCd === 3 && <img src={person3}/>}
+          {customers.customersCd === 5 && <img src={person5}/>}
           {customers.customers}
         </Button>
       )}
     </Item.Group>
 
-  const visibleMenu = showShopMenu && (shop.menu_categorys.map(category => 
+  const visibleMenu = showShopMenu && (shop.menuCategories.map(category => 
       <>
       <Header as='h3' className='detailpage-service-header' dividing>
         <Icon name='slack hash'/>
         <Header.Content>{category}</Header.Content>
       </Header>
       {
-      shop.menu_list.filter(list => list.menu_category.match(category)).map(menu => 
+      shop.menuList.filter(list => list.menuCategory.match(category)).map(menu => 
         <>
-        <Item.Group unstackable className={0 < menu.num ? 'detailpage-service-menu detailpage-selected' : 'detailpage-service-menu'} key={menu.menu_cd}>
-          <Item className='detailpage-service' onClick={() => shopMenuBtnClick(menu.menu_cd)}>
-            <Item.Image className='detailpage-service-img' src={api.imgRender(menu.menu_img === null ? menuDefault : menu.menu_img)}/>
-            <Item.Content header={menu.menu_name} meta={comma(menu.menu_price) + '원'} description={menu.menu_description === null ? '' : menu.menu_description}/>
+        <Item.Group unstackable className={0 < menu.num ? 'detailpage-service-menu detailpage-selected' : 'detailpage-service-menu'} key={menu.menuCd}>
+          <Item className='detailpage-service' onClick={() => shopMenuBtnClick(menu.menuCd)}>
+            <Item.Image className='detailpage-service-img' src={api.imgRender(menu.menuImg === null ? menuDefault : menu.menuImg)}/>
+            <Item.Content header={menu.menuName} meta={comma(menu.menuPrice) + '원'} description={menu.menuDescription === null ? '' : menu.menuDescription}/>
           </Item>
         </Item.Group>
         {0 < menu.num &&
         <Item className='detailpage-service-num'>
-          <Icon color='violet' className='detailpage-service-minus' name='minus circle' onClick={() => shopMenuBtnMinusClick(menu.menu_cd)}/>
+          <Icon color='violet' className='detailpage-service-minus' name='minus circle' onClick={() => shopMenuBtnMinusClick(menu.menuCd)}/>
           {menu.num}
-          <Icon color='violet' className='detailpage-service-plus' name='plus circle' onClick={() => shopMenuBtnClick(menu.menu_cd)}/>
+          <Icon color='violet' className='detailpage-service-plus' name='plus circle' onClick={() => shopMenuBtnClick(menu.menuCd)}/>
         </Item>
         }
         </>
@@ -793,10 +800,10 @@ export default function BookingDetail(props) {
           <Card.Group className='detailpage-coupon-list' itemsPerRow={2}>
             {couponList.map(coupon =>
               <Card color='violet'
-                onClick={() => CouponClick(coupon.coupon_cd)}
-                header={{content: useCouponList.indexOf(coupon.coupon_cd) !== -1 ? comma(coupon.coupon_discount) + '원 할인' : coupon.coupon_name}}
-                meta={useCouponList.indexOf(coupon.coupon_cd) !== -1 ? <Icon name='checkmark'/> : comma(coupon.coupon_discount) + '원'}
-                className={useCouponList.indexOf(coupon.coupon_cd) !== -1  && 'coupon-checked'}/>
+                onClick={() => CouponClick(coupon.couponCd)}
+                header={{content: useCouponList.indexOf(coupon.couponCd) !== -1 ? comma(coupon.couponDiscount) + '원 할인' : coupon.couponName}}
+                meta={useCouponList.indexOf(coupon.couponCd) !== -1 ? <Icon name='checkmark'/> : comma(coupon.couponDiscount) + '원'}
+                className={useCouponList.indexOf(coupon.couponCd) !== -1  && 'coupon-checked'}/>
             )}
           </Card.Group>
         :<></>
@@ -808,8 +815,8 @@ export default function BookingDetail(props) {
   function discountPrice() {
     let result = 0;
     for (let target in useCouponList) {
-      const coupon = couponList.find(coupon => coupon.coupon_cd === useCouponList[target]);
-      result += coupon.coupon_discount;
+      const coupon = couponList.find(coupon => coupon.couponCd === useCouponList[target]);
+      result += coupon.couponDiscount;
     }
     return result;
   }
@@ -844,9 +851,9 @@ export default function BookingDetail(props) {
 
       {/* 샵 정보 탭 */}
       <Segment className='detailpage-main'>
-        <p className='detailpage-name'>{shop.shop_name}
+        <p className='detailpage-name'>{shop.shopName}
           <span className='detailpage-call'>
-            <a href={`tel:${shop.shop_tel}`}><Icon name='phone square'/></a>
+            <a href={`tel:${shop.shopTel}`}><Icon name='phone square'/></a>
           </span>
           <span className='detailpage-review'>
             <Link to={`/review/${category}/${shopCd}`}>
@@ -854,17 +861,17 @@ export default function BookingDetail(props) {
             </Link>
           </span>
         </p>
-        <p className='detailpage-time'><Icon name='clock outline'/>{shop.shop_open}~{shop.shop_close} 
-          <span className='detailpage-holiday'>({shop.shop_holiday === 'none' ? '휴무일 없음' : convertWeek(shop.shop_holiday) + ' 휴무'})</span>
+        <p className='detailpage-time'><Icon name='clock outline'/>{shop.shopOpen}~{shop.shopClose} 
+          <span className='detailpage-holiday'>({shop.shopHoliday === 'none' ? '휴무일 없음' : convertWeek(shop.shopHoliday) + ' 휴무'})</span>
         </p>
-        <p className='detailpage-info'><Icon name='list alternate outline'/>{shop.shop_info}</p>
-        <p className='detailpage-location'><Icon name='map outline'/>{shop.shop_location}
+        <p className='detailpage-info'><Icon name='list alternate outline'/>{shop.shopInfo}</p>
+        <p className='detailpage-location'><Icon name='map outline'/>{shop.shopLocation}
           <Scroll className='detailpage-icon' to='map' offset={-56} spy={true} smooth={true}>
             <Icon id='map' onClick={mapToogle} name={mapOpen ? 'angle up' : 'angle down'}/>
           </Scroll>
         </p>
         {mapOpen && 
-          (shop.location_lat === 0 && shop.location_lng === 0
+          (shop.locationLat === 0 && shop.locationLng === 0
           ? <h4 className='detailpage-location-empty'>위치정보 미등록 매장입니다</h4>
           : <MapContainer shop={shop}/>
           )
@@ -875,15 +882,15 @@ export default function BookingDetail(props) {
       <Segment className='review-info'>
         <Statistic.Group size='mini' widths='three' inverted>
           <Statistic>
-            <Statistic.Value className='review-tab-icon' onClick={favorite}><Icon name={isFavorite ? 'like' : 'like outline'}/> {shop.favorite_num === undefined ? 0 : comma(shop.favorite_num)}</Statistic.Value>
+            <Statistic.Value className='review-tab-icon' onClick={favorite}><Icon name={isFavorite ? 'like' : 'like outline'}/> {shop.favoriteNum === undefined ? 0 : comma(shop.favoriteNum)}</Statistic.Value>
             <Statistic.Label className='review-tab-label' onClick={favorite}>즐겨찾기</Statistic.Label>
           </Statistic>
           <Statistic>
-            <Statistic.Value className='review-tab-icon' onClick={() => props.history.push(`/review/${category}/${shopCd}`)}><Icon name='comments outline'/> {shop.review_num === undefined ? 0 : comma(shop.review_num)}</Statistic.Value>
+            <Statistic.Value className='review-tab-icon' onClick={() => props.history.push(`/review/${category}/${shopCd}`)}><Icon name='comments outline'/> {shop.reviewNum === undefined ? 0 : comma(shop.reviewNum)}</Statistic.Value>
             <Statistic.Label className='review-tab-label' onClick={() => props.history.push(`/review/${category}/${shopCd}`)}>총 리뷰수</Statistic.Label>
           </Statistic>
           <Statistic>
-            <Statistic.Value className='review-tab-icon' onClick={() => props.history.push(`/review/${category}/${shopCd}`)}><Icon name='star outline'/> {shop.ratings_ave}</Statistic.Value>
+            <Statistic.Value className='review-tab-icon' onClick={() => props.history.push(`/review/${category}/${shopCd}`)}><Icon name='star outline'/> {shop.ratingsAve}</Statistic.Value>
             <Statistic.Label className='review-tab-label' onClick={() => props.history.push(`/review/${category}/${shopCd}`)}>만족도</Statistic.Label>
           </Statistic>
         </Statistic.Group>
@@ -938,7 +945,7 @@ export default function BookingDetail(props) {
         <Modal.Content>
           <div className='booking-modal-title'>
             <div className='booking-modal-bar'/>
-            {shop.shop_name}
+            {shop.shopName}
           </div>
           <Image className='booking-modal-shopimg' src={api.imgRender(shopImages[0])}/>
           <h4><Icon name='calendar check outline'/>예약일시</h4>
@@ -958,19 +965,19 @@ export default function BookingDetail(props) {
         <div className='booking-modal-total'>
             <div className='booking-modal-detail'>
               <ol className='booking-modal-order'>
-                {orderList.map(order => (
+                {orderList && orderList.map(order => (
                   <li>
-                    {order.menu_name} {comma(order.menu_price)}원
+                    {order.menuName} {comma(order.menuPrice)}원
                     <span className='booking-modal-order-num'>
                       {1 < order.num && order.num}
                     </span>
                   </li>
                 ))}
-                {couponList.map(coupon => (
-                  useCouponList.indexOf(coupon.coupon_cd) !== -1 &&
+                {couponList && couponList.map(coupon => (
+                  useCouponList.indexOf(coupon.couponCd) !== -1 &&
                   <>
                   <li>
-                    <Icon name='minus circle'/>쿠폰할인 {'-' + comma(coupon.coupon_discount)}원
+                    <Icon name='minus circle'/>쿠폰할인 {'-' + comma(coupon.couponDiscount)}원
                   </li>
                   </>
                 ))}

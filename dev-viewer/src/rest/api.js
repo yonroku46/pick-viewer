@@ -8,7 +8,6 @@ export function imgRender(img) {
 // Public
 export const check = "/api/check/";
 export const imgUpload = "/api/imgUpload";
-export const favorite = "/api/favorite";
 export const myFavorites = "/api/myFavorites";
 export const login = "/api/login";
 
@@ -22,6 +21,7 @@ export const helpService = "/api/helpService";
 export const resetService = "/api/resetService";
 
 // BookingPage
+export const favorite = "/api/shop/favorite";
 export const shopList = "/api/shop/list";
 export const shopInfo = "/api/shop/info";
 export const booking = "/api/booking";

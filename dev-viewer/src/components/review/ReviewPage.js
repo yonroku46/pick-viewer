@@ -279,7 +279,7 @@ export default function ReviewPage(props) {
         .catch(error => reject(error.response))
     })
     .then(data => {
-      sessionStorage.setItem('favorites', JSON.stringify(data));
+      sessionStorage.setItem('favorites', JSON.stringify(data.dataList));
       setClickFavorite(false);
     })
   }
