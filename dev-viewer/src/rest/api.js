@@ -30,7 +30,7 @@ export const bookingCheck = "/api/booking/check";
 // ReviewPage
 export const sendReview = "/api/sendReview";
 export const deleteReview = "/api/deleteReview";
-export const reviewList = "/api/reviewList";
+export const reviewList = "/api/shop/review/list";
 
 // MyPage
 export const infoUpdate = "/api/infoUpdate";

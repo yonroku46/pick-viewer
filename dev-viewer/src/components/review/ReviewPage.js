@@ -43,22 +43,22 @@ export default function ReviewPage(props) {
     if (favorites) {
       favoriteJudge();
     }
-    const params = { 
-      'shopCd': shopCd,
-      'role': role
-    };
     return new Promise(function(resolve, reject) {
       axios
-        .post(api.shopInfo, params)
+        .get(api.shopInfo,  {
+          params: {
+            'shopCd': shopCd
+          }
+        })
         .then(response => resolve(response.data))
         .catch(error => reject(error.response))
     })
     .then(res => {
-      if (res !== null) {
-        setShop(res);
-        staffJudge(res);
-        getReviewList(res.shopCd);
-        makeImageList(res.shop_img);
+      if (res.success) {
+        setShop(res.data);
+        staffJudge(res.data);
+        getReviewList(res.data.shopCd);
+        makeImageList(res.data.shopImg);
       }
     })
     .catch(err => {
@@ -66,18 +66,19 @@ export default function ReviewPage(props) {
     })
   }, [reload])
 
-  function makeImageList(shop_img) {
+  function makeImageList(shopImg) {
+    const imgList = shopImg.split(',');
     const result = [];
     for (let index = 0; index < 4; index++) {
-        result.push(shop_img[index] ? shop_img[index] : shopDefault);
-      }
-      setShopImages(result);
+      result.push(imgList[index] ? imgList[index] : shopDefault);
+    }
+    setShopImages(result);
   }
 
-  function staffJudge(res) {
+  function staffJudge(data) {
     let staffList = [];
-    if (res.staff_list != null) {
-      for (let staff of res.staff_list) {
+    if (data.staffList != null) {
+      for (let staff of data.staffList) {
         staffList.push(staff.userCd);
       }
       setIsStaff(staffList.indexOf(userCd) !== -1);
@@ -99,8 +100,8 @@ export default function ReviewPage(props) {
         .catch(error => reject(error.response))
     })
     .then(res => {
-      if (res !== null) {
-        setReviewList(res);
+      if (res.success) {
+        setReviewList(res.dataList);
         setReviewLoading(false);
       }
     })
@@ -123,7 +124,7 @@ export default function ReviewPage(props) {
       'isStaff': isStaff,
       'userCd': userCd,
       'shopCd': shopCd,
-      'review_text': comment
+      'reviewText': comment
     };
 
     if (isStaff) {
@@ -131,7 +132,7 @@ export default function ReviewPage(props) {
         alert("답글을 남길 상대가 지정되지 않았습니다.");
         return
       } else {
-        params.review_reply = targetReply.review_cd;
+        params.reviewReply = targetReply.reviewCd;
       }
     } else {
       params.ratings = ratings;
@@ -161,13 +162,13 @@ export default function ReviewPage(props) {
     })
   }
 
-  function deleteReview(review_cd) {
+  function deleteReview(reviewCd) {
     setSendLoading(true);
 
     const params = { 
       'userCd': userCd,
       'shopCd': shopCd,
-      'review_cd': review_cd
+      'reviewCd': reviewCd
     };
     return new Promise(function(resolve, reject) {
       axios
@@ -200,7 +201,7 @@ export default function ReviewPage(props) {
   }
 
   function clickReply(targetId) {
-    const reply = reviewList.find(review => review.review_cd === targetId);
+    const reply = reviewList.find(review => review.reviewCd === targetId);
     setTargetReply(reply);
   }
 
@@ -255,15 +256,24 @@ export default function ReviewPage(props) {
         .catch(error => reject(error.response))
     })
     .then(data => {
-      setIsFavorite(data);
-      if (data) {
-        shop.favorite_num = shop.favorite_num + 1;
+      if (data.success) {
+        const result = data.data.result;
+        setIsFavorite(result);
+        if (result) {
+          shop.favoriteNum = shop.favoriteNum + 1;
+        } else {
+          shop.favoriteNum = shop.favoriteNum - 1;
+        }
         setShop(shop)
+        myFavorites(userCd);
       } else {
-        shop.favorite_num = shop.favorite_num - 1;
-        setShop(shop)
+        alert('잠시 후 다시 시도하여 주세요.')
+        setClickFavorite(false);
       }
-      myFavorites(userCd);
+    })
+    .catch(err => {
+      alert('잠시 후 다시 시도하여 주세요.')
+      setClickFavorite(false);
     })
   }
 
@@ -374,9 +384,9 @@ export default function ReviewPage(props) {
 
         {/* 샵 정보 탭 */}
         <Segment className='detailpage-main'>
-          <p className='detailpage-name'>{shop.shop_name}
+          <p className='detailpage-name'>{shop.shopName}
             <span className='detailpage-call'>
-              <a href={`tel:${shop.shop_tel}`}><Icon name='phone square'/></a>
+              <a href={`tel:${shop.shopTel}`}><Icon name='phone square'/></a>
             </span>
             <span className='detailpage-review'>
               <Link to={`/booking/${category}/${shopCd}`}>
@@ -384,15 +394,15 @@ export default function ReviewPage(props) {
               </Link>
             </span>
           </p>
-          <p className='detailpage-time'><Icon name='clock outline'/>{shop.shop_open}~{shop.shop_close}</p>
-          <p className='detailpage-info'><Icon name='list alternate outline'/>{shop.shop_info}</p>
-          <p className='detailpage-location'><Icon name='map outline'/>{shop.shop_location} 
+          <p className='detailpage-time'><Icon name='clock outline'/>{shop.shopOpen}~{shop.shopClose}</p>
+          <p className='detailpage-info'><Icon name='list alternate outline'/>{shop.shopInfo}</p>
+          <p className='detailpage-location'><Icon name='map outline'/>{shop.shopLocation} 
             <Scroll className='detailpage-icon' to='map' offset={-56} spy={true} smooth={true}>
               <Icon id='map' onClick={mapToogle} name={mapOpen ? 'angle up' : 'angle down'}/>
             </Scroll>
           </p>
           {mapOpen && 
-            (shop.location_lat === 0 && shop.location_lng === 0
+            (shop.locationLat === 0 && shop.locationLng === 0
             ? <h4 className='detailpage-location-empty'>위치정보 미등록 매장입니다</h4>
             : <MapContainer shop={shop}/>
             )
@@ -403,15 +413,15 @@ export default function ReviewPage(props) {
         <Segment className='review-info'>
           <Statistic.Group size='mini' widths='three' inverted>
             <Statistic>
-              <Statistic.Value className='review-tab-icon' onClick={favorite}><Icon name={isFavorite ? 'like' : 'like outline'}/> {shop.favorite_num === undefined ? 0 : comma(shop.favorite_num)}</Statistic.Value>
+              <Statistic.Value className='review-tab-icon' onClick={favorite}><Icon name={isFavorite ? 'like' : 'like outline'}/> {shop.favoriteNum === undefined ? 0 : comma(shop.favoriteNum)}</Statistic.Value>
               <Statistic.Label>즐겨찾기</Statistic.Label>
             </Statistic>
             <Statistic>
-              <Statistic.Value><Icon name='comments outline'/> {shop.review_num === undefined ? 0 : comma(shop.review_num)}</Statistic.Value>
+              <Statistic.Value><Icon name='comments outline'/> {shop.reviewNum === undefined ? 0 : comma(shop.reviewNum)}</Statistic.Value>
               <Statistic.Label>총 리뷰수</Statistic.Label>
             </Statistic>
             <Statistic>
-              <Statistic.Value><Icon name='star outline'/> {shop.ratings_ave}</Statistic.Value>
+              <Statistic.Value><Icon name='star outline'/> {shop.ratingsAve}</Statistic.Value>
               <Statistic.Label>만족도</Statistic.Label>
             </Statistic>
           </Statistic.Group>
@@ -419,35 +429,35 @@ export default function ReviewPage(props) {
         
         {/* 리뷰 탭 */}
         {/* 0. 아직 댓글 없음 */}
-        {reviewList.length === 0 &&
+        {reviewList && reviewList.length === 0 &&
         <div className='review-no-comment'>
           <Icon name='comment alternate' size='huge'/>
           <h4>아직 댓글이 없습니다</h4>
         </div>
         }
         <Comment.Group className='review-comment-area'>
-          {reviewList.map(review => (
-            review.reply_list.length === 0 ?
+          {reviewList && reviewList.map(review => (
+            review.replyList.length === 0 ?
             <>
             {/* 1. 댓글 없는 리뷰 */}
-            {review.user_name !== null ?
+            {review.userName !== null ?
             <Comment className='review-style'>
-              <Comment.Avatar src={api.imgRender(review.user_img === null ? userimgDefault : review.user_img)}/>
+              <Comment.Avatar src={api.imgRender(review.userImg === null ? userimgDefault : review.userImg)}/>
               <Comment.Content>
                 <Rating icon='star' defaultRating={review.ratings} maxRating={5} size='mini' disabled/><br/>
-                <Comment.Author as='a'>{review.user_name}</Comment.Author>
-                <Comment.Metadata>{timeForToday(review.review_time)}</Comment.Metadata>
+                <Comment.Author as='a'>{review.userName}</Comment.Author>
+                <Comment.Metadata>{timeForToday(review.reviewTime)}</Comment.Metadata>
                 {mypostJudge(review.userCd) && 
-                  <Label className='review-comment-label-setting' onClick={() => reviewEdit(review.review_cd)}>
+                  <Label className='review-comment-label-setting' onClick={() => reviewEdit(review.reviewCd)}>
                     <Icon name='ellipsis vertical'/>
                   </Label>
                 }
                 <Comment.Text className='review-comment-text'>
-                  {review.review_text}
+                  {review.reviewText}
                 </Comment.Text>
                 {isStaff && 
                 <Scroll to='reply' spy={true} smooth={true}>
-                  <Comment.Actions onClick={() => clickReply(review.review_cd)}>
+                  <Comment.Actions onClick={() => clickReply(review.reviewCd)}>
                     <Comment.Action>답글달기</Comment.Action>
                   </Comment.Actions>
                 </Scroll>
@@ -458,7 +468,7 @@ export default function ReviewPage(props) {
             // 1_1. 삭제된 댓글 알림표시
             <Comment className='review-style-deleted'>
               <Comment.Content>
-                <p>{review.review_text}</p>
+                <p>{review.reviewText}</p>
               </Comment.Content>
             </Comment>
             }
@@ -466,24 +476,24 @@ export default function ReviewPage(props) {
             :
             <>
             {/* 2. 댓글 있는 리뷰 */}
-            {review.user_name !== null ?
+            {review.userName !== null ?
             <Comment className='review-style'>
-              <Comment.Avatar src={api.imgRender(review.user_img === null ? userimgDefault : review.user_img)}/>
+              <Comment.Avatar src={api.imgRender(review.userImg === null ? userimgDefault : review.userImg)}/>
               <Comment.Content>
                 <Rating icon='star' defaultRating={review.ratings} maxRating={5} size='mini' disabled/><br/>
-                <Comment.Author as='a'>{review.user_name}</Comment.Author>
-                <Comment.Metadata>{timeForToday(review.review_time)}</Comment.Metadata>
+                <Comment.Author as='a'>{review.userName}</Comment.Author>
+                <Comment.Metadata>{timeForToday(review.reviewTime)}</Comment.Metadata>
                 {mypostJudge(review.userCd) && 
-                  <Label className='review-comment-label-setting' onClick={() => reviewEdit(review.review_cd)}>
+                  <Label className='review-comment-label-setting' onClick={() => reviewEdit(review.reviewCd)}>
                     <Icon name='ellipsis vertical'/>
                   </Label>
                 }
                 <Comment.Text className='review-comment-text'>
-                  {review.review_text}
+                  {review.reviewText}
                 </Comment.Text>
                 {isStaff && 
                 <Scroll to='reply' spy={true} smooth={true}>
-                  <Comment.Actions onClick={() => clickReply(review.review_cd)}>
+                  <Comment.Actions onClick={() => clickReply(review.reviewCd)}>
                     <Comment.Action>답글달기</Comment.Action>
                   </Comment.Actions>
                 </Scroll>
@@ -492,22 +502,22 @@ export default function ReviewPage(props) {
 
               {/* 3. 리뷰 대댓글 */}
               <div className='reply-style-top'>
-              {review.reply_list.map(reply => (
-                reply.user_name !== null ?
+              {review.replyList.map(reply => (
+                reply.userName !== null ?
                 <Comment.Group className='reply-style-outline'>
                   <Comment className='reply-style'>
-                    <Comment.Avatar src={api.imgRender(reply.user_img === null ? userimgDefault : reply.user_img)}/>
+                    <Comment.Avatar src={api.imgRender(reply.userImg === null ? userimgDefault : reply.userImg)}/>
                     <Comment.Content>
-                      <Comment.Author as='a'>{reply.user_name}</Comment.Author>
+                      <Comment.Author as='a'>{reply.userName}</Comment.Author>
                       <Label className='review-comment-label' color='violet' size='mini' horizontal>STAFF</Label>
-                      <Comment.Metadata>{timeForToday(reply.review_time)}</Comment.Metadata>
+                      <Comment.Metadata>{timeForToday(reply.reviewTime)}</Comment.Metadata>
                       {mypostJudge(reply.userCd) && 
-                        <Label className='review-comment-label-setting' onClick={() => reviewEdit(reply.review_cd)}>
+                        <Label className='review-comment-label-setting' onClick={() => reviewEdit(reply.reviewCd)}>
                           <Icon name='ellipsis vertical'/>
                         </Label>
                       }
                       <Comment.Text className='review-comment-text'>
-                        {reply.review_text}
+                        {reply.reviewText}
                       </Comment.Text>
                     </Comment.Content>
                   </Comment>
@@ -522,7 +532,7 @@ export default function ReviewPage(props) {
             // 2_1. 삭제된 댓글 알림표시(대댓글도 미표시)
             <Comment className='review-style-deleted'>
               <Comment.Content>
-                <p>{review.review_text}</p>
+                <p>{review.reviewText}</p>
               </Comment.Content>
             </Comment>
             }
@@ -534,11 +544,11 @@ export default function ReviewPage(props) {
           {isStaff ?
           targetReply &&
           <Form.Field className='review-rating'>
-            <label><Icon name='angle double left'/><span className='pcolor'>{targetReply.user_name}</span> 님에게 답글</label>
+            <label><Icon name='angle double left'/><span className='pcolor'>{targetReply.userName}</span> 님에게 답글</label>
             <Comment className='review-style-replyview'>
               <Comment.Content>
                 <Rating icon='star' rating={targetReply.ratings} maxRating={5} size='mini' disabled/><br/>
-                <p>{targetReply.review_text}</p>
+                <p>{targetReply.reviewText}</p>
               </Comment.Content>
             </Comment>
           </Form.Field>

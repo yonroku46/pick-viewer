@@ -79,7 +79,7 @@ export default function BookingDetail(props) {
     }
     return new Promise(function(resolve, reject) {
       axios
-        .get(api.shopInfo,  {
+        .get(api.shopInfo, {
           params: {
             'shopCd': shopCd
           }
@@ -370,14 +370,14 @@ export default function BookingDetail(props) {
     })
     .then(data => {
       if (data.success) {
-        setIsFavorite(data);
-        if (data) {
+        const result = data.data.result;
+        setIsFavorite(result);
+        if (result) {
           shop.favoriteNum = shop.favoriteNum + 1;
-          setShop(shop)
         } else {
           shop.favoriteNum = shop.favoriteNum - 1;
-          setShop(shop)
         }
+        setShop(shop)
         myFavorites(userCd);
       } else {
         alert('잠시 후 다시 시도하여 주세요.')
