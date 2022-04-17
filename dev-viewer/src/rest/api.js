@@ -28,8 +28,8 @@ export const booking = "/api/booking";
 export const bookingCheck = "/api/booking/check";
 
 // ReviewPage
-export const sendReview = "/api/sendReview";
-export const deleteReview = "/api/deleteReview";
+export const sendReview = "/api/shop/review/post";
+export const reviewDelete = "/api/shop/review/delete";
 export const reviewList = "/api/shop/review/list";
 
 // MyPage

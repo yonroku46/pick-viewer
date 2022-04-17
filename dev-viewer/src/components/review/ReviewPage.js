@@ -146,11 +146,12 @@ export default function ReviewPage(props) {
         .then(response => resolve(response.data))
         .catch(error => reject(error.response))
     })
-    .then(res => {
-      if (res) {
+    .then(data => {
+      if (data.success) {
         alert("리뷰가 작성되었습니다.");
         setReload(reload + 1);
         setComment('');
+        setTargetReply(null);
       } else {
         alert("리뷰 작성에 실패하였습니다. 지속시 관리자에게 문의해주세요.");
       }
@@ -162,7 +163,7 @@ export default function ReviewPage(props) {
     })
   }
 
-  function deleteReview(reviewCd) {
+  function reviewDelete(reviewCd) {
     setSendLoading(true);
 
     const params = { 
@@ -172,12 +173,12 @@ export default function ReviewPage(props) {
     };
     return new Promise(function(resolve, reject) {
       axios
-        .post(api.deleteReview, params)
+        .post(api.reviewDelete, params)
         .then(response => resolve(response.data))
         .catch(error => reject(error.response))
     })
-    .then(res => {
-      if (res) {
+    .then(data => {
+      if (data.success) {
         alert("리뷰 삭제가 완료되었습니다.");
         dispatch({ type: 'close' });
         setReload(reload + 1);
@@ -587,7 +588,7 @@ export default function ReviewPage(props) {
           <Modal.Header>정말로 삭제하시겠습니까?</Modal.Header>
             <Modal.Actions>
               <Button negative onClick={() => dispatch({ type: 'close' })}>취소</Button>
-              <Button positive onClick={() => deleteReview(targetReview)}>확인</Button>
+              <Button positive onClick={() => reviewDelete(targetReview)}>확인</Button>
             </Modal.Actions>
         </Modal>
       </div>

@@ -19,7 +19,7 @@ export class MapContainer extends Component {
     }
 
     componentDidMount() {
-        if (this.state.shop.location_lat === 0 && this.state.shop.location_lng === 0 && this.props.role === 3) {
+        if (this.state.shop.locationLat === 0 && this.state.shop.locationLng === 0 && this.props.role === 3) {
             if(navigator.geolocation) {
                 navigator.geolocation.getCurrentPosition(position => {
                     this.setState({
@@ -37,12 +37,12 @@ export class MapContainer extends Component {
         } else {
             this.setState({
                 mapPosition:{
-                    lat: this.state.shop.location_lat,
-                    lng: this.state.shop.location_lng,
+                    lat: this.state.shop.locationLat,
+                    lng: this.state.shop.locationLng,
                 },
                 markerPosition:{
-                    lat: this.state.shop.location_lat,
-                    lng: this.state.shop.location_lng
+                    lat: this.state.shop.locationLat,
+                    lng: this.state.shop.locationLng
                 }
             })
         }
@@ -109,7 +109,7 @@ export class MapContainer extends Component {
                     }
                 });
                 this.props.setShop(
-                    { ...this.props.shop, location_lat: newLat, location_lng: newLng }
+                    { ...this.props.shop, locationLat: newLat, locationLng: newLng }
                 );
                 this.props.setLocationSearch(address);
             })
