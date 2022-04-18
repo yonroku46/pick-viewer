@@ -33,7 +33,7 @@ export default function DashboardPage(props) {
     const [modalCategoryList, setModalCategoryList] = useState([]);
     const [shopImages, setShopImages] = useState([]);
     const [shopImageIndex, setShopImageIndex] = useState([]);
-    const shop_cd = userInfo ? userInfo.employment : null;
+    const shopCd = userInfo ? userInfo.employment : null;
     
     const [category, setCategory] = useState('all');
     const [searchValue, setSearchValue] = useState('');
@@ -104,25 +104,26 @@ export default function DashboardPage(props) {
             props.history.goBack(1);
         }
         setLoading(true);
-        const params = { 
-          'shop_cd': shop_cd,
-          'role': role
-        };
         return new Promise(function(resolve, reject) {
           axios
-            .post(api.shopInfo, params)
+            .get(api.dashboardInfo, {
+                params: {
+                  'shopCd': shopCd,
+                  'role': role
+                }
+            })
             .then(response => resolve(response.data))
             .catch(error => reject(error.response))
         })
         .then(res => {
-          if (res !== null) {
-            setShop(res);
-            setShopOrigin(JSON.parse(JSON.stringify(res)));
-            setStaffList(res.staff_list);
-            setMenuList(res.menu_list);
-            makeCategoryList(res.menu_categorys);
-            makeImageList(res.shop_img);
-            getRequestList(shop_cd);
+          if (res.success) {
+            setShop(res.data);
+            setShopOrigin(JSON.parse(JSON.stringify(res.data)));
+            setStaffList(res.data.staffList);
+            setMenuList(res.data.menuList);
+            makeCategoryList(res.data.menuCategories);
+            makeImageList(res.data.shopImg);
+            getRequestList(shopCd);
           }
         })
         .catch(err => {
@@ -131,41 +132,43 @@ export default function DashboardPage(props) {
         })
       }, [reload])
     
-    function makeCategoryList(menu_categorys) {
+    function makeCategoryList(menuCategories) {
         const result = [];
         const modalResult = [];
         result.push({ key: 'all', value: 'all', text: '전체선택' });
         modalResult.push({ key: 'direct', value: 'direct', text: '직접입력' });
-        menu_categorys.map(category => {
+        menuCategories.map(category => {
             result.push({ key: category, value: category, text: category });
             modalResult.push({ key: category, value: category, text: category });
         });
         setCategoryList(result);
         setModalCategoryList(modalResult);
     }
-
-    function makeImageList(shop_img) {
+    
+    function makeImageList(shopImg) {
+        const imgList = shopImg.split(',');
         const result = [];
         for (let index = 0; index < 4; index++) {
-            result.push({ id: (index + 1).toString(), img: shop_img[index] ? shop_img[index] : shopDefault });
+            result.push({ id: (index + 1).toString(), img: imgList[index] ? imgList[index] : shopDefault });
         }
         setShopImages(result);
     }
     
-    function getRequestList(shop_cd) {
+    function getRequestList(shopCd) {
         return new Promise(function(resolve, reject) {
           axios
             .get(api.shopRequestList, {
               params: {
-                'shop_cd': shop_cd
+                'shopCd': shopCd,
+                'role': role
               }
             })
             .then(response => resolve(response.data))
             .catch(error => reject(error.response))
         })
-        .then(res => {
-          if (res !== null) {
-            setRequestList(res);
+        .then(data => {
+          if (data.success) {
+            setRequestList(data.dataList);
             setLoading(false);
           }
         })
@@ -187,54 +190,54 @@ export default function DashboardPage(props) {
             shopImg.push(item.img)
         });
         setShop(
-            { ...shop, shop_img: shopImg }
+            { ...shop, shopImg: shopImg }
         );
         setShopImages(items);
     };
 
     function changeLocation(e) {
         setShop(
-            { ...shop, shop_location: e.target.value }
+            { ...shop, shopLocation: e.target.value }
         );
     }
     function changeTel(e, { tabIndex }) {
-        const shop_tel = shop.shop_tel.split('-');
-        shop_tel[tabIndex] = e.target.value.replace(/[^0-9]/g, '');
+        const shopTel = shop.shopTel.split('-');
+        shopTel[tabIndex] = e.target.value.replace(/[^0-9]/g, '');
         setShop(
-            { ...shop, shop_tel: shop_tel[0] + '-' + shop_tel[1] + '-' + shop_tel[2] }
+            { ...shop, shopTel: shopTel[0] + '-' + shopTel[1] + '-' + shopTel[2] }
         );
     }
     function changeOpen(e, { value }) {
         setShop(
-            { ...shop, shop_open: value }
+            { ...shop, shopOpen: value }
         );
     }
     function changeClose(e, { value }) {
         setShop(
-            { ...shop, shop_close: value }
+            { ...shop, shopClose: value }
         );
     }
     function changeHoliday(e, { value }) {
         setShop(
-            { ...shop, shop_holiday: value }
+            { ...shop, shopHoliday: value }
         );
     }
     function changeShopInfo(e) {
         setShop(
-            { ...shop, shop_info: e.target.value }
+            { ...shop, shopInfo: e.target.value }
         );
     }
     function changeCareer(e, { tabIndex }) {
         setStaffList(
             staffList.map(
-                staff => staff.user_cd === tabIndex
+                staff => staff.userCd === tabIndex
                 ? { ...staff, career: e.target.value }
                 : staff
             )
         );
         setShop(
-            { ...shop, staff_list: shop.staff_list.map(
-                staff => staff.user_cd === tabIndex
+            { ...shop, staffList: shop.staffList.map(
+                staff => staff.userCd === tabIndex
                 ? { ...staff, career: e.target.value }
                 : staff
             )}
@@ -243,14 +246,14 @@ export default function DashboardPage(props) {
     function changeInfo(e, { tabIndex }) {
         setStaffList(
             staffList.map(
-                staff => staff.user_cd === tabIndex
+                staff => staff.userCd === tabIndex
                 ? { ...staff, info: e.target.value }
                 : staff
             )
         );
         setShop(
-            { ...shop, staff_list: shop.staff_list.map(
-                staff => staff.user_cd === tabIndex
+            { ...shop, staffList: shop.staffList.map(
+                staff => staff.userCd === tabIndex
                 ? { ...staff, info: e.target.value }
                 : staff
             )}
@@ -258,22 +261,22 @@ export default function DashboardPage(props) {
     }
     function changeMenuCategory(e) {
         setModalMenu(
-            { ...modalMenu, menu_category: e.target.value.replace(/[\'\"\=]/gi, '') }
+            { ...modalMenu, menuCategory: e.target.value.replace(/[\'\"\=]/gi, '') }
         );
     }
     function changeMenuName(e) {
         setModalMenu(
-            { ...modalMenu, menu_name: e.target.value.replace(/[ \{\}\[\]\/?.,;:|\)*~`!^\-_+┼<>@\#$%&\'\"\\\(\=]/gi, '') }
+            { ...modalMenu, menuName: e.target.value.replace(/[ \{\}\[\]\/?.,;:|\)*~`!^\-_+┼<>@\#$%&\'\"\\\(\=]/gi, '') }
         );
     }
     function changeMenuPrice(e) {
         setModalMenu(
-            { ...modalMenu, menu_price: e.target.value.replace(/[^0-9]/g, '') }
+            { ...modalMenu, menuPrice: e.target.value.replace(/[^0-9]/g, '') }
         );
     }
     function changeMenuDescription(e) {
         setModalMenu(
-            { ...modalMenu, menu_description: e.target.value.replace(/[ \{\}\[\]\/?.,;:|\)*~`!^\-_+┼<>@\#$%&\'\"\\\(\=]/gi, '') }
+            { ...modalMenu, menuDescription: e.target.value.replace(/[ \{\}\[\]\/?.,;:|\)*~`!^\-_+┼<>@\#$%&\'\"\\\(\=]/gi, '') }
         );
     }
 
@@ -291,7 +294,7 @@ export default function DashboardPage(props) {
         if (fileType.indexOf(file.type) !== -1) {
           const params = new FormData();
           params.append('file', file);
-          params.append('shop_cd', shop_cd);
+          params.append('shopCd', shopCd);
           params.append('img_index', img_index);
           params.append('call', 'shop');
           axios
@@ -305,7 +308,7 @@ export default function DashboardPage(props) {
                             : image
                     ));
                     setShop(
-                        { ...shop, shop_img: shopImages }
+                        { ...shop, shopImg: shopImages }
                     );
                 }
             })
@@ -322,19 +325,19 @@ export default function DashboardPage(props) {
             return;
         }
         const file = e.target.files[0];
-        const menu_cd = modalMenu.menu_cd;
+        const menuCd = modalMenu.menuCd;
         if (fileType.indexOf(file.type) !== -1) {
           const params = new FormData();
           params.append('file', file);
-          params.append('shop_cd', shop_cd);
-          params.append('menu_cd', menu_cd);
+          params.append('shopCd', shopCd);
+          params.append('menuCd', menuCd);
           params.append('call', 'menu');
           axios
             .post(api.imgUpload, params)
             .then((res) => {
                 if (res) {
                     setModalMenu(
-                        { ...modalMenu, menu_img: res.data }
+                        { ...modalMenu, menuImg: res.data }
                     )
                 }
             })
@@ -389,16 +392,16 @@ export default function DashboardPage(props) {
             if (targetId === 'new') {
                 setCount(count + 1);
                 setModalMenu({
-                    menu_category: '',
-                    menu_cd: 'new' + count,
-                    menu_description: '',
-                    menu_img: null,
-                    menu_name: '',
-                    menu_price: ''
+                    menuCategory: '',
+                    menuCd: 'new' + count,
+                    menuDescription: '',
+                    menuImg: null,
+                    menuName: '',
+                    menuPrice: ''
                 });
                 setOpen(true);
             } else {
-                const target = shop.menu_list.find(menu => menu.menu_cd === targetId);
+                const target = shop.menuList.find(menu => menu.menuCd === targetId);
                 setModalMenu(target);
                 setOpen(true);
             }
@@ -410,7 +413,7 @@ export default function DashboardPage(props) {
     function rollBack() {
         if (window.confirm("수정된 내용이 초기화됩니다. 계속하시겠습니까?")) {
             const params = new FormData();
-            params.append('shop_cd', shop_cd);
+            params.append('shopCd', shopCd);
             axios
             .post(api.imgClear, params)
             .then((res) => {
@@ -459,21 +462,21 @@ export default function DashboardPage(props) {
             {shop.length !== 0 && <>
             <Form className='dashboard-viewer-inline'>
                 <Form.Field>
-                    <Menu floated='right' onClick={() => copy(shop.shop_serial)}>
+                    <Menu floated='right' onClick={() => copy(shop.shopSerial)}>
                         <Menu.Item as='a' icon>
                             <Icon name='qrcode'/>
                         </Menu.Item>
                     </Menu>
                     <label><Icon name='angle right'/>매장명</label>
-                    <p className='dashboard-shopinfo-text'>{shop.shop_name}</p>
+                    <p className='dashboard-shopinfo-text'>{shop.shopName}</p>
                 </Form.Field>
                 <Form.Field>
                     <label><Icon name='angle right'/>매장주소</label>
                     {editMode ? <></>
                     :
-                    <p className='dashboard-shopinfo-text'>{shop.shop_location}</p>
+                    <p className='dashboard-shopinfo-text'>{shop.shopLocation}</p>
                     }
-                    <MapContainer id='map' shop={shop} setShop={setShop} changeLocation={changeLocation} value={shop.shop_location} editMode={editMode} role={role}/>
+                    <MapContainer id='map' shop={shop} setShop={setShop} changeLocation={changeLocation} value={shop.shopLocation} editMode={editMode} role={role}/>
                 </Form.Field>
                 <Form.Field className={editMode && 'dashboard-map-bottom'}>
                     <label><Icon name='angle right'/>매장 사진</label>
@@ -500,12 +503,12 @@ export default function DashboardPage(props) {
                         <label><Icon name='angle right'/>매장 전화번호</label>
                         {editMode ? 
                         <>
-                        <Input className='dashboard-shopinfo-tel' placeholder='000' value={shop.shop_tel.split('-')[0]} tabIndex='0' onChange={changeTel}/>
-                        <Input className='dashboard-shopinfo-tel' placeholder='000' value={shop.shop_tel.split('-')[1]} tabIndex='1' onChange={changeTel}/>
-                        <Input className='dashboard-shopinfo-tel' placeholder='0000' value={shop.shop_tel.split('-')[2]} tabIndex='2' onChange={changeTel}/>
+                        <Input className='dashboard-shopinfo-tel' placeholder='000' value={shop.shopTel.split('-')[0]} tabIndex='0' onChange={changeTel}/>
+                        <Input className='dashboard-shopinfo-tel' placeholder='000' value={shop.shopTel.split('-')[1]} tabIndex='1' onChange={changeTel}/>
+                        <Input className='dashboard-shopinfo-tel' placeholder='0000' value={shop.shopTel.split('-')[2]} tabIndex='2' onChange={changeTel}/>
                         </>
                         :
-                        <p className='dashboard-shopinfo-text'>{shop.shop_tel.length === 2 ? <span className='empty'>전화번호 미입력</span> : shop.shop_tel}</p>
+                        <p className='dashboard-shopinfo-text'>{shop.shopTel.length === 2 ? <span className='empty'>전화번호 미입력</span> : shop.shopTel}</p>
                         }
                     </Form.Field>
                 </Form.Group>
@@ -514,22 +517,22 @@ export default function DashboardPage(props) {
                     <>
                     <Form.Field className='form-interval'>
                         <label><Icon name='angle right'/>오픈시간</label>
-                        <Select className='dashboard-shopinfo-hours' placeholder='09:00' value={shop.shop_open} options={hours} onChange={changeOpen}/>
+                        <Select className='dashboard-shopinfo-hours' placeholder='09:00' value={shop.shopOpen} options={hours} onChange={changeOpen}/>
                     </Form.Field>
                     <Form.Field className='form-interval'>
                         <label><Icon name='angle right'/>마감시간</label>
-                        <Select className='dashboard-shopinfo-hours' placeholder='18:00' value={shop.shop_close} options={hours} onChange={changeClose}/>
+                        <Select className='dashboard-shopinfo-hours' placeholder='18:00' value={shop.shopClose} options={hours} onChange={changeClose}/>
                     </Form.Field>
                     <Form.Field className='form-interval'>
                         <label><Icon name='angle right'/>휴무일</label>
-                        <Select className='dashboard-shopinfo-hours' placeholder='휴무없음' value={shop.shop_holiday} options={weeks} onChange={changeHoliday}/>
+                        <Select className='dashboard-shopinfo-hours' placeholder='휴무없음' value={shop.shopHoliday} options={weeks} onChange={changeHoliday}/>
                     </Form.Field>
                     </>
                     :
                     <Form.Field className='form-interval'>
                         <label><Icon name='angle right'/>매장 운영시간</label>
-                        <p className='dashboard-shopinfo-text'>{shop.shop_open} ~ {shop.shop_close}
-                            <span className='detailpage-holiday'>({shop.shop_holiday === 'none' ? '휴무일 없음' : convertWeek(shop.shop_holiday) + ' 휴무'})</span>
+                        <p className='dashboard-shopinfo-text'>{shop.shopOpen} ~ {shop.shopClose}
+                            <span className='detailpage-holiday'>({shop.shopHoliday === 'none' ? '휴무일 없음' : convertWeek(shop.shopHoliday) + ' 휴무'})</span>
                         </p>
                     </Form.Field>
                     }
@@ -537,12 +540,12 @@ export default function DashboardPage(props) {
                 {editMode ? 
                 <Form.Field className='form-interval'>
                     <label><Icon name='angle right'/>매장 소개</label>
-                    <TextArea placeholder='매장 소개를 입력해보세요. (최대 100자)' value={shop.shop_info} onChange={changeShopInfo}/>
+                    <TextArea placeholder='매장 소개를 입력해보세요. (최대 100자)' value={shop.shopInfo} onChange={changeShopInfo}/>
                 </Form.Field>
                 :
                 <Form.Field className='form-interval'>
                     <label><Icon name='angle right'/>매장 소개</label>
-                    <p className='dashboard-shopinfo-text'>{shop.shop_info}</p>
+                    <p className='dashboard-shopinfo-text'>{shop.shopInfo}</p>
                 </Form.Field>
                 }
                 <div className='dashboard-content-final-empty'> </div>
@@ -558,7 +561,7 @@ export default function DashboardPage(props) {
             <Form className='dashboard-viewer-inline'>
                 <Form.Field>
                     <label><Icon name='angle right'/>총 직원수</label>
-                    <p className='dashboard-shopinfo-text'>{shop.staff_list.length + '명'}</p>
+                    <p className='dashboard-shopinfo-text'>{shop.staffList.length + '명'}</p>
                 </Form.Field>
                 <Form.Field>
                     <label><Icon name='angle right'/>직원 신쳥현황</label>
@@ -566,11 +569,11 @@ export default function DashboardPage(props) {
                     <List selection verticalAlign='middle'>
                         {requestList.map(request => (
                             <List.Item>
-                                <Image className="user-icon" src={api.imgRender(request.user_img === null ? userimgDefault : request.user_img)}/>
+                                <Image className="user-icon" src={api.imgRender(request.userImg === null ? userimgDefault : request.userImg)}/>
                                 <List.Content>
                                     <List.Header>
-                                        {request.user_name}
-                                        <span className='dashboard-viewer-email'>{request.user_email}</span>
+                                        {request.userName}
+                                        <span className='dashboard-viewer-email'>{request.userEmail}</span>
                                     </List.Header>
                                 </List.Content>
                                 <List.Content floated='right'>
@@ -602,31 +605,31 @@ export default function DashboardPage(props) {
                         <Table.Body>
                         {staffList.length !== 0 ?
                             staffList.map(staff => (
-                                <Table.Row key={staff.user_cd}>
+                                <Table.Row key={staff.userCd}>
                                     <Table.Cell className='dashboard-table-no'>
                                         {staffList.indexOf(staff) + 1}
                                     </Table.Cell>
                                     <Table.Cell className='dashboard-table-name'>
-                                        {staff.user_name}
+                                        {staff.userName}
                                     </Table.Cell>
                                     <Table.Cell className={editMode ? 'dashboard-table-career edit-input' : 'dashboard-table-career'}>
                                         {editMode ? 
-                                        <Input placeholder={staff.career} value={staff.career} tabIndex={staff.user_cd} onChange={changeCareer}/>
+                                        <Input placeholder={staff.career} value={staff.career} tabIndex={staff.userCd} onChange={changeCareer}/>
                                         :
                                         staff.career ? staff.career : <span className='empty'>미입력</span>
                                         }
                                     </Table.Cell>
                                     <Table.Cell className={editMode ? 'dashboard-table-info edit-input' : 'dashboard-table-info'}>
                                         {editMode ? 
-                                        <Input placeholder={staff.info} value={staff.info} tabIndex={staff.user_cd} onChange={changeInfo}/>
+                                        <Input placeholder={staff.info} value={staff.info} tabIndex={staff.userCd} onChange={changeInfo}/>
                                         :
                                         staff.info ? staff.info : <span className='empty'>미입력</span>
                                         }
                                     </Table.Cell>
                                     {editMode &&
                                     <Table.Cell className='dashboard-table-delete'>
-                                        {staff.user_cd !== userInfo.user_cd &&
-                                            <Icon name='x' onClick={() => staffDelete(staff.user_cd)}/>
+                                        {staff.userCd !== userInfo.userCd &&
+                                            <Icon name='x' onClick={() => staffDelete(staff.userCd)}/>
                                         }
                                     </Table.Cell>
                                     }
@@ -673,18 +676,18 @@ export default function DashboardPage(props) {
                     :
                     <>
                     {menuList.map(menu => (
-                    <Item.Group unstackable className='dashboard-viewer-menu' key={menu.menu_cd}>
+                    <Item.Group unstackable className='dashboard-viewer-menu' key={menu.menuCd}>
                         <Item className='detailpage-service'>
                         <Label className='dashboard-menu-label'>
                             {menuList.indexOf(menu) + 1}
                         </Label>
-                            <Item.Image className='dashboard-viewer-menu-img' src={api.imgRender(menu.menu_img === null ? menuDefault : menu.menu_img)}/>
+                            <Item.Image className='dashboard-viewer-menu-img' src={api.imgRender(menu.menuImg === null ? menuDefault : menu.menuImg)}/>
                             <Item.Content
-                                header={menu.menu_name ? menu.menu_name : '메뉴명 미입력'}
-                                meta={menu.menu_price ? comma(menu.menu_price) + '원' : '가격 미입력'}
-                                description={menu.menu_description ? menu.menu_description : <span className='empty'>설명 미입력</span>}
+                                header={menu.menuName ? menu.menuName : '메뉴명 미입력'}
+                                meta={menu.menuPrice ? comma(menu.menuPrice) + '원' : '가격 미입력'}
+                                description={menu.menuDescription ? menu.menuDescription : <span className='empty'>설명 미입력</span>}
                             />
-                            {editMode && <Item className='dashboard-content-icon'><Icon name='edit' onClick={() => modalOpen(menu.menu_cd)}/></Item>}
+                            {editMode && <Item className='dashboard-content-icon'><Icon name='edit' onClick={() => modalOpen(menu.menuCd)}/></Item>}
                         </Item>
                     </Item.Group>
                     ))}
@@ -708,24 +711,24 @@ export default function DashboardPage(props) {
                 <Modal.Header><Icon name='angle right'/>메뉴작성/편집</Modal.Header>
                 <Modal.Content image>
                     <input hidden type='file' ref={inputRef} accept=".png, .jpg, .jpeg" onChange={imgUpload}/>
-                    <Image className='dashboard-modal-img' src={modalMenu.menu_img ? modalMenu.menu_img : sampleImg} onClick={setImg} wrapped/>
+                    <Image className='dashboard-modal-img' src={modalMenu.menuImg ? modalMenu.menuImg : sampleImg} onClick={setImg} wrapped/>
                     <Modal.Description className='dashboard-modal-body'>
                         <Form.Group>
-                            <Select placeholder='카테고리 선택' className='dashboard-modal-category-select' defaultValue={modalMenu.menu_category ? modalMenu.menu_category : 'direct'} options={modalCategoryList} onChange={selectModalCategory}/>
-                            <Input placeholder='카테고리 입력' className='dashboard-modal-category' value={modalMenu.menu_category ? modalMenu.menu_category : ''} onChange={changeMenuCategory}/>
+                            <Select placeholder='카테고리 선택' className='dashboard-modal-category-select' defaultValue={modalMenu.menuCategory ? modalMenu.menuCategory : 'direct'} options={modalCategoryList} onChange={selectModalCategory}/>
+                            <Input placeholder='카테고리 입력' className='dashboard-modal-category' value={modalMenu.menuCategory ? modalMenu.menuCategory : ''} onChange={changeMenuCategory}/>
                         </Form.Group>
                         <Form.Group>
-                            <Input placeholder='메뉴 이름' className='dashboard-modal-name' value={modalMenu.menu_name ? modalMenu.menu_name : ''} onChange={changeMenuName}/>
-                            <Input placeholder='메뉴 가격' className='dashboard-modal-price' value={modalMenu.menu_price ? modalMenu.menu_price : ''} onChange={changeMenuPrice}/>
+                            <Input placeholder='메뉴 이름' className='dashboard-modal-name' value={modalMenu.menuName ? modalMenu.menuName : ''} onChange={changeMenuName}/>
+                            <Input placeholder='메뉴 가격' className='dashboard-modal-price' value={modalMenu.menuPrice ? modalMenu.menuPrice : ''} onChange={changeMenuPrice}/>
                         </Form.Group>
                         <Form.Group>
-                            <TextArea placeholder='메뉴 설명' className='dashboard-modal-description' value={modalMenu.menu_description ? modalMenu.menu_description : ''} onChange={changeMenuDescription}/>
+                            <TextArea placeholder='메뉴 설명' className='dashboard-modal-description' value={modalMenu.menuDescription ? modalMenu.menuDescription : ''} onChange={changeMenuDescription}/>
                         </Form.Group>
                     </Modal.Description>
                 </Modal.Content>
                 <Modal.Actions>
-                    <Button onClick={() => menuDelete(modalMenu.menu_cd)} color='red'>삭제</Button>
-                    <Button onClick={() => menuEdit(modalMenu.menu_cd)} color='blue'>수정 / 등록</Button>
+                    <Button onClick={() => menuDelete(modalMenu.menuCd)} color='red'>삭제</Button>
+                    <Button onClick={() => menuEdit(modalMenu.menuCd)} color='blue'>수정 / 등록</Button>
                 </Modal.Actions>
             </Modal>
             }
@@ -750,7 +753,7 @@ export default function DashboardPage(props) {
     }
 
     function staffSearch(e) {
-        const result = shop.staff_list.filter(staff => staff.user_name.match(e.target.value));
+        const result = shop.staffList.filter(staff => staff.userName.match(e.target.value));
         setStaffList(result);
         setSearchValue(e.target.value);
     }
@@ -772,8 +775,8 @@ export default function DashboardPage(props) {
     function requestConfirm(request_stat, targetId) {
         const target = requestList.find(request => request.request_cd === targetId);
         const params = { 
-            'shop_cd': shop_cd,
-            'user_cd': target.user_cd,
+            'shopCd': shopCd,
+            'userCd': target.userCd,
             'request_cd': target.request_cd,
             'request_stat': request_stat
         };
@@ -796,12 +799,12 @@ export default function DashboardPage(props) {
 
     function staffDelete(targetId) {
         if (window.confirm("해당 직원을 삭제하시겠습니까?")) {
-            const target = shop.staff_list.find(staff => staff.user_cd === targetId);
-            const index = shop.staff_list.indexOf(target);
+            const target = shop.staffList.find(staff => staff.userCd === targetId);
+            const index = shop.staffList.indexOf(target);
             staffList.splice(index, 1);
             setStaffList(staffList);
             setShop(
-                { ...shop, staff_list: staffList }
+                { ...shop, staffList: staffList }
             );
         } else {
             return;
@@ -810,9 +813,9 @@ export default function DashboardPage(props) {
 
     function selectCategory (e, { value }) {
         if (value === 'all') {
-            setMenuList(shop.menu_list);
+            setMenuList(shop.menuList);
         } else {
-            const result = shop.menu_list.filter(menu => menu.menu_category === value);
+            const result = shop.menuList.filter(menu => menu.menuCategory === value);
             setMenuList(result);
         }
         setCategory(value)
@@ -821,39 +824,39 @@ export default function DashboardPage(props) {
     function selectModalCategory (e, { value }) {
         if (value === 'direct') {
             setModalMenu(
-                { ...modalMenu, menu_category: '' }
+                { ...modalMenu, menuCategory: '' }
             )
         } else {
             setModalMenu(
-                { ...modalMenu, menu_category: value }
+                { ...modalMenu, menuCategory: value }
             )
         }
     }
 
     function menuDelete(targetId) {
         if (window.confirm("해당 메뉴를 삭제하시겠습니까?")) {
-            const target = shop.menu_list.find(menu => menu.menu_cd === targetId);
+            const target = shop.menuList.find(menu => menu.menuCd === targetId);
             if (target === undefined) {
                 setOpen(false);
                 return;
             } else {
-                shop.menu_list.splice(shop.menu_list.indexOf(target), 1);
+                shop.menuList.splice(shop.menuList.indexOf(target), 1);
                 setShop(
-                    { ...shop, menu_list: shop.menu_list }
+                    { ...shop, menuList: shop.menuList }
                 );
-                setMenuList(shop.menu_list);
+                setMenuList(shop.menuList);
                 if (category !== 'all') {
                     menuList.splice(menuList.indexOf(target), 1);
                     setMenuList(menuList);
                 }
 
                 // 카테고리에 메뉴 없을시 리스트에서 삭제
-                const filter = shop.menu_list.filter(menu => menu.menu_category === target.menu_category);
+                const filter = shop.menuList.filter(menu => menu.menuCategory === target.menuCategory);
                 if (filter.length === 0) {
-                    const del1 = categoryList.find(category => category.value === target.menu_category);
+                    const del1 = categoryList.find(category => category.value === target.menuCategory);
                     categoryList.splice(categoryList.indexOf(del1), 1);
                     setCategoryList(categoryList);
-                    const del2 = modalCategoryList.find(category => category.value === target.menu_category);
+                    const del2 = modalCategoryList.find(category => category.value === target.menuCategory);
                     modalCategoryList.splice(modalCategoryList.indexOf(del2), 1);
                     setModalCategoryList(modalCategoryList);
                 }
@@ -865,59 +868,59 @@ export default function DashboardPage(props) {
     }
 
     function menuEdit(targetId) {
-        if (modalMenu.menu_category.length === 0 || modalMenu.menu_name.length === 0 || modalMenu.menu_price.length === 0) {
+        if (modalMenu.menuCategory.length === 0 || modalMenu.menuName.length === 0 || modalMenu.menuPrice.length === 0) {
             return alert('입력되지 않은 항목이 존재합니다.');
         }
-        if (shop.menu_categorys.indexOf(modalMenu.menu_category) === -1) {
-            categoryList.push({ key: modalMenu.menu_category, value: modalMenu.menu_category, text: modalMenu.menu_category });
-            modalCategoryList.push({ key: modalMenu.menu_category, value: modalMenu.menu_category, text: modalMenu.menu_category });
-            shop.menu_categorys.push(modalMenu.menu_category);
+        if (shop.menuCategories.indexOf(modalMenu.menuCategory) === -1) {
+            categoryList.push({ key: modalMenu.menuCategory, value: modalMenu.menuCategory, text: modalMenu.menuCategory });
+            modalCategoryList.push({ key: modalMenu.menuCategory, value: modalMenu.menuCategory, text: modalMenu.menuCategory });
+            shop.menuCategories.push(modalMenu.menuCategory);
             setCategoryList(categoryList);
             setModalCategoryList(modalCategoryList);
             setShop(
-                { ...shop, menu_categorys: shop.menu_categorys }
+                { ...shop, menuCategories: shop.menuCategories }
             );
         }
 
         // 신규
-        if (modalMenu.menu_cd.toString().indexOf('new') !== -1) {
-            const target = shop.menu_list.find(menu => menu.menu_cd === targetId);
+        if (modalMenu.menuCd.toString().indexOf('new') !== -1) {
+            const target = shop.menuList.find(menu => menu.menuCd === targetId);
             // 신규 등록
             if (target === undefined) {
-                if (category === modalMenu.menu_category) {
+                if (category === modalMenu.menuCategory) {
                     menuList.push({
-                        menu_category: modalMenu.menu_category,
-                        menu_cd: modalMenu.menu_cd,
-                        menu_description: modalMenu.menu_description ? modalMenu.menu_description : '',
-                        menu_img: modalMenu.menu_img ? modalMenu.menu_img : menuDefault,
-                        menu_name: modalMenu.menu_name,
-                        menu_price: modalMenu.menu_price
+                        menuCategory: modalMenu.menuCategory,
+                        menuCd: modalMenu.menuCd,
+                        menuDescription: modalMenu.menuDescription ? modalMenu.menuDescription : '',
+                        menuImg: modalMenu.menuImg ? modalMenu.menuImg : menuDefault,
+                        menuName: modalMenu.menuName,
+                        menuPrice: modalMenu.menuPrice
                     });
                 }
                 setMenuList(menuList);
-                shop.menu_list.push({
-                    menu_category: modalMenu.menu_category,
-                    menu_cd: modalMenu.menu_cd,
-                    menu_description: modalMenu.menu_description ? modalMenu.menu_description : '',
-                    menu_img: modalMenu.menu_img ? modalMenu.menu_img : menuDefault,
-                    menu_name: modalMenu.menu_name,
-                    menu_price: modalMenu.menu_price
+                shop.menuList.push({
+                    menuCategory: modalMenu.menuCategory,
+                    menuCd: modalMenu.menuCd,
+                    menuDescription: modalMenu.menuDescription ? modalMenu.menuDescription : '',
+                    menuImg: modalMenu.menuImg ? modalMenu.menuImg : menuDefault,
+                    menuName: modalMenu.menuName,
+                    menuPrice: modalMenu.menuPrice
                 });
                 setShop(
-                    { ...shop, menu_list: shop.menu_list }
+                    { ...shop, menuList: shop.menuList }
                 );
             // 신규 수정
             } else {
                 setMenuList(
                     menuList.map(
-                        menu => menu.menu_cd === modalMenu.menu_cd
+                        menu => menu.menuCd === modalMenu.menuCd
                         ? modalMenu
                         : menu
                     )
                 );
                 setShop(
-                    { ...shop, menu_list: shop.menu_list.map(
-                        menu => menu.menu_cd === modalMenu.menu_cd
+                    { ...shop, menuList: shop.menuList.map(
+                        menu => menu.menuCd === modalMenu.menuCd
                         ? modalMenu
                         : menu
                     )}
@@ -928,18 +931,18 @@ export default function DashboardPage(props) {
         // 기존 수정
         } else {
             const res = menuList.map(
-                menu => menu.menu_cd === modalMenu.menu_cd
+                menu => menu.menuCd === modalMenu.menuCd
                 ? modalMenu
                 : menu
             )
             setMenuList(res);
             if (category !== 'all') {
-                const result = res.filter(menu => menu.menu_category === category);
+                const result = res.filter(menu => menu.menuCategory === category);
                 setMenuList(result);
             }
             setShop(
-                { ...shop, menu_list: shop.menu_list.map(
-                    menu => menu.menu_cd === modalMenu.menu_cd
+                { ...shop, menuList: shop.menuList.map(
+                    menu => menu.menuCd === modalMenu.menuCd
                     ? modalMenu
                     : menu
                 )}

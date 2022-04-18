@@ -40,7 +40,8 @@ export const favoriteList = "/api/mypage/favoriteList";
 export const getSchedule = "/api/getSchedule";
 
 // DashBoard
-export const shopRequestList = "/api/shopRequestList";
+export const dashboardInfo = "/api/dashboard/info";
+export const shopRequestList = "/api/dashboard/requestList";
 export const shopBookingList = "/api/shopBookingList";
 export const userRequestConfirm = "/api/userRequestConfirm";
 export const saveShopInfo = "/api/saveShopInfo";
