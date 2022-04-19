@@ -568,7 +568,7 @@ export default function DashboardPage(props) {
                     {requestList.length !== 0 ?
                     <List selection verticalAlign='middle'>
                         {requestList.map(request => (
-                            <List.Item>
+                            <List.Item className='dashboard-viewer-userinfo'>
                                 <Image className="user-icon" src={api.imgRender(request.userImg === null ? userimgDefault : request.userImg)}/>
                                 <List.Content>
                                     <List.Header>

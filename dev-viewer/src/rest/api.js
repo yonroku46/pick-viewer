@@ -33,9 +33,9 @@ export const reviewDelete = "/api/shop/review/delete";
 export const reviewList = "/api/shop/review/list";
 
 // MyPage
-export const infoUpdate = "/api/infoUpdate";
+export const infoUpdate = "/api/mypage/infoUpdate";
 export const bookingList = "/api/mypage/bookingList";
-export const submitEmployment = "/api/submitEmployment";
+export const submitEmployment = "/api/mypage/submit";
 export const favoriteList = "/api/mypage/favoriteList";
 export const getSchedule = "/api/getSchedule";
 

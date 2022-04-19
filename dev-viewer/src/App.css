@@ -528,6 +528,12 @@ hr {
 .dashboard-info-popup {
   white-space: pre-line !important;
 }
+.dashboard-viewer-userinfo .user-icon {
+  margin-top: 4px !important;
+}
+.dashboard-viewer-userinfo div.header {
+  margin-top: 4px !important;
+}
 .dashboard-viewer-imgs {
   border: 1px solid rgb(0, 0, 0, 0.2);
   background-color: rgba(0, 0, 0, 0.05);

@@ -27,7 +27,7 @@ export default function MyPage(props) {
 
   const [icon, setIcon] = useState(userIcon);
   const [intro, setIntro] = useState(userIntro);
-  const [submitShopCd, setSubmitShopCd] = useState(null);
+  const [submitSerial, setSubmitShopCd] = useState(null);
   const inputRef = useRef(null);
 
   const fileType=['image/png','image/jpg','image/jpeg'];
@@ -143,7 +143,7 @@ export default function MyPage(props) {
     if (fileType.indexOf(type) !== -1) {
       const params = new FormData();
       params.append('file', e.target.files[0]);
-      params.append('user_cd', userCd);
+      params.append('userCd', userCd);
       params.append('call', 'user');
       axios
         .post(api.imgUpload, params)
@@ -170,45 +170,55 @@ export default function MyPage(props) {
       alert("자기소개 글자수가 너무 적거나 많습니다.(최대 30자)");
       return;
     }
-    let body = {
-      user_email: email,
-      user_info: newInfo
+    let params = {
+      'userCd': userCd,
+      'userInfo': newInfo
     }
+    return new Promise(function(resolve, reject) {
     axios
-      .post(api.infoUpdate, body)
-      .then((res) => {
-        if (res.data === true) {
-          userInfo['user_info'] = newInfo;
-          sessionStorage.setItem('userInfo', JSON.stringify(userInfo));
-          setIntro(newInfo);
-          dispatch({ type: 'close' });
-        } else {
-          alert("업데이트에 실패하였습니다. 잠시 후 시도해주세요.");
-        }
-      })
-      .catch((err) => {
-        console.error(err);
-        alert("서버가 원활하지 않습니다. 잠시 후 시도해주세요.");
-      });
+        .post(api.infoUpdate, params)
+        .then(response => resolve(response.data))
+        .catch(error => reject(error.response))
+    })
+    .then((data) => {
+      if (data.success) {
+        userInfo['userInfo'] = newInfo;
+        sessionStorage.setItem('userInfo', JSON.stringify(userInfo));
+        setIntro(newInfo);
+        dispatch({ type: 'close' });
+      } else {
+        alert("업데이트에 실패하였습니다. 잠시 후 시도해주세요.");
+      }
+    })
+    .catch((err) => {
+      alert("서버가 원활하지 않습니다. 잠시 후 시도해주세요.");
+    });
   }
 
   function submitEmployment() {
-    let body = {
-      user_cd: userInfo.user_cd,
-      submit_shop_cd: submitShopCd,
+    let params = {
+      userCd: userInfo.userCd,
+      shopSerial: submitSerial,
       role: role
     }
-    axios
-      .post(api.submitEmployment, body)
-      .then((res) => {
-        if (res.data === true) {
-          userInfo['employment'] = submitShopCd;
-          sessionStorage.setItem('userInfo', JSON.stringify(userInfo));
-          alert("소속 신청이 완료되었습니다.");
-          dispatch2({ type2: 'close' });
-          props.history.push('/mypage');
-        } else {
-          alert("매장코드를 확인 후 다시 시도해주세요.\n지속시 관리자에게 문의 바랍니다.");
+    return new Promise(function(resolve, reject) {
+      axios
+          .post(api.submitEmployment, params)
+          .then(response => resolve(response.data))
+          .catch(error => reject(error.response))
+      })
+      .then((data) => {
+        if (data.success) {
+          if (data.data.result) {
+            userInfo['employment'] = submitSerial;
+            sessionStorage.setItem('userInfo', JSON.stringify(userInfo));
+            alert("소속 신청이 완료되었습니다.");
+            dispatch2({ type2: 'close' });
+            props.history.push('/mypage');
+          } else {
+            alert("매장코드를 확인 후 다시 시도해주세요.\n지속시 관리자에게 문의 바랍니다.");
+            return;
+          }
         }
       })
       .catch((err) => {
@@ -228,7 +238,7 @@ export default function MyPage(props) {
     <div className='mypage-main'>
     {(employment === null && role === 2) &&
     <Transition animation={animation} duration={duration} visible={visible}>
-      <Message color='blue' onClick={() => dispatch2({ type2: 'open' })} className='mypage-msg' header='직원이신가요?' content='이 메세지를 눌러 소속을 정해주세요' />
+      <Message color='blue' onClick={() => dispatch2({ type2: 'open' })} className='mypage-msg' header='직원이신가요?' content='이 메세지를 눌러 소속을 신청해주세요' />
     </Transition>
     }
     <Container className="mypage-content-user">
