@@ -10,6 +10,7 @@ export const check = "/api/check/";
 export const imgUpload = "/api/imgUpload";
 export const myFavorites = "/api/myFavorites";
 export const login = "/api/login";
+export const bookingCheck = "/api/bookingCheck";
 
 // SignupPage
 export const mailService = "/api/mailService";
@@ -24,8 +25,7 @@ export const resetService = "/api/resetService";
 export const favorite = "/api/shop/favorite";
 export const shopList = "/api/shop/list";
 export const shopInfo = "/api/shop/info";
-export const booking = "/api/booking";
-export const bookingCheck = "/api/booking/check";
+export const booking = "/api/shop/booking";
 
 // ReviewPage
 export const sendReview = "/api/shop/review/post";
@@ -43,7 +43,7 @@ export const getSchedule = "/api/getSchedule";
 export const dashboardInfo = "/api/dashboard/info";
 export const shopRequestList = "/api/dashboard/requestList";
 export const shopBookingList = "/api/shopBookingList";
-export const userRequestConfirm = "/api/userRequestConfirm";
+export const requestConfirm = "/api/dashboard/requestConfirm";
 export const saveShopInfo = "/api/saveShopInfo";
 export const imgClear = "/api/imgClear";
 

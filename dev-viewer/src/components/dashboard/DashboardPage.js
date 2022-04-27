@@ -577,8 +577,8 @@ export default function DashboardPage(props) {
                                     </List.Header>
                                 </List.Content>
                                 <List.Content floated='right'>
-                                    <Button inverted color='red' onClick={() => requestConfirm(2, request.request_cd)}>거절</Button>
-                                    <Button inverted color='green' onClick={() => requestConfirm(1, request.request_cd)}>승인</Button>
+                                    <Button inverted color='red' onClick={() => requestConfirm(2, request.requestCd)}>거절</Button>
+                                    <Button inverted color='green' onClick={() => requestConfirm(1, request.requestCd)}>승인</Button>
                                 </List.Content>
                             </List.Item>
                         ))}
@@ -772,24 +772,26 @@ export default function DashboardPage(props) {
         return result;
     }
 
-    function requestConfirm(request_stat, targetId) {
-        const target = requestList.find(request => request.request_cd === targetId);
+    function requestConfirm(requestStat, targetId) {
+        const target = requestList.find(request => request.requestCd === targetId);
         const params = { 
             'shopCd': shopCd,
             'userCd': target.userCd,
-            'request_cd': target.request_cd,
-            'request_stat': request_stat
+            'requestCd': target.requestCd,
+            'requestStat': requestStat
         };
         return new Promise(function(resolve, reject) {
         axios
-            .post(api.userRequestConfirm, params)
+            .post(api.requestConfirm, params)
             .then(response => resolve(response.data))
             .catch(error => reject(error.response))
         })
-        .then(res => {
-            if (res) {
+        .then(data => {
+            if (data.success) {
                 alert("처리가 완료되었습니다.");
                 setReload(reload + 1);
+            } else {
+                alert("처리가 실패하였습니다. 잠시 후 다시 시도해주세요.");
             }
         })
         .catch(err => {

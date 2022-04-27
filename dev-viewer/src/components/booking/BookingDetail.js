@@ -54,7 +54,7 @@ export default function BookingDetail(props) {
     {'customersCd':1, 'customers':'1명'},
     {'customersCd':2, 'customers':'2명'},
     {'customersCd':3, 'customers':'3 ~ 4명'},
-    {'customersCd':5, 'customers':'5명 이상'}
+    {'customersCd':5, 'customers':'5명이상'}
   ]
   
   const [shop, setShop] = useState([]);
@@ -67,6 +67,7 @@ export default function BookingDetail(props) {
 
   const [modalOpen, setModalOpen] = useState(false)
   const [modalLoading, setModalLoading] = useState(false)
+  const [modalFinal, setModalFinal] = useState(false)
 
   const [mapOpen, setMapOpen] = useState(false)
   
@@ -147,21 +148,24 @@ export default function BookingDetail(props) {
 
   function sendBooking() {
     setModalLoading(true);
-    const timeStamp = dbDate + " " + dbTime + ":00";
+    const offset = new Date().getTimezoneOffset() * 60 * 1000;
+    const bookingTime = dbDate + " " + dbTime + ":00";
     const bookingDetail = {};
 
-    const checkParams = { 
-      'userCd': userCd,
-      'bookingTime': timeStamp
-    };
     new Promise(function(resolve, reject) {
       axios
-        .post(api.bookingCheck, checkParams)
+        .get(api.bookingCheck, {
+          params: {
+            'userCd': userCd,
+            'bookingTime': bookingTime
+          }
+        })
         .then(response => resolve(response.data))
         .catch(error => reject(error.response))
     })
     .then(data => {
-      if (!data) {
+      const result = data.data.result;
+      if (!result) {
         alert("해당 시간에 고객님의 다른 일정이 확인되었습니다.\n일정 확인 후 시도해주세요.");
         setModalLoading(false);
         return;
@@ -179,10 +183,10 @@ export default function BookingDetail(props) {
         const params = { 
           'userCd': userCd,
           'shopCd': shopCd,
-          'bookingTime': timeStamp,
-          'bookingDetail': bookingDetail,
+          'bookingTime': Date.parse(bookingTime) - offset,
           'bookingPrice': resultPrice,
-          'category': category
+          'category': category,
+          'bookingDetail': bookingDetail
         };
         return new Promise(function(resolve, reject) {
           axios
@@ -191,14 +195,15 @@ export default function BookingDetail(props) {
             .catch(error => reject(error.response))
         })
         .then(data => {
-          if (data) {
+          const result = data.data.result;
+          if (result && data.success) {
             dispatch({ type: 'CLOSE_MODAL' })
             setModalLoading(false);
+            setModalFinal(true)
+          } else {
+            alert("예약에 실패하였습니다. 잠시 후 시도해주세요.")
+            setModalLoading(false);
           }
-        })
-        .catch(err => {
-          alert("예약에 실패하였습니다. 잠시 후 시도해주세요.")
-          setModalLoading(false);
         })
       }
     })
@@ -1002,34 +1007,36 @@ export default function BookingDetail(props) {
       }
 
       {/* 예약 완료 모달 */}
-      <Modal basic onOpen={() => setModalOpen(true)} open={modalOpen} size='small'>
-      {modalLoading ? <Loader size='large'>예약중...</Loader>
-      :
-      <>
-        <Header icon>
-          <Icon name='handshake outline'/>
-          예약 완료
-        </Header>
-        <Modal.Content>
-          <p style={{textAlign:'center'}}>
-            예약하신 내역 및 관리는<br/><Link className='pcolor' to='/mypage'>마이페이지</Link>에서 가능합니다.
-          </p>
-        </Modal.Content>
-        <Modal.Actions style={{textAlign:'center'}}>
-          <Link to='/'>
-            <Button inverted>
-              <Icon name='home'/> 홈으로
-            </Button>
-          </Link>
-          <Link to='/search'>
-            <Button inverted>
-              <Icon name='search'/> 둘러보기
-            </Button>
-          </Link>
-        </Modal.Actions>
-      </>
+      {modalFinal &&
+        <Modal basic onOpen={() => setModalOpen(true)} open={modalOpen} size='small'>
+        {modalLoading 
+        ? <Loader size='large'>예약중...</Loader>
+        : <>
+          <Header icon>
+            <Icon name='handshake outline'/>
+            예약 완료
+          </Header>
+          <Modal.Content>
+            <p style={{textAlign:'center'}}>
+              예약하신 내역 및 관리는<br/><Link className='pcolor' to='/mypage'>마이페이지</Link>에서 가능합니다.
+            </p>
+          </Modal.Content>
+          <Modal.Actions style={{textAlign:'center'}}>
+            <Link to='/'>
+              <Button inverted>
+                <Icon name='home'/> 홈으로
+              </Button>
+            </Link>
+            <Link to='/search'>
+              <Button inverted>
+                <Icon name='search'/> 둘러보기
+              </Button>
+            </Link>
+          </Modal.Actions>
+         </>
+        }
+        </Modal>
       }
-      </Modal>
     </div>
   </div>
   )
