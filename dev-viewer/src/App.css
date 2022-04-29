@@ -1574,7 +1574,7 @@ table.dashboard-table input {
   margin-top: 4vh !important;
 }
 .booking-table {
-  width: 92% !important;
+  width: 95% !important;
   margin-left: auto !important;
   margin-right: auto !important;
   margin-top: calc(1em - 6px) !important;
@@ -1782,6 +1782,9 @@ table.dashboard-table input {
     margin-left: 0 !important;
     margin-right: 0 !important;
   }
+  .booking-table {
+    width: 90% !important;
+  }
   .shopmodal-shops button{
     width: 96vw;
   }
@@ -1849,10 +1852,10 @@ table.dashboard-table input {
   margin-left: auto;
   margin-right: auto;
   max-width: 720px;
-  padding: 0.1vw 1vw;
 }
 .slick-list {
-  border-radius: 12px;
+  border-bottom-left-radius: 12px;
+  border-bottom-right-radius: 12px;
 }
 .slick-dots {
   bottom: 0 !important;
@@ -1904,7 +1907,6 @@ table.dashboard-table input {
 }
 .detailpage-main-image {
   padding: 0px !important;
-  margin-top: 24px !important;
   margin-bottom: 0px !important;
   margin-left: auto !important;
   margin-right: auto !important;
@@ -1923,8 +1925,6 @@ table.dashboard-table input {
   margin-top: 0px !important;
   padding-top: 1.5em !important;
   padding-bottom: 1.5em !important;
-  padding-left: 8px !important;
-  padding-right: 8px !important;
   border-radius: 0px !important;
   border-bottom: rgb(0, 0, 0, 0.1) 1px solid !important;
 }
@@ -2138,6 +2138,9 @@ a.detailpage-tel:hover {
   .detailpage-sub-image {
     margin-top: -100px !important;
   }
+  .detailpage-menu-btn {
+    padding: 0 1em !important;
+  }
 }
 /* sp */
 @media only screen and (max-width: 767px){
@@ -2145,7 +2148,17 @@ a.detailpage-tel:hover {
     width: 96%;
   }
   .timetable-btn-area {
-    text-align: center;
+    margin: 0.5em 3.5em;
+  }
+  .timetable-btn-area p {
+    margin-left: -1.5em;
+  }
+  .detailpage-main-image img {
+    min-height: 37vh;
+    max-height: 37vh;
+  }
+  .detailpage-service-menu.ui.items {
+    margin: 5px 10px;
   }
 }
 
@@ -2176,7 +2189,7 @@ a.detailpage-tel:hover {
 .review-write-area {
   text-align: left !important;
   margin-top: 1em;
-  padding: 1em;
+  padding: 1.75em;
   border-top: rgb(0, 0, 0, 0.2) 1px solid;
 }
 .review-write-area textarea {
@@ -2265,6 +2278,13 @@ a.detailpage-tel:hover {
 }
 .review-style-replyview p {
   margin-left: 0.5em;
+}
+
+/* sp */
+@media only screen and (max-width: 767px){
+  .review-write-area {
+    padding: 1em;
+  }
 }
 
 /* HelpPage */
