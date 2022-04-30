@@ -20,6 +20,8 @@ export default function SearchPage(props) {
     const duration = 500;
     const animation = 'fade down';
 
+    const recommendValue = ['2022트렌드','분위기 좋은 매장'];
+
     // category check
     if (!categoryList.includes(category)) {
         if (category === undefined) {
@@ -37,30 +39,12 @@ export default function SearchPage(props) {
             historyList.pop();
             setSearchHistory(historyList);
         }
-
-        setRecHistory(['2022트렌드','분위기 좋은 매장'])
-        
-        setLoading(true);
-        const params = { 
-            'category': category
-        };
-        return new Promise(function(resolve, reject) {
-            axios
-            .get(api.shopList, params)
-            .then(response => resolve(response.data))
-            .catch(error => reject(error.response))
-        })
-        .then(res => {
-            if (res !== null) {
-                setShops(res);
-                setLoading(false);
-                searching();
-            }
-        })
-        .catch(err => {
-            alert("현재 서버와의 연결이 원활하지 않습니다. 관리자에게 문의해주세요.");
-            setLoading(false);
-        })
+        setRecHistory(recommendValue)
+        if (search.length === 0) {
+            setSearchResult([]);
+        } else {
+            searching();
+        }
     }, [category])
 
     function delSearch() {
@@ -100,6 +84,9 @@ export default function SearchPage(props) {
     }
     
     function searching() {
+        if (search.length === 0) {
+            return;
+        }
         let past = storage.getItem('searchHistory');
         let history = past ? past : '';
 
@@ -130,14 +117,15 @@ export default function SearchPage(props) {
             .then(response => resolve(response.data))
             .catch(error => reject(error.response))
         })
-        .then(res => {
-            if (res !== null) {
-                if (res.length === 0) {
-                    setSearchResult(res);
+        .then(data => {
+            if (data.success) {
+                const shops = data.dataList;
+                if (shops.length === 0) {
+                    setSearchResult(shops);
                     setVisible(true);
                     setTimeout(() => { setVisible(false) }, 2500);
                 } else {
-                    setSearchResult(res);
+                    setSearchResult(shops);
                 }
             setLoading(false);
           }     
@@ -195,7 +183,6 @@ export default function SearchPage(props) {
                     )}
                 </div>
                 :
-                <>
                 <div className='search-recent'>
                     <h4 className='underline'>추천 검색</h4>
                     {recHistory.map(history =>
@@ -204,25 +191,6 @@ export default function SearchPage(props) {
                         </Label>
                     )}
                 </div>
-                {searchResult.length === 0 &&
-                <div className="search-recommend">
-                    <h4 className='underline'>추천 매장</h4>
-                    {shops.map(shop => 
-                        <Link to={`/booking/${category}/${shop.shop_cd}`}>
-                            <button key={shop.shop_cd} style={{backgroundPosition: 'center', backgroundImage: 'linear-gradient(rgba(0, 0, 0, 0.05), rgba(0, 0, 0, 0.45)), url(' + api.imgRender(shop.shop_img === null ? 'images/shop/default.png' : shop.shop_img.split(',')[0]) + ')'}}>
-                                <div className='shopmodal-name'>
-                                    {shop.shop_name}
-                                </div>
-                                <div className='shopmodal-location'>
-                                    {shop.shop_location}
-                                </div>
-                                <span className='shopmodal-rating'><Icon name='star'/>{shop.ratings_ave}</span>
-                            </button>
-                        </Link>
-                    )}
-                </div>
-                }
-                </>
             }
             {searchResult.length !== 0 &&
                 <>
@@ -230,15 +198,15 @@ export default function SearchPage(props) {
                 <div className='search-recommend'>
                     <h4 className='underline'>검색 결과</h4>
                     {searchResult.map(shop => 
-                        <Link to={`/booking/${category}/${shop.shop_cd}`}>
-                            <button key={shop.shop_cd} style={{backgroundSize: '105%', backgroundPosition: 'center', backgroundImage: 'linear-gradient(rgba(0, 0, 0, 0.05), rgba(0, 0, 0, 0.45)), url(' + api.imgRender(shop.shop_img === null ? 'images/shop/default.png' : shop.shop_img.split(',')[0]) + ')'}}>
+                        <Link to={`/booking/${category}/${shop.shopCd}`}>
+                            <button key={shop.shopCd} style={{backgroundSize: '105%', backgroundPosition: 'center', backgroundImage: 'linear-gradient(rgba(0, 0, 0, 0.05), rgba(0, 0, 0, 0.45)), url(' + api.imgRender(shop.shopImg === null ? 'images/shop/default.png' : shop.shopImg.split(',')[0]) + ')'}}>
                                 <div className='shopmodal-name'>
-                                    {shop.shop_name}
+                                    {shop.shopName}
                                 </div>
                                 <div className='shopmodal-location'>
-                                    {shop.shop_location}
+                                    {shop.shopLocation}
                                 </div>
-                                <span className='shopmodal-rating'><Icon name='star'/>{shop.ratings_ave}</span>
+                                <span className='shopmodal-rating'><Icon name='star'/>{shop.ratingsAve}</span>
                             </button>
                         </Link>
                     )}

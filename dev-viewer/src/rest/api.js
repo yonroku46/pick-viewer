@@ -48,7 +48,7 @@ export const saveShopInfo = "/api/saveShopInfo";
 export const imgClear = "/api/imgClear";
 
 // SearchPage
-export const search = "/api/search";
+export const search = "/api/shop/search";
 
 // ContactPage
 export const contact = "/api/contact";

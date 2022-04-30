@@ -148,16 +148,16 @@ export default function BookingDetail(props) {
 
   function sendBooking() {
     setModalLoading(true);
-    const offset = new Date().getTimezoneOffset() * 60 * 1000;
     const bookingTime = dbDate + " " + dbTime + ":00";
+    const checkingTimeContury = moment.utc(bookingTime).local().format('YYYY-MM-DD HH:mm:ss');
+    const bookingTimeContury = moment.utc(bookingTime);
     const bookingDetail = {};
-
     new Promise(function(resolve, reject) {
       axios
         .get(api.bookingCheck, {
           params: {
             'userCd': userCd,
-            'bookingTime': bookingTime
+            'bookingTime': checkingTimeContury,
           }
         })
         .then(response => resolve(response.data))
@@ -183,7 +183,7 @@ export default function BookingDetail(props) {
         const params = { 
           'userCd': userCd,
           'shopCd': shopCd,
-          'bookingTime': Date.parse(bookingTime) - offset,
+          'bookingTime': bookingTimeContury,
           'bookingPrice': resultPrice,
           'category': category,
           'bookingDetail': bookingDetail
@@ -692,7 +692,7 @@ export default function BookingDetail(props) {
           <Scroll to='calendar' offset={-56} spy={true} smooth={true}>
           <Button id='calendar' className={calendarSelected ? 'detailpage-menu-btn-bg' :'detailpage-menu-btn-sub'} onClick={calendarToogle}>
             <Icon name={calendarSelected ? 'chevron right' : 'chevron down'}/>
-            {calendarSelected ? today.format('MM월 DD일') : '예약일자를 선택하세요' }
+            {calendarSelected ? '예약일자 : ' + today.format('MM월 DD일') : '예약일자를 선택하세요' }
           </Button>
           </Scroll>
       </Grid.Column>
@@ -731,7 +731,6 @@ export default function BookingDetail(props) {
     const timeValue = e.target.value;
     const render = parseInt(e.target.value.split(':')[0]) <= 12 ? '오전 ' + timeValue : '오후 ' + timeValue;
     setDbTime(timeValue);
-    setTimeActive(false);
     setTimetableSelected(true);
   }
 
@@ -751,7 +750,7 @@ export default function BookingDetail(props) {
         <Scroll to='timeTable' offset={-56} spy={true} smooth={true}>
         <Button id='timeTable' className={timetableSelected ? 'detailpage-menu-btn-bg' :'detailpage-menu-btn-sub'} onClick={bookingTimeToggle}>
             <Icon name={timetableSelected ? 'chevron right' : 'chevron down'}/>
-            {timetableSelected ? dbTime: '예약시간을 선택하세요' }
+            {timetableSelected ? '예약시간 : ' + dbTime: '예약시간을 선택하세요' }
         </Button>
         </Scroll>
         <div className='timetable-btn-area'>
