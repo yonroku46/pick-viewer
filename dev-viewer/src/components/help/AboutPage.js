@@ -8,8 +8,8 @@ export default function AboutPage(props) {
 
     return(
     <>
-    <Header as='h3' className="about-title">
-        <Icon name='pinterest'/>Pick
+    <Header as='h3' className="about-title underline">
+        Pick
     </Header>
     <Grid container stackable columns={2} className='about-intro'>
         <Grid.Column>

@@ -10,7 +10,6 @@ export default function SearchPage(props) {
     const [searchHistory, setSearchHistory] = useState([]);
     const [searchResult, setSearchResult] = useState([]);
     const [recHistory, setRecHistory] = useState([]);
-    const [shops, setShops] = useState([]);
     const [loading, setLoading] = useState(false);
     const [category, setCategory] = useState(props.location.state.category);
     const categoryList = ['hairshop', 'restaurant', 'cafe'];
@@ -72,7 +71,35 @@ export default function SearchPage(props) {
 
     function clickHistory(value) {
         setSearch(value);
-        searching();
+        setLoading(true);
+        return new Promise(function(resolve, reject) {
+          axios
+            .get(api.search, {
+              params: {
+                'category': category,
+                'value': value
+              }
+            })
+            .then(response => resolve(response.data))
+            .catch(error => reject(error.response))
+        })
+        .then(data => {
+            if (data.success) {
+                const shops = data.dataList;
+                if (shops.length === 0) {
+                    setSearchResult(shops);
+                    setVisible(true);
+                    setTimeout(() => { setVisible(false) }, 2500);
+                } else {
+                    setSearchResult(shops);
+                }
+            setLoading(false);
+          }     
+        })
+        .catch(err => {
+          alert("현재 서버와의 연결이 원활하지 않습니다. 관리자에게 문의해주세요.");
+          setLoading(false);
+        })
     }
 
     function delTarget(target) {

@@ -1602,11 +1602,12 @@ table.dashboard-table input {
   margin: 2em auto;
 }
 .shopmodal-shops button {
-  background-size:cover;
+  background-size: cover;
+  background-repeat: no-repeat;
   text-align: left;
   border: 0px;
   color: #fff;
-  width: 300px; 
+  width: 24vw; 
   height: 200px; 
   padding: 10px;
   margin: 5px;
@@ -1618,9 +1619,8 @@ table.dashboard-table input {
 .shopmodal-shops button:hover {
   position: relative; 
   cursor: pointer;
-  opacity: 0.9;
   transition: .3s ease-in-out;
-  animation: zoomout 5s linear;
+  animation: zoomout 1s linear;
   box-shadow: 3px 3px 6px rgb(0,0,0,0.5);
 }
 .shopmodal-name {
@@ -2297,7 +2297,7 @@ a.detailpage-tel:hover {
   margin-top: 14px !important;
   border-right: 1px solid #d4d4d5 !important;
   padding-right: 0px !important;
-  max-width: 184px !important;
+  max-width: 124px !important;
 }
 .help-menu-item {
   border-right: none !important;
@@ -2323,7 +2323,12 @@ a.detailpage-tel:hover {
   padding-left: 10vw;
   padding-right: 10vw;
 }
-
+/* pc */
+@media only screen and (min-width: 766px) {
+  .help-menu {
+    margin-left: 8px;
+  }
+}
 /* sp */
 @media only screen and (max-width: 767px){
   .help-contents {
@@ -2401,7 +2406,9 @@ a.detailpage-tel:hover {
 .contact-title i {
   margin-right: 0.5em !important;
 }
-
+.contact-textarea textarea {
+  min-height: 280px !important;
+}
 .contact-submit {
   margin-top: 2.5em !important;
   margin-bottom: 2em !important;
@@ -2567,9 +2574,8 @@ a.detailpage-tel:hover {
 .search-recommend button:hover {
   position: relative; 
   cursor: pointer;
-  opacity: 0.9;
   transition: .3s ease-in-out;
-  animation: zoomout 5s linear;
+  animation: zoomout 1s linear;
   box-shadow: 3px 3px 6px rgb(0,0,0,0.5);
 }
 .search-recommend {
@@ -2611,11 +2617,12 @@ a.detailpage-tel:hover {
   margin: 2px !important;
 }
 .search-recommend button {
-  background-size:cover;
+  background-size: cover;
+  background-repeat: no-repeat;
   text-align: left;
   border: 0px;
   color: #fff;
-  width: 290px; 
+  width: 23vw; 
   height: 200px; 
   padding: 10px;
   margin: 5px;

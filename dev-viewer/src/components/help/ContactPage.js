@@ -52,8 +52,8 @@ export default function ContactPage(props) {
 
     return(
     <>
-    <Header as='h3' className="contact-title">
-        <Icon name='mail'/>문의페이지
+    <Header as='h3' className="contact-title underline">
+        문의페이지
     </Header>
     <Form onSubmit={handleSubmit}>
         <Form.Field>
@@ -73,7 +73,7 @@ export default function ContactPage(props) {
                 placeholder={categoryOptions[0]}
                 onChange={(e, { value }) => setCategory(value)}/>
         </Form.Field>
-        <Form.TextArea label='상세내용' onChange={(e) => setDetail(e.target.value)}/>
+        <Form.TextArea label='상세내용' className="contact-textarea" onChange={(e) => setDetail(e.target.value)}/>
         <Form.Field className="contact-submit">
             <Checkbox value={consent} onChange={() => setConsent(!consent)} label='메일 수신을 위한 개인정보 제공에 동의합니다'/><br/>
             <Button disabled={!consent} secondary type='submit'>전송하기</Button>
