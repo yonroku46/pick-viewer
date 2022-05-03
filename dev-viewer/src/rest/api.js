@@ -42,7 +42,7 @@ export const getSchedule = "/api/getSchedule";
 // DashBoard
 export const dashboardInfo = "/api/dashboard/info";
 export const shopRequestList = "/api/dashboard/requestList";
-export const shopBookingList = "/api/shopBookingList";
+export const shopBookingList = "/api/dashboard/bookingList";
 export const requestConfirm = "/api/dashboard/requestConfirm";
 export const saveShopInfo = "/api/saveShopInfo";
 export const imgClear = "/api/imgClear";

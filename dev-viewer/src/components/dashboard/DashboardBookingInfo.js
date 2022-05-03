@@ -6,6 +6,12 @@ import axios from 'axios';
 import * as api from '../../rest/api'
 
 export default function DashboardBookingInfo(props) {
+    const isAuthorized = sessionStorage.getItem('isAuthorized');
+    const userInfo = JSON.parse(sessionStorage.getItem('userInfo'));
+    const role = userInfo ? userInfo.role : null;
+    if (isAuthorized === null) {
+        props.history.goBack(1);
+    }
 
     // // userSelector:redux값 획득
     // const value = useSelector( (state) => state );
@@ -30,9 +36,9 @@ export default function DashboardBookingInfo(props) {
     const tableimgDefault = 'images/menu/default.png';
 
     const categoryList = ['hairshop', 'restaurant', 'cafe'];
-    const shopCategory = props.shop.shop_serial.substr(0, 2) === 'HS' ? categoryList[0] : 
-                         props.shop.shop_serial.substr(0, 2) === 'RT' ? categoryList[1] :
-                         props.shop.shop_serial.substr(0, 2) === 'CF' ? categoryList[2] : undefined;
+    const shopCategory = props.shop.shopSerial.substr(0, 2) === 'HS' ? categoryList[0] : 
+                         props.shop.shopSerial.substr(0, 2) === 'RT' ? categoryList[1] :
+                         props.shop.shopSerial.substr(0, 2) === 'CF' ? categoryList[2] : undefined;
 
     useEffect(() => {
         setLoading(true);
@@ -40,15 +46,16 @@ export default function DashboardBookingInfo(props) {
           axios
             .get(api.shopBookingList, {
               params: {
-                'shop_cd': props.shop.shop_cd
+                'shopCd': props.shop.shopCd,
+                'role': role
               }
             })
             .then(response => resolve(response.data))
             .catch(error => reject(error.response))
         })
-        .then(res => {
-          if (res !== null) {
-            setBookingList(res);
+        .then(data => {
+          if (data.success) {
+            setBookingList(data.dataList);
             setLoading(false);
           }     
         })
@@ -59,7 +66,7 @@ export default function DashboardBookingInfo(props) {
     },[])
     
     function bookingInfo(targetId) {
-        const target = bookingList.filter(booking => booking.booking_cd === targetId);
+        const target = bookingList.filter(booking => booking.bookingCd === targetId);
     }
 
     const timeArr = [];
@@ -68,8 +75,8 @@ export default function DashboardBookingInfo(props) {
         // timeArr.push(moment({ hour: index, minute: 30 }).format('HH:mm'));
     })
 
-    const startHour = Number(shop.shop_open.substring(0,2));
-    const endHour = Number(shop.shop_close.substring(0,2));
+    const startHour = Number(shop.shopOpen.substring(0,2));
+    const endHour = Number(shop.shopClose.substring(0,2));
 
     for (let i = 0; i < startHour; i++) {
         timeArr.shift()
@@ -115,12 +122,12 @@ export default function DashboardBookingInfo(props) {
                 Array(7).fill(0).map((_data, index) => {
                 let days = today.clone().startOf('year').week(week).startOf('week').add(index, 'day');
 
-                if (getMoment.format('YYYYMMDD') === days.format('YYYYMMDD')) {
+                if (getMoment.format('YYYY-MM-DD') === days.format('YYYY-MM-DD')) {
                     // 오늘날짜
                     return(
                         <Table.Cell onClick={dayClick} className='mypage-table-active table-today' key={index}>
                             <span>{days.format('D')}</span>
-                            {bookingList.filter(booking => booking.booking_time.substr(0,8) === days.format('YYYYMMDD')).length !== 0 &&
+                            {bookingList.filter(booking => booking.bookingTime.substr(0,10) === days.format('YYYY-MM-DD')).length !== 0 &&
                                 <Button disabled className='mypage-booking-date' size='mini' icon='star'/>
                             }
                         </Table.Cell>
@@ -130,7 +137,7 @@ export default function DashboardBookingInfo(props) {
                     return(
                         <Table.Cell key={index} className='table-other-month'>
                             <span>{days.format('D')}</span>
-                            {bookingList.filter(booking => booking.booking_time.substr(0,8) === days.format('YYYYMMDD')).length !== 0 &&
+                            {bookingList.filter(booking => booking.bookingTime.substr(0,10) === days.format('YYYY-MM-DD')).length !== 0 &&
                                 <Button disabled className='mypage-booking-date-other' size='mini' icon='star'/>
                             }
                         </Table.Cell>
@@ -140,7 +147,7 @@ export default function DashboardBookingInfo(props) {
                     return(
                         <Table.Cell onClick={dayClick} className='mypage-table-active' key={index}>
                             <span>{days.format('D')}</span>
-                            {bookingList.filter(booking => booking.booking_time.substr(0,8) === days.format('YYYYMMDD')).length !== 0 &&
+                            {bookingList.filter(booking => booking.bookingTime.substr(0,10) === days.format('YYYY-MM-DD')).length !== 0 &&
                                 <Button disabled className='mypage-booking-date' size='mini' icon='star'/>
                             }
                         </Table.Cell>
@@ -157,7 +164,7 @@ export default function DashboardBookingInfo(props) {
     function staffRender() {
         let result = [];
         
-        const target = bookingList.filter(booking => booking.booking_time.match(today.format("YYYYMMDD")));
+        const target = bookingList.filter(booking => booking.bookingTime.match(today.format("YYYY-MM-DD")));
         const cnt = target.length;
         let targetList = [];
         
@@ -165,14 +172,14 @@ export default function DashboardBookingInfo(props) {
             if (shopCategory === categoryList[0]) {
                 // 헤어샵의경우 매니저별
                 target.forEach(booking => targetList.push(booking.designer))
-                const targetStaff = shop.staff_list.filter(staff => targetList.indexOf(staff.user_cd.toString()) !== -1)
+                const targetStaff = shop.staffList.filter(staff => targetList.indexOf(staff.userCd.toString()) !== -1)
 
                 result = result.concat(
                     <Form.Field className='dashboard-booking-select'>
                         {targetStaff.map(staff =>
-                        <Label as='a' className={staff.user_cd === activeStaff && 'dashboard-booking-selected'} onClick={() => activeStaff !== staff.user_cd ? setActiveStaff(staff.user_cd) : setActiveStaff(null)}>
-                            <Image avatar spaced='right' src={api.imgRender(staff.user_img === null ? userimgDefault : staff.user_img)}/>
-                            {staff.user_name}
+                        <Label as='a' className={staff.userCd === activeStaff && 'dashboard-booking-selected'} onClick={() => activeStaff !== staff.userCd ? setActiveStaff(staff.userCd) : setActiveStaff(null)}>
+                            <Image avatar spaced='right' src={api.imgRender(staff.userImg === null ? userimgDefault : staff.userImg)}/>
+                            {staff.userName}
                         </Label>
                         )}
                     </Form.Field>
@@ -196,7 +203,7 @@ export default function DashboardBookingInfo(props) {
         let result = [];
 
         const activeList = activeStaff !== null ? bookingList.filter(booking => booking.designer.match(activeStaff)) : bookingList;
-        const target = activeList.filter(booking => booking.booking_time.match(today.format("YYYYMMDD")));
+        const target = activeList.filter(booking => booking.bookingTime.match(today.format("YYYY-MM-DD")));
         const cnt = target.length;
 
         if (cnt > 0) {
@@ -208,27 +215,27 @@ export default function DashboardBookingInfo(props) {
                     </Table.Cell>
 
                     {target.map(booking => 
-                    booking.booking_time.substr(9).split(":")[0] ===  time.split(":")[0] &&
+                    booking.bookingTime.substr(11).split(":")[0] ===  time.split(":")[0] &&
                     <Table.Cell style={{fontWeight:'bold', textAlign:'left'}}>
-                        {booking.booking_category === categoryList[0] &&
+                        {booking.bookingCategory === categoryList[0] &&
                         <span>
                             <Icon className='mypage-tt-icon' name='cut'/>
-                            {booking.shop_name}
+                            {booking.shopName}
                         </span>
                         }
-                        {booking.booking_category === categoryList[1] &&
+                        {booking.bookingCategory === categoryList[1] &&
                         <span>
                             <Icon className='mypage-tt-icon' name='food'/>
-                            {booking.shop_name} ({booking.customers}명)
+                            {booking.shopName} ({booking.customers}명)
                         </span>
                         }
-                        {booking.booking_category === categoryList[2] &&
+                        {booking.bookingCategory === categoryList[2] &&
                         <span>
                             <Icon className='mypage-tt-icon' name='coffee'/>
-                            {booking.shop_name} ({booking.customers}명)
+                            {booking.shopName} ({booking.customers}명)
                         </span>
                         }
-                        <Icon name='angle double right' className='mypage-tt-info' onClick={() => bookingInfo(booking.booking_cd)}/>
+                        <Icon name='angle double right' className='mypage-tt-info' onClick={() => bookingInfo(booking.bookingCd)}/>
                     </Table.Cell>
                     )}
                 </Table.Row> 

@@ -2181,6 +2181,13 @@ a.detailpage-tel:hover {
   border-radius: 0px 0px 14px 14px !important;
   background-color: #A291FB !important;
 }
+.review-info .statistic:not(:first-of-type)::before {
+  content: '';
+  height: 46px;
+  margin-top: -3px;
+  margin-bottom: -43px;
+  border-left: 1px solid #fff;
+}
 .review-comment-area {
   text-align: left;
   margin: 0px 1.5vw !important;
