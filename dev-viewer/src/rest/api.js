@@ -14,12 +14,12 @@ export const bookingCheck = "/api/bookingCheck";
 
 // SignupPage
 export const mailService = "/api/mailService";
-export const certifiService = "/api/certifiService";
+export const certification = "/api/certification";
 export const signup = "/api/signup";
 
 // HelpPage
-export const helpService = "/api/helpService";
-export const resetService = "/api/resetService";
+export const mailCheck = "/api/mailCheck";
+export const resetPwd = "/api/resetPwd";
 
 // BookingPage
 export const favorite = "/api/shop/favorite";

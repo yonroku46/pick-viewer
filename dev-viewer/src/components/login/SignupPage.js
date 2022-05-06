@@ -154,7 +154,7 @@ export default function SignupPage(props) {
     };
     return new Promise(function(resolve, reject) {
       axios
-        .post(api.certifiService, params)
+        .post(api.certification, params)
         .then(response => resolve(response.data))
         .catch(error => reject(error.response))
     });

@@ -8,8 +8,8 @@ export default function HelpPwdPage(props) {
   const [apiload, setApiload] = useState(false);
   const [email, setEmail] = useState('');
   const [error, setError] = useState(null);
-  const [certifi, setCertifi] = useState('');
-  const [certifiStep, setCertifiStep] = useState(false);
+  const [pin, setPin] = useState('');
+  const [certificationStep, setCertificationStep] = useState(false);
   const [resetStep, setResetStep] = useState(false);
   const [pw, setPw] = useState('');
   const [pwCheck, setPwCheck] = useState('');
@@ -17,8 +17,8 @@ export default function HelpPwdPage(props) {
   function emailInput(e) {
     setEmail(e.target.value);
   }
-  function certifiInput(e) {
-    setCertifi(e.target.value);
+  function pinInput(e) {
+    setPin(e.target.value);
   }
   function pwInput(e) {
     setPw(e.target.value);
@@ -28,18 +28,19 @@ export default function HelpPwdPage(props) {
   }
 
   // 비밀번호 재설정
-  function help() {
+  function submit() {
     let reg = /^[A-Za-z0-9]{1}[A-Za-z0-9_.-]*@{1}[A-Za-z0-9_.-]{1,}.[A-Za-z0-9]{1,}$/;
 
     if (reg.test(email)) {
       setError(null);
       setApiload(true);
-      helpService(email).then(res => {
-        if (res) {
+      mailCheck(email).then(data => {
+        const result = data.data.result;
+        if (result) {
           setError(null);
           alert("인증 이메일을 전송하였습니다. 인증번호를 확인해주세요");
           setApiload(false);
-          setCertifiStep(true);
+          setCertificationStep(true);
         } else {
           setError("해당 메일의 유저가 존재하지 않습니다");
           setApiload(false);
@@ -52,10 +53,11 @@ export default function HelpPwdPage(props) {
     }
   }
 
-  function helpCertifi() {
+  function submitCertification() {
     setApiload(true);
-    certifiService(certifi, email).then(res => {
-      if (res) {
+    certification(email, pin).then(data => {
+      const result = data.data.result;
+      if (result) {
         setError(null);
         setApiload(false);
         setResetStep(true);
@@ -80,8 +82,9 @@ export default function HelpPwdPage(props) {
 
     setError(null);
     setApiload(true);
-    resetService(email, pw).then(res => {
-      if (res) {
+    resetPwd(email, pw).then(data => {
+      const result = data.data.result;
+      if (result) {
         setError(null);
         setApiload(false);
         alert("패스워드 재설정이 완료되었습니다.")
@@ -94,39 +97,39 @@ export default function HelpPwdPage(props) {
     });
   }
 
-  function helpService(email) {
+  function mailCheck(email) {
     const params = { 
-      'user_email': email
+      'userEmail': email
     };
     return new Promise(function(resolve, reject) {
       axios
-        .post(api.helpService, params)
+        .post(api.mailCheck, params)
         .then(response => resolve(response.data))
         .catch(error => reject(error.response))
     });
   }
 
-  function certifiService(certifi, email) {
+  function certification(email, pin) {
     const params = { 
-      'user_email': email,
-      'certifi': certifi
+      'userEmail': email,
+      'pin': pin
     };
     return new Promise(function(resolve, reject) {
       axios
-        .post(api.certifiService, params)
+        .post(api.certification, params)
         .then(response => resolve(response.data))
         .catch(error => reject(error.response))
     });
   }
 
-  function resetService(email, pw) {
+  function resetPwd(email, pw) {
     const params = { 
-      'user_email': email,
-      'user_pw': pw
+      'userEmail': email,
+      'userPw': pw
     };
     return new Promise(function(resolve, reject) {
       axios
-        .post(api.resetService, params)
+        .post(api.resetPwd, params)
         .then(response => resolve(response.data))
         .catch(error => reject(error.response))
     });
@@ -150,7 +153,7 @@ export default function HelpPwdPage(props) {
           비밀번호를 잊으셨나요?
         </Header.Content>
       </Header>
-      <Form size='large' onSubmit={help}>
+      <Form size='large' onSubmit={submit}>
         <Segment stacked>
           <p>회원가입시 등록한 이메일 주소를 입력해주세요</p>
           <Form.Input fluid icon='mail' iconPosition='left' placeholder='E-Mail' value={email} onChange={emailInput}/>
@@ -179,9 +182,9 @@ export default function HelpPwdPage(props) {
           인증번호를 입력해주세요
         </Header.Content>
       </Header>
-      <Form size='large' onSubmit={helpCertifi}>
+      <Form size='large' onSubmit={submitCertification}>
         <Segment stacked>
-        <Form.Input fluid icon='key' name='certifi' iconPosition='left' placeholder='인증번호 입력' value={certifi} onChange={certifiInput}/>
+        <Form.Input fluid icon='key' name='pin' iconPosition='left' placeholder='인증번호 입력' value={pin} onChange={pinInput}/>
           {apiload ?
             <Button color='black' loading disabled fluid size='large'>
               로딩중
@@ -236,7 +239,7 @@ export default function HelpPwdPage(props) {
         step3()
         :
         <>
-          {certifiStep ?
+          {certificationStep ?
           step2()
           :
           step1()
