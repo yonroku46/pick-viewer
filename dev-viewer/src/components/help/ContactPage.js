@@ -52,8 +52,8 @@ export default function ContactPage(props) {
 
     return(
     <>
-    <Header as='h3' className="contact-title underline">
-        문의페이지
+    <Header as='h5' className="contact-title">
+        <Icon name='angle right'/>문의페이지
     </Header>
     <Form onSubmit={handleSubmit}>
         <Form.Field>

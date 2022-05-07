@@ -30,7 +30,7 @@ export default function HelpPage(props) {
             <Grid.Column className='help-menu' width={2}>
                 <Menu className='help-menu-item' fluid vertical tabular>
                     <Menu.Item name='about' active={activeItem === 'about'} onClick={handleItemClick}>
-                        {sp ? <Icon name='pinterest'/> : 'Pick'}
+                        {sp ? <Icon name='pinterest'/> : 'About'}
                     </Menu.Item>
                     <Menu.Item name='notice' active={activeItem === 'notice'} onClick={handleItemClick}>
                         {sp ? <Icon name='thumbtack'/> : '공지사항'}

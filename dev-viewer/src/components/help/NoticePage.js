@@ -15,8 +15,8 @@ export default function NoticePage(props) {
 
     return(
     <>
-    <Header as='h3' className="notice-title underline">
-        공지사항
+    <Header as='h5' className="notice-title">
+        <Icon name='angle right'/>공지사항
     </Header>
     <div>
         <Input className='notice-search' iconPosition='left' placeholder='공지사항 검색' value={search} onChange={(e) => setSearch(e.target.value)}>
