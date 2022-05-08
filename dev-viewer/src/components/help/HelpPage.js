@@ -42,18 +42,16 @@ export default function HelpPage(props) {
             </Grid.Column>
 
             <Grid.Column stretched width={14} className='help-contents'>
-                <Segment>
-                    <div className='help-contents-active'>
-                        {
-                        activeItem === 'notice' ? <NoticePage sp={sp}/>
-                        :
-                        activeItem === 'contact' ? <ContactPage/>
-                        :
-                        activeItem === 'about' ? <AboutPage/>
-                        :
-                        <></>
-                        }  
-                    </div>
+                <Segment className='help-contents-active'>
+                    {
+                    activeItem === 'notice' ? <NoticePage sp={sp}/>
+                    :
+                    activeItem === 'contact' ? <ContactPage/>
+                    :
+                    activeItem === 'about' ? <AboutPage/>
+                    :
+                    <></>
+                    }  
                 </Segment>
             </Grid.Column>
 

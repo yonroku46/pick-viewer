@@ -15,7 +15,7 @@ export default function NoticePage(props) {
 
     return(
     <>
-    <Header as='h5' className="notice-title">
+    <Header className="notice-title">
         <Icon name='angle right'/>공지사항
     </Header>
     <div>

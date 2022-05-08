@@ -199,7 +199,7 @@ export default function SearchPage(props) {
             {0 < searchHistory.length ?
                 <div className='search-recent'>
                     <div className='search-recent-group'>
-                        <h4 className='underline'>최근 검색</h4>
+                        <h4 className='shopmodal-subtitle'><Icon name='angle right'/>최근 검색</h4>
                         <Icon name='trash alternate outline' className='search-recent-del' onClick={delHistory}/>
                     </div>
                     {searchHistory.map(history =>
@@ -211,7 +211,7 @@ export default function SearchPage(props) {
                 </div>
                 :
                 <div className='search-recent'>
-                    <h4 className='underline'>추천 검색</h4>
+                    <h4 className='shopmodal-subtitle'><Icon name='angle right'/>추천 검색</h4>
                     {recHistory.map(history =>
                         <Label basic className='search-recent-label'>
                             <span onClick={() => clickHistory(history)}>{history}</span>
@@ -223,7 +223,7 @@ export default function SearchPage(props) {
                 <>
                 {/* 검색결과 존재시 ShopModal로 결과 전송 및 페이지이동하도록 변경 */}
                 <div className='search-recommend'>
-                    <h4 className='underline'>검색 결과</h4>
+                    <h4 className='shopmodal-subtitle'><Icon name='angle right'/>검색 결과</h4>
                     {searchResult.map(shop => 
                         <Link to={`/booking/${category}/${shop.shopCd}`}>
                             <button key={shop.shopCd} style={{backgroundSize: '105%', backgroundPosition: 'center', backgroundImage: 'linear-gradient(rgba(0, 0, 0, 0.05), rgba(0, 0, 0, 0.45)), url(' + api.imgRender(shop.shopImg === null ? 'images/shop/default.png' : shop.shopImg.split(',')[0]) + ')'}}>

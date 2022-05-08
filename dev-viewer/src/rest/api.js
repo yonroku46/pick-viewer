@@ -51,4 +51,4 @@ export const imgClear = "/api/imgClear";
 export const search = "/api/shop/search";
 
 // ContactPage
-export const contact = "/api/contact";
+export const contact = "/api/contact/save";

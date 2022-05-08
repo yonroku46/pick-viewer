@@ -1,9 +1,10 @@
 import React, { useEffect, useState, useReducer } from "react";
 import * as api from '../../rest/api'
 import axios from 'axios';
+import { Link, withRouter } from "react-router-dom";
 import { Form, Checkbox, Button, Select, Icon, Header } from 'semantic-ui-react';
 
-export default function ContactPage(props) {
+function ContactPage(props) {
 
     const [consent, setConsent] = useState(false);
     
@@ -35,14 +36,15 @@ export default function ContactPage(props) {
               .then(response => resolve(response.data))
               .catch(error => reject(error.response))
         })
-        .then(res => {
-            if (res) {
+        .then(data => {
+            const result = data.data.result;
+            if (result) {
                 setName('');
                 setEmail('');
-                setCategory('');
+                setCategory(categoryOptions[0].value);
                 setDetail('');
+                alert('전송이 완료되었습니다.');
                 props.history.push('/');
-                alert('전송이 완료되었습니다.')
             }
         })
         .catch(err => {
@@ -52,7 +54,7 @@ export default function ContactPage(props) {
 
     return(
     <>
-    <Header as='h5' className="contact-title">
+    <Header className="contact-title">
         <Icon name='angle right'/>문의페이지
     </Header>
     <Form onSubmit={handleSubmit}>
@@ -82,3 +84,5 @@ export default function ContactPage(props) {
     </>
     )
   };
+
+  export default withRouter(ContactPage);

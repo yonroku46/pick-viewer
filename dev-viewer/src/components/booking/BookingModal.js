@@ -107,7 +107,7 @@ export default class BookingModal extends Component {
                 </Menu.Item>
                 
                 <div className="shopmodal-main">
-                <h4 className='underline'>My Pick</h4>
+                <h4 className='shopmodal-subtitle'><Icon name='angle right'/>My Pick</h4>
                     <div className='shopmodal-pick-group'>
                         <Button basic={!pickFavorite} color={pickFavorite ? 'pink' : 'black'} className='shopmodal-pick' onClick={() => this.pickFilter('favorite')}>
                             <Icon name={pickFavorite ? 'like' : 'like outline'}/>즐겨찾기
@@ -119,7 +119,7 @@ export default class BookingModal extends Component {
                             <Icon name={pickPromotion ? 'gem' : 'gem outline'}/>프로모션중
                         </Button>
                     </div>
-                <h4 className='underline'>주변 매장</h4>
+                <h4 className='shopmodal-subtitle'><Icon name='angle right'/>주변 매장</h4>
                     <div className='shopmodal-shops'>
                     {shops.length === 0 && !isLoading ?
                         <div>

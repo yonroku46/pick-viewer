@@ -1577,6 +1577,10 @@ table.dashboard-table input {
 .shopmodal-nodata {
   margin: 2em auto;
 }
+.shopmodal-subtitle {
+  text-align: left;
+  margin-left: 0px !important;
+}
 .shopmodal-shops button {
   background-size: cover;
   background-repeat: no-repeat;
@@ -2301,10 +2305,19 @@ a.detailpage-tel:hover {
   min-height: calc(100vh - 69px);
   padding: 1em 1em 0 0 !important;
 }
+div.stretched.fourteen.wide.column.help-contents {
+  width: 85.5% !important;
+  padding-right: 0px !important;
+}
+.help-contents div.ui.header i {
+  margin-right: 0px !important;
+}
 .help-contents-active {
   text-align: left !important;
-  padding-left: 10vw;
-  padding-right: 10vw;
+  padding-left: 10vw !important;
+  padding-right: 10vw !important;
+  overflow: scroll !important;
+  height: 90vh !important;
 }
 /* pc */
 @media only screen and (min-width: 766px) {
@@ -2318,8 +2331,8 @@ a.detailpage-tel:hover {
     min-height: none;
   }
   .help-contents-active {
-    padding-left: 0;
-    padding-right: 0;
+    padding-left: 14px !important;
+    padding-right: 14px !important;
   }
 }
 
@@ -2329,7 +2342,7 @@ a.detailpage-tel:hover {
 }
 .about-title {
   margin-top: 0.5em !important;
-  margin-bottom: 1em !important;
+  margin-bottom: 2em !important;
 }
 .about-title i {
   margin-right: 0.25em !important;
@@ -2350,7 +2363,7 @@ a.detailpage-tel:hover {
 }
 .notice-title {
   margin-top: 0.5em !important;
-  margin-bottom: 1em !important;
+  margin-bottom: 2em !important;
 }
 .notice-title i {
   margin-right: 0.25em !important;
@@ -2384,7 +2397,7 @@ a.detailpage-tel:hover {
 }
 .contact-title {
   margin-top: 0.5em !important;
-  margin-bottom: 1em !important;
+  margin-bottom: 2em !important;
 }
 .contact-title i {
   margin-right: 0.25em !important;
@@ -2550,9 +2563,7 @@ a.detailpage-tel:hover {
   cursor: pointer !important;
 }
 .search-result {
-  width: 50vw !important;
-  margin-left: auto;
-  margin-right: auto;
+  margin: 5px 25vw !important;
 }
 .search-recommend button:hover {
   position: relative; 
@@ -2576,11 +2587,11 @@ a.detailpage-tel:hover {
 }
 .search-recent-del {
   margin-left: 5px !important;
-  margin-top: 2px !important;
+  opacity: 0.5 !important;
 }
 .search-recent-del:hover {
   cursor: pointer;
-  opacity: 0.6;
+  opacity: 1 !important;
 }
 .search-recent-label:hover {
   cursor: pointer;
@@ -2588,7 +2599,6 @@ a.detailpage-tel:hover {
 }
 .search-recent {
   margin-top: 14px;
-  margin-left: 1.5em;
   text-align: left;
 }
 .search-recent h4 {
@@ -2597,7 +2607,8 @@ a.detailpage-tel:hover {
   text-align: left;
 }
 .search-recent div.ui.label {
-  margin: 2px !important;
+  margin-left: 5px !important;
+  margin-bottom: 5px !important;
 }
 .search-recommend button {
   background-size: cover;
