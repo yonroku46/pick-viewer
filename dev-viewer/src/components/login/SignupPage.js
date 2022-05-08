@@ -3,10 +3,8 @@ import axios from 'axios';
 import { Link } from "react-router-dom"
 import page1 from '../../img/page1.png'
 import page2 from '../../img/page2.png'
-import userIcon from '../../img/user-icon.svg'
-import shopIcon from '../../img/shop-icon.svg'
 import * as api from '../../rest/api'
-import { Icon, Button, Form, Grid, Segment, Progress, Reveal, Label, Transition, Image } from 'semantic-ui-react'
+import { Icon, Button, Form, Grid, Segment, Progress, Reveal, Label, Transition, Image, Header } from 'semantic-ui-react'
 
 export default function SignupPage(props) {
 
@@ -19,7 +17,7 @@ export default function SignupPage(props) {
   const [visible, setVisible] = useState(false);
   const [apiload, setApiload] = useState(false);
   
-  const [certifi, setCertifi] = useState('');
+  const [pin, setPin] = useState('');
 
   const [email, setEmail] = useState('');
   const [role, setrole] = useState('');
@@ -38,8 +36,8 @@ export default function SignupPage(props) {
   function emailInput(e) {
     setEmail(e.target.value);
   }
-  function certifiInput(e) {
-    setCertifi(e.target.value);
+  function pinInput(e) {
+    setPin(e.target.value);
   }
   function nameInput(e) {
     setName(e.target.value);
@@ -66,8 +64,9 @@ export default function SignupPage(props) {
     if (reg.test(email)) {
       setError(null);
       setApiload(true);
-      mailService(role, email).then(res => {
-        if (res) {
+      mailService(email).then(data => {
+        const result = data.data.result;
+        if (result) {
           alert("인증 이메일을 전송하였습니다. 인증번호를 확인해주세요")
           setApiload(false);
           nextStep();
@@ -87,8 +86,9 @@ export default function SignupPage(props) {
     toggleVisibility();
 
     setApiload(true);
-    certifiService(certifi, email).then(res => {
-      if (res) {
+    certifiService(pin, email).then(data => {
+      const result = data.data.result;
+      if (result) {
         setError(null);
         setApiload(false);
         nextStep();
@@ -134,9 +134,9 @@ export default function SignupPage(props) {
     });
   }
 
-  function mailService(role, email) {
+  function mailService(email) {
     const params = { 
-      'user_email': email,
+      'userEmail': email,
       'role': role
     };
     return new Promise(function(resolve, reject) {
@@ -147,10 +147,10 @@ export default function SignupPage(props) {
     });
   }
 
-  function certifiService(certifi, email) {
+  function certifiService(pin, email) {
     const params = { 
-      'user_email': email,
-      'certifi': certifi
+      'userEmail': email,
+      'pin': pin
     };
     return new Promise(function(resolve, reject) {
       axios
@@ -162,9 +162,9 @@ export default function SignupPage(props) {
   
   function signup(email, name, pw) {
     const params = { 
-      'user_email': email,
-      'user_name': name,
-      'user_pw': pw
+      'userEmail': email,
+      'userName': name,
+      'userPw': pw
     };
     return new Promise(function(resolve, reject) {
       axios
@@ -177,21 +177,28 @@ export default function SignupPage(props) {
   return(
     <>
     <div className="signup-main">
-      <Progress percent={percent} className='signup-progress' indicating/>
+      <Progress percent={percent} size='tiny' className='signup-progress' indicating/>
       {percent === 0 ?
       <>
-         <h2>1 / 4</h2>
-         <h1>권한선택</h1>
+         <h1 className='pcolor'><Icon name='angle right'/>권한 선택</h1>
+         <h3>1. 가입하실 항목을 선택해주세요.</h3>
          <div vertical fluid className='signup-step1'>
-          <button value='1' className='step1-normal' onClick={step1}><img src={userIcon}/><br/>일반</button>
-          <button value='2' className='step1-staff' onClick={step1}><img src={shopIcon}/><br/>매장/스태프</button>
+          <Button basic value='1' className='signup-step1-button' onClick={step1}>
+            <Icon name='user outline'/>일반
+          </Button>
+          <Button basic value='2' className='signup-step1-button' onClick={step1}>
+            <Icon name='address card outline'/>직원 / 스태프
+          </Button>
+          <Button basic value='3' className='signup-step1-button' onClick={step1}>
+            <Icon name='building outline'/>매장관리자
+          </Button>
         </div>
       </>
       :
       percent === 25 ?
       <>
-      <h2>2 / 4</h2>
-      <h1>이메일 입력</h1>
+      <h1 className='pcolor'><Icon name='angle right'/>이메일 입력</h1>
+      <h3>2. 인증된 이메일은 ID로서 사용됩니다.</h3>
       <Grid className="login-form" textAlign='center' verticalAlign='middle'>
         <Grid.Column style={{ maxWidth: 450 }}>
           <Form size='large' onSubmit={step2}>
@@ -222,13 +229,13 @@ export default function SignupPage(props) {
       :
       percent === 50 ?
       <>
-      <h2>3 / 4</h2>
-      <h1>이메일 인증</h1>
+      <h1 className='pcolor'><Icon name='angle right'/>이메일 인증</h1>
+      <h3>3. 메일에 전송된 인증번호를 입력해주세요.</h3>
       <Grid className="login-form" textAlign='center' verticalAlign='middle'>
         <Grid.Column style={{ maxWidth: 450 }}>
           <Form size='large' onSubmit={step3}>
             <Segment stacked>
-              <Form.Input fluid icon='key' name='certifi' iconPosition='left' placeholder='인증번호 입력' value={certifi} onChange={certifiInput}/>
+              <Form.Input fluid icon='key' name='certifi' iconPosition='left' placeholder='인증번호 입력' value={pin} onChange={pinInput}/>
               {apiload ?
               <Button loading primary disabled fluid size='large'>
                 로딩중
@@ -254,8 +261,8 @@ export default function SignupPage(props) {
       :
       percent === 75 ?
       <>
-      <h2>4 / 4</h2>
-      <h1>회원정보 입력</h1>
+      <h1 className='pcolor'><Icon name='angle right'/>회원정보 입력</h1>
+      <h3>4. 서비스 사용에 필요한 정보를 입력해주세요.</h3>
       <Grid className="login-form" textAlign='center' verticalAlign='middle'>
         <Grid.Column style={{ maxWidth: 450, marginTop: '-30px' }}>
           <Form size='large' onSubmit={step4}>
@@ -288,11 +295,12 @@ export default function SignupPage(props) {
       :
       percent === 100 &&
       <>
-      <h1>환영합니다!<br/>나만의 <span className='pcolor'>Pick</span>을 즐겨보세요</h1>
-      <Iphone/>
-      <Link to='/login'>
-        <Button color='black' size='big' className='signup-login'>로그인</Button>
-      </Link>
+      <h1 className='pcolor'><Icon name='angle right'/>회원가입 완료</h1>
+      <h3>환영합니다! 나만의 <span className='pcolor'>Pick</span>을 즐겨보세요</h3>
+        <Iphone/>
+        <Link to='/login'>
+          <Button secondary className='signup-login'>로그인</Button>
+        </Link>
       </>
       }
     </div>

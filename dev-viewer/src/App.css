@@ -329,70 +329,46 @@ hr {
   margin-top: 49px;
   min-height: calc(100vh - 81px);
   border-top: #52525210 1px solid !important;
-  padding: 1em 2em;
-  padding-left: 30vw;
-  padding-right: 30vw;
+  padding: 0.5em 0.5em;
+  margin-left: 30vw;
+  margin-right: 30vw;
+  border-radius: 12px;
+  box-shadow: 1px 1px 14px rgba(157, 157, 157, 0.5); 
+  max-width: 720px;
+}
+.signup-title {
+  text-align: left;
+  margin-top: 0.5em !important;
+  margin-bottom: 1em !important;
+}
+.signup-title i {
+  margin-right: 0.25em !important;
 }
 .signup-progress {
   margin-left: auto !important;
   margin-right: auto !important;
-  margin-top: -14px !important;
-}
-.signup-main h2 {
-  text-align: center;
-  padding-top: 12vh;
-  padding-bottom: 14px; 
-  border-bottom: 2px #000 solid;
-  margin-left: auto;
-  margin-right: auto;
-  width: 120px;
+  margin-bottom: 0px !important;
 }
 .signup-main h1 {
-  text-align: center;
-  padding-bottom: 6vh;
-  margin-top: 0vh;
+  text-align: left;
   position: relative;
   font-size: 2em;
 }
-.signup-step1 img {
-  width: 55px;
-  margin-bottom: 6px;
+.signup-main h3 {
+  text-align: left;
+  margin-top: -0.5em;
+  margin-left: 2em;
+  margin-bottom: 12vh;
 }
-.signup-step1 button {
-  font-size: 22px;
-  height: 160px;
-  width: 160px;
-  font-weight: bold;
-  margin: 12px;
-  border-radius: 50%;
-  padding: 10px;
-}
-.signup-step1 button:hover {
-  cursor: pointer;
-  opacity: 0.8;
-  transition: 0.4s;
-}
-.signup-step1 .step1-normal {
-  background-color: #2185d0;
-  color: #fff;
-  border: 2px solid #2185d0;
-}
-.signup-step1 .step1-normal img {
-  filter: invert(100%);
-}
-.signup-step1 .step1-staff {
-  background-color: #fff;
-  color: #2185d0;
-  border: 2px solid #2185d0;
-}
-.signup-step1 .step1-staff img {
-  filter: invert(46%) sepia(68%) saturate(812%) hue-rotate(170deg) brightness(84%) contrast(93%);
-}
-.signup-step1 i {
-  padding-right: 20%;
+.signup-step1-button {
+  width: 92%;
+  margin-bottom: 7px !important;
+  text-align: left !important;
+  font-size: 1.5em !important;
+  padding-left: 1em !important;
 }
 .signup-login {
-  width: 220px;
+  width: 235px;
 }
 
 /* pc */
@@ -408,8 +384,8 @@ hr {
     margin-right: 0;
   }
   .signup-main {
-    padding-left: 0;
-    padding-right: 0;
+    margin-left: auto;
+    margin-right: auto;
   }
 }
 
@@ -2429,8 +2405,8 @@ a.detailpage-tel:hover {
 @import url('https://fonts.googleapis.com/css?family=Roboto:500&display=swap');
 
 .iphonex-signup {
-  margin-top: -70px !important;
-  margin-bottom: -40px !important;
+  margin-top: -110px !important;
+  margin-bottom: -64px !important;
 }
 
 .iphonex-container {
