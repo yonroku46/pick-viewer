@@ -10,6 +10,7 @@ export const check = "/api/check/";
 export const imgUpload = "/api/imgUpload";
 export const myFavorites = "/api/myFavorites";
 export const login = "/api/login";
+export const logout = "/api/logout";
 export const bookingCheck = "/api/bookingCheck";
 
 // SignupPage
