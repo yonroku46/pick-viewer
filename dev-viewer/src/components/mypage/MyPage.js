@@ -148,11 +148,12 @@ export default function MyPage(props) {
       axios
         .post(api.imgUpload, params)
         .then((res) => {
-          if (res) {
+          const data = res.data.data;
+          if (data.result) {
             alert("변경이 완료되었습니다.")
-            userInfo['user_img'] = res.data;
+            userInfo['user_img'] = data.imgPath;
             sessionStorage.setItem('userInfo', JSON.stringify(userInfo));
-            setIcon(res.data);
+            setIcon(data.imgPath);
             setReload(reload + 1);
           }
         })
