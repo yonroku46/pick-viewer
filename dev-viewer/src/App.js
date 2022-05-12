@@ -62,8 +62,16 @@ export default function App() {
   }
 
   function logout() {
-    sessionStorage.clear();
-    location.href="/";
+    return new Promise(function(resolve, reject) {
+      axios
+        .get(api.logout)
+        .then(response => resolve(response.data))
+        .catch(error => reject(error.response))
+    })
+    .then(data => {
+      sessionStorage.clear();
+      location.href="/";
+    })
   }
 
   const [state, dispatch] = React.useReducer(logoutModal, {

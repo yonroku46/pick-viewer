@@ -86,9 +86,9 @@ export default function LoginPage(props) {
         .then(response => resolve(response.data))
         .catch(error => reject(error.response))
     })
-      .then(data => {
-        sessionStorage.setItem('favorites', JSON.stringify(data.dataList));
-      })
+    .then(data => {
+      sessionStorage.setItem('favorites', JSON.stringify(data.dataList));
+    })
   }
 
   return(
