@@ -82,9 +82,8 @@ function MyTimeTable(props) {
                         <Table.Cell className={tableStat ? 'mypage-tt-empty none' : 'mypage-tt-empty'}>
                         </Table.Cell> 
                     </Table.Row>
-                )
-            )
-        ));
+                )))
+            );
         } else {
             result = result.concat(
             <Table.Cell colSpan='2' className='mypage-tt-time'>

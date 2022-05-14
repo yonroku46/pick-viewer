@@ -829,7 +829,7 @@ table.dashboard-table input {
 /* CommonPage */
 .common-main {
   margin-top: 49px;
-  min-height: calc(100vh - 81px);
+  min-height: calc(100vh - 77px);
   border-top: #52525210 1px solid !important;
   padding-left: 5vw;
   padding-right: 5vw;
