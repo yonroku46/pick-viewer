@@ -415,7 +415,7 @@ export default function DashboardPage(props) {
             const params = new FormData();
             params.append('shopCd', shopCd);
             axios
-            .post(api.imgClear, params)
+            .post(api.tmpClear, params)
             .then((res) => {
                 if (res) {
                     window.location.replace("/dashboard");
