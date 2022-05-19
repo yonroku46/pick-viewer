@@ -98,7 +98,7 @@ export default function MyCalendar(props) {
         </Menu>
         <Menu floated='right' onClick={() => setMoment(moment())}>
             <Menu.Item as='a' icon>
-                <Icon name='history'/>
+                <Icon name='redo'/>
             </Menu.Item>
         </Menu>
     </Table>

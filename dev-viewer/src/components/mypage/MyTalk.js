@@ -1,16 +1,50 @@
 import { useState } from 'react';
 import { Link, withRouter } from "react-router-dom";
-import { Image, List, Label } from 'semantic-ui-react'
+import { Image, List, Menu, Icon, Dropdown } from 'semantic-ui-react'
 
 function MyTalk(props) {
+
+    const [activeItem, setActiveItem] = useState('home');
 
     function talkInfo(targetId) {
         const target = targetId;
         props.history.push('/mypage/talk/' + target);
     }
 
+    function handleItemClick(e, { name }) {
+        setActiveItem(name);
+    }
+
     return (
         <>
+        <Menu attached='top' className='mytalk-menu'>
+            <Dropdown item icon='th list' simple>
+                <Dropdown.Menu>
+                <Dropdown.Item>
+                    <Icon name='dropdown'/>
+                        <span className='text'>정렬</span>
+                        <Dropdown.Menu>
+                            <Dropdown.Item>최신순</Dropdown.Item>
+                            <Dropdown.Item>읽지않은순</Dropdown.Item>
+                        </Dropdown.Menu>
+                </Dropdown.Item>
+                <Dropdown.Item>기능1</Dropdown.Item>
+                <Dropdown.Divider/>
+                <Dropdown.Item>기능2</Dropdown.Item>
+                </Dropdown.Menu>
+            </Dropdown>
+
+            <Menu.Menu position='right'>
+                <div className='ui right aligned category search item'>
+                <div className='ui transparent icon input'>
+                    <input className='prompt' type='text' placeholder='고객명 검색'/>
+                    <i className='search link icon' />
+                </div>
+                <div className='results' />
+                </div>
+            </Menu.Menu>
+        </Menu>
+
         <List celled className='mytalk-list'>
             <List.Item onClick={() => talkInfo('1')}>
                 <Image avatar className='mytalk-user-icon' src='https://react.semantic-ui.com/images/avatar/small/helen.jpg' />
