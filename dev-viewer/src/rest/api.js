@@ -45,7 +45,7 @@ export const dashboardInfo = "/api/dashboard/info";
 export const shopRequestList = "/api/dashboard/requestList";
 export const shopBookingList = "/api/dashboard/bookingList";
 export const requestConfirm = "/api/dashboard/requestConfirm";
-export const saveShopInfo = "/api/saveShopInfo";
+export const dashboardSave = "/api/dashboard/saveInfo";
 export const tmpClear = "/api/tmpClear";
 
 // SearchPage

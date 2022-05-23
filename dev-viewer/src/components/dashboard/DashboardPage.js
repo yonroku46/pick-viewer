@@ -354,21 +354,24 @@ export default function DashboardPage(props) {
         if (window.confirm("저장 후 되돌릴 수 없습니다. 변경된 내용을 저장하시겠습니까?")) {
             setLoading(true);
             const params = { 
-            'shop': shop,
-            'origin': shopOrigin
+                'shop': shop,
+                'shopOrigin': shopOrigin
             };
             return new Promise(function(resolve, reject) {
             axios
-                .post(api.saveShopInfo, params)
+                .post(api.dashboardSave, params)
                 .then(response => resolve(response.data))
                 .catch(error => reject(error.response))
             })
-            .then(res => {
-                if (res) {
+            .then(data => {
+                const result = data.data.result;
+                if (result) {
                     alert('저장이 완료되었습니다.')
                     setEditMode(false)
                     setReload(reload + 1);
                     setCategory('all');
+                } else {
+                    alert('저장에 실패하였습니다. 잠시 후 시도해주세요.')
                 }
                 setLoading(false);
             })
