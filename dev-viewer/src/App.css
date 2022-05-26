@@ -294,6 +294,12 @@ hr {
 .login-form {
   margin-top: 0px !important;
 }
+.login-form-border {
+  margin-top: 16vh;
+  border-radius: 14px;
+  border: 1px solid rgb(220, 220, 220, 0.7);
+  padding: 24px !important;
+}
 .login-form-main {
   background-color: rgb(0, 0, 0, 0) !important;
 }
@@ -310,8 +316,7 @@ hr {
   font-size: 16px;
 }
 .login-background {
-  width: 160px;
-  margin-top: 14vh;
+  width: 140px;
 }
 .ui.stacked.segment:after{
   all: unset !important;
@@ -321,6 +326,9 @@ hr {
   .login-main {
     padding-left: 0;
     padding-right: 0;
+  }
+  .login-form-border {
+    border: none;
   }
 }
 

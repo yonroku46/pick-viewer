@@ -96,7 +96,7 @@ export default function LoginPage(props) {
     <div className="login-main">
     {loading ? <Loading /> :
     <Grid className="login-form" textAlign='center' verticalAlign='middle'>
-      <Grid.Column style={{ maxWidth: 450 }}>
+      <Grid.Column className='login-form-border' style={{ maxWidth: 450 }}>
         <img src={background} className='login-background'/>
         <Form size='large' onSubmit={onSubmitHandler}>
           <Segment className='login-form-main' stacked>
