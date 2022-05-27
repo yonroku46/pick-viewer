@@ -92,7 +92,7 @@ export default class BookingModal extends Component {
         return(
             <div className='shopmodal-body'>
                 
-                <Menu.Item className="shopmodal-search">
+                <Menu.Item className="shopmodal-search" onDragStart={(e) => e.preventDefault()}>
                     <Link to={{
                         pathname:'/search',
                         state:{

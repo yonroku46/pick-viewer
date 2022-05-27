@@ -465,7 +465,12 @@ hr {
   padding-left: 2em !important;
   padding-top: 0.6em !important;
   padding-bottom: 0.6em !important;
+  margin-left: 0px !important;
   font-size: 1em !important;;
+}
+.dashboard-menu-dropdown i.icon.toggle.on:before {
+  color: rgb(0, 153, 255);
+  transition: 0.5s;
 }
 .dashboard-menu a.item:hover {
   background-color: rgba(0,0,0,.05)!important;
@@ -476,6 +481,14 @@ hr {
 .dashboard-menu.ui.vertical.menu .active.item.dropdown {
   background-color: #fff !important;
   color: #000 !important;
+}
+.dashboard-menu.ui.vertical.menu .active.item {
+  background: rgb(0, 153, 255) !important;
+  color: #fff !important;
+  margin-left: 6px;
+  border-top-left-radius: 6px;
+  border-bottom-left-radius: 6px;
+  transition: 0.25s;
 }
 .dashboard-viewer {
   min-height: calc(100vh - 83px) !important;
@@ -1648,8 +1661,10 @@ table.dashboard-table input {
   margin-left: 14px;
 }
 .shopmodal-pick-group .ui.basic.black.button {
-  box-shadow: 1px 1px 4px rgba(157, 157, 157, 0.5) !important; 
   margin-right: 6px;
+}
+.shopmodal-pick-group .ui.basic.black.button:hover {
+  opacity: 0.7;
 }
 .shopmodal-pick {
   margin-top: 0.5em !important;
@@ -1805,7 +1820,7 @@ table.dashboard-table input {
     margin-top: 0;
     width: 96vw;
   }
-  .shopmodal-search input{
+  .shopmodal-search input {
     width: 96vw;
   }
   .booking-modal-shopname {
@@ -2568,6 +2583,9 @@ div.stretched.fourteen.wide.column.help-contents {
   margin-top: 49px;
   min-height: calc(100vh - 81px);
   border-top: #52525210 1px solid !important;
+}
+.search-input {
+  border: 1px solid rgb(34, 36, 38) !important;
 }
 .search-del {
   pointer-events: auto !important;
