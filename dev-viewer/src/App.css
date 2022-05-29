@@ -696,6 +696,8 @@ table.dashboard-table input {
   width: 150px !important;
   height: 150px !important;
   filter: saturate(100%);
+  margin-top: auto;
+  margin-bottom: auto;
 }
 .dashboard-modal-img:hover {
   opacity: 0.8;
@@ -704,16 +706,17 @@ table.dashboard-table input {
 .dashboard-modal-img img {
   width: 150px !important;
   height: 150px !important;
-  margin-top: 0.25em;
   border-radius: 6px !important;
 }
 .dashboard-modal-category {
   margin-bottom: 0.5em;
-  width: 70% !important;
+  width: 67% !important;
 }
 .dashboard-modal-category-select {
   margin-bottom: 0.5em;
   margin-right: 1%;
+  width: 32% !important;
+  min-width: 32% !important;
 }
 .dashboard-modal-name {
   margin-bottom: 0.5em;

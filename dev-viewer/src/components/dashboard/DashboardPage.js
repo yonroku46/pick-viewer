@@ -17,6 +17,7 @@ export default function DashboardPage(props) {
     }
 
     const [reload, setReload] = useState(0);
+    const [imgChange, setImgChange] = useState(0);
     const [loading, setLoading] = useState(false);
     const [open, setOpen] = useState(false);
     const [activePage, setActivePage] = useState(1);
@@ -118,11 +119,10 @@ export default function DashboardPage(props) {
         .then(res => {
           if (res.success) {
             setShop(res.data);
-            setShopOrigin(JSON.parse(JSON.stringify(res.data)));
             setStaffList(res.data.staffList);
             setMenuList(res.data.menuList);
             makeCategoryList(res.data.menuCategories);
-            makeImageList(res.data.shopImg);
+            makeShopInfo(res.data);
             getRequestList(shopCd);
           }
         })
@@ -145,11 +145,21 @@ export default function DashboardPage(props) {
         setModalCategoryList(modalResult);
     }
     
-    function makeImageList(shopImg) {
-        const imgList = shopImg.split(',');
+    function makeShopInfo(data) {
+        const imgList = data.shopImg.split(',');
         const result = [];
+        const originResult = [];
         for (let index = 0; index < 4; index++) {
-            result.push({ id: (index + 1).toString(), img: imgList[index] ? imgList[index] : shopDefault });
+            result.push({ id: (index + 1).toString(), imgPath: imgList[index] ? imgList[index] : shopDefault });
+            originResult.push({ id: (index + 1).toString(), imgPath: imgList[index] ? imgList[index] : shopDefault });
+        }
+        setShop(
+            { ...JSON.parse(JSON.stringify(data)), shopImg: result }
+        );
+        if (imgChange == 0 && shopOrigin.shopImg == undefined) {
+            setShopOrigin(
+                { ...JSON.parse(JSON.stringify(data)), shopImg: originResult }
+            );
         }
         setShopImages(result);
     }
@@ -187,10 +197,10 @@ export default function DashboardPage(props) {
         const [reorderedItem] = items.splice(result.source.index, 1);
         items.splice(result.destination.index, 0, reorderedItem);
         items.map(item => {
-            shopImg.push(item.img)
+            shopImg.push(item.imgPath)
         });
         setShop(
-            { ...shop, shopImg: shopImg }
+            { ...shop, shopImg: items }
         );
         setShopImages(items);
     };
@@ -300,9 +310,10 @@ export default function DashboardPage(props) {
           axios
             .post(api.imgUpload, params)
             .then((res) => {
-                if (res) {
+                const data = res.data.data;
+                if (data.result) {
                     const target = shopImages.find(image => image.id === img_index)
-                    target.img = res.data
+                    target.imgPath = data.imgPath
                     setShopImages(shopImages.map(image => image.id === img_index
                             ? target
                             : image
@@ -310,6 +321,9 @@ export default function DashboardPage(props) {
                     setShop(
                         { ...shop, shopImg: shopImages }
                     );
+                    setImgChange(imgChange + 1);
+                    // 같은파일 업로드 회피용
+                    e.target.value = '';
                 }
             })
             .catch((err) => {
@@ -335,10 +349,12 @@ export default function DashboardPage(props) {
           axios
             .post(api.imgUpload, params)
             .then((res) => {
-                if (res) {
+                const data = res.data.data;
+                if (data.result) {
                     setModalMenu(
-                        { ...modalMenu, menuImg: res.data }
+                        { ...modalMenu, menuImg: data.imgPath }
                     )
+                    e.target.value = '';
                 }
             })
             .catch((err) => {
@@ -433,7 +449,7 @@ export default function DashboardPage(props) {
         }
     }
 
-    const getItemStyle = (isDragging, draggableStyle,img) => ({
+    const getItemStyle = (isDragging, draggableStyle, img) => ({
         border: '1px solid rgb(200, 200, 200)',
         borderRadius:' 8px',
         padding: '8px',
@@ -491,7 +507,7 @@ export default function DashboardPage(props) {
                             {shopImages.map((item, index) => (
                                 <Draggable key={item.id} draggableId={item.id} index={index}>
                                     {(provided, snapshot) => (
-                                        <li onClick={setImg} id={item.id} ref={provided.innerRef} {...provided.draggableProps} {...provided.dragHandleProps} style={getItemStyle(snapshot.isDragging,provided.draggableProps.style,api.imgRender(item.img))}/>
+                                        <li onClick={setImg} id={item.id} ref={provided.innerRef} {...provided.draggableProps} {...provided.dragHandleProps} style={getItemStyle(snapshot.isDragging,provided.draggableProps.style,api.imgRender(item.imgPath))}/>
                                     )}
                                 </Draggable>
                             ))}
@@ -668,6 +684,8 @@ export default function DashboardPage(props) {
             <Form className='dashboard-viewer-inline'>
                 <Form.Field>
                     <label><Icon name='angle right'/>메뉴 리스트</label>
+                    <button onClick={() => console.log("shop",shop.menuList)}>shop</button>
+                    <button onClick={() => console.log("shopOrigin",shopOrigin.menuList)}>shopOrigin</button>
                     <Select className='dashboard-viewer-category' placeholder='전체선택' value={category} options={categoryList} onChange={selectCategory}/>
                     {editMode && 
                     <Button.Group basic>
