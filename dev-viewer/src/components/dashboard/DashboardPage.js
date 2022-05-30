@@ -120,7 +120,7 @@ export default function DashboardPage(props) {
           if (res.success) {
             setShop(res.data);
             setStaffList(res.data.staffList);
-            setMenuList(res.data.menuList);
+            makeMenuList(res.data.menuList)
             makeCategoryList(res.data.menuCategories);
             makeShopInfo(res.data);
             getRequestList(shopCd);
@@ -131,6 +131,11 @@ export default function DashboardPage(props) {
           setLoading(false);
         })
       }, [reload])
+
+    function makeMenuList(menuList) {
+        menuList.forEach(menu => menu.newFlag = false)
+        setMenuList(menuList);
+    }
     
     function makeCategoryList(menuCategories) {
         const result = [];
@@ -406,17 +411,24 @@ export default function DashboardPage(props) {
         return result;
     }
 
+    function getPrivateCode(key) {
+        let result = moment().format('YYMMDD');
+        result = result + key.toString();
+        return parseInt(result);
+    }
+
     function modalOpen(targetId) {
         if (editMode) {
             if (targetId === 'new') {
                 setCount(count + 1);
                 setModalMenu({
                     menuCategory: '',
-                    menuCd: 'new' + count,
+                    menuCd: getPrivateCode(count),
                     menuDescription: '',
                     menuImg: null,
                     menuName: '',
-                    menuPrice: ''
+                    menuPrice: '',
+                    newFlag: true
                 });
                 setOpen(true);
             } else {
@@ -906,7 +918,7 @@ export default function DashboardPage(props) {
         }
 
         // 신규
-        if (modalMenu.menuCd.toString().indexOf('new') !== -1) {
+        if (modalMenu.newFlag) {
             const target = shop.menuList.find(menu => menu.menuCd === targetId);
             // 신규 등록
             if (target === undefined) {
@@ -917,7 +929,8 @@ export default function DashboardPage(props) {
                         menuDescription: modalMenu.menuDescription ? modalMenu.menuDescription : '',
                         menuImg: modalMenu.menuImg ? modalMenu.menuImg : menuDefault,
                         menuName: modalMenu.menuName,
-                        menuPrice: modalMenu.menuPrice
+                        menuPrice: modalMenu.menuPrice,
+                        newFlag: modalMenu.newFlag
                     });
                 }
                 setMenuList(menuList);
@@ -927,7 +940,8 @@ export default function DashboardPage(props) {
                     menuDescription: modalMenu.menuDescription ? modalMenu.menuDescription : '',
                     menuImg: modalMenu.menuImg ? modalMenu.menuImg : menuDefault,
                     menuName: modalMenu.menuName,
-                    menuPrice: modalMenu.menuPrice
+                    menuPrice: modalMenu.menuPrice,
+                    newFlag: modalMenu.newFlag
                 });
                 setShop(
                     { ...shop, menuList: shop.menuList }
