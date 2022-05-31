@@ -443,12 +443,15 @@ export default function DashboardPage(props) {
 
     function rollBack() {
         if (window.confirm("수정된 내용이 초기화됩니다. 계속하시겠습니까?")) {
-            const params = new FormData();
-            params.append('shopCd', shopCd);
+            const params = { 
+                'shopCd': shopCd,
+                'role': role
+            };
             axios
             .post(api.tmpClear, params)
             .then((res) => {
-                if (res) {
+                const data = res.data.data;
+                if (data.result) {
                     window.location.replace("/dashboard");
                 }
             })
@@ -696,8 +699,6 @@ export default function DashboardPage(props) {
             <Form className='dashboard-viewer-inline'>
                 <Form.Field>
                     <label><Icon name='angle right'/>메뉴 리스트</label>
-                    <button onClick={() => console.log("shop",shop.menuList)}>shop</button>
-                    <button onClick={() => console.log("shopOrigin",shopOrigin.menuList)}>shopOrigin</button>
                     <Select className='dashboard-viewer-category' placeholder='전체선택' value={category} options={categoryList} onChange={selectCategory}/>
                     {editMode && 
                     <Button.Group basic>
