@@ -12,6 +12,7 @@ import PostPage from './components/common/PostPage'
 import LoginPage from './components/login/LoginPage'
 import SignupPage from './components/login/SignupPage'
 import HelpPage from './components/help/HelpPage'
+import NoticeDetail from './components/help/NoticeDetail'
 import HelpPwdPage from './components/help/HelpPwdPage'
 import MyPage from './components/mypage/MyPage'
 import SchedulePage from './components/mypage/SchedulePage';
@@ -187,6 +188,7 @@ export default function App() {
                   <Route path="/common/:postCd" component={PostPage}/>
                 <Route exact path="/help/pwd" component={HelpPwdPage}/>
                 <Route exact path="/help/:item" component={HelpPage}/>
+                  <Route exact path="/help/notice/:noticeCd" component={NoticeDetail}/>
                 <Route exact path="/login" component={LoginPage}/>
                 <Route exact path="/signup" component={SignupPage}/>
                 <Route exact path="/mypage" component={MyPage}/>

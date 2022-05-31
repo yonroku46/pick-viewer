@@ -2392,12 +2392,16 @@ div.stretched.fourteen.wide.column.help-contents {
 .about-intro div.column {
   align-self: center !important;
 }
+
 /* NoticePage */
 .notice-search {
   float: left;
   margin-bottom: 8px;
   width: 60vw;
   max-width: 300px;
+}
+.notice-search input {
+  border: 1px solid rgba(34, 36, 38, 0.15) !important;
 }
 .notice-add {
   float: right;
@@ -2410,11 +2414,18 @@ div.stretched.fourteen.wide.column.help-contents {
 .notice-title i {
   margin-right: 0.25em !important;
 }
+.notice-table-body .ui.horizontal.label {
+  width: 68px !important;
+  margin-right: 1em;
+}
 .notice-table-body td {
   overflow:hidden;
   text-overflow:ellipsis;
   white-space:nowrap;
   max-width: 59vw;
+}
+.notice-table-body td:hover {
+  cursor: pointer;
 }
 .notice-table-sp {
   display: none;
@@ -2432,6 +2443,54 @@ div.stretched.fourteen.wide.column.help-contents {
   box-shadow: none !important;
 }
 
+/* NoticeDetail */
+.notice-main {
+  margin-top: 49px;
+  min-height: calc(100vh - 81px);
+  border-top: #52525210 1px solid !important;
+}
+.notice-back {
+  float: left;
+  box-shadow: none !important;
+}
+.notice-contents-background {
+  min-height: calc(30vh + 81px);
+  background-position: center center;
+  background-image: linear-gradient(rgba(0, 0, 0, 0.25), rgba(220, 220, 220, 0.8)), url('./img/home.jpg');
+  background-repeat: no-repeat;
+  background-size: cover;
+  border-bottom-left-radius: 48px;
+  border-bottom-right-radius: 48px;
+  margin-bottom: -10vh;
+}
+.notice-contents p {
+  text-align: left;
+}
+.notice-contents h1.ui.header {
+  font-size: 2em !important;
+  margin-bottom: 10vh !important;
+}
+.notice-contents h2.ui.header {
+  margin: 10vh 0 !important;
+}
+.notice-contents h5.ui.header {
+  font-weight: lighter;
+}
+.notice-contents-footer {
+  padding: 3vh 0 !important;
+  margin-top: 6vh !important;
+  margin-bottom: 0 !important;
+  background-color: #000;
+  color: #fff !important;
+}
+.notice-contents-footer i.circular.icon {
+  box-shadow: 0 0 0 0.1em inset !important;
+}
+.notice-contents-footer .sub.header {
+  margin-top: 4px !important;
+  color: #fff !important;
+}
+  
 /* ContactPage */
 .contact-main textarea {
   min-height: 180px;

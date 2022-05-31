@@ -1,9 +1,10 @@
 import React, { useEffect, useState, useReducer } from "react";
 import * as api from '../../rest/api'
 import axios from 'axios';
+import { Link, withRouter } from "react-router-dom";
 import { Table, Icon, Label, Button, Input, Header, Pagination } from 'semantic-ui-react';
 
-export default function NoticePage(props) {
+function NoticePage(props) {
 
     const [search, setSearch] = useState('');
     const [activePage, setActivePage] = useState(1);
@@ -11,6 +12,10 @@ export default function NoticePage(props) {
 
     function handlePaginationChange (e, { activePage }) {
         setActivePage(activePage);
+    }
+
+    function noticeInfo(targetId) {
+        props.history.push('/help/notice/' + targetId);
     }
 
     return(
@@ -37,7 +42,7 @@ export default function NoticePage(props) {
         </Table.Header>
 
         <Table.Body className='notice-table-body'>
-            <Table.Row>
+            <Table.Row onClick={() => noticeInfo('1')}>
                 <Table.Cell>
                     <Label color='blue' horizontal>{categoryList[1]}</Label>
                     1.0.0 패치노트
@@ -49,7 +54,7 @@ export default function NoticePage(props) {
                     2022.03.08
                 </Table.Cell>
             </Table.Row>
-            <Table.Row>
+            <Table.Row onClick={() => noticeInfo('2')}>
                 <Table.Cell>
                     <Label color='teal' horizontal>{categoryList[2]}</Label>
                     Pick이 오픈기념 이벤트 초초초특가!
@@ -61,7 +66,7 @@ export default function NoticePage(props) {
                     2022.03.08
                 </Table.Cell>
             </Table.Row>
-            <Table.Row>
+            <Table.Row onClick={() => noticeInfo('3')}>
                 <Table.Cell>
                     <Label color='purple' horizontal>{categoryList[0]}</Label>
                     Pick이 오픈하였습니다!
@@ -85,3 +90,5 @@ export default function NoticePage(props) {
     </>
     )
   };
+
+  export default withRouter(NoticePage);
