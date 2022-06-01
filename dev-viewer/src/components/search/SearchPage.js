@@ -165,6 +165,7 @@ export default function SearchPage(props) {
     
     return(
         <div className='search-main'>
+
             <Transition animation={animation} duration={duration} visible={visible}>
                 <Message color='blue' onClick={() => setVisible(false)} className='mypage-msg search-msg' header='찾으시는 매장이 없습니다' content='매장에 서비스 등록을 요청해보세요!' />
             </Transition>
@@ -195,6 +196,7 @@ export default function SearchPage(props) {
                     </Input>
                 </Form>
             </Menu.Item>
+
             <Menu.Item className='search-result'>
             {0 < searchHistory.length ?
                 <div className='search-recent'>
@@ -202,12 +204,14 @@ export default function SearchPage(props) {
                         <h4 className='shopmodal-subtitle'><Icon name='angle right'/>최근 검색</h4>
                         <Icon name='trash alternate outline' className='search-recent-del' onClick={delHistory}/>
                     </div>
+                    <div className='shopmodal-pick-group'>
                     {searchHistory.map(history =>
                         <Label basic className='search-recent-label'>
                             <span onClick={() => clickHistory(history)}>{history}</span>
                             <Icon name='delete' onClick={() => delTarget(history)}/>
                         </Label>
                     )}
+                    </div>
                 </div>
                 :
                 <div className='search-recent'>
@@ -219,14 +223,35 @@ export default function SearchPage(props) {
                     )}
                 </div>
             }
-            {searchResult.length !== 0 &&
+            
+            {searchResult.length == 0 ?
+                <>
+                {/* 검색결과 존재시 ShopModal로 결과 전송 및 페이지이동하도록 변경 */}
+                <div className='search-recommend'>
+                    <h4 className='shopmodal-subtitle'><Icon name='angle right'/>주변 추천매장</h4>
+                    {searchResult.map(shop => 
+                        <Link to={`/booking/${category}/${shop.shopCd}`}>
+                            <button key={shop.shopCd} style={{backgroundPosition: 'center', backgroundImage: 'linear-gradient(rgba(0, 0, 0, 0.05), rgba(0, 0, 0, 0.45)), url(' + api.imgRender(shop.shopImg === null ? 'images/shop/default.png' : shop.shopImg.split(',')[0]) + ')'}}>
+                                <div className='shopmodal-name'>
+                                    {shop.shopName}
+                                </div>
+                                <div className='shopmodal-location'>
+                                    {shop.shopLocation}
+                                </div>
+                                <span className='shopmodal-rating'><Icon name='star'/>{shop.ratingsAve}</span>
+                            </button>
+                        </Link>
+                    )}
+                </div>
+                </>
+            :
                 <>
                 {/* 검색결과 존재시 ShopModal로 결과 전송 및 페이지이동하도록 변경 */}
                 <div className='search-recommend'>
                     <h4 className='shopmodal-subtitle'><Icon name='angle right'/>검색 결과</h4>
                     {searchResult.map(shop => 
                         <Link to={`/booking/${category}/${shop.shopCd}`}>
-                            <button key={shop.shopCd} style={{backgroundSize: '105%', backgroundPosition: 'center', backgroundImage: 'linear-gradient(rgba(0, 0, 0, 0.05), rgba(0, 0, 0, 0.45)), url(' + api.imgRender(shop.shopImg === null ? 'images/shop/default.png' : shop.shopImg.split(',')[0]) + ')'}}>
+                            <button key={shop.shopCd} style={{backgroundPosition: 'center', backgroundImage: 'linear-gradient(rgba(0, 0, 0, 0.05), rgba(0, 0, 0, 0.45)), url(' + api.imgRender(shop.shopImg === null ? 'images/shop/default.png' : shop.shopImg.split(',')[0]) + ')'}}>
                                 <div className='shopmodal-name'>
                                     {shop.shopName}
                                 </div>

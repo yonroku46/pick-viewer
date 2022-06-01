@@ -33,7 +33,7 @@ function NoticeDetail(props) {
                 viverra nulla ut metus varius laoreet. Quisque rutrum. Aenean imperdiet.
                 Etiam ultricies nisi vel augue. Curabitur ullamcorper ultricies nisi.
                 </p>
-                <Table celled structured>
+                <Table celled structured unstackable>
                     <Table.Header>
                     <Table.Row>
                         <Table.HeaderCell rowSpan='2'>Name</Table.HeaderCell>

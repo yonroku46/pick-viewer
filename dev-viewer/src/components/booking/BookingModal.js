@@ -124,7 +124,7 @@ export default class BookingModal extends Component {
                     {shops.length === 0 && !isLoading ?
                         <div>
                             <Image src={nodata} className='shopmodal-nodata'/>
-                            <h4>필터링 결과가 존재하지 않습니다</h4>
+                            <h3 className='shopmodal-nodata-text'>필터링 결과가 존재하지 않습니다</h3>
                         </div>
                         :
                         isLoading ? <this.Loading/> : 

@@ -1611,9 +1611,16 @@ table.dashboard-table input {
 .shopmodal-nodata {
   margin: 2em auto;
 }
+.shopmodal-nodata-text {
+  text-align: center;
+  color: lightgray;
+}
 .shopmodal-subtitle {
   text-align: left;
   margin-left: 0px !important;
+}
+.shopmodal-shops {
+  text-align: left;
 }
 .shopmodal-shops button {
   background-size: cover;
@@ -1621,20 +1628,18 @@ table.dashboard-table input {
   text-align: left;
   border: 0px;
   color: #fff;
-  width: 24vw; 
+  width: 24.2vw; 
   height: 200px; 
   padding: 10px;
   margin: 5px;
   font-weight: bold;
   border-radius: 10px;
-  background-size: 105%;
   box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
 }
 .shopmodal-shops button:hover {
   position: relative; 
   cursor: pointer;
   transition: .3s ease-in-out;
-  animation: zoomout 1s linear;
   box-shadow: 3px 3px 6px rgb(0,0,0,0.5);
 }
 .shopmodal-name {
@@ -1806,12 +1811,12 @@ table.dashboard-table input {
     width: 90% !important;
   }
   .shopmodal-shops button{
-    width: 96vw;
+    width: 93.5vw;
   }
   .shopmodal-main {
-    width: 100vw;
-    margin-left: auto;
-    margin-right: auto;
+    width: 96vw !important;
+    margin-left: auto !important;
+    margin-right: auto !important;
   }
   .bookingpage.ui.basic.segment{
     padding-left: 0px;
@@ -2490,7 +2495,19 @@ div.stretched.fourteen.wide.column.help-contents {
   margin-top: 4px !important;
   color: #fff !important;
 }
-  
+/* sp */
+@media only screen and (max-width: 767px){
+  .notice-contents-background {
+    min-height: calc(20vh + 81px);
+  }
+  .notice-contents h1.ui.header {
+    font-size: 1.5em !important;
+  }
+  .notice-contents .table {
+    font-size: 11px !important;
+  }
+}
+
 /* ContactPage */
 .contact-main textarea {
   min-height: 180px;
@@ -2673,12 +2690,10 @@ div.stretched.fourteen.wide.column.help-contents {
   position: relative; 
   cursor: pointer;
   transition: .3s ease-in-out;
-  animation: zoomout 1s linear;
   box-shadow: 3px 3px 6px rgb(0,0,0,0.5);
 }
 .search-recommend {
   margin-top: 14px;
-  margin-left: 1.5em;
   text-align: left;
 }
 .search-recommend h4 {
@@ -2711,8 +2726,7 @@ div.stretched.fourteen.wide.column.help-contents {
   text-align: left;
 }
 .search-recent div.ui.label {
-  margin-left: 5px !important;
-  margin-bottom: 5px !important;
+  margin-right: 5px !important;
 }
 .search-recommend button {
   background-size: cover;
@@ -2720,7 +2734,7 @@ div.stretched.fourteen.wide.column.help-contents {
   text-align: left;
   border: 0px;
   color: #fff;
-  width: 23vw; 
+  width: 24.2vw; 
   height: 200px; 
   padding: 10px;
   margin: 5px;
@@ -2746,6 +2760,8 @@ div.stretched.fourteen.wide.column.help-contents {
   }
   .search-result {
     width: 96vw !important;
+    margin-left: auto !important;
+    margin-right: auto !important;
   }
   .search-recent {
     margin-left: 0;
