@@ -750,7 +750,7 @@ export default function BookingDetail(props) {
         <Scroll to='timeTable' offset={-56} spy={true} smooth={true}>
         <Button id='timeTable' className={timetableSelected ? 'detailpage-menu-btn-bg' :'detailpage-menu-btn-sub'} onClick={bookingTimeToggle}>
             <Icon name={timetableSelected ? 'chevron right' : 'chevron down'}/>
-            {timetableSelected ? '예약시간 : ' + dbTime: '예약시간을 선택하세요' }
+            {timetableSelected ? '예약시간 : ' + dbTime : '예약시간을 선택하세요' }
         </Button>
         </Scroll>
         <div className='timetable-btn-area'>
@@ -760,7 +760,7 @@ export default function BookingDetail(props) {
               (parseInt(time.substring(0,2)) <= 12)
               ? (originToday === dbDate && (parseInt(time.substring(0,2)) <= thisHour))
                 ? <Button disabled className='timetable-btn'>{time}</Button>
-                : <Button className='timetable-btn' value={time} onClick={timeClick}>{time}</Button>
+                : <Button className={dbTime == time ? 'timetable-btn-selected' : 'timetable-btn'} value={time} onClick={timeClick}>{time}</Button>
               : <></>
             ))
           }
@@ -773,7 +773,7 @@ export default function BookingDetail(props) {
             ? <></>
             : (originToday === dbDate && (parseInt(time.substring(0,2)) <= thisHour))
               ? <Button disabled className='timetable-btn'>{time}</Button>
-              : <Button className='timetable-btn' value={time} onClick={timeClick}>{time}</Button>
+              : <Button className={dbTime == time ? 'timetable-btn-selected' : 'timetable-btn'} value={time} onClick={timeClick}>{time}</Button>
           ))
         }
         </div>

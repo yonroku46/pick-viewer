@@ -92,6 +92,7 @@ function NoticeDetail(props) {
 
             </Container>
             <Header className='notice-contents-footer' as='h3' icon textAlign='center'>
+                <div className='notice-contents-arrow'/>
                 <Icon name='paw' circular/>
                 <Header.Content>관리자1</Header.Content>
                 <Header.Subheader>자기소개</Header.Subheader>

@@ -1054,6 +1054,7 @@ table.dashboard-table input {
 }
 .table-today {
   background-color: rgba(161, 51, 204, 0.05);
+  color: #A291FB;
   font-weight: bold;
   width: calc(100% / 7);
 }
@@ -1085,7 +1086,7 @@ table.dashboard-table input {
   border: 2px rgba(0, 0, 0, 0.4) solid;
   margin: 0 30px;
   filter: grayscale(0.25);
-  z-index: 1000;
+  z-index: 10;
 }
 .mypage-user-icon:hover {
   cursor: pointer;
@@ -1905,6 +1906,7 @@ table.dashboard-table input {
   font-family: unset !important;
   font-size: 2em !important;
   opacity: 0.25;
+  margin: 0 0.25em;
 }
 .slick-prev, .slick-next {
   top: 49% !important;
@@ -2032,7 +2034,7 @@ a.detailpage-tel:hover {
   background-image: linear-gradient(rgba(255, 255, 255, 0.7), rgba(216, 178, 225, 0.1)) !important;
 }
 .detailpage-service-menu {
-  padding: 12px 6px !important;
+  padding: 12px !important;
   border: 1px lightgray solid;
   border-radius: 6px;
 }
@@ -2139,10 +2141,21 @@ a.detailpage-tel:hover {
 }
 .ui.button.timetable-btn {
   border-style: solid;
-  width: 100px;
+  width: 31%;
+  max-width: 100px;
   border-width: 1px;
   border-color: lightgray ;
   margin: 2px;
+}
+.ui.button.timetable-btn-selected {
+  border-style: solid;
+  width: 31%;
+  max-width: 100px;
+  border-width: 1px;
+  color: #A291FB !important;
+  border-color: #A291FB;
+  margin: 2px;
+  transition: .25s;
 }
 .timetable-btn-area {
   text-align: left;
@@ -2203,8 +2216,6 @@ a.detailpage-tel:hover {
 .review-info {
   margin-top: -14px !important;
   margin-bottom: 28px !important;
-  margin-left: 1em !important;
-  margin-right: 1em !important;
   border-radius: 0px 0px 14px 14px !important;
   background-color: #A291FB !important;
 }
@@ -2361,8 +2372,8 @@ div.stretched.fourteen.wide.column.help-contents {
 }
 .help-contents-active {
   text-align: left !important;
-  padding-left: 10vw !important;
-  padding-right: 10vw !important;
+  padding-left: 6vw !important;
+  padding-right: 6vw !important;
   overflow: scroll !important;
   height: 90vh !important;
 }
@@ -2380,6 +2391,7 @@ div.stretched.fourteen.wide.column.help-contents {
   .help-contents-active {
     padding-left: 14px !important;
     padding-right: 14px !important;
+    height: 87vh !important;
   }
 }
 
@@ -2481,6 +2493,16 @@ div.stretched.fourteen.wide.column.help-contents {
 .notice-contents h5.ui.header {
   font-weight: lighter;
 }
+.notice-contents-arrow {
+  width: 20px;
+  height: 20px;
+  position: absolute;
+  background: #fff;
+  transform: rotate(45deg);
+  bottom: 169px;
+  left: 50%;
+  margin-left: -10px;
+}
 .notice-contents-footer {
   padding: 3vh 0 !important;
   margin-top: 6vh !important;
@@ -2498,7 +2520,7 @@ div.stretched.fourteen.wide.column.help-contents {
 /* sp */
 @media only screen and (max-width: 767px){
   .notice-contents-background {
-    min-height: calc(20vh + 81px);
+    min-height: calc(14vh + 81px);
   }
   .notice-contents h1.ui.header {
     font-size: 1.5em !important;
