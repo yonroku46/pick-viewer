@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import page1 from '../../img/page1.png'
 import page2 from '../../img/page2.png'
 import * as api from '../../rest/api'
-import { Button, Segment, Icon, Accordion, Grid, Image, Input, Reveal } from 'semantic-ui-react';
+import { Button, Segment, Icon, Accordion, Grid, Image, Input, Reveal, Menu, Item } from 'semantic-ui-react';
 
 export default function HomePage(props) {
     let isAuthorized = sessionStorage.getItem("isAuthorized");
@@ -13,7 +13,8 @@ export default function HomePage(props) {
     const [activeIndex, SetActiveIndex] = useState();
 
     const eventList = ["images/event/1.png", "images/event/2.png", "images/event/3.png", "images/event/4.png"];
-
+    const [activeItem, setActiveItem] = useState('today');
+    const handleItemClick = (e, { name }) => setActiveItem(name);
     const handleClick = (e, titleProps) => {
       const { index } = titleProps
       const newIndex = activeIndex === index ? -1 : index
@@ -49,15 +50,18 @@ export default function HomePage(props) {
     };
   
     function onDragMove(e) {
-      if (isDrag) {
-        const { scrollWidth, clientWidth, scrollLeft } = scrollRef.current;
-        scrollRef.current.scrollLeft = startX - e.pageX;
-    
-        if (scrollLeft === 0) {
-          setStartX(e.pageX);
-        } else if (scrollWidth <= clientWidth + scrollLeft) {
-          setStartX(e.pageX + scrollLeft);
+      try {
+        if (isDrag) {
+          const { scrollWidth, clientWidth, scrollLeft } = scrollRef.current;
+          scrollRef.current.scrollLeft = startX - e.pageX;
+      
+          if (scrollLeft === 0) {
+            setStartX(e.pageX);
+          } else if (scrollWidth <= clientWidth + scrollLeft) {
+            setStartX(e.pageX + scrollLeft);
+          }
         }
+      } catch {
       }
     };
 
@@ -86,47 +90,38 @@ export default function HomePage(props) {
         </Input>
       </div>
 
-      <Grid container className='home-content-main content1' divided relaxed stackable>
-        <div className='content1-left'>
-          <p className='content1-title'>{isAuthorized ? '오늘도 멋진 하루 되세요!' : '아직 회원이 아니신가요?'}</p>
-          <p className='content1-subtitle'>저희 서비스는 여러분의 소중한 데이터를 바탕으로</p>
-          <p className='content1-subtitle'>보다 나은 서비스를 제공하고 있습니다.</p>
-        </div>
-        <div className='content1-right'>
-        {isAuthorized ?
-          role === 3 ?
-            <Link to='/dashboard'>
-              <Button color='black'>
-                매장관리<Icon name='arrow right'/>
-              </Button>
-            </Link>
-            :
-            <Link to='/mypage'>
-              <Button color='black'>
-                마이페이지<Icon name='arrow right'/>
-              </Button>
-            </Link>
-        :
-        <Link to='/login'>
-          <Button color='black'>
-            로그인 / 회원가입<Icon name='arrow right'/>
-          </Button>
-        </Link>
-        }
-        </div>
+      <Grid container className='home-content-main-top' divided relaxed stackable>
+
+        <Menu pointing secondary className='home-menu'>
+          <Menu.Item name='today' active={activeItem === 'today'} onClick={handleItemClick}>
+            <span><Icon name='clock outline' size='large'/>이벤트 매장</span>
+          </Menu.Item>
+          <Menu.Item name='recommend' active={activeItem === 'recommend'} onClick={handleItemClick}>
+            <span><Icon name='compass outline' size='large'/>주변 추천매장</span>
+          </Menu.Item>
+        </Menu>
+
+        <Grid container className='content2' divided relaxed stackable>
+          <div className='home-quick-menu' onMouseDown={onDragStart} onMouseMove={isDrag ? onThrottleDragMove : null} onMouseUp={onDragEnd} onMouseLeave={onDragEnd} ref={scrollRef}>
+            {eventList.map(shop => 
+              <div className='content2-quick' onClick={() => props.history.push('booking/hairshop/1')}>
+                <img src={api.imgRender('images/shop/default.png')}/>
+                <Item className='content2-quick-content'>
+                  <Item.Content>
+                    <Item.Header as='h5'>ShopName</Item.Header>
+                    <Item.Meta>ShopInfo</Item.Meta>
+                    <Item.Description>
+                      <span><Icon name='star'/>4.5</span>
+                      <span><Icon name='comment'/>0</span>
+                    </Item.Description>
+                  </Item.Content>
+                </Item>
+              </div>
+            )}
+          </div>
+        </Grid>
+
       </Grid>
-      
-      {/* <Grid container className='home-content-main content2' divided relaxed stackable>
-        <div className='home-quick-menu' onMouseDown={onDragStart} onMouseMove={isDrag ? onThrottleDragMove : null} onMouseUp={onDragEnd} onMouseLeave={onDragEnd} ref={scrollRef}>
-          {eventList.map(event => 
-            <Link to={`/booking/hairshop`}>
-              <span className='content2-quick'>
-                <img src={api.imgRender(event)}/>
-              </span>
-            </Link>
-          )}
-        </div>
-      </Grid> */}
 
       <Grid container columns={2} className='home-content-main' divided relaxed stackable>
         <Grid.Column>

@@ -302,23 +302,17 @@ export default function MyPage(props) {
     </Container>
 
     <Menu pointing secondary className='mypage-menu'>
-      <Menu.Item
-        name='schdule'
-        active={activeItem === 'schdule'}
-        onClick={handleItemClick}>
-        <Icon name='table' size='large' className='mypage-icon-sp'/><span className='mypage-menu-sp'>예약관리</span>
+      <Menu.Item name='schdule' active={activeItem === 'schdule'} onClick={handleItemClick}>
+        <Icon name='table' size='large' className='mypage-icon-sp'/>
+        <span className='mypage-menu-sp'>예약관리</span>
       </Menu.Item>
-      <Menu.Item
-        name='talk'
-        active={activeItem === 'talk'}
-        onClick={handleItemClick}>
-        <Icon name='comments' size='large' className='mypage-icon-sp'/><span className='mypage-menu-sp'>메세지</span>
+      <Menu.Item name='talk' active={activeItem === 'talk'} onClick={handleItemClick}>
+        <Icon name='comments' size='large' className='mypage-icon-sp'/>
+        <span className='mypage-menu-sp'>메세지</span>
       </Menu.Item>
-      <Menu.Item
-        name='favorite'
-        active={activeItem === 'favorite'}
-        onClick={handleItemClick}>
-        <Icon name='heart' size='large' className='mypage-icon-sp'/><span className='mypage-menu-sp'>즐겨찾기</span>
+      <Menu.Item name='favorite' active={activeItem === 'favorite'} onClick={handleItemClick}>
+        <Icon name='heart' size='large' className='mypage-icon-sp'/>
+        <span className='mypage-menu-sp'>즐겨찾기</span>
       </Menu.Item>
     </Menu>
 

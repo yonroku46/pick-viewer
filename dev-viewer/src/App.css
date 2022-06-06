@@ -1348,10 +1348,29 @@ table.dashboard-table input {
   padding-top: 36vh;
   padding-bottom: 2vh;
   margin-top: 0px;
-  margin-bottom: -5vh;
   position: relative;
 }
-
+.home-menu {
+  margin-top: -14px !important;
+  margin-left: auto!important;
+  margin-right: auto!important;
+  border-bottom: none !important;
+}
+.home-menu .active.item {
+  border-top: 2px #000 solid !important;
+  border-bottom: 0px !important;
+}
+.home-menu .item {
+  margin-top: 2px !important;
+  border-bottom: 0px !important;
+  width: 150px;
+}
+.home-menu span {
+  margin-left: auto;
+  margin-right: auto;
+  display: flex;
+  align-items: center;
+}
 .home-main-title-top {
   font-size: 1.1em;
   margin-bottom: 0em;
@@ -1424,6 +1443,12 @@ table.dashboard-table input {
   text-align: left;
   min-height: 270px;
 }
+.home-recommend-shop {
+  margin-top: 12px !important;
+  border: rgb(220, 220, 220, 0.7) solid 1px;
+  border-radius: 12px;
+  text-align: left;
+}
 
 .home-content-main {
   margin-top: 12px !important;
@@ -1436,54 +1461,66 @@ table.dashboard-table input {
   position: inherit;
   padding: 1em 0 !important;
 }
-
-/* pc */
-.content1 {
-  padding: 0.5em 1em !important;
-  height: 14.5vh !important;
+.home-content-main-top {
+  margin-top: 12px !important;
+  margin-bottom: 12px !important;
+  background-color: rgb(255, 255, 255);
+  border-radius: 12px;
+  z-index: 500 !important;
+  position: inherit;
+  padding: 1em 0 !important;
 }
-.content1-title {
-  font-size: 1.5em;
-  font-weight: bold;
-  margin-bottom: 0.25em;
-  text-align: left;
-}
-.content1-subtitle {
-  font-size: 1em;
-  margin-left: 0.5em;
-  margin-bottom: 0;
-  text-align: left;
-}
-.content1-left {
-  align-self: center;
-  width: 80%;
-}
-.content1-right {
-  align-self: center;
-  margin-right: 0;
-  margin-left: auto;
-}
-
 .content2 {
-  padding: 0.5em 0.5em !important;
-  height: 14.5vh;
+  padding: 0 !important;
+  margin-top: 0 !important;
+}
+.content2-quick {
+  flex: 2;
+  display: flex;
+}
+.content2-quick-content {
+  flex: 1;
+  text-align: left;
+  width: 210px;
+  height: 140px;
+  padding: 14px 10px 14px 20px;
+  box-shadow: 1px 1px 8px rgb(157 157 157 / 50%);
+  border: rgb(220, 220, 220, 0.7) solid 1px;
+  margin-left: -14px;
+  border-radius: 0.5em;
+  margin-right: 14px;
+}
+.content2-quick-content .header {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.content2-quick-content .meta {
+  font-size: 0.9em;
+  height: 56px;
+  margin-left: 4px;
+  overflow: hidden;
+  white-space: pre-line;
+}
+.content2-quick-content .description span {
+  margin-left: 4px;
+  margin-right: 6px !important;
+  font-size: 0.85em;
+  bottom : 20px;
 }
 .content2-quick img {
-  margin-left: -0.5em;
-  margin-right: 1em;
   border-radius: 0.5em;
-  width: 290px;
-  height: 12.5vh;
+  z-index: 1;
+  width: 160px;
+  height: 140px;
   border:#fff solid 1px;
   background-position: center;
 	transition: .3s ease-in-out;
-  border-radius: 12px;
 }
-.content2-quick img:hover {
+.content2-quick:hover {
   cursor: pointer;
-  filter: opacity(.9);
-  transition: all 0.2s linear;
-  transform: scale(1.02);
+  filter: opacity(0.9);
+  transition: all 0.1s linear;
 }
 
 .content4 {
@@ -1499,6 +1536,12 @@ table.dashboard-table input {
   margin-left: 2em;
 }
 
+/* pc */
+@media only screen and (min-width: 766px) {
+  .home-quick-menu {
+    padding-left: 0 !important;
+  }
+}
 /* sp */
 @media only screen and (max-width: 767px) {
   .home-main {
@@ -1512,21 +1555,6 @@ table.dashboard-table input {
     text-align: center;
     height: 36vh;
     padding: 1em 0px !important;
-  }
-
-  .content1 {
-    padding: 0.5em 2em !important;
-    height: 20vh !important;
-  }
-  .content1-left {
-    align-self: center;
-    width: 100%;
-    padding-left: 0 !important;
-  }
-  .content1-right {
-    margin-right: auto;
-    margin-left: auto;
-    padding-right: 0 !important;
   }
   .content4-right {
     width: 100% !important;
@@ -1655,7 +1683,7 @@ table.dashboard-table input {
   margin-top: -1.2em;
   float: right;
 }
-.shopmodal-location {
+.shopmodal-info {
   width: 80%;
   font-weight: normal;
   font-size: 0.9em;
@@ -1998,6 +2026,19 @@ a.detailpage-tel:hover {
 .detailpage-service-header {
   padding: 7px !important;
   margin-top: 7px !important;
+  margin-bottom: 7px !important;
+  letter-spacing: 2px;
+  display: flex;
+}
+.detailpage-service-header .middle-line {
+  flex: 1;
+  background-color: #000;
+  height: 1px;
+  margin-bottom: auto;
+  margin-top: auto;
+  border-radius: 1em;
+  margin-left: 1em;
+  margin-right: 0.25em;
 }
 .detailpage-service-header div.content {
   padding-left: 3px !important;
@@ -2160,6 +2201,7 @@ a.detailpage-tel:hover {
 .timetable-btn-area {
   text-align: left;
   margin: 0.5em 2em;
+  letter-spacing: 2px;
 }
 .timetable-btn-area p {
   text-align: left;
@@ -2375,7 +2417,7 @@ div.stretched.fourteen.wide.column.help-contents {
   padding-left: 6vw !important;
   padding-right: 6vw !important;
   overflow: scroll !important;
-  height: 90vh !important;
+  height: calc(99vh - 81px) !important;
 }
 /* pc */
 @media only screen and (min-width: 766px) {
