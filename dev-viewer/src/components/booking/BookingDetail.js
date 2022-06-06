@@ -491,9 +491,9 @@ export default function BookingDetail(props) {
 
   const visibleHairShopMenu = showShopMenu && (shop.menuCategories.map(category => 
     <>
-    <Header as='h3' className='detailpage-service-header' dividing>
-      <Icon name='slack hash'/>
+    <Header as='h3' className='detailpage-service-header'>
       <Header.Content>{category}</Header.Content>
+      <div className='middle-line'></div>
     </Header>
     {
     shop.menuList.filter(list => list.menuCategory.match(category)).map(menu => 
@@ -530,9 +530,9 @@ export default function BookingDetail(props) {
 
   const visibleMenu = showShopMenu && (shop.menuCategories.map(category => 
       <>
-      <Header as='h3' className='detailpage-service-header' dividing>
-        <Icon name='slack hash'/>
+      <Header as='h3' className='detailpage-service-header'>
         <Header.Content>{category}</Header.Content>
+        <div className='middle-line'></div>
       </Header>
       {
       shop.menuList.filter(list => list.menuCategory.match(category)).map(menu => 

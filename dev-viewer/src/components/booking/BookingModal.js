@@ -137,8 +137,8 @@ export default class BookingModal extends Component {
                                     <div className='shopmodal-name'>
                                         {shop.shopName}
                                     </div>
-                                    <div className='shopmodal-location'>
-                                        {shop.shopLocation}
+                                    <div className='shopmodal-info'>
+                                        {shop.shopInfo}
                                     </div>
                                     <span className='shopmodal-rating'><Icon name='star'/>{shop.ratingsAve}</span>
                                 </button>

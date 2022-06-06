@@ -42,7 +42,7 @@ export default function HelpPwdPage(props) {
           setApiload(false);
           setCertificationStep(true);
         } else {
-          setError("해당 메일의 유저가 존재하지 않습니다");
+          setError("해당 메일유저가 존재하지 않거나, 전송에 실패하였습니다.");
           setApiload(false);
           return;
         }
