@@ -13,6 +13,10 @@ export const login = "/api/login";
 export const logout = "/api/logout";
 export const bookingCheck = "/api/bookingCheck";
 
+// HomePage
+export const eventShopList = "/api/shop/list/event";
+export const nearShopList = "/api/shop/list/near";
+
 // SignupPage
 export const mailService = "/api/mailService";
 export const certification = "/api/certification";

@@ -1,8 +1,9 @@
-import React, { useState, useRef } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import { Link } from "react-router-dom";
 import page1 from '../../img/page1.png'
 import page2 from '../../img/page2.png'
 import * as api from '../../rest/api'
+import axios from 'axios';
 import { Button, Segment, Icon, Accordion, Grid, Image, Input, Reveal, Menu, Item } from 'semantic-ui-react';
 
 export default function HomePage(props) {
@@ -11,14 +12,54 @@ export default function HomePage(props) {
     const role = userInfo ? userInfo.role : null;
 
     const [activeIndex, SetActiveIndex] = useState();
-
-    const eventList = ["images/event/1.png", "images/event/2.png", "images/event/3.png", "images/event/4.png"];
-    const [activeItem, setActiveItem] = useState('today');
-    const handleItemClick = (e, { name }) => setActiveItem(name);
+    const [shopList, SetShopList] = useState();
+    const [activeItem, setActiveItem] = useState('event');
+    function handleItemClick (e, { name }) {
+      setActiveItem(name);
+      name === "event" ? getEventShop() : getNearShop();
+   }
     const handleClick = (e, titleProps) => {
-      const { index } = titleProps
-      const newIndex = activeIndex === index ? -1 : index
-      SetActiveIndex(newIndex)
+      const { index } = titleProps;
+      const newIndex = activeIndex === index ? -1 : index;
+      SetActiveIndex(newIndex);
+    }
+
+    useEffect(() => {
+      getEventShop();
+    }, [])
+
+    function getEventShop() {
+      return new Promise(function(resolve, reject) {
+        axios
+          .get(api.eventShopList)
+          .then(response => resolve(response.data))
+          .catch(error => reject(error.response))
+      })
+      .then(res => {
+        if (res.success) {
+          SetShopList(res.data);
+        }
+      })
+      .catch(err => {
+        alert("현재 서버와의 연결이 원활하지 않습니다. 관리자에게 문의해주세요.");
+      })
+    }
+
+    function getNearShop() {
+      return new Promise(function(resolve, reject) {
+        axios
+          .get(api.nearShopList)
+          .then(response => resolve(response.data))
+          .catch(error => reject(error.response))
+      })
+      .then(res => {
+        if (res.success) {
+          SetShopList(res.data);
+        }
+      })
+      .catch(err => {
+        alert("현재 서버와의 연결이 원활하지 않습니다. 관리자에게 문의해주세요.");
+      })
     }
 
     //// scroll func start
@@ -93,7 +134,7 @@ export default function HomePage(props) {
       <Grid container className='home-content-main-top' divided relaxed stackable>
 
         <Menu pointing secondary className='home-menu'>
-          <Menu.Item name='today' active={activeItem === 'today'} onClick={handleItemClick}>
+          <Menu.Item name='event' active={activeItem === 'event'} onClick={handleItemClick}>
             <span><Icon name='clock outline' size='large'/>이벤트 매장</span>
           </Menu.Item>
           <Menu.Item name='recommend' active={activeItem === 'recommend'} onClick={handleItemClick}>
@@ -103,7 +144,7 @@ export default function HomePage(props) {
 
         <Grid container className='content2' divided relaxed stackable>
           <div className='home-quick-menu' onMouseDown={onDragStart} onMouseMove={isDrag ? onThrottleDragMove : null} onMouseUp={onDragEnd} onMouseLeave={onDragEnd} ref={scrollRef}>
-            {eventList.map(shop => 
+            {shopList?.map(shop => 
               <div className='content2-quick' onClick={() => props.history.push('booking/hairshop/1')}>
                 <img src={api.imgRender('images/shop/default.png')}/>
                 <Item className='content2-quick-content'>
