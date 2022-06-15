@@ -37,7 +37,7 @@ export default function HomePage(props) {
       })
       .then(res => {
         if (res.success) {
-          SetShopList(res.data);
+          SetShopList(res.dataList);
         }
       })
       .catch(err => {
@@ -54,7 +54,7 @@ export default function HomePage(props) {
       })
       .then(res => {
         if (res.success) {
-          SetShopList(res.data);
+          SetShopList(res.dataList);
         }
       })
       .catch(err => {
@@ -144,16 +144,16 @@ export default function HomePage(props) {
 
         <Grid container className='content2' divided relaxed stackable>
           <div className='home-quick-menu' onMouseDown={onDragStart} onMouseMove={isDrag ? onThrottleDragMove : null} onMouseUp={onDragEnd} onMouseLeave={onDragEnd} ref={scrollRef}>
-            {shopList?.map(shop => 
-              <div className='content2-quick' onClick={() => props.history.push('booking/hairshop/1')}>
-                <img src={api.imgRender('images/shop/default.png')}/>
+            {shopList && shopList.map(shop => 
+              <div className='content2-quick' onClick={() => props.history.push(`/booking/${shop.category}/${shop.shopCd}`)}>
+                <img src={api.imgRender(shop.shopImg ? shop.shopImg.split(",")[0] : 'images/shop/default.png')}/>
                 <Item className='content2-quick-content'>
                   <Item.Content>
-                    <Item.Header as='h5'>ShopName</Item.Header>
-                    <Item.Meta>ShopInfo</Item.Meta>
+                    <Item.Header as='h5'>{shop.shopName}</Item.Header>
+                    <Item.Meta>{shop.shopInfo}</Item.Meta>
                     <Item.Description>
-                      <span><Icon name='star'/>4.5</span>
-                      <span><Icon name='comment'/>0</span>
+                      <span><Icon name='star'/>{shop.ratingsAve}</span>
+                      <span><Icon name='comment'/>{shop.reviewNum}</span>
                     </Item.Description>
                   </Item.Content>
                 </Item>
