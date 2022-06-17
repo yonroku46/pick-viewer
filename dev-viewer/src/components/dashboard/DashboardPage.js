@@ -276,12 +276,12 @@ export default function DashboardPage(props) {
     }
     function changeMenuCategory(e) {
         setModalMenu(
-            { ...modalMenu, menuCategory: e.target.value.replace(/[\'\"\=]/gi, '') }
+            { ...modalMenu, menuCategory: e.target.value.replace(/[\\\=]/gi, '') }
         );
     }
     function changeMenuName(e) {
         setModalMenu(
-            { ...modalMenu, menuName: e.target.value.replace(/[ \{\}\[\]\/?.,;:|\)*~`!^\-_+┼<>@\#$%&\'\"\\\(\=]/gi, '') }
+            { ...modalMenu, menuName: e.target.value.replace(/[\\\=]/gi, '') }
         );
     }
     function changeMenuPrice(e) {
@@ -291,7 +291,7 @@ export default function DashboardPage(props) {
     }
     function changeMenuDescription(e) {
         setModalMenu(
-            { ...modalMenu, menuDescription: e.target.value.replace(/[ \{\}\[\]\/?.,;:|\)*~`!^\-_+┼<>@\#$%&\'\"\\\(\=]/gi, '') }
+            { ...modalMenu, menuDescription: e.target.value.replace(/[\\\=]/gi, '') }
         );
     }
 

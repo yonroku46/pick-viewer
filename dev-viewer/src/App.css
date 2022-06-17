@@ -466,7 +466,7 @@ hr {
   padding-top: 0.6em !important;
   padding-bottom: 0.6em !important;
   margin-left: 0px !important;
-  font-size: 1em !important;;
+  font-size: 1em !important;
 }
 .dashboard-menu-dropdown i.icon.toggle.on:before {
   color: rgb(0, 153, 255);
@@ -569,6 +569,7 @@ hr {
 }
 .dashboard-viewer-menu div.description {
   margin-left: 6px;
+  white-space: break-spaces;
 }
 .dashboard-viewer-menu-img {
   width: 125px !important;
@@ -593,6 +594,7 @@ hr {
   margin-top: 0px !important;
   margin-left: 2em !important;
   font-size: 1.1em !important;
+  white-space: break-spaces;
 }
 .dashboard-viewer-page {
   border: none !important;
@@ -1537,9 +1539,9 @@ table.dashboard-table input {
   z-index: 1;
   width: 160px;
   height: 140px;
-  margin-top: -16px;
+  margin-top: -15px;
   margin-left: -20px;
-  margin-right: 16px;
+  margin-right: 15px;
   float: left;
   background-position: center;
   border-top-left-radius: 0.5em;
@@ -2034,8 +2036,10 @@ table.dashboard-table input {
   padding-bottom: 1.5em !important;
   border-radius: 0px !important;
 }
-.detailpage-main .detailpage-time i,.detailpage-info i, .detailpage-location i {
-  margin-right: 0.6em !important;
+.detailpage-main .detailpage-time i, .detailpage-info i, .detailpage-location i {
+  position: absolute;
+  margin-left: -26px !important;
+  margin-top: 2px !important;
 }
 .detailpage-link-btn {
   margin-right: 0px !important;
@@ -2047,7 +2051,7 @@ table.dashboard-table input {
   margin-left: 9px;
 }
 .detailpage-time {
-  margin: 6px 12px;
+  margin: 6px 12px 6px 34px;
 }
 .detailpage-call a {
   margin: 5px;
@@ -2059,7 +2063,10 @@ table.dashboard-table input {
   opacity: 1;
 }
 .detailpage-location {
-  margin: 6px 12px;;
+  margin: 6px 12px 6px 34px;
+}
+.detailpage-location .angle {
+  margin-left: 0.25em !important;
 }
 .detailpage-location-empty {
   margin-top: 1.2em;
@@ -2067,7 +2074,8 @@ table.dashboard-table input {
   text-align: center;
 }
 .detailpage-info {
-  margin: 6px 12px;;
+  margin: 6px 12px 6px 34px;
+  white-space: break-spaces;
 }
 a.detailpage-tel {
   color: #000;
@@ -2136,6 +2144,7 @@ a.detailpage-tel:hover {
 }
 .detailpage-service-menu div.description {
   margin-left: 6px;
+  white-space: break-spaces;
 }
 .detailpage-service-customers {
   margin-left: auto !important;
@@ -2838,7 +2847,7 @@ div.stretched.fourteen.wide.column.help-contents {
 }
 .search-recent h4 {
   margin-left: -0.5em;
-  margin-bottom: calc(1em - 2px);;
+  margin-bottom: calc(1em - 2px);
   text-align: left;
 }
 .search-recent div.ui.label {

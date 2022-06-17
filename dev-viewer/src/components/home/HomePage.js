@@ -17,6 +17,7 @@ export default function HomePage(props) {
     function handleItemClick (e, { name }) {
       setActiveItem(name);
       name === "event" ? getEventShop() : getNearShop();
+      scrollRef.current.scrollLeft = 0;
    }
     const handleClick = (e, titleProps) => {
       const { index } = titleProps;

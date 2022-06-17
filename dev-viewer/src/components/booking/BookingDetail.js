@@ -871,7 +871,7 @@ export default function BookingDetail(props) {
         <p className='detailpage-info'><Icon name='list alternate outline'/>{shop.shopInfo}</p>
         <p className='detailpage-location'><Icon name='map outline'/>{shop.shopLocation}
           <Scroll className='detailpage-icon' to='map' offset={-56} spy={true} smooth={true}>
-            <Icon id='map' onClick={mapToogle} name={mapOpen ? 'angle up' : 'angle down'}/>
+            <Icon id='map' className='angle' onClick={mapToogle} name={mapOpen ? 'angle up' : 'angle down'}/>
           </Scroll>
         </p>
         {mapOpen && 
