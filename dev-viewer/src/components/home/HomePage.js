@@ -110,6 +110,10 @@ export default function HomePage(props) {
     const onThrottleDragMove = throttle(onDragMove, delay);
     //// scroll func end
 
+    function onMovePage(e, category, shopCd) {
+      props.history.push(`/booking/${category}/${shopCd}`);
+    }
+
     function searching(e) {
       if (e.key === 'Enter') {
         props.history.push({
@@ -143,11 +147,13 @@ export default function HomePage(props) {
         </Menu>
 
         <Grid container className='content2' divided relaxed stackable>
+          <div className={scrollRef.current?.scrollLeft !== 0 ? 'home-quick-menu-background left view' : 'home-quick-menu-background left'}/>
+          <div className={scrollRef.current?.scrollLeft !== 2545 ? 'home-quick-menu-background right view' : 'home-quick-menu-background right'}/>
           <div className='home-quick-menu' onMouseDown={onDragStart} onMouseMove={isDrag ? onThrottleDragMove : null} onMouseUp={onDragEnd} onMouseLeave={onDragEnd} ref={scrollRef}>
             {shopList && shopList.map(shop => 
-              <div className='content2-quick' onClick={() => props.history.push(`/booking/${shop.category}/${shop.shopCd}`)}>
-                <img src={api.imgRender(shop.shopImg ? shop.shopImg.split(",")[0] : 'images/shop/default.png')}/>
+              <div className='content2-quick' onClick={(e) => onMovePage(e, shop.category, shop.shopCd)}>
                 <Item className='content2-quick-content'>
+                  <img src={api.imgRender(shop.shopImg ? shop.shopImg.split(",")[0] : 'images/shop/default.png')}/>
                   <Item.Content>
                     <Item.Header as='h5'>{shop.shopName}</Item.Header>
                     <Item.Meta>{shop.shopInfo}</Item.Meta>

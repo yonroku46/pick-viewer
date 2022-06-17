@@ -1409,6 +1409,30 @@ table.dashboard-table input {
 .home-quick-menu {
   display: flex;
   overflow-x: scroll;
+  align-items: center;
+}
+.home-quick-menu-background.left {
+  display: none;
+  z-index: 2;
+  margin-left: 0;
+  margin-right: auto;
+  width: 62;
+  height: 156px;
+  margin-bottom: -156px;
+  background-image: linear-gradient(to right, rgba(255, 255, 255, 0.7), rgba(216, 178, 225, 0)) !important;
+}
+.home-quick-menu-background.right {
+  display: none;
+  z-index: 2;
+  margin-left: auto;
+  margin-right: 0;
+  width: 62;
+  height: 156px;
+  margin-bottom: -156px;
+  background-image: linear-gradient(to left, rgba(255, 255, 255, 0.7), rgba(216, 178, 225, 0)) !important;
+}
+.home-quick-menu-background.view {
+  display: block;
 }
 
 .home-quick-menu::-webkit-scrollbar {
@@ -1473,6 +1497,7 @@ table.dashboard-table input {
 .content2 {
   padding: 0 !important;
   margin-top: 0 !important;
+  height: 156px;
 }
 .content2-quick {
   flex: 2;
@@ -1481,13 +1506,12 @@ table.dashboard-table input {
 .content2-quick-content {
   flex: 1;
   text-align: left;
-  width: 210px;
+  width: 370px;
   height: 140px;
   padding: 14px 10px 14px 20px;
-  box-shadow: 1px 1px 8px rgb(157 157 157 / 50%);
+  box-shadow: 1px 1px 6px rgb(157 157 157 / 50%);
   background-color: #fff;
   border: rgb(220, 220, 220, 0.7) solid 1px;
-  margin-left: -14px;
   border-radius: 0.5em;
   margin-right: 14px;
 }
@@ -1513,13 +1537,17 @@ table.dashboard-table input {
   z-index: 1;
   width: 160px;
   height: 140px;
+  margin-top: -16px;
+  margin-left: -20px;
+  margin-right: 16px;
+  float: left;
   background-position: center;
   border-top-left-radius: 0.5em;
   border-bottom-left-radius: 0.5em;
 	transition: .3s ease-in-out;
 }
 .content2-quick:first-child {
-  margin-left: 14px !important;
+  margin-left: 6px !important;
 }
 .content2-quick:last-child .content2-quick-content {
   margin-right: 0px !important;
@@ -1565,6 +1593,23 @@ table.dashboard-table input {
   }
   .content4-right {
     width: 100% !important;
+  }
+  .home-content-main.ui.relaxed.grid.container {
+    margin-left: 1em !important;
+    margin-right: 1em !important;
+  }
+  .ui.container.stackable.divided.relaxed.grid.content2 {
+    margin-left: 0 !important;
+    margin-right: 0 !important;
+  }
+  .home-quick-menu {
+    padding-left: 0 !important;
+  }
+  .home-quick-menu-background.left {
+    display: block !important;
+  }
+  .home-quick-menu-background.right {
+    display: block !important;
   }
 }
 
