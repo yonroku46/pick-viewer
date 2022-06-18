@@ -11,9 +11,10 @@ export default function HomePage(props) {
     const userInfo = JSON.parse(sessionStorage.getItem('userInfo'));
     const role = userInfo ? userInfo.role : null;
 
+    const [onMouseX, setOnMouseX] = useState();
     const [activeIndex, SetActiveIndex] = useState();
     const [shopList, SetShopList] = useState();
-    const [activeItem, setActiveItem] = useState('event');
+    const [activeItem, setActiveItem] = useState('recommend');
     function handleItemClick (e, { name }) {
       setActiveItem(name);
       name === "event" ? getEventShop() : getNearShop();
@@ -26,7 +27,7 @@ export default function HomePage(props) {
     }
 
     useEffect(() => {
-      getEventShop();
+      getNearShop();
     }, [])
 
     function getEventShop() {
@@ -107,12 +108,14 @@ export default function HomePage(props) {
       }
     };
 
-    const delay = 100;
+    const delay = 10;
     const onThrottleDragMove = throttle(onDragMove, delay);
     //// scroll func end
 
     function onMovePage(e, category, shopCd) {
-      props.history.push(`/booking/${category}/${shopCd}`);
+      if (onMouseX === e.pageX) {
+        props.history.push(`/booking/${category}/${shopCd}`);
+      }
     }
 
     function searching(e) {
@@ -139,20 +142,20 @@ export default function HomePage(props) {
       <Grid container className='home-content-main-top' divided relaxed stackable>
 
         <Menu pointing secondary className='home-menu'>
-          <Menu.Item name='event' active={activeItem === 'event'} onClick={handleItemClick}>
-            <span><Icon name='clock outline' size='large'/>이벤트 매장</span>
-          </Menu.Item>
           <Menu.Item name='recommend' active={activeItem === 'recommend'} onClick={handleItemClick}>
             <span><Icon name='compass outline' size='large'/>주변 추천매장</span>
+          </Menu.Item>
+          <Menu.Item name='event' active={activeItem === 'event'} onClick={handleItemClick}>
+            <span><Icon name='clock outline' size='large'/>이벤트 매장</span>
           </Menu.Item>
         </Menu>
 
         <Grid container className='content2' divided relaxed stackable>
-          <div className={scrollRef.current?.scrollLeft !== 0 ? 'home-quick-menu-background left view' : 'home-quick-menu-background left'}/>
+          <div className={scrollRef.current?.scrollLeft !== 0 ? 'home-quick-menu-background left view' : 'home-quick-menu-background left'} id='first-content'/>
           <div className={scrollRef.current?.scrollLeft !== 2545 ? 'home-quick-menu-background right view' : 'home-quick-menu-background right'}/>
           <div className='home-quick-menu' onMouseDown={onDragStart} onMouseMove={isDrag ? onThrottleDragMove : null} onMouseUp={onDragEnd} onMouseLeave={onDragEnd} ref={scrollRef}>
             {shopList && shopList.map(shop => 
-              <div className='content2-quick' onClick={(e) => onMovePage(e, shop.category, shop.shopCd)}>
+              <div className='content2-quick' onMouseDown={(e) => setOnMouseX(e.pageX)} onClick={(e) => onMovePage(e, shop.category, shop.shopCd)}>
                 <Item className='content2-quick-content'>
                   <img src={api.imgRender(shop.shopImg ? shop.shopImg.split(",")[0] : 'images/shop/default.png')}/>
                   <Item.Content>

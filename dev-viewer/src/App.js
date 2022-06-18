@@ -98,12 +98,12 @@ export default function App() {
     <div className="App">
       {/* Header */}
       <div className={scrollPosition < 10 || visible ? "app-header invisible" : "app-header"}>
-        <div className="menu-left">
+        <div className={scrollPosition < 10 || visible ? "menu-left" : "menu-left pcolor-filter" }>
           <Link to="/" ><img className="logo" src={logo}/></Link>
         </div>
         <div className="menu-center">
         </div>
-        <div className="menu-right">
+        <div className={scrollPosition < 10 || visible ? "menu-right" : "menu-right pcolor-filter" }>
           <div id="menu-icon" className={visible ? 'open': null} onClick={toggleMenu} >
             <span></span>
             <span></span>
