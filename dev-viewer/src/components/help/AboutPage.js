@@ -9,7 +9,7 @@ export default function AboutPage(props) {
     return(
     <>
     <Header className="about-title">
-        <Icon name='angle right'/>About Pick
+        About Pick
     </Header>
     <Grid container stackable columns={2} className='about-intro'>
         <Grid.Column>

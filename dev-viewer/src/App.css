@@ -2,6 +2,10 @@
   src : url("./fonts/NotoSansKR-Regular.otf");
   font-family: "NotoSans";
 }
+@font-face {
+  src : url("./fonts/NotoSansCJKkr-Bold.otf");
+  font-family: "NotoSansBold";
+}
 
 /* animation */
 @keyframes zoomout {
@@ -1350,7 +1354,7 @@ table.dashboard-table input {
   color: #fff;
   min-height: 105vh;
   filter: saturate(100%);
-  padding-top: 36vh;
+  padding-top: 38vh;
   padding-bottom: 2vh;
   margin-top: 0px;
   position: relative;
@@ -1376,6 +1380,12 @@ table.dashboard-table input {
   display: flex;
   align-items: center;
 }
+.home-main-title-top img {
+  width: 32px;
+  margin-left: 260px;
+  margin-bottom: -12px;
+  filter: invert(1);
+}
 .home-main-title-top {
   font-size: 1.1em;
   margin-bottom: 0em;
@@ -1383,11 +1393,12 @@ table.dashboard-table input {
   letter-spacing: 0.4em;
 }
 .home-main-title {
-  font-size: 3em;
+  font-family: "NotoSansBold" !important;
+  font-size: 2.8em;
   margin-bottom: -0.2em;
 }
 .home-main-title-bottom {
-  font-size: 2em;
+  font-size: 1.6em;
   margin-bottom: 0.6em;
 }
 .home-main-search {
@@ -2469,6 +2480,11 @@ a.detailpage-tel:hover {
   min-height: calc(100vh - 69px);
   padding: 1em 1em 0 0 !important;
 }
+.help-contents .about-title,.notice-title,.contact-title {
+  font-family: "NotoSansBold" !important;
+  font-size: 1.5em !important;
+  margin-bottom: 1.5em !important;
+}
 div.stretched.fourteen.wide.column.help-contents {
   width: 85.5% !important;
   padding-right: 0px !important;
@@ -2507,7 +2523,6 @@ div.stretched.fourteen.wide.column.help-contents {
 }
 .about-title {
   margin-top: 0.5em !important;
-  margin-bottom: 2em !important;
 }
 .about-title i {
   margin-right: 0.25em !important;
@@ -2532,7 +2547,6 @@ div.stretched.fourteen.wide.column.help-contents {
 }
 .notice-title {
   margin-top: 0.5em !important;
-  margin-bottom: 2em !important;
 }
 .notice-title i {
   margin-right: 0.25em !important;
@@ -2643,7 +2657,6 @@ div.stretched.fourteen.wide.column.help-contents {
 }
 .contact-title {
   margin-top: 0.5em !important;
-  margin-bottom: 2em !important;
 }
 .contact-title i {
   margin-right: 0.25em !important;

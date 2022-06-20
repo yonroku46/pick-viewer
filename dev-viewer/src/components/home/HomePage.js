@@ -2,6 +2,7 @@ import React, { useEffect, useState, useRef } from 'react';
 import { Link } from "react-router-dom";
 import page1 from '../../img/page1.png'
 import page2 from '../../img/page2.png'
+import icon1 from '../../img/icon1.png'
 import * as api from '../../rest/api'
 import axios from 'axios';
 import { Button, Segment, Icon, Accordion, Grid, Image, Input, Reveal, Menu, Item } from 'semantic-ui-react';
@@ -130,9 +131,9 @@ export default function HomePage(props) {
     return(
     <>
       <div className="home-main">
-        <p className='home-main-title-top'>Only for you</p>
-        <p className='home-main-title'>서비스 오픈 </p>
-        <p className='home-main-title-bottom'>나만의 특가를 찾아보세요!</p>
+        <p className='home-main-title-top'><img src={icon1}/></p>
+        <p className='home-main-title'>예약은 바로바로</p>
+        <p className='home-main-title-bottom'>기다림에서 해방되세요</p>
         <Input iconPosition='left' className='home-main-search' placeholder='위치 또는 매장명을 입력해주세요'>
           <Icon name='search' onClick={() => searching()}/>
           <input onKeyPress={searching}/>

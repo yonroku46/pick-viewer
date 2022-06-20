@@ -55,7 +55,7 @@ function ContactPage(props) {
     return(
     <>
     <Header className="contact-title">
-        <Icon name='angle right'/>문의페이지
+        문의페이지
     </Header>
     <Form onSubmit={handleSubmit}>
         <Form.Field>
