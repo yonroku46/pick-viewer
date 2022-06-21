@@ -8,7 +8,6 @@ import axios from 'axios';
 import { Button, Segment, Icon, Accordion, Grid, Image, Input, Reveal, Menu, Item } from 'semantic-ui-react';
 
 export default function HomePage(props) {
-    let isAuthorized = sessionStorage.getItem("isAuthorized");
     const userInfo = JSON.parse(sessionStorage.getItem('userInfo'));
     const role = userInfo ? userInfo.role : null;
 

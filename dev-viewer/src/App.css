@@ -1525,11 +1525,16 @@ table.dashboard-table input {
   width: 370px;
   height: 140px;
   padding: 14px 10px 14px 20px;
-  box-shadow: 1px 1px 6px rgb(157 157 157 / 50%);
+  box-shadow: 1px 1px 6px rgb(157, 157, 157, 0.5);
   background-color: #fff;
   border: rgb(220, 220, 220, 0.7) solid 1px;
   border-radius: 0.5em;
   margin-right: 14px;
+}
+.content2-quick-content:hover {
+  box-shadow: 1px 1px 8px rgba(81, 81, 81, 0.5);
+  transition: box-shadow 0.5s;
+  cursor: pointer;
 }
 .content2-quick-content .header {
   overflow: hidden;
@@ -1567,11 +1572,6 @@ table.dashboard-table input {
 }
 .content2-quick:last-child .content2-quick-content {
   margin-right: 0px !important;
-}
-.content2-quick:hover {
-  cursor: pointer;
-  filter: opacity(0.9);
-  transition: all 0.1s linear;
 }
 
 .content4 {
