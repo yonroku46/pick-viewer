@@ -52,6 +52,9 @@ export const requestConfirm = "/api/dashboard/requestConfirm";
 export const dashboardSave = "/api/dashboard/saveInfo";
 export const tmpClear = "/api/dashboard/tmpClear";
 
+// ChatPage
+export const roomlist = "/api/chat/roomlist";
+
 // SearchPage
 export const search = "/api/shop/search";
 

@@ -16,7 +16,7 @@ import NoticeDetail from './components/help/NoticeDetail'
 import HelpPwdPage from './components/help/HelpPwdPage'
 import MyPage from './components/mypage/MyPage'
 import SchedulePage from './components/mypage/SchedulePage';
-import TalkPage from './components/mypage/TalkPage';
+import TalkPage from './components/talk/TalkPage';
 import DashboardPage from './components/dashboard/DashboardPage'
 import WikiPage from './components/WikiPage'
 import EmptyPage from './components/EmptyPage'
@@ -193,7 +193,7 @@ export default function App() {
                 <Route exact path="/signup" component={SignupPage}/>
                 <Route exact path="/mypage" component={MyPage}/>
                  <Route path="/mypage/schedule/:bookingCd" component={SchedulePage}/>
-                 <Route path="/mypage/talk/:talkCd" component={TalkPage}/>
+                <Route path="/talk/:talkCd" component={TalkPage}/>
                 <Route exact path="/dashboard" component={DashboardPage}/>
                 <Route exact path="/wiki" component={WikiPage}/>
                 <Route component={EmptyPage}/>

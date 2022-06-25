@@ -1,14 +1,39 @@
-import { useState } from 'react';
+import React, { useEffect, useState, useReducer } from "react";
 import { Link, withRouter } from "react-router-dom";
 import { Image, List, Menu, Icon, Dropdown } from 'semantic-ui-react'
+import * as api from '../../rest/api'
+import axios from 'axios';
 
 function MyTalk(props) {
 
     const [activeItem, setActiveItem] = useState('home');
+    const [page, setPage] = useState(1);
+
+    useEffect(() => {
+        // 사용자의 스케쥴이 아닌경우 접근거부
+        const params = { 
+          'page': page
+        };
+        return new Promise(function(resolve, reject) {
+          axios
+            .post(api.roomlist, params)
+            .then(response => resolve(response.data))
+            .catch(error => reject(error.response))
+        })
+        .then(res => {
+          if (res) {
+            console.log(res);
+          }
+        })
+        .catch(err => {
+          alert("해당 예약정보를 찾을 수 없습니다. 지속시 문의 바랍니다.");
+          props.history.goBack(1);
+        })
+      }, [])
 
     function talkInfo(targetId) {
         const target = targetId;
-        props.history.push('/mypage/talk/' + target);
+        props.history.push('/talk/' + target);
     }
 
     function handleItemClick(e, { name }) {
