@@ -53,7 +53,11 @@ export const dashboardSave = "/api/dashboard/saveInfo";
 export const tmpClear = "/api/dashboard/tmpClear";
 
 // ChatPage
-export const roomlist = "/api/chat/roomlist";
+export const roomlist = "/api/chat/roomList";
+export const roomEnter = "/api/chat/enter";
+export const roomCreate = "/api/chat/create";
+export const chatSend = "/api/chat/send";
+export const roomLeave = "/api/chat/leave";
 
 // SearchPage
 export const search = "/api/shop/search";

@@ -10,13 +10,13 @@ function MyTalk(props) {
     const [page, setPage] = useState(1);
 
     useEffect(() => {
-        // 사용자의 스케쥴이 아닌경우 접근거부
-        const params = { 
-          'page': page
-        };
         return new Promise(function(resolve, reject) {
           axios
-            .post(api.roomlist, params)
+            .get(api.roomlist, {
+                params: {
+                    'page': page
+                }
+              })
             .then(response => resolve(response.data))
             .catch(error => reject(error.response))
         })
