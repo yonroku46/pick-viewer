@@ -52,12 +52,12 @@ export const requestConfirm = "/api/dashboard/requestConfirm";
 export const dashboardSave = "/api/dashboard/saveInfo";
 export const tmpClear = "/api/dashboard/tmpClear";
 
-// ChatPage
-export const roomlist = "/api/chat/roomList";
-export const roomEnter = "/api/chat/enter";
-export const roomCreate = "/api/chat/create";
-export const chatSend = "/api/chat/send";
-export const roomLeave = "/api/chat/leave";
+// TalkPage
+export const roomlist = "/api/talk/roomList";
+export const roomEnter = "/api/talk/enter";
+export const roomCreate = "/api/talk/create";
+export const talkSend = "/api/talk/send";
+export const roomLeave = "/api/talk/leave";
 
 // SearchPage
 export const search = "/api/shop/search";
