@@ -37,7 +37,7 @@ export default function TalkPage(props) {
     function bookingDetail() {
         return(
             <>
-            <Accordion fluid styled>
+            <Accordion fluid styled className='talk-booking-info'>
                 <Accordion.Title active={activeIndex === 0} index={0} onClick={handleClick}>
                     <Icon name='dropdown'/>예약상황
                 </Accordion.Title>
@@ -53,16 +53,24 @@ export default function TalkPage(props) {
         <>
         <div className='talk-main'>
             {bookingDetail()}
-            <div className='talk-message'>
-                내가 주인
-            </div>
-            <div className='talk-message mine'>
-                내가 게스트
+            <div className='talk-main-board'>
+                <div className='talk-box default'>
+                    <img src={api.imgRender('images/user/default.png')} alt="" className="talk-user-icon"/>
+                    <div className='talk-message default'>
+                        내가 상대
+                    </div>
+                </div>
+                <div className='talk-box mine'>
+                    <img src={api.imgRender('images/user/default.png')} alt="" className="talk-user-icon"/>
+                    <div className='talk-message mine'>
+                        내가 로그인 유저
+                    </div>
+                </div>
             </div>
             <Input type='text' action className='talk-message-input'>
-                <Button circular icon='cog'/>
-                <input value={message} onChange={(e) => setMessage(e.target.value)} onKeyPress={sendMessage}/>
-                <Button type='submit' onClick={sendMessage}>전송</Button>
+                <Button className='setting' icon='cog'/>
+                <input value={message} onChange={(e) => setMessage(e.target.value)}/>
+                <Button className='submit' type='submit' onClick={sendMessage}>전송</Button>
             </Input>
         </div>
         </>

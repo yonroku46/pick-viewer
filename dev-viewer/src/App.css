@@ -1341,24 +1341,117 @@ table.dashboard-table input {
   margin-left: auto;
   margin-right: auto;
 }
+.talk-box.default .talk-user-icon {
+  float: left !important;
+  margin-right: 0.75em;
+  margin-top: -0.25em;
+}
+.talk-box.mine .talk-user-icon {
+  float: right !important;
+  margin-left: 0.75em;
+  margin-top: -0.25em;
+}
+.talk-user-icon {
+  width: 40px;
+  height: 37px;
+  border-radius: 42%;
+  border: 1px rgba(0, 0, 0, 0.4) solid;
+}
+.talk-main-board {
+  margin-left: auto;
+  margin-right: auto;
+  width: 60vw;
+  max-width: 720px;
+  min-height: calc(100vh - 159px);
+  border: 1px solid rgba(34,36,38,.15);
+}
 .talk-message {
   display: table;
   text-align: left;
+  margin-left: 0.5em;
   margin-right: auto;
-  margin-left: 0;
-  margin-bottom: 1em;
-  padding: 1em 0.5em;
+  margin-top: 0.5em;
+  margin-bottom: 0.5em;
+  padding: 0.5em 0.75em;
   background-color: rgb(195, 195, 250);
   max-width: 60vw;
   border-radius: 8px;
 }
+.talk-message.default:before {
+  content: ""; 
+  position: absolute;
+  margin-top: 9px;
+  border-top: 0px solid transparent;
+  border-left: 19px solid transparent;
+  border-right: 0px solid transparent;
+  border-bottom: 12px solid rgb(195, 195, 250);
+  transform: rotate(270deg);
+  left: auto;
+  margin-left: -20px !important;
+}
+.default {
+  margin-left: 0.5em !important;
+  margin-right: auto !important;
+}
 .mine {
   text-align: right !important;
-  margin-right: 0 !important;
   margin-left: auto !important;
+  margin-right: 0.5em !important;
+}
+.talk-message.mine:after {
+  content: ""; 
+  position: absolute;
+  margin-top: 9px;
+  border-top: 0px solid transparent;
+  border-left: 0px solid transparent;
+  border-right: 19px solid transparent;
+  border-bottom: 12px solid rgb(195, 195, 250);
+  transform: rotate(90deg);
+  left: auto;
+}
+.talk-booking-info {
+  margin-left: auto;
+  margin-right: auto;
+  width: 60vw !important;
+  max-width: 720px !important;
+  box-shadow: none !important;
+  border: 1px solid rgba(34,36,38,.15);
+  margin-bottom: -1px;
 }
 .talk-message-input {
-  width: 100%;
+  width: 60vw;
+  max-width: 720px;
+  margin-top: -1px;
+}
+.talk-booking-info {
+  border-radius: 0 !important;
+  border-top-left-radius: 8px !important;
+  border-top-right-radius: 8px !important;
+}
+.talk-message-input input {
+  border-radius: 0 !important;
+}
+.talk-message-input .setting {
+  border-radius: 0 !important;
+  border-bottom-left-radius: 8px !important;
+}
+.talk-message-input .submit {
+  border-radius: 0 !important;
+  border-bottom-right-radius: 8px !important;
+}
+
+/* sp */
+@media only screen and (max-width: 767px) {
+  .talk-main-board {
+    width: 100vw;
+    min-height: calc(100vh - 166px);
+  }
+  .talk-booking-info {
+    width: 100vw !important;
+  }
+  .talk-message-input {
+    width: 100vw;
+  }
 }
 
 /* HomePage */
