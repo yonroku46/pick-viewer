@@ -9,18 +9,36 @@ export default function TalkPage(props) {
     if (isAuthorized === null) {
         props.history.goBack(1);
     }
-    const {talk_cd} = useParams();
     const userInfo = JSON.parse(sessionStorage.getItem('userInfo'));
 
     const [activeIndex, setActiveIndex] = useState(-1);
+    const [page, setPage] = useState(1);
+    const [talkRoomCd, setTalkRoomCd] = useState();
     const [message, setMessage] = useState('');
 
     useEffect(() => {
         // 사용자의 토크내역이 아닌경우 접근거부
-        if (talk_cd === null) {
-            alert('잘못된 접근입니다.')
+        return new Promise(function(resolve, reject) {
+            axios
+              .get(api.roomEnter, {
+                  params: {
+                      'talkRoomCd': talkRoomCd,
+                      'page': page
+                  }
+                })
+              .then(response => resolve(response.data))
+              .catch(error => reject(error.response))
+          })
+          .then(res => {
+            if (res) {
+              console.log(res);
+              setTalkRoomCd(res.data);
+            }
+          })
+          .catch(err => {
+            alert("잘못된 접근입니다.");
             props.history.goBack(1);
-        }
+          })
     }, [])
 
     function handleClick(e, props) {
@@ -30,8 +48,25 @@ export default function TalkPage(props) {
     }
 
     function sendMessage() {
-        console.log(message);
-        setMessage('');
+        return new Promise(function(resolve, reject) {
+            const params = { 
+                'talkRoomCd': talkRoomCd,
+                'message': message
+              };
+            axios
+              .post(api.talkSend, params)
+              .then(response => resolve(response.data))
+              .catch(error => reject(error.response))
+          })
+          .then(res => {
+            if (res) {
+              console.log(res);
+              setMessage('');
+            }
+          })
+          .catch(err => {
+            alert("메세지 전송에 실패하였습니다. 지속시 문의 바랍니다.");
+          })
     }
 
     function bookingDetail() {

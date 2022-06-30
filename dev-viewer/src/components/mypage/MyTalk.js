@@ -26,7 +26,7 @@ function MyTalk(props) {
           }
         })
         .catch(err => {
-          alert("해당 예약정보를 찾을 수 없습니다. 지속시 문의 바랍니다.");
+          alert("메세지 내역을 불러올 수 없습니다. 지속시 문의 바랍니다.");
           props.history.goBack(1);
         })
       }, [])
