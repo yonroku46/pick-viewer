@@ -1101,6 +1101,17 @@ table.dashboard-table input {
   cursor: pointer;
   opacity: 0.8;
 }
+.mypage-favorite-menu {
+  text-align: left;
+  margin-bottom: 12px;
+  font-size: 16px !important;
+}
+.mypage-favorite-menu .text {
+  margin: 0 6px;
+}
+.mypage-favorite-menu i.dropdown {
+  display: none;
+}
 .mypage-favorite-label {
   margin-top: 1em !important;
   margin-bottom: -0.5em !important;
@@ -1253,9 +1264,6 @@ table.dashboard-table input {
   height: 6px;
   margin-right: -6px;
 }
-.mytalk-menu {
-  box-shadow: 0px 1px 2px 0px rgb(34, 36, 38, 0.15) !important;
-}
 .mytalk-list {
   text-align: left;
   margin-left: auto !important;
@@ -1296,7 +1304,8 @@ table.dashboard-table input {
   margin-right: auto;
 }
 .schedule-header {
-  margin-bottom: 6px;
+  margin-top: 5px;
+  margin-bottom: 5px;
   border-radius: 12px;
   box-shadow: 1px 1px 14px rgba(157, 157, 157, 0.5); 
   margin-left: auto;
@@ -1328,9 +1337,18 @@ table.dashboard-table input {
   box-shadow: 1px 1px 14px rgba(157, 157, 157, 0.5); 
   margin-left: auto;
   margin-right: auto;
+  min-height: calc(100vh - 135px);
   max-width: 720px;
   padding: 0.1vw 1vw;
   text-align: left;
+}
+.schedule-content .talk-btn {
+  position: absolute;
+  bottom: 12px;
+  right: 6px;
+}
+.schedule-content .talk-btn:hover {
+  opacity: 0.8;
 }
 
 /* TalkPage */

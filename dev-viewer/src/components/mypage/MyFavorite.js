@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
-import { Icon, Card, Menu, Label, Segment, Header, Button } from 'semantic-ui-react'
+import { Icon, Card, Menu, Label, Segment, Header, Button, Dropdown } from 'semantic-ui-react'
 import { useHistory } from "react-router-dom";
 import { Link as Scroll } from "react-scroll";
 import * as api from '../../rest/api';
@@ -12,39 +12,29 @@ export default function MyFavorite(props) {
     const cardRow = parseInt(window.innerWidth / 350);
     const shopDefault = 'images/shop/default.png';
 
-    const [activeItem, setActiveItem] = useState('All');
-    function handleItemClick(e, { name }) {
-        let renderName = 'All'
-        if (name === '헤어샵') {
-            renderName = 'hairshop';
-        } else if (name === '맛집') {
-            renderName = 'restaurant';
-        } else if (name === '카페') {
-            renderName = 'cafe';
-        }
-        setActiveItem(renderName);
-    };
+    const filterOptions = [
+            {key: 'all', text: '전체보기', value: 'all'},
+            {key: 'hairshop', text: '헤어샵', value: 'hairshop'},
+            {key: 'restaurant', text: '맛집', value: 'restaurant'},
+            {key: 'cafe', text: '카페', value: 'cafe'},
+        ]
+
+    const [activeItem, setActiveItem] = useState(filterOptions[0].value);
+    
+    function handleChange(e, { value }) {
+        setActiveItem(value)
+    }
 
     return (
         <>
-        <Menu pointing>
-            <Scroll to='menu' offset={-56} spy={true} smooth={true}>
-                <Menu.Item id='menu' name='All' active={activeItem === 'All'} onClick={handleItemClick}/>
-            </Scroll>
-            <Scroll to='menu' offset={-56} spy={true} smooth={true}>
-                <Menu.Item id='menu' name='헤어샵' active={activeItem === 'hairshop'} onClick={handleItemClick}/>
-            </Scroll>
-            <Scroll to='menu' offset={-56} spy={true} smooth={true}>
-                <Menu.Item id='menu' name='맛집' active={activeItem === 'restaurant'} onClick={handleItemClick}/>
-            </Scroll>
-            <Scroll to='menu' offset={-56} spy={true} smooth={true}>
-                <Menu.Item id='menu' name='카페' active={activeItem === 'cafe'} onClick={handleItemClick}/>
-            </Scroll>
-        </Menu>
+        <div className='mypage-favorite-menu'>
+            <Icon name={activeItem === 'all' ? 'folder outline' : 'folder open outline'}/>
+            <Dropdown inline options={filterOptions} defaultValue={filterOptions[0].value} onChange={handleChange}/>
+        </div>
 
         <Card.Group itemsPerRow={cardRow}>
             {favoriteList.length !== 0 ?
-                activeItem === 'All' ?
+                activeItem === 'all' ?
                 favoriteList.map(shop => 
                     <Card
                     image={api.imgRender(shop.shopImg === null ? shopDefault : shop.shopImg.split(",")[0])}

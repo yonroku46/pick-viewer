@@ -41,13 +41,8 @@ export default function SchedulePage(props) {
     }, [])
 
     function moveTalkPage() {
-      const designer = bookingInfo.bookingDetail.designer;
-      const shopCd = bookingInfo.shopCd;
-      if (designer === undefined) {
-        console.log(shopCd);
-      } else {
-        console.log(designer);
-      }
+      const manager = bookingInfo.managerCd;
+      console.log(manager);
     }
 
     return(
@@ -67,7 +62,7 @@ export default function SchedulePage(props) {
 
           <div className='schedule-content'>
             {/* 예약정보 - 샵정보 */}
-            <label><Icon name='angle right'/>{bookingInfo.shop_cd}</label>
+            <label>{bookingInfo.shopCd}</label>
             <div>
               {/* 예약가게 사진
               예약일
@@ -75,12 +70,11 @@ export default function SchedulePage(props) {
             예약가게 전화번호 */}
             </div>
             <div>
-            {bookingInfo.bookingPrice}
             {/* 예약정보 - 예약내역 */}
             {/* 예약정보(상세)
             가격(할인있으면 할인내역) */}
             </div>
-            <Button circular color='black' icon='talk' onClick={moveTalkPage}/>
+            <Button circular color='black' icon='talk' size='big' className='talk-btn' onClick={moveTalkPage}/>
           </div>
 
         </div>
