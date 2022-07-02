@@ -1042,11 +1042,30 @@ table.dashboard-table input {
 .mypage-user-info {
   margin-top: 7px !important;
 }
+.mypage-calendar-menu {
+  text-align: left;
+  margin-bottom: 12px;
+  font-size: 18px !important;
+  font-weight: bold;
+}
+.mypage-calendar-menu .text {
+  margin: 0 4px;
+}
+.mypage-table-reset {
+  float: right;
+  margin-right: 12px !important;
+  opacity: 0.25 !important;
+  transition: 0.25s;
+}
+.mypage-table-reset:hover {
+  cursor: pointer;
+  opacity: 0.6 !important;
+}
 .mypage-table-btn1 {
  margin-right: 20px !important;
  cursor: pointer;
 }
-.mypage-table-btn1-disable{
+.mypage-table-btn1-disable {
   margin-right: 20px !important;
   color: rgb(0, 0, 0, 0.1);
  }
@@ -1080,11 +1099,6 @@ table.dashboard-table input {
 .mypage-table-btn {
   margin-bottom: 14px !important;
 }
-.mypage-history {
-  border: none !important;
-  background-color: rgb(0, 0, 0, 0) !important;
-  margin-bottom: 1em !important;
-}
 .mypage-setting-icon {
   margin-right: 5px !important;
 }
@@ -1104,10 +1118,11 @@ table.dashboard-table input {
 .mypage-favorite-menu {
   text-align: left;
   margin-bottom: 12px;
-  font-size: 16px !important;
+  font-size: 18px !important;
+  font-weight: bold;
 }
 .mypage-favorite-menu .text {
-  margin: 0 6px;
+  margin: 0 4px;
 }
 .mypage-favorite-menu i.dropdown {
   display: none;
@@ -1182,9 +1197,6 @@ table.dashboard-table input {
 .mypage-favorite-card {
   margin-top: 1em !important;
 }
-.mypage-favorite-card:hover {
-  opacity: 0.9;
-}
 .mypage-favorite-nodata {
   margin-left: auto !important;
   margin-right: auto !important;
@@ -1252,9 +1264,22 @@ table.dashboard-table input {
   .mypage-setting-icon {
     margin-right: -14px !important;
   }
+  .mypage-favorite-card {
+    margin-left: 0 !important;
+    margin-right: 0 !important;
+  }
 }
 
 /* MyTalk */
+.mypage-talk-menu {
+  text-align: left;
+  margin-bottom: 12px;
+  font-size: 18px !important;
+  font-weight: bold;
+}
+.mypage-talk-menu .text {
+  margin: 0 4px;
+}
 .mytalk-mark {
   float: right;
   display: block;
@@ -1304,9 +1329,8 @@ table.dashboard-table input {
   margin-right: auto;
 }
 .schedule-header {
-  margin-top: 5px;
-  margin-bottom: 5px;
-  border-radius: 12px;
+  border-bottom-left-radius: 12px;
+  border-bottom-right-radius: 12px;
   box-shadow: 1px 1px 14px rgba(157, 157, 157, 0.5); 
   margin-left: auto;
   margin-right: auto;
@@ -1332,20 +1356,20 @@ table.dashboard-table input {
   opacity: 0.7;
 }
 .schedule-content {
-  margin-bottom: 14px;
   border-radius: 12px;
   box-shadow: 1px 1px 14px rgba(157, 157, 157, 0.5); 
   margin-left: auto;
   margin-right: auto;
-  min-height: calc(100vh - 135px);
+  min-height: calc(100vh - 122px);
   max-width: 720px;
   padding: 0.1vw 1vw;
   text-align: left;
 }
 .schedule-content .talk-btn {
   position: absolute;
-  bottom: 12px;
-  right: 6px;
+  bottom: 9px;
+  right: 5px;
+  box-shadow: 1px 1px 14px rgba(157, 157, 157, 0.5) !important;
 }
 .schedule-content .talk-btn:hover {
   opacity: 0.8;
@@ -1378,10 +1402,12 @@ table.dashboard-table input {
 .talk-main-board {
   margin-left: auto;
   margin-right: auto;
-  width: 60vw;
+  padding: 12px 0;
   max-width: 720px;
   min-height: calc(100vh - 159px);
-  border: 1px solid rgba(34,36,38,.15);
+  border-top-left-radius: 12px;
+  border-top-right-radius: 12px;
+  box-shadow: 1px 1px 8px rgba(157, 157, 157, 0.5); 
 }
 .talk-message {
   display: table;
@@ -1407,7 +1433,14 @@ table.dashboard-table input {
   left: auto;
   margin-left: -20px !important;
 }
+.talk-time {
+  display: block;
+  color: grey;
+  font-size: 12px;
+  margin-top: -6px;
+}
 .default {
+  text-align: left;
   margin-left: 0.5em !important;
   margin-right: auto !important;
 }
@@ -1427,35 +1460,25 @@ table.dashboard-table input {
   transform: rotate(90deg);
   left: auto;
 }
-.talk-booking-info {
-  margin-left: auto;
-  margin-right: auto;
-  width: 60vw !important;
-  max-width: 720px !important;
-  box-shadow: none !important;
-  border: 1px solid rgba(34,36,38,.15);
-  margin-bottom: -1px;
-}
 .talk-message-input {
   width: 60vw;
   max-width: 720px;
   margin-top: -1px;
 }
-.talk-booking-info {
-  border-radius: 0 !important;
-  border-top-left-radius: 8px !important;
-  border-top-right-radius: 8px !important;
-}
 .talk-message-input input {
   border-radius: 0 !important;
+  box-shadow: 0px 2px 8px rgba(157, 157, 157, 0.5) !important;
 }
 .talk-message-input .setting {
   border-radius: 0 !important;
   border-bottom-left-radius: 8px !important;
+  box-shadow: -2px 2px 8px rgba(157, 157, 157, 0.5) !important;
+  z-index: 1;
 }
 .talk-message-input .submit {
   border-radius: 0 !important;
   border-bottom-right-radius: 8px !important;
+  box-shadow: 2px 2px 8px rgba(157, 157, 157, 0.5) !important;
 }
 
 /* sp */
@@ -1463,9 +1486,6 @@ table.dashboard-table input {
   .talk-main-board {
     width: 100vw;
     min-height: calc(100vh - 166px);
-  }
-  .talk-booking-info {
-    width: 100vw !important;
   }
   .talk-message-input {
     width: 100vw;

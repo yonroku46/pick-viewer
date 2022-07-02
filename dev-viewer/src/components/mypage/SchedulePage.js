@@ -13,8 +13,8 @@ export default function SchedulePage(props) {
     const {bookingCd} = useParams();
     const userInfo = JSON.parse(sessionStorage.getItem('userInfo'));
     const userCd = userInfo ? userInfo.userCd : null;
-    let [scheduleStat, setScheduleStat] = useState(true);;
-    let [bookingInfo, setBookingInfo] = useState({});;
+    const [scheduleStat, setScheduleStat] = useState(true);
+    const [bookingInfo, setBookingInfo] = useState({});
 
     useEffect(() => {
       // 사용자의 스케쥴이 아닌경우 접근거부
@@ -43,6 +43,7 @@ export default function SchedulePage(props) {
     function moveTalkPage() {
       const manager = bookingInfo.managerCd;
       console.log(manager);
+      props.history.push(`/talk/${manager}`)
     }
 
     return(

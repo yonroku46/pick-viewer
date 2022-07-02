@@ -35,12 +35,13 @@ function MyTalk(props) {
         props.history.push('/talk/' + target);
     }
 
-    function handleItemClick(e, { name }) {
-        setActiveItem(name);
-    }
-
     return (
         <>
+        <div className='mypage-talk-menu'>
+            <Icon name='comment outline'/>
+            <span className='text'>토크내역</span>
+        </div>
+
         <List celled className='mytalk-list'>
             <List.Item onClick={() => talkInfo('1')}>
                 <Image avatar className='mytalk-user-icon' src='https://react.semantic-ui.com/images/avatar/small/helen.jpg' />

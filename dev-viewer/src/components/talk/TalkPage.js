@@ -11,10 +11,10 @@ export default function TalkPage(props) {
     }
     const userInfo = JSON.parse(sessionStorage.getItem('userInfo'));
 
-    const [activeIndex, setActiveIndex] = useState(-1);
     const [page, setPage] = useState(1);
     const [talkRoomCd, setTalkRoomCd] = useState();
     const [message, setMessage] = useState('');
+    const [scheduleStat, setScheduleStat] = useState(true);
 
     useEffect(() => {
         // 사용자의 토크내역이 아닌경우 접근거부
@@ -37,15 +37,9 @@ export default function TalkPage(props) {
           })
           .catch(err => {
             alert("잘못된 접근입니다.");
-            props.history.goBack(1);
+            // props.history.goBack(1);
           })
     }, [])
-
-    function handleClick(e, props) {
-        const index = props.index;
-        const newIndex = activeIndex === index ? -1 : index
-        setActiveIndex(newIndex)
-    }
 
     function sendMessage() {
         return new Promise(function(resolve, reject) {
@@ -72,14 +66,15 @@ export default function TalkPage(props) {
     function bookingDetail() {
         return(
             <>
-            <Accordion fluid styled className='talk-booking-info'>
-                <Accordion.Title active={activeIndex === 0} index={0} onClick={handleClick}>
-                    <Icon name='dropdown'/>예약상황
-                </Accordion.Title>
-                <Accordion.Content active={activeIndex === 0}>
-                    예약 상세
-                </Accordion.Content>
-            </Accordion>
+            <div className={scheduleStat ? 'schedule-header' : 'schedule-header warning'}>
+                <span className='left'>
+                <Icon name={scheduleStat ? 'check circle outline' : 'warning circle'}/>
+                {scheduleStat ? '예약확정' : '예약대기중'}
+                </span>
+                <span className='right' onClick={() => setScheduleStat(!scheduleStat)}>
+                <Icon name='ellipsis vertical'/>
+                </span>
+            </div>
             </>
         )
     }
@@ -94,12 +89,14 @@ export default function TalkPage(props) {
                     <div className='talk-message default'>
                         내가 상대
                     </div>
+                    <span className='talk-time default'>오전 10:34</span>
                 </div>
                 <div className='talk-box mine'>
                     <img src={api.imgRender('images/user/default.png')} alt="" className="talk-user-icon"/>
                     <div className='talk-message mine'>
                         내가 로그인 유저
                     </div>
+                    <span className='talk-time mine'>오전 10:34</span>
                 </div>
             </div>
             <Input type='text' action className='talk-message-input'>

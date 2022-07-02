@@ -6,7 +6,6 @@ import TimeTable from './MyTimeTable';
 export default function MyCalendar(props) {
 
     const [getMoment, setMoment] = useState(moment());
-    const [calendarActive, setCalendarActive] = useState(true);
 
     const today = getMoment;
     const bookingList = props.bookingList;
@@ -24,10 +23,6 @@ export default function MyCalendar(props) {
         }
         return result;
     };
-
-    function calendarToogle() {
-        setCalendarActive(!calendarActive);
-    }
 
     function dayClick(e) {
         setMoment(getMoment.clone().date(e.target.innerText));
@@ -84,27 +79,11 @@ export default function MyCalendar(props) {
 
   return (
     <>
-    <div>
-    <Table className='mypage-history'>
-        <Menu floated='left' compact>
-            <Menu.Item>{today.format('MM월 DD일')}</Menu.Item>
-            <Menu.Item link icon onClick={calendarToogle}>
-                {calendarActive?
-                <Icon name='triangle down'/>
-                :
-                <Icon name='triangle right'/>
-                }
-            </Menu.Item>
-        </Menu>
-        <Menu floated='right' onClick={() => setMoment(moment())}>
-            <Menu.Item as='a' icon>
-                <Icon name='redo'/>
-            </Menu.Item>
-        </Menu>
-    </Table>
+    <div className='mypage-calendar-menu'>
+        <Icon name='clock outline'/>
+        <span className='text'>{today.format('MM월 DD일')}</span>
     </div>
-    {calendarActive &&
-    <>
+
     <Table unstackable>
         <Table.Header>
             <Table.Row>
@@ -113,6 +92,7 @@ export default function MyCalendar(props) {
                     <Icon name='chevron left' className='mypage-table-btn1' onClick={()=>{ setMoment(getMoment.clone().subtract(1, 'month')) }}/>
                     {today.format('YYYY / MM')}
                     <Icon name='chevron right' className='mypage-table-btn2' onClick={()=>{ setMoment(getMoment.clone().add(1, 'month')) }}/>
+                    <Icon name='redo' className='mypage-table-reset' onClick={() => setMoment(moment())}/>
                     </h4>
                 </Table.HeaderCell>
             </Table.Row>
@@ -125,8 +105,7 @@ export default function MyCalendar(props) {
             {calendarRender()}
         </Table.Body>
     </Table>
-    </>
-    }
+
     <TimeTable today={today.format('YYYY-MM-DD')} bookingList={bookingList}/>
     </>
   );
