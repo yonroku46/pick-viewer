@@ -16,7 +16,10 @@ function MyTimeTable(props) {
     
     function bookingInfo(targetId) {
         const target = bookingList.filter(booking => booking.bookingCd === targetId);
-        props.history.push('/mypage/schedule/' + target[0].bookingCd);
+        props.history.push({
+            pathname: '/mypage/schedule',
+            state: { bookingCd: target[0].bookingCd}
+        })
     }
 
     const timeArr = [];

@@ -10,7 +10,6 @@ export default function SchedulePage(props) {
     if (isAuthorized === null) {
       props.history.goBack(1);
     }
-    const {bookingCd} = useParams();
     const userInfo = JSON.parse(sessionStorage.getItem('userInfo'));
     const userCd = userInfo ? userInfo.userCd : null;
     const [scheduleStat, setScheduleStat] = useState(true);
@@ -23,7 +22,7 @@ export default function SchedulePage(props) {
           .get(api.getSchedule, { 
             params: {
               'userCd': userCd,
-              'bookingCd': bookingCd
+              'bookingCd': props.location.state.bookingCd
             }
           })
           .then(response => resolve(response.data))
@@ -32,6 +31,9 @@ export default function SchedulePage(props) {
       .then(res => {
         if (res.success) {
           setBookingInfo(res.data)
+        } else {
+          alert("해당 예약정보를 찾을 수 없습니다. 지속시 문의 바랍니다.");
+          props.history.goBack(1);
         }
       })
       .catch(err => {
@@ -41,9 +43,29 @@ export default function SchedulePage(props) {
     }, [])
 
     function moveTalkPage() {
-      const manager = bookingInfo.managerCd;
-      console.log(manager);
-      props.history.push(`/talk/${manager}`)
+      return new Promise(function(resolve, reject) {
+        axios
+          .get(api.roomCreate, {
+            params: {
+              'toUserCd': bookingInfo.managerCd
+            }
+          })
+          .then(response => resolve(response.data))
+          .catch(error => reject(error.response))
+      })
+      .then(res => {
+        if (res.success) {
+          props.history.push({
+            pathname: '/talk',
+            state: { talkRoomCd: res.data.talkRoomCd }
+          })
+        } else {
+          alert("대화방 입장에 실패하였습니다. 지속시 문의 바랍니다.");
+        }
+      })
+      .catch(err => {
+        alert("대화방 입장에 실패하였습니다. 지속시 문의 바랍니다.");
+      })
     }
 
     return(

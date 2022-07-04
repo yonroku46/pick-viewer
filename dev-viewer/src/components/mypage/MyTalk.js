@@ -32,7 +32,10 @@ function MyTalk(props) {
 
     function talkInfo(targetId) {
         const target = targetId;
-        props.history.push('/talk/' + target);
+        props.history.push({
+            pathname: '/talk',
+            state: { talkRoomCd: target}
+        })
     }
 
     return (

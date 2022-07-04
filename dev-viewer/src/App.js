@@ -192,8 +192,8 @@ export default function App() {
                 <Route exact path="/login" component={LoginPage}/>
                 <Route exact path="/signup" component={SignupPage}/>
                 <Route exact path="/mypage" component={MyPage}/>
-                 <Route path="/mypage/schedule/:bookingCd" component={SchedulePage}/>
-                <Route path="/talk/:talkCd" component={TalkPage}/>
+                 <Route path="/mypage/schedule" component={SchedulePage}/>
+                <Route path="/talk" component={TalkPage}/>
                 <Route exact path="/dashboard" component={DashboardPage}/>
                 <Route exact path="/wiki" component={WikiPage}/>
                 <Route component={EmptyPage}/>

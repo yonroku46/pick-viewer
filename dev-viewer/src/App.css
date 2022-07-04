@@ -1402,11 +1402,11 @@ table.dashboard-table input {
 .talk-main-board {
   margin-left: auto;
   margin-right: auto;
+  margin-bottom: -28px;
   padding: 12px 0;
   max-width: 720px;
-  min-height: calc(100vh - 159px);
-  border-top-left-radius: 12px;
-  border-top-right-radius: 12px;
+  min-height: calc(100vh - 122px);
+  border-radius: 12px;
   box-shadow: 1px 1px 8px rgba(157, 157, 157, 0.5); 
 }
 .talk-message {
@@ -1461,34 +1461,31 @@ table.dashboard-table input {
   left: auto;
 }
 .talk-message-input {
-  width: 60vw;
-  max-width: 720px;
-  margin-top: -1px;
+  width: 720px;
+  margin-top: -101px;
+  margin-left: auto;
+  margin-right: auto;
 }
 .talk-message-input input {
   border-radius: 0 !important;
-  box-shadow: 0px 2px 8px rgba(157, 157, 157, 0.5) !important;
 }
 .talk-message-input .setting {
   border-radius: 0 !important;
   border-bottom-left-radius: 8px !important;
-  box-shadow: -2px 2px 8px rgba(157, 157, 157, 0.5) !important;
   z-index: 1;
 }
 .talk-message-input .submit {
   border-radius: 0 !important;
   border-bottom-right-radius: 8px !important;
-  box-shadow: 2px 2px 8px rgba(157, 157, 157, 0.5) !important;
 }
 
 /* sp */
 @media only screen and (max-width: 767px) {
   .talk-main-board {
     width: 100vw;
-    min-height: calc(100vh - 166px);
   }
   .talk-message-input {
-    width: 100vw;
+    width: 100vw !important;
   }
 }
 
