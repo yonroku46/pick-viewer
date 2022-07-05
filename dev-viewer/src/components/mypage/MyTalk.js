@@ -7,6 +7,7 @@ import axios from 'axios';
 function MyTalk(props) {
 
     const [activeItem, setActiveItem] = useState('home');
+    const [talkRoomList, setTalkRoomList] = useState([]);
     const [page, setPage] = useState(1);
 
     useEffect(() => {
@@ -21,8 +22,8 @@ function MyTalk(props) {
             .catch(error => reject(error.response))
         })
         .then(res => {
-          if (res) {
-            console.log(res);
+          if (res.success) {
+            setTalkRoomList(res.data.talkRoomList);
           }
         })
         .catch(err => {
@@ -46,7 +47,18 @@ function MyTalk(props) {
         </div>
 
         <List celled className='mytalk-list'>
-            <List.Item onClick={() => talkInfo('1')}>
+            {talkRoomList && talkRoomList.map(talk =>
+                <List.Item onClick={() => talkInfo(talk.talkRoomCd)}>
+                    <Image avatar className='mytalk-user-icon' src={api.imgRender(talk.userImg)} />
+                    <List.Content>
+                        <List.Header>{talk.userName}</List.Header>
+                        {talk.message}
+                    </List.Content>
+                    <span className={talk.read ? '' : 'mytalk-mark'}/>
+                    <span className='mytalk-time'>{talk.updateTimeAsString}</span>
+                </List.Item>
+                )}
+            {/* <List.Item onClick={() => talkInfo('1')}>
                 <Image avatar className='mytalk-user-icon' src='https://react.semantic-ui.com/images/avatar/small/helen.jpg' />
                 <List.Content>
                     <List.Header>고객1</List.Header>
@@ -71,7 +83,7 @@ function MyTalk(props) {
                     문의드립니다
                 </List.Content>
                 <span className='mytalk-time'>08:51</span>
-            </List.Item>
+            </List.Item> */}
         </List>
         </>
     );

@@ -1405,7 +1405,7 @@ table.dashboard-table input {
   margin-bottom: -28px;
   padding: 12px 0;
   max-width: 720px;
-  min-height: calc(100vh - 122px);
+  min-height: calc(100vh - 123px);
   border-radius: 12px;
   box-shadow: 1px 1px 8px rgba(157, 157, 157, 0.5); 
 }
