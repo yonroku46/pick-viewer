@@ -1301,6 +1301,12 @@ table.dashboard-table input {
   cursor: pointer;
   background-color: rgb(0, 0, 0, 0.03);
 }
+.mytalk-content {
+  max-width: 80%;
+  white-space: pre;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
 .mytalk-user-icon {
   width: 45px;
   height: 40px;
@@ -1383,6 +1389,18 @@ table.dashboard-table input {
   margin-left: auto;
   margin-right: auto;
 }
+.talk-day {
+  margin: 4px auto;
+  padding: 2px 0px;
+  background-color: rgb(0, 0, 0, 0.05);
+  font-size: 11px;
+  width: 180px;
+  border-radius: 12px;
+}
+.talk-username {
+  display: block;
+  margin-bottom: 0.5em;
+}
 .talk-box.default .talk-user-icon {
   float: left !important;
   margin-right: 0.75em;
@@ -1411,14 +1429,13 @@ table.dashboard-table input {
 }
 .talk-message {
   display: table;
+  position: relative;
   text-align: left;
   margin-left: 0.5em;
   margin-right: auto;
-  margin-top: 0.5em;
-  margin-bottom: 0.5em;
   padding: 0.5em 0.75em;
   background-color: rgb(195, 195, 250);
-  max-width: 60vw;
+  max-width: 60%;
   border-radius: 8px;
 }
 .talk-message.default:before {
@@ -1432,12 +1449,18 @@ table.dashboard-table input {
   transform: rotate(270deg);
   left: auto;
   margin-left: -20px !important;
+  top: 10%;
 }
 .talk-time {
-  display: block;
+  display: inline;
+  position: relative;
   color: grey;
-  font-size: 12px;
-  margin-top: -6px;
+  font-size: 11px;
+  top: -4px;
+  left: 49px;
+}
+.talk-time.mine {
+  left: -49px;
 }
 .default {
   text-align: left;
@@ -1459,6 +1482,7 @@ table.dashboard-table input {
   border-bottom: 12px solid rgb(195, 195, 250);
   transform: rotate(90deg);
   left: auto;
+  top: 10%;
 }
 .talk-message-input {
   width: 720px;

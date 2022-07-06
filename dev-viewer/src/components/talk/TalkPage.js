@@ -13,7 +13,8 @@ export default function TalkPage(props) {
 
     const talkRoomCd = props.location.state.talkRoomCd;
     const [page, setPage] = useState(1);
-    const [talkList, setTalkList] = useState('');
+    const [talkList, setTalkList] = useState([]);
+    const [talkDayList, setTalkDayList] = useState([]);
     const [message, setMessage] = useState('');
     const [scheduleStat, setScheduleStat] = useState(true);
 
@@ -32,7 +33,7 @@ export default function TalkPage(props) {
         })
         .then(res => {
           if (res.success) {
-            setTalkList(res.data.talkContents);
+            setTalkList(talkTimeRender(res.data.talkContents));
           } else {
             alert("채팅내역 불러오기에 실패하였습니다.");
           }
@@ -58,7 +59,7 @@ export default function TalkPage(props) {
       })
       .then(res => {
         if (res.success) {
-          setTalkList(res.data.talkContents);
+          setTalkList(talkTimeRender(res.data.talkContents));
         } else {
           alert("채팅내역 불러오기에 실패하였습니다.");
         }
@@ -95,6 +96,18 @@ export default function TalkPage(props) {
           })
     }
 
+    function talkTimeRender(targetList) {
+      let result = [];
+      targetList.map(talk => {
+        const tmp = talk.sendTime.split("/");
+        if (result.indexOf(tmp[0]) == -1) {
+          result.push(tmp[0])
+        }
+      })
+      setTalkDayList(result);
+      return targetList;
+    }
+
     function bookingDetail() {
         return(
             <>
@@ -116,29 +129,27 @@ export default function TalkPage(props) {
         <div className='talk-main'>
             {bookingDetail()}
             <div className='talk-main-board'>
-              {talkList && talkList.map(talk =>
+              {talkList && talkList.map((talk, idx) =>
+              <>
+                {talkDayList.map(talkDay =>
+                  <div className={idx != 0 && talkList[idx-1].sendTime.split("/")[0] == talk.sendTime.split("/")[0] ? 'none' : talk.sendTime.split("/")[0] == talkDay ? 'talk-day' : 'none'}>
+                    {talkDay}
+                  </div>
+                )}
                 <div className={talk.me ? 'talk-box mine' : 'talk-box default'}>
-                  <img src={api.imgRender('images/user/default.png')} alt="" className="talk-user-icon"/>
+                  <span className={idx != 0 && talkList[idx-1].userName == talk.userName ? 'none' : 'talk-username'}>
+                    {talk.userName}
+                  </span>
+                  <img src={api.imgRender(talk.userImg ? talk.userImg : 'images/user/default.png')} alt="" className="talk-user-icon"/>
                   <div className={talk.me ? 'talk-message mine' : 'talk-message default'}>
                     {talk.message}
                   </div>
-                  <span className={talk.me ? 'talk-time mine' : 'talk-time default'}>{talk.sendTime}</span>
+                  <span className={talk.me ? 'talk-time mine' : 'talk-time default'}>
+                    {talk.sendTime.split("/")[1]}
+                  </span>
                 </div>
+              </>
               )}
-                {/* <div className='talk-box default'>
-                    <img src={api.imgRender('images/user/default.png')} alt="" className="talk-user-icon"/>
-                    <div className='talk-message default'>
-                        내가 상대
-                    </div>
-                    <span className='talk-time default'>오전 10:34</span>
-                </div>
-                <div className='talk-box mine'>
-                    <img src={api.imgRender('images/user/default.png')} alt="" className="talk-user-icon"/>
-                    <div className='talk-message mine'>
-                        내가 로그인 유저
-                    </div>
-                    <span className='talk-time mine'>오전 10:34</span>
-                </div> */}
             </div>
             <Input type='text' action className='talk-message-input'>
                 <Button className='setting' icon='cog'/>
