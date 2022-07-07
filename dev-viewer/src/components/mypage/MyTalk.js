@@ -23,13 +23,44 @@ function MyTalk(props) {
         })
         .then(res => {
           if (res.success) {
-            setTalkRoomList(res.data.talkRoomList);
+            setTalkRoomList(res.dataList);
           }
         })
         .catch(err => {
           alert("메세지 내역을 불러올 수 없습니다. 지속시 문의 바랍니다.");
         })
       }, [])
+    
+    // 첫 실행 후에는 현재 list에있는 이후의 내역만 가져오도록 변경
+    useEffect(() => {
+      const id = setInterval(() => {
+        chatListUpdate();
+      }, 5000);
+      return () => {
+        clearInterval(id);
+      };
+    });
+
+    function chatListUpdate() {
+      return new Promise(function(resolve, reject) {
+        axios
+          .get(api.roomlist, {
+              params: {
+                  'page': page
+              }
+            })
+          .then(response => resolve(response.data))
+          .catch(error => reject(error.response))
+      })
+      .then(res => {
+        if (res.success) {
+          setTalkRoomList(res.dataList);
+        }
+      })
+      .catch(err => {
+        alert("메세지 내역을 불러올 수 없습니다. 지속시 문의 바랍니다.");
+      })
+    }
 
     function talkInfo(targetId) {
         const target = targetId;

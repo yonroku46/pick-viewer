@@ -1303,7 +1303,7 @@ table.dashboard-table input {
 }
 .mytalk-content {
   max-width: 80%;
-  white-space: pre;
+  white-space: normal;
   overflow: hidden;
   text-overflow: ellipsis;
 }
@@ -1412,7 +1412,7 @@ table.dashboard-table input {
   margin-top: -0.25em;
 }
 .talk-user-icon {
-  width: 40px;
+  width: 39px;
   height: 37px;
   border-radius: 42%;
   border: 1px rgba(0, 0, 0, 0.4) solid;
@@ -1437,6 +1437,7 @@ table.dashboard-table input {
   background-color: rgb(195, 195, 250);
   max-width: 60%;
   border-radius: 8px;
+  white-space: pre-wrap;
 }
 .talk-message.default:before {
   content: ""; 
@@ -1490,8 +1491,14 @@ table.dashboard-table input {
   margin-left: auto;
   margin-right: auto;
 }
-.talk-message-input input {
+.talk-message-input textarea {
+  width: 620px;
   border-radius: 0 !important;
+  border-color: rgb(0, 0, 0, 0.05);
+  resize: none;
+  max-height: 37px;
+  padding: 0.6em;
+  z-index: 2;
 }
 .talk-message-input .setting {
   border-radius: 0 !important;

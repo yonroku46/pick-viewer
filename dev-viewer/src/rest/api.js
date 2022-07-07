@@ -58,6 +58,7 @@ export const roomEnter = "/api/talk/enter";
 export const roomCreate = "/api/talk/create";
 export const talkSend = "/api/talk/send";
 export const roomLeave = "/api/talk/leave";
+export const talkReload = "/api/talk/reload";
 
 // SearchPage
 export const search = "/api/shop/search";
