@@ -1401,6 +1401,9 @@ table.dashboard-table input {
   display: block;
   margin-bottom: 0.5em;
 }
+.talk-box:last-child {
+  margin-bottom: 2em;
+}
 .talk-box.default .talk-user-icon {
   float: left !important;
   margin-right: 0.75em;
@@ -1420,10 +1423,11 @@ table.dashboard-table input {
 .talk-main-board {
   margin-left: auto;
   margin-right: auto;
+  overflow: auto;
   margin-bottom: -28px;
   padding: 12px 0;
   max-width: 720px;
-  min-height: calc(100vh - 123px);
+  height: calc(100vh - 123px);
   border-radius: 12px;
   box-shadow: 1px 1px 8px rgba(157, 157, 157, 0.5); 
 }
@@ -2279,12 +2283,11 @@ a.detailpage-tel:hover {
   padding: 7px !important;
   margin-top: 7px !important;
   margin-bottom: 7px !important;
-  letter-spacing: 2px;
   display: flex;
 }
 .detailpage-service-header .middle-line {
   flex: 1;
-  background-color: #000;
+  background-color: lightgray;
   height: 1px;
   margin-bottom: auto;
   margin-top: auto;

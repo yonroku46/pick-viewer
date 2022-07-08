@@ -478,7 +478,7 @@ export default function BookingDetail(props) {
     <Item.Group unstackable className={dbDesigner === staff.userCd ? 'detailpage-service-menu detailpage-selected' : 'detailpage-service-menu'} key={staff.userCd} onClick={() => DesignerBtnClick(staff.userCd)}>
       <Item className='detailpage-service'>
         <Item.Image className='detailpage-service-img' src={api.imgRender(staff.userImg === null ? staffDefault : staff.userImg)}/>
-        <Item.Content header={staff.userName + ' (' + staff.career +') '} meta={staff.info}/>
+        <Item.Content header={staff.career ? staff.userName + ' (' + staff.career +') ' : staff.userName} meta={staff.info}/>
       </Item>
     </Item.Group>
     {dbDesigner === staff.userCd &&
