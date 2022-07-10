@@ -42,7 +42,7 @@ export default function MyFavorite(props) {
                     meta={shop.shopLocation}
                     color={shop.category === 'hairshop' ? 'violet' : shop.category === 'restaurant' ? 'teal' : 'blue'}
                     description={<Label className='mypage-favorite-label'><Icon name='archive'/>프로모션 진행중</Label>}
-                    onClick={() => {history.push(`/booking/${shop.category}/${shop.shop_cd}`)}}
+                    onClick={() => {history.push(`/booking/${shop.category}/${shop.shopCd}`)}}
                     className='mypage-favorite-card'
                     />
                 )
@@ -55,28 +55,28 @@ export default function MyFavorite(props) {
                     meta={shop.shopLocation}
                     color={shop.category === 'hairshop' ? 'violet' : shop.category === 'restaurant' ? 'teal' : 'blue'}
                     description={<Label className='mypage-favorite-label'><Icon name='archive'/>프로모션 진행중</Label>}
-                    onClick={() => {history.push(`/booking/${shop.category}/${shop.shop_cd}`)}}
+                    onClick={() => {history.push(`/booking/${shop.category}/${shop.shopCd}`)}}
                     className='mypage-favorite-card'
                     />
                 )
                 :
-                <Segment className='mypage-favorite-nodata' placeholder>
+                <Segment className='mypage-nodata' placeholder>
                     <Header icon>
                     <Icon name='file text outline'/>
-                    해당 카테고리에 등록된 매장가 없습니다.
+                    해당 카테고리에 등록된 매장이 없습니다.
                     </Header>
                     <Link to='/booking/hairshop'>
-                        <Button className='mypage-favorite-nodata-btn' secondary>둘러보기<Icon name='angle double right'/></Button>
+                        <Button secondary>둘러보기<Icon name='angle double right'/></Button>
                     </Link>
                 </Segment>
             :
-            <Segment className='mypage-favorite-nodata' placeholder>
+            <Segment className='mypage-nodata' placeholder>
                 <Header icon>
                 <Icon name='file text outline'/>
-                아직 즐겨찾기에 등록된 매장가 없습니다.
+                아직 즐겨찾기에 등록된 매장이 없습니다.
                 </Header>
                 <Link to='/booking/hairshop'>
-                    <Button className='mypage-favorite-nodata-btn' secondary>둘러보기<Icon name='angle double right'/></Button>
+                    <Button className='mypage-nodata' secondary>둘러보기<Icon name='angle double right'/></Button>
                 </Link>
             </Segment>
             }

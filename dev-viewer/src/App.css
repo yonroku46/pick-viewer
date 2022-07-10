@@ -1000,6 +1000,16 @@ table.dashboard-table input {
   min-height: calc(100vh - 81px);
   border-top: #52525210 1px solid !important;
 }
+.mypage-nodata {
+  margin-left: auto !important;
+  margin-right: auto !important;
+  background-color: #fff !important;
+  padding-top: 8em !important;
+  padding-bottom: 8em !important;
+}
+.mypage-nodata button {
+  margin-top: 0.5em !important;
+}
 .mypage-booking-date {
   position: absolute;
   background-color: #ffffff00 !important;
@@ -1196,19 +1206,6 @@ table.dashboard-table input {
 }
 .mypage-favorite-card {
   margin-top: 1em !important;
-}
-.mypage-favorite-nodata {
-  margin-left: auto !important;
-  margin-right: auto !important;
-  background-color: #fff !important;
-  padding-top: 8em !important;
-  padding-bottom: 8em !important;
-}
-.mypage-favorite-nodata-btn {
-  margin-top: 1em !important;
-}
-.mypage-tt-nodata {
-  background-color: #fff !important;
 }
 
 /* pc */

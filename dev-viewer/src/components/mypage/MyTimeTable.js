@@ -90,9 +90,9 @@ function MyTimeTable(props) {
         } else {
             result = result.concat(
             <Table.Cell colSpan='2' className='mypage-tt-time'>
-                <Segment className='mypage-tt-nodata' placeholder>
+                <Segment className='mypage-nodata' placeholder>
                     <Header icon>
-                    <Icon name='qq'/>
+                    <Icon name='file text outline'/>
                     등록된 예약이 없습니다.
                     </Header>
                     <Link to='/booking/hairshop'>

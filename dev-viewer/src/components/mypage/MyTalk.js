@@ -1,6 +1,6 @@
 import React, { useEffect, useState, useReducer } from "react";
 import { Link, withRouter } from "react-router-dom";
-import { Image, List, Menu, Icon, Dropdown } from 'semantic-ui-react'
+import { Image, List, Segment, Icon, Header, Button } from 'semantic-ui-react'
 import * as api from '../../rest/api'
 import axios from 'axios';
 
@@ -78,7 +78,8 @@ function MyTalk(props) {
         </div>
 
         <List celled className='mytalk-list'>
-            {talkRoomList && talkRoomList.map(talk =>
+            {talkRoomList.length !== 0 ?
+            talkRoomList && talkRoomList.map(talk =>
                 <List.Item onClick={() => talkInfo(talk.talkRoomCd)}>
                     <Image avatar className='mytalk-user-icon' src={api.imgRender(talk.userImg)} />
                     <List.Content className='mytalk-content'>
@@ -88,7 +89,15 @@ function MyTalk(props) {
                     <span className={talk.read ? '' : 'mytalk-mark'}/>
                     <span className='mytalk-time'>{talk.updateTimeAsString}</span>
                 </List.Item>
-            )}
+            )
+            :
+            <Segment className='mypage-nodata' placeholder>
+                <Header icon>
+                <Icon name='file text outline'/>
+                현재 표시할 내역이 없습니다.
+                </Header>
+            </Segment>
+            }
         </List>
         </>
     );
