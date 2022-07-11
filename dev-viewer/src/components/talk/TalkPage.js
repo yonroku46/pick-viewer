@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useReducer } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import { useParams, Link } from "react-router-dom";
 import { Input, Accordion, Icon, Button } from 'semantic-ui-react'
 import * as api from '../../rest/api'
@@ -11,6 +11,7 @@ export default function TalkPage(props) {
     }
 
     const talkRoomCd = props.location.state.talkRoomCd;
+    const scrollRef = useRef();
     const [page, setPage] = useState(1);
     const [talkList, setTalkList] = useState([]);
     const [talkDayList, setTalkDayList] = useState([]);
@@ -42,6 +43,10 @@ export default function TalkPage(props) {
           props.history.goBack(1);
         })
     }, []);
+
+    useEffect(() => {
+      scrollToBotton();
+    }, [talkList]);
     
     // 첫 실행 후에는 현재 list에있는 이후의 내역만 가져오도록 변경
     useEffect(() => {
@@ -119,6 +124,10 @@ export default function TalkPage(props) {
       return targetList;
     }
 
+    function scrollToBotton() {
+      scrollRef.current.scrollIntoView();
+    }
+
     function bookingDetail() {
         return(
             <>
@@ -142,10 +151,16 @@ export default function TalkPage(props) {
             <div className='talk-main-board'>
               {talkList && talkList.map((talk, idx) =>
               <>
-                {talkDayList.map(talkDay =>
-                  <div className={idx != 0 && talkList[idx-1].sendTime.split("/")[0] == talk.sendTime.split("/")[0] ? 'none' : talk.sendTime.split("/")[0] == talkDay ? 'talk-day' : 'none'}>
-                    {talkDay}
-                  </div>
+                {talkDayList.map(talkDay => idx == 0 ?
+                  talk.sendTime.split("/")[0] == talkDay &&
+                    <div className='talk-day'>
+                      {talkDay}
+                    </div>
+                  :
+                  talkList[idx-1].sendTime.split("/")[0] != talk.sendTime.split("/")[0] && talk.sendTime.split("/")[0] == talkDay &&
+                    <div className='talk-day'>
+                      {talkDay}
+                    </div>
                 )}
                 <div className={talk.me ? 'talk-box mine' : 'talk-box default'}>
                   <span className={idx != 0 && talkList[idx-1].userName == talk.userName ? 'none' : 'talk-username'}>
@@ -161,11 +176,11 @@ export default function TalkPage(props) {
                 </div>
               </>
               )}
+              <div className='talk-box-end' ref={scrollRef}/>
             </div>
             <Input type='text' action className='talk-message-input'>
-                <Button className='setting' icon='cog'/>
                 <textarea value={message} onChange={(e) => setMessage(e.target.value)}/>
-                <Button className='submit' type='submit' onClick={sendMessage}>전송</Button>
+                <Button className='submit' color='black' type='submit' onClick={sendMessage}>전송</Button>
             </Input>
         </div>
         </>

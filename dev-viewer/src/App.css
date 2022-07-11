@@ -106,6 +106,7 @@ h1, h2, h3, h4, h5, div, a, button {
   font-size: 20px;
   margin-bottom: -49px;
   transition: 0.5s;
+  user-select: none;
 }
 
 .invisible {
@@ -124,6 +125,7 @@ h1, h2, h3, h4, h5, div, a, button {
   color: rgb(160, 160, 160, 0.4);
   padding: 5px 10px;
   font-size: 12px;
+  user-select: none;
 }
 .footer-border {
   border-top: #52525210 1px solid !important;
@@ -1411,6 +1413,10 @@ table.dashboard-table input {
   margin-left: 0.75em;
   margin-top: -0.25em;
 }
+.talk-box-end::after {
+  content: '-';
+  opacity: 0;
+}
 .talk-user-icon {
   width: 39px;
   height: 37px;
@@ -1424,7 +1430,7 @@ table.dashboard-table input {
   margin-bottom: -28px;
   padding: 12px 0;
   max-width: 720px;
-  height: calc(100vh - 123px);
+  height: calc(100vh - 131px);
   border-radius: 12px;
   box-shadow: 1px 1px 8px rgba(157, 157, 157, 0.5); 
 }
@@ -1453,6 +1459,21 @@ table.dashboard-table input {
   margin-left: -20px !important;
   top: 10%;
 }
+.talk-message.mine {
+  background-color: rgb(222, 238, 248);
+}
+.talk-message.mine:after {
+  content: ""; 
+  position: absolute;
+  margin-top: 9px;
+  border-top: 0px solid transparent;
+  border-left: 0px solid transparent;
+  border-right: 19px solid transparent;
+  border-bottom: 12px solid rgb(222, 238, 248);
+  transform: rotate(90deg);
+  left: auto;
+  top: 10%;
+}
 .talk-time {
   display: inline;
   position: relative;
@@ -1474,36 +1495,19 @@ table.dashboard-table input {
   margin-left: auto !important;
   margin-right: 0.5em !important;
 }
-.talk-message.mine:after {
-  content: ""; 
-  position: absolute;
-  margin-top: 9px;
-  border-top: 0px solid transparent;
-  border-left: 0px solid transparent;
-  border-right: 19px solid transparent;
-  border-bottom: 12px solid rgb(195, 195, 250);
-  transform: rotate(90deg);
-  left: auto;
-  top: 10%;
-}
 .talk-message-input {
   width: 720px;
-  margin-top: -101px;
   margin-left: auto;
   margin-right: auto;
 }
 .talk-message-input textarea {
-  width: 620px;
+  width: 100%;
   border-radius: 0 !important;
-  border-color: rgb(0, 0, 0, 0.05);
+  border-bottom-left-radius: 8px !important;
+  border: 1px solid rgba(0, 0, 0) !important;
   resize: none;
   max-height: 37px;
   padding: 0.6em;
-  z-index: 2;
-}
-.talk-message-input .setting {
-  border-radius: 0 !important;
-  border-bottom-left-radius: 8px !important;
   z-index: 1;
 }
 .talk-message-input .submit {
