@@ -6,7 +6,6 @@ import axios from 'axios';
 
 function MyTalk(props) {
 
-    const [activeItem, setActiveItem] = useState('home');
     const [talkRoomList, setTalkRoomList] = useState([]);
     const [page, setPage] = useState(1);
 
@@ -31,7 +30,6 @@ function MyTalk(props) {
         })
       }, [])
     
-    // 첫 실행 후에는 현재 list에있는 이후의 내역만 가져오도록 변경
     useEffect(() => {
       const id = setInterval(() => {
         chatListUpdate();

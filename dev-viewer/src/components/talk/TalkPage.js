@@ -17,6 +17,7 @@ export default function TalkPage(props) {
     const [talkDayList, setTalkDayList] = useState([]);
     const [message, setMessage] = useState('');
     const [scheduleStat, setScheduleStat] = useState(true);
+    const noticeMessage = "개인정보 및 선결제 요구는\n각별히 조심해주시기 바랍니다.";
 
     useEffect(() => {
       // 사용자의 토크내역이 아닌경우 접근거부
@@ -86,7 +87,25 @@ export default function TalkPage(props) {
       })
     }
 
+    function onPress(e) {
+      // 조합중의 동작을 막음
+      if (e.nativeEvent.isComposing) {
+        return;
+      }
+      // ctrl/shift: 개행, Enter: 전송
+      if (e.ctrlKey) {
+        setMessage(message + "\n");
+      } else if (e.shiftKey) {
+        setMessage(message);
+      } else if (e.key === 'Enter') {
+        sendMessage();
+      }
+    }
+
     function sendMessage() {
+        if (message.length === 0) {
+          return;
+        }
         return new Promise(function(resolve, reject) {
             const params = { 
                 'talkRoomCd': talkRoomCd,
@@ -147,9 +166,14 @@ export default function TalkPage(props) {
     return(
         <>
         <div className='talk-main'>
-            {bookingDetail()}
             <div className='talk-main-board'>
-              {talkList && talkList.map((talk, idx) =>
+              {bookingDetail()}
+              {talkList?.length == 0 ?
+                <div className='talk-notice'>
+                  {noticeMessage}
+                </div>
+              :
+              talkList.map((talk, idx) =>
               <>
                 {talkDayList.map(talkDay => idx == 0 ?
                   talk.sendTime.split("/")[0] == talkDay &&
@@ -157,29 +181,69 @@ export default function TalkPage(props) {
                       {talkDay}
                     </div>
                   :
-                  talkList[idx-1].sendTime.split("/")[0] != talk.sendTime.split("/")[0] && talk.sendTime.split("/")[0] == talkDay &&
-                    <div className='talk-day'>
-                      {talkDay}
-                    </div>
+                  talkList[idx-1].sendTime.split("/")[0] != talk.sendTime.split("/")[0] && 
+                    talk.sendTime.split("/")[0] == talkDay &&
+                      <div className='talk-day'>
+                        {talkDay}
+                      </div>
                 )}
-                <div className={talk.me ? 'talk-box mine' : 'talk-box default'}>
-                  <span className={idx != 0 && talkList[idx-1].userName == talk.userName ? 'none' : 'talk-username'}>
-                    {talk.userName}
-                  </span>
-                  <img src={api.imgRender(talk.userImg ? talk.userImg : 'images/user/default.png')} alt="" className="talk-user-icon"/>
-                  <div className={talk.me ? 'talk-message mine' : 'talk-message default'}>
-                    {talk.message}
+                {talk.me ?
+                  idx != 0 && talkList[idx-1].userName == talk.userName ?
+                  // case1 : mine & not first
+                  <div className='talk-box mine'>
+                    {talkList[idx].sendTime.split("/")[1] != talkList[idx+1]?.sendTime.split("/")[1] &&
+                    <span className='talk-time mine'>
+                      {talk.sendTime.split("/")[1]}
+                    </span>
+                    }
+                    <div className='talk-message mine'>
+                      {talk.message}
+                    </div>
                   </div>
-                  <span className={talk.me ? 'talk-time mine' : 'talk-time default'}>
-                    {talk.sendTime.split("/")[1]}
-                  </span>
-                </div>
+                  :
+                  // case1-1 : mine
+                  <div className='talk-box mine'>
+                    <span className='talk-time mine'>
+                      {talk.sendTime.split("/")[1]}
+                    </span>
+                    <div className='talk-message mine'>
+                      {talk.message}
+                    </div>
+                  </div>
+                :
+                  idx != 0 && talkList[idx-1].userName == talk.userName ?
+                  // case2 : default & not first
+                  <div className='talk-box default margin'>
+                    <div className='talk-message default'>
+                      {talk.message}
+                    </div>
+                    {talkList[idx].sendTime.split("/")[1] != talkList[idx+1]?.sendTime.split("/")[1] &&
+                    <span className='talk-time default'>
+                      {talk.sendTime.split("/")[1]}
+                    </span>
+                    }
+                  </div>
+                  :
+                  // case2-1 : default
+                  <div className='talk-box default'>
+                    <span className='talk-username'>
+                      {talk.userName}
+                    </span>
+                    <img src={api.imgRender(talk.userImg ? talk.userImg : 'images/user/default.png')} alt="" className="talk-user-icon"/>
+                    <div className='talk-message default'>
+                      {talk.message}
+                    </div>
+                    <span className='talk-time default'>
+                      {talk.sendTime.split("/")[1]}
+                    </span>
+                  </div>
+                }
               </>
               )}
               <div className='talk-box-end' ref={scrollRef}/>
             </div>
             <Input type='text' action className='talk-message-input'>
-                <textarea value={message} onChange={(e) => setMessage(e.target.value)}/>
+                <textarea value={message} onKeyPress={onPress} onChange={(e) => setMessage(e.target.value)}/>
                 <Button className='submit' color='black' type='submit' onClick={sendMessage}>전송</Button>
             </Input>
         </div>

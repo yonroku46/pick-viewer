@@ -8,10 +8,43 @@
 }
 
 /* animation */
-@keyframes zoomout {
-  0%   { background-size: 105% auto; }
-  20% { background-size: 100% auto; }
-  100% { background-size: 100% auto; }
+@keyframes zoom-out {
+  0%   { background-size: 105% auto;}
+  20% { background-size: 100% auto;}
+  100% { background-size: 100% auto;}
+}
+
+@-webkit-keyframes slide-scroll {
+  0% {
+    -webkit-transform: translate(0, 0);
+    opacity: 0;
+  }
+  40% {
+    opacity: 1;
+  }
+  80% {
+    -webkit-transform: translate(0, 20px);
+    opacity: 0;
+  }
+  100% {
+    opacity: 0;
+  }
+}
+@keyframes slide-scroll {
+  0% {
+    transform: translate(0, 0);
+    opacity: 0;
+  }
+  40% {
+    opacity: 1;
+  }
+  80% {
+    transform: translate(0, 20px);
+    opacity: 0;
+  }
+  100% {
+    opacity: 0;
+  }
 }
 
 .App {
@@ -194,7 +227,7 @@ h1, h2, h3, h4, h5, div, a, button {
 }
 
 .ui.basic.segment {
-  /* min-height: 887px; */
+  /* min-height: 887px;*/
   padding: 0px;
   margin-bottom: 0px;
 }
@@ -350,7 +383,7 @@ hr {
   margin-left: 30vw;
   margin-right: 30vw;
   border-radius: 12px;
-  box-shadow: 1px 1px 14px rgba(157, 157, 157, 0.5); 
+  box-shadow: 1px 1px 14px rgba(157, 157, 157, 0.5);
   max-width: 720px;
 }
 .signup-title {
@@ -1334,18 +1367,22 @@ table.dashboard-table input {
   margin-right: auto;
 }
 .schedule-header {
+  position: fixed;
   border-bottom-left-radius: 12px;
   border-bottom-right-radius: 12px;
-  box-shadow: 1px 1px 14px rgba(157, 157, 157, 0.5); 
+  box-shadow: 1px 1px 14px rgba(157, 157, 157, 0.5);
   margin-left: auto;
   margin-right: auto;
+  width: 100%;
   max-width: 720px;
   height: 42px;
   line-height: 42px;
+  margin-top: -42px;
   padding-left: 10px;
   background-color: rgb(74, 201, 74);
   color: #fff;
   font-size: 18px;
+  z-index: 1;
 }
 .schedule-header.warning {
   background-color: rgb(255, 99, 71) !important;
@@ -1361,13 +1398,17 @@ table.dashboard-table input {
   opacity: 0.7;
 }
 .schedule-content {
-  border-radius: 12px;
-  box-shadow: 1px 1px 14px rgba(157, 157, 157, 0.5); 
   margin-left: auto;
   margin-right: auto;
-  min-height: calc(100vh - 122px);
+  overflow: auto;
+  margin-bottom: -28px;
+  padding-top: 42px;
+  padding-bottom: 12px;
   max-width: 720px;
-  padding: 0.1vw 1vw;
+  height: calc(100vh - 85px);
+  box-shadow: 1px 1px 8px rgba(157, 157, 157, 0.5);
+  border-end-start-radius: 12px;
+  border-end-end-radius: 12px;
   text-align: left;
 }
 .schedule-content .talk-btn {
@@ -1388,8 +1429,17 @@ table.dashboard-table input {
   margin-left: auto;
   margin-right: auto;
 }
+.talk-notice {
+  margin: 1em auto;
+  padding: 2px 0px;
+  background-color: rgba(0, 0, 0, 0.05);
+  font-size: 11px;
+  width: 320px;
+  border-radius: 12px;
+  white-space: pre-wrap;
+}
 .talk-day {
-  margin: 4px auto;
+  margin: 1em auto;
   padding: 2px 0px;
   background-color: rgb(0, 0, 0, 0.05);
   font-size: 11px;
@@ -1402,6 +1452,9 @@ table.dashboard-table input {
 }
 .talk-box:last-child {
   margin-bottom: 2em;
+}
+.talk-box.default.margin {
+  margin-left: calc(0.5em + 49px) !important;
 }
 .talk-box.default .talk-user-icon {
   float: left !important;
@@ -1428,32 +1481,37 @@ table.dashboard-table input {
   margin-right: auto;
   overflow: auto;
   margin-bottom: -28px;
-  padding: 12px 0;
+  padding-top: 42px;
+  padding-bottom: 12px;
   max-width: 720px;
-  height: calc(100vh - 131px);
-  border-radius: 12px;
-  box-shadow: 1px 1px 8px rgba(157, 157, 157, 0.5); 
+  height: calc(100vh - 93px);
+  box-shadow: 1px 1px 8px rgba(157, 157, 157, 0.5);
+}
+.talk-main-board::-webkit-scrollbar {
+  display: block !important;
+  width: 4px;
 }
 .talk-message {
-  display: table;
+  display: inline-block;
   position: relative;
   text-align: left;
   margin-left: 0.5em;
   margin-right: auto;
+  margin-bottom: 0.5em;
   padding: 0.5em 0.75em;
-  background-color: rgb(195, 195, 250);
+  background-color: rgb(195, 216, 250);
   max-width: 60%;
   border-radius: 8px;
   white-space: pre-wrap;
 }
 .talk-message.default:before {
-  content: ""; 
+  content: "";
   position: absolute;
   margin-top: 9px;
   border-top: 0px solid transparent;
   border-left: 19px solid transparent;
   border-right: 0px solid transparent;
-  border-bottom: 12px solid rgb(195, 195, 250);
+  border-bottom: 12px solid rgb(195, 216, 250);
   transform: rotate(270deg);
   left: auto;
   margin-left: -20px !important;
@@ -1463,7 +1521,7 @@ table.dashboard-table input {
   background-color: rgb(222, 238, 248);
 }
 .talk-message.mine:after {
-  content: ""; 
+  content: "";
   position: absolute;
   margin-top: 9px;
   border-top: 0px solid transparent;
@@ -1478,12 +1536,14 @@ table.dashboard-table input {
   display: inline;
   position: relative;
   color: grey;
-  font-size: 11px;
-  top: -4px;
-  left: 49px;
+  font-size: 10px;
+  top: 8px;
+}
+.talk-time.default {
+  left: -2px;
 }
 .talk-time.mine {
-  left: -49px;
+  right: -2px;
 }
 .default {
   text-align: left;
@@ -1526,6 +1586,38 @@ table.dashboard-table input {
 }
 
 /* HomePage */
+.home-main a {
+  color: #fff !important;
+  display: block;
+  position: relative;
+  opacity: 0.5;
+  margin-top: 38vh;
+}
+.home-main a span {
+  position: absolute;
+  top: -56px;
+  left: 50%;
+  width: 30px;
+  height: 50px;
+  margin-left: -15px;
+  border: 2px solid #fff;
+  border-radius: 50px;
+  box-sizing: border-box;
+}
+.home-main a span::before {
+  position: absolute;
+  top: 10px;
+  left: 50%;
+  content: '';
+  width: 6px;
+  height: 6px;
+  margin-left: -3px;
+  background-color: #fff;
+  border-radius: 100%;
+  -webkit-animation: slide-scroll 2s infinite;
+  animation: slide-scroll 2s infinite;
+  box-sizing: border-box;
+}
 .home-main {
   background-position: center center;
   background-image: linear-gradient(rgba(0, 0, 0, 0.25), rgba(0, 0, 0, 0.8)),url('./img/home.jpg');
@@ -1678,7 +1770,7 @@ table.dashboard-table input {
   margin-bottom: 12px !important;
   background-color: rgb(255, 255, 255);
   border: rgb(220, 220, 220, 0.7) solid 1px;
-  box-shadow: 1px 1px 8px rgba(157, 157, 157, 0.5); 
+  box-shadow: 1px 1px 8px rgba(157, 157, 157, 0.5);
   border-radius: 12px;
   z-index: 500 !important;
   position: inherit;
@@ -1762,7 +1854,6 @@ table.dashboard-table input {
   margin-bottom: 1rem !important;
 }
 .content4-right {
-  min-width: 50vw !important;
   margin-top: 10px;
   float: right;
 }
@@ -1908,8 +1999,8 @@ table.dashboard-table input {
   text-align: left;
   border: 0px;
   color: #fff;
-  width: 24.2vw; 
-  height: 200px; 
+  width: 24.2vw;
+  height: 200px;
   padding: 10px;
   margin: 5px;
   font-weight: bold;
@@ -1917,7 +2008,7 @@ table.dashboard-table input {
   box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
 }
 .shopmodal-shops button:hover {
-  position: relative; 
+  position: relative;
   cursor: pointer;
   transition: .3s ease-in-out;
   box-shadow: 3px 3px 6px rgb(0,0,0,0.5);
@@ -3010,7 +3101,7 @@ div.stretched.fourteen.wide.column.help-contents {
   margin: 5px 25vw !important;
 }
 .search-recommend button:hover {
-  position: relative; 
+  position: relative;
   cursor: pointer;
   transition: .3s ease-in-out;
   box-shadow: 3px 3px 6px rgb(0,0,0,0.5);
@@ -3057,8 +3148,8 @@ div.stretched.fourteen.wide.column.help-contents {
   text-align: left;
   border: 0px;
   color: #fff;
-  width: 24.2vw; 
-  height: 200px; 
+  width: 24.2vw;
+  height: 200px;
   padding: 10px;
   margin: 5px;
   font-weight: bold;
@@ -3066,9 +3157,9 @@ div.stretched.fourteen.wide.column.help-contents {
   box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
 }
 .search-recommend button:hover {
-  position: relative; 
+  position: relative;
   opacity: 0.9;
-  box-shadow: 3px 3px 3px rgb(0,0,0,0.5); 
+  box-shadow: 3px 3px 3px rgb(0,0,0,0.5);
 }
 .search-msg {
   margin-bottom: -69.188px !important;
@@ -3138,7 +3229,7 @@ div.stretched.fourteen.wide.column.help-contents {
 }
 
 /* .loader {
-  animation: rotate 1s infinite;  
+  animation: rotate 1s infinite; 
   height: 50px;
   width: 50px;
   margin-left: auto;
@@ -3150,32 +3241,32 @@ div.stretched.fourteen.wide.column.help-contents {
   border-radius: 50%;
   content: '';
   display: block;
-  height: 20px;  
+  height: 20px; 
   width: 20px;
 }
 .loader:before {
-  animation: ball1 1s infinite;  
+  animation: ball1 1s infinite; 
   background-color: #6720cb;
   box-shadow: 30px 0 0 #f8b334;
   margin-bottom: 10px;
 }
 .loader:after {
-  animation: ball2 1s infinite; 
+  animation: ball2 1s infinite;
   background-color: #8041b3;
   box-shadow: 30px 0 0 #0d95bf;
 }
 
 @keyframes rotate {
   0% { 
-    -webkit-transform: rotate(0deg) scale(0.8); 
+    -webkit-transform: rotate(0deg) scale(0.8);
     -moz-transform: rotate(0deg) scale(0.8);
   }
   50% { 
-    -webkit-transform: rotate(360deg) scale(1.2); 
+    -webkit-transform: rotate(360deg) scale(1.2);
     -moz-transform: rotate(360deg) scale(1.2);
   }
   100% { 
-    -webkit-transform: rotate(720deg) scale(0.8); 
+    -webkit-transform: rotate(720deg) scale(0.8);
     -moz-transform: rotate(720deg) scale(0.8);
   }
 }

@@ -1,5 +1,6 @@
 import React, { useEffect, useState, useRef } from 'react';
 import { Link } from "react-router-dom";
+import { Link as Scroll } from "react-scroll";
 import page1 from '../../img/page1.png'
 import page2 from '../../img/page2.png'
 import icon1 from '../../img/icon1.png'
@@ -137,11 +138,14 @@ export default function HomePage(props) {
           <Icon name='search' onClick={() => searching()}/>
           <input onKeyPress={searching}/>
         </Input>
+        <Scroll to='main' offset={-56} spy={true} smooth={true}>
+          <a href=""><span/><span/>Scroll</a>
+        </Scroll>
       </div>
 
       <Grid container className='home-content-main-top' divided relaxed stackable>
 
-        <Menu pointing secondary className='home-menu'>
+        <Menu pointing secondary className='home-menu' id='main'>
           <Menu.Item name='recommend' active={activeItem === 'recommend'} onClick={handleItemClick}>
             <span><Icon name='compass outline' size='large'/>주변 추천매장</span>
           </Menu.Item>
