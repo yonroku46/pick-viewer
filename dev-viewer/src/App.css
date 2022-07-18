@@ -1424,7 +1424,7 @@ table.dashboard-table input {
 /* TalkPage */
 .talk-main {
   margin-top: 49px;
-  min-height: calc(100vh - 81px);
+  min-height: calc((var(--vh, 1vh) * 100) - 81px);
   border-top: #52525210 1px solid !important;
   margin-left: auto;
   margin-right: auto;
@@ -1484,7 +1484,7 @@ table.dashboard-table input {
   padding-top: 42px;
   padding-bottom: 12px;
   max-width: 720px;
-  height: calc(100vh - 93px);
+  height: calc((var(--vh, 1vh) * 100) - 93px);
   box-shadow: 1px 1px 8px rgba(157, 157, 157, 0.5);
 }
 .talk-main-board::-webkit-scrollbar {
@@ -3226,6 +3226,10 @@ div.stretched.fourteen.wide.column.help-contents {
   border-radius: 10px;
   padding: 10px;
   max-width: 600px;
+}
+
+/* iOS only */
+@supports (-webkit-touch-callout: none) {
 }
 
 /* .loader {

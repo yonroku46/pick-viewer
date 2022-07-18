@@ -20,6 +20,8 @@ export default function TalkPage(props) {
     const noticeMessage = "개인정보 및 선결제 요구는\n각별히 조심해주시기 바랍니다.";
 
     useEffect(() => {
+      let vh = window.innerHeight * 0.01;
+      document.documentElement.style.setProperty('--vh', `${vh}px`);
       // 사용자의 토크내역이 아닌경우 접근거부
       return new Promise(function(resolve, reject) {
           axios
@@ -191,7 +193,7 @@ export default function TalkPage(props) {
                   idx != 0 && talkList[idx-1].userName == talk.userName ?
                   // case1 : mine & not first
                   <div className='talk-box mine'>
-                    {talkList[idx].sendTime.split("/")[1] != talkList[idx+1]?.sendTime.split("/")[1] &&
+                    {talk.sendTime.split("/")[1] != talkList[idx+1]?.sendTime.split("/")[1] &&
                     <span className='talk-time mine'>
                       {talk.sendTime.split("/")[1]}
                     </span>
@@ -217,7 +219,7 @@ export default function TalkPage(props) {
                     <div className='talk-message default'>
                       {talk.message}
                     </div>
-                    {talkList[idx].sendTime.split("/")[1] != talkList[idx+1]?.sendTime.split("/")[1] &&
+                    {talk.sendTime.split("/")[1] != talkList[idx+1]?.sendTime.split("/")[1] &&
                     <span className='talk-time default'>
                       {talk.sendTime.split("/")[1]}
                     </span>
@@ -243,8 +245,8 @@ export default function TalkPage(props) {
               <div className='talk-box-end' ref={scrollRef}/>
             </div>
             <Input type='text' action className='talk-message-input'>
-                <textarea value={message} onKeyPress={onPress} onChange={(e) => setMessage(e.target.value)}/>
-                <Button className='submit' color='black' type='submit' onClick={sendMessage}>전송</Button>
+              <textarea value={message} onKeyPress={onPress} onChange={(e) => setMessage(e.target.value)}/>
+              <Button className='submit' color='black' type='submit' onClick={sendMessage}>전송</Button>
             </Input>
         </div>
         </>
