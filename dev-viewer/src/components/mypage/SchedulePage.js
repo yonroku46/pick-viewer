@@ -1,6 +1,6 @@
 import React, { useEffect, useState, useReducer } from "react";
 import { useParams, Link } from "react-router-dom";
-import { Label, Button, Container, Divider, Grid, Segment, Image, Icon, Loader, Modal } from 'semantic-ui-react'
+import { Button, Dropdown, Icon } from 'semantic-ui-react'
 import * as api from '../../rest/api'
 import axios from 'axios';
 import TalkPage from "../talk/TalkPage";
@@ -16,6 +16,8 @@ export default function SchedulePage(props) {
     const [bookingInfo, setBookingInfo] = useState({});
 
     useEffect(() => {
+      let vh = window.innerHeight * 0.01;
+      document.documentElement.style.setProperty('--vh', `${vh}px`);
       // 사용자의 스케쥴이 아닌경우 접근거부
       return new Promise(function(resolve, reject) {
         axios
@@ -57,7 +59,7 @@ export default function SchedulePage(props) {
         if (res.success) {
           props.history.push({
             pathname: '/talk',
-            state: { talkRoomCd: res.data.talkRoomCd }
+            state: { talkRoomCd: res.data.talkRoomCd, bookingCd: props.location.state.bookingCd }
           })
         } else {
           alert("대화방 입장에 실패하였습니다. 지속시 문의 바랍니다.");
@@ -76,8 +78,13 @@ export default function SchedulePage(props) {
               <Icon name={scheduleStat ? 'check circle outline' : 'warning circle'}/>
               {scheduleStat ? '예약확정' : '예약대기중'}
               </span>
-              <span className='right' onClick={() => setScheduleStat(!scheduleStat)}>
-              <Icon name='ellipsis vertical'/>
+              <span className='right'>
+                <Dropdown icon='ellipsis vertical' className='icon' pointing='top right'>
+                  <Dropdown.Menu>
+                    <Dropdown.Item icon='exchange' text='예약변경' onClick={() => {}}/>
+                    <Dropdown.Item icon='ban' text='예약취소' onClick={() => {}}/>
+                  </Dropdown.Menu>
+                </Dropdown>
               </span>
           </div>
           </>

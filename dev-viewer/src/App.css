@@ -1313,13 +1313,8 @@ table.dashboard-table input {
   margin: 0 4px;
 }
 .mytalk-mark {
-  float: right;
-  display: block;
-  background-color: red;
-  border-radius: 50%;
-  width: 6px;
-  height: 6px;
-  margin-right: -6px;
+  border-left: 4px solid rgb(0, 153, 255);
+  margin-left: -4px !important;
 }
 .mytalk-list {
   text-align: left;
@@ -1361,7 +1356,7 @@ table.dashboard-table input {
 /* SchedulePage */
 .schedule-main {
   margin-top: 49px;
-  min-height: calc(100vh - 81px);
+  min-height: calc((var(--vh, 1vh) * 100) - 81px);
   border-top: #52525210 1px solid !important;
   margin-left: auto;
   margin-right: auto;
@@ -1383,9 +1378,18 @@ table.dashboard-table input {
   color: #fff;
   font-size: 18px;
   z-index: 1;
+  transition: width 0.35s;
 }
 .schedule-header.warning {
   background-color: rgb(255, 99, 71) !important;
+}
+.schedule-header.mini {
+  width: 42px;
+  padding-left: 0.25em !important;
+  transition: width 0.35s;
+}
+.schedule-header.mini {
+  cursor: pointer;
 }
 .schedule-header .left {
   float: left;
@@ -1395,7 +1399,10 @@ table.dashboard-table input {
 }
 .schedule-header .right:hover {
   cursor: pointer;
-  opacity: 0.7;
+}
+.schedule-header .right .ui.top.right.pointing.dropdown>.menu {
+  top: 70%;
+  right: 4px;
 }
 .schedule-content {
   margin-left: auto;

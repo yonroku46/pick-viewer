@@ -1,6 +1,6 @@
 import React, { useEffect, useState, useRef } from "react";
 import { useParams, Link } from "react-router-dom";
-import { Input, Accordion, Icon, Button } from 'semantic-ui-react'
+import { Input, Dimmer, Icon, Button, Loader, Dropdown } from 'semantic-ui-react'
 import * as api from '../../rest/api'
 import axios from 'axios';
 
@@ -11,12 +11,15 @@ export default function TalkPage(props) {
     }
 
     const talkRoomCd = props.location.state.talkRoomCd;
+    const bookingCd = props.location.state.bookingCd;
     const scrollRef = useRef();
     const [page, setPage] = useState(1);
     const [talkList, setTalkList] = useState([]);
     const [talkDayList, setTalkDayList] = useState([]);
     const [message, setMessage] = useState('');
     const [scheduleStat, setScheduleStat] = useState(true);
+    const [loading, setLoading] = useState(true);
+
     const noticeMessage = "개인정보 및 선결제 요구는\n각별히 조심해주시기 바랍니다.";
 
     useEffect(() => {
@@ -40,9 +43,12 @@ export default function TalkPage(props) {
           } else {
             alert("채팅내역 불러오기에 실패하였습니다.");
           }
+          setLoading(false);
+          scrollToBotton();
         })
         .catch(err => {
           alert("잘못된 접근입니다.");
+          setLoading(false);
           props.history.goBack(1);
         })
     }, []);
@@ -152,15 +158,27 @@ export default function TalkPage(props) {
     function bookingDetail() {
         return(
             <>
-            <div className={scheduleStat ? 'schedule-header' : 'schedule-header warning'}>
-                <span className='left'>
-                <Icon name={scheduleStat ? 'check circle outline' : 'warning circle'}/>
-                {scheduleStat ? '예약확정' : '예약대기중'}
-                </span>
-                <span className='right' onClick={() => setScheduleStat(!scheduleStat)}>
-                <Icon name='ellipsis vertical'/>
-                </span>
-            </div>
+            {scheduleStat ?
+              <div className={scheduleStat ? 'schedule-header' : 'schedule-header warning'}>
+                  <span className='left'>
+                  <Icon name={scheduleStat ? 'check circle outline' : 'warning circle'}/>
+                  {scheduleStat ? '예약확정' : '예약대기중'}
+                  </span>
+                  <span className='right'>
+                    <Dropdown icon='ellipsis vertical' className='icon' pointing='top right'>
+                      <Dropdown.Menu>
+                        <Dropdown.Item icon='columns' text='예약정보로 이동' onClick={() => props.history.push({pathname: '/mypage/schedule', state: { bookingCd: bookingCd}})}/>
+                        <Dropdown.Item icon='zoom-out' text='최소화' onClick={() => setScheduleStat(!scheduleStat)}/>
+                        <Dropdown.Item icon='sign-out' text='이전 페이지로' onClick={() => props.history.goBack(1)}/>
+                      </Dropdown.Menu>
+                    </Dropdown>
+                  </span>
+              </div>
+              :
+              <div className='schedule-header mini'>
+                <Icon name='plus' onClick={() => setScheduleStat(!scheduleStat)}></Icon>
+              </div>
+              }
             </>
         )
     }
@@ -170,7 +188,12 @@ export default function TalkPage(props) {
         <div className='talk-main'>
             <div className='talk-main-board'>
               {bookingDetail()}
-              {talkList?.length == 0 ?
+              {loading ? 
+                <Dimmer active inverted>
+                  <Loader size='large'></Loader>
+                </Dimmer>
+              :
+              talkList?.length == 0 ?
                 <div className='talk-notice'>
                   {noticeMessage}
                 </div>
