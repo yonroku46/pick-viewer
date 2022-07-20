@@ -1,6 +1,6 @@
 import React, { useEffect, useState, useRef } from "react";
 import { useParams, Link } from "react-router-dom";
-import { Input, Dimmer, Icon, Button, Loader, Dropdown } from 'semantic-ui-react'
+import { Input, Dimmer, Icon, Button, Loader, Dropdown, Image } from 'semantic-ui-react'
 import * as api from '../../rest/api'
 import axios from 'axios';
 
@@ -19,6 +19,14 @@ export default function TalkPage(props) {
     const [message, setMessage] = useState('');
     const [scheduleStat, setScheduleStat] = useState(true);
     const [loading, setLoading] = useState(true);
+
+    const emoticonBase = 'https://noticon-static.tammolo.com/dgggcrkxq/image/upload/noticon/'
+    const emoticonList = [
+      'EMOTICON_BASE_bbqpsqij4dahbxay5cik.png', 'EMOTICON_BASE_urlhfslsdssycl4awyaf.png', 'EMOTICON_BASE_ypjrdngkpx4tansqg8pr.png',
+      'EMOTICON_BASE_xxpktompyafewevsvebm.png', 'EMOTICON_BASE_lkb4rmcrdbxaxdmv6vsq.png', 'EMOTICON_BASE_puw7ewvs87ndly1pamzt.png',
+      'EMOTICON_BASE_asnzeopvjcuc50ynymrw.png', 'EMOTICON_BASE_b1nph8nhaqwxuzt4g0tr.png', 'EMOTICON_BASE_tigciwnn53qdtsx5c0ak.png'
+    ]
+    const emoticonDiv = 3;
 
     const noticeMessage = "개인정보 및 선결제 요구는\n각별히 조심해주시기 바랍니다.";
 
@@ -110,6 +118,31 @@ export default function TalkPage(props) {
       }
     }
 
+    function sendEmoticon(src) {
+      return new Promise(function(resolve, reject) {
+        const params = { 
+            'talkRoomCd': talkRoomCd,
+            'message': src
+          };
+        axios
+          .post(api.talkSend, params)
+          .then(response => resolve(response.data))
+          .catch(error => reject(error.response))
+      })
+      .then(res => {
+        if (res.success) {
+          if (res.data.result) {
+            chatReload();
+          }
+        } else {
+          alert("메세지 전송에 실패하였습니다. 지속시 문의 바랍니다.");
+        }
+      })
+      .catch(err => {
+        alert("메세지 전송에 실패하였습니다. 지속시 문의 바랍니다.");
+      })
+    }
+
     function sendMessage() {
         if (message.length === 0) {
           return;
@@ -149,6 +182,10 @@ export default function TalkPage(props) {
       })
       setTalkDayList(result);
       return targetList;
+    }
+
+    function emoticonCovert(src) {
+      return src.replace('EMOTICON_BASE_', emoticonBase)
     }
 
     function scrollToBotton() {
@@ -222,7 +259,7 @@ export default function TalkPage(props) {
                     </span>
                     }
                     <div className='talk-message mine'>
-                      {talk.message}
+                      {talk.message.startsWith('EMOTICON_BASE_') ? <img src={emoticonCovert(talk.message)}/> : talk.message}
                     </div>
                   </div>
                   :
@@ -232,7 +269,7 @@ export default function TalkPage(props) {
                       {talk.sendTime.split("/")[1]}
                     </span>
                     <div className='talk-message mine'>
-                      {talk.message}
+                      {talk.message.startsWith('EMOTICON_BASE_') ? <img src={emoticonCovert(talk.message)}/> : talk.message}
                     </div>
                   </div>
                 :
@@ -240,7 +277,7 @@ export default function TalkPage(props) {
                   // case2 : default & not first
                   <div className='talk-box default margin'>
                     <div className='talk-message default'>
-                      {talk.message}
+                      {talk.message.startsWith('EMOTICON_BASE_') ? <img src={emoticonCovert(talk.message)}/> : talk.message}
                     </div>
                     {talk.sendTime.split("/")[1] != talkList[idx+1]?.sendTime.split("/")[1] &&
                     <span className='talk-time default'>
@@ -256,7 +293,7 @@ export default function TalkPage(props) {
                     </span>
                     <img src={api.imgRender(talk.userImg ? talk.userImg : 'images/user/default.png')} alt="" className="talk-user-icon"/>
                     <div className='talk-message default'>
-                      {talk.message}
+                      {talk.message.startsWith('EMOTICON_BASE_') ? <img src={emoticonCovert(talk.message)}/> : talk.message}
                     </div>
                     <span className='talk-time default'>
                       {talk.sendTime.split("/")[1]}
@@ -269,6 +306,17 @@ export default function TalkPage(props) {
             </div>
             <Input type='text' action className='talk-message-input'>
               <textarea value={message} onKeyPress={onPress} onChange={(e) => setMessage(e.target.value)}/>
+              <Dropdown className='emoticon' icon='meh outline' pointing='top right'>
+                <Dropdown.Menu>
+                  {[...Array(Math.round(emoticonList.length/emoticonDiv))].map((v,i) =>
+                    <Image.Group size='tiny'>
+                      {emoticonList.slice(emoticonDiv * i, emoticonDiv * (i+1)).map((src) => 
+                        <Image src={emoticonCovert(src)} onClick={() => sendEmoticon(src)}/>
+                      )}
+                    </Image.Group>
+                  )}
+                </Dropdown.Menu>
+              </Dropdown>
               <Button className='submit' color='black' type='submit' onClick={sendMessage}>전송</Button>
             </Input>
         </div>

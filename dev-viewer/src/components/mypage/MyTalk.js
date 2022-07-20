@@ -90,7 +90,7 @@ function MyTalk(props) {
               <Image avatar className='mytalk-user-icon' src={api.imgRender(talk.userImg)} />
               <List.Content className='mytalk-content'>
                   <List.Header>{talk.userName}</List.Header>
-                  {talk.message}
+                  {talk.message.startsWith('EMOTICON_BASE_') ? '(이모티콘)' : talk.message}
               </List.Content>
               <span className='mytalk-time'>{talk.updateTimeAsString}</span>
             </List.Item>)

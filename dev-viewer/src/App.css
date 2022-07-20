@@ -1511,6 +1511,9 @@ table.dashboard-table input {
   border-radius: 8px;
   white-space: pre-wrap;
 }
+.talk-message img {
+  width: 120px;
+}
 .talk-message.default:before {
   content: "";
   position: absolute;
@@ -1576,6 +1579,26 @@ table.dashboard-table input {
   max-height: 37px;
   padding: 0.6em;
   z-index: 1;
+}
+.talk-message-input .emoticon {
+  margin-left: -34px !important;
+  font-size: 22px !important;
+  color: rgb(100, 100, 100) !important;
+  align-self: center;
+  margin-right: 4px !important;
+  z-index: 1;
+}
+.talk-message-input .emoticon:hover {
+  cursor: pointer;
+  color: rgb(0, 0, 0) !important;
+}
+.emoticon img:hover {
+  cursor: pointer;
+  opacity: 0.65;
+}
+.emoticon .menu.transition.visible {
+  margin-right: -12px !important;
+  padding: 7px 7px 0px 7px !important;
 }
 .talk-message-input .submit {
   border-radius: 0 !important;
