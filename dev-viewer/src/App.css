@@ -1172,10 +1172,6 @@ table.dashboard-table input {
 .mypage-favorite-menu i.dropdown {
   display: none;
 }
-.mypage-favorite-label {
-  margin-top: 1em !important;
-  margin-bottom: -0.5em !important;
-}
 
 .mypage-tt-icon {
   margin-left: -0.5em !important;
@@ -1241,6 +1237,18 @@ table.dashboard-table input {
 }
 .mypage-favorite-card {
   margin-top: 1em !important;
+  text-align: left;
+}
+.mypage-favorite-card .meta {
+  color: black !important;
+  font-size: 12px !important;
+  margin-left: 0.25em;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+.mypage-favorite-card .extra.content {
+  padding: 0.5em 1em !important;
 }
 
 /* pc */
@@ -1412,7 +1420,7 @@ table.dashboard-table input {
   padding-top: 42px;
   padding-bottom: 12px;
   max-width: 720px;
-  height: calc(100vh - 85px);
+  height: calc((var(--vh, 1vh) * 100) - 85px);
   box-shadow: 1px 1px 8px rgba(157, 157, 157, 0.5);
   border-end-start-radius: 12px;
   border-end-end-radius: 12px;
@@ -1577,7 +1585,7 @@ table.dashboard-table input {
   border: 1px solid rgba(0, 0, 0) !important;
   resize: none;
   max-height: 37px;
-  padding: 0.6em;
+  padding: 0.6em 2.4em 0.6em 0.6em;
   z-index: 1;
 }
 .talk-message-input .emoticon {
