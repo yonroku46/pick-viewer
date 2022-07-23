@@ -2897,6 +2897,21 @@ div.stretched.fourteen.wide.column.help-contents {
   min-height: calc(100vh - 81px);
   border-top: #52525210 1px solid !important;
 }
+.notice-editor {
+  margin: 2em auto;
+  width: 60vw;
+}
+.notice-editor .header {
+  float: left;
+}
+.notice-editor .title {
+  width: 60vw;
+  margin-bottom: 0.5em;
+}
+.notice-editor .submit {
+  float: right;
+  margin-top: 1em !important;
+}
 .notice-back {
   float: left;
   box-shadow: none !important;
@@ -2950,6 +2965,12 @@ div.stretched.fourteen.wide.column.help-contents {
 }
 /* sp */
 @media only screen and (max-width: 767px){
+  .notice-editor {
+    width: 96vw;
+  }
+  .notice-editor .title {
+    width: 96vw;
+  }
   .notice-contents-background {
     min-height: calc(14vh + 81px);
   }

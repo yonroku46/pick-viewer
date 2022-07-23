@@ -619,7 +619,7 @@ export default function DashboardPage(props) {
                     </List>
                     : 
                     <p className='dashboard-shopinfo-text'>
-                        신청 없음
+                        현재 없음
                     </p>
                     }
                 </Form.Field>

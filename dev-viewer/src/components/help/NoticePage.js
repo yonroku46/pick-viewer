@@ -28,7 +28,7 @@ function NoticePage(props) {
             <Icon className='search-btn' name='search'/>
             <input className='search-input'/>
         </Input>
-        <Button className='notice-add' basic icon>
+        <Button className='notice-add' basic icon onClick={() => props.history.push('/help/notice/write')}>
             <Icon name='plus'/>
         </Button>
     </div>
