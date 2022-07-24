@@ -61,6 +61,11 @@
   background-color: #f6f6f4 !important;
 } */
 
+/* public-other */
+.toastui-editor-mode-switch {
+  background-color: #dadde655;
+}
+
 /* public */
 body {
   font-family: "NotoSans" !important;
@@ -2900,17 +2905,43 @@ div.stretched.fourteen.wide.column.help-contents {
 .notice-editor {
   margin: 2em auto;
   width: 60vw;
+  text-align: left;
 }
-.notice-editor .header {
-  float: left;
+.notice-editor h4 {
+  text-align: left !important;
 }
-.notice-editor .title {
-  width: 60vw;
+.notice-editor-title {
+  display: flex;
+}
+.notice-editor-title .category {
+  min-width: 100px !important;
+  min-height: 36px !important;
+  max-height: 36px !important;
+  margin-right: 6px;
+  padding: .67em 1em !important;
+  z-index: 21 !important;
+}
+.notice-editor-title .title {
+  width: calc(60vw - 106px);
   margin-bottom: 0.5em;
 }
-.notice-editor .submit {
-  float: right;
+.notice-editor-bottom {
   margin-top: 1em !important;
+}
+.notice-editor-bottom .checkbox {
+  float: right;
+  margin-top: 8px;
+  margin-right: 1em;
+  color: grey !important;
+  opacity: 0.6;
+}
+.notice-editor-bottom .checkbox:hover {
+  cursor: pointer;
+  opacity: 0.8;
+}
+.notice-editor-bottom .submit {
+  float: right;
+  width: 110px;
 }
 .notice-back {
   float: left;
@@ -2967,6 +2998,7 @@ div.stretched.fourteen.wide.column.help-contents {
 @media only screen and (max-width: 767px){
   .notice-editor {
     width: 96vw;
+    margin: 1em auto;
   }
   .notice-editor .title {
     width: 96vw;
