@@ -155,6 +155,8 @@ export default function MyPage(props) {
             sessionStorage.setItem('userInfo', JSON.stringify(userInfo));
             setIcon(data.imgPath);
             setReload(reload + 1);
+          } else {
+            alert("업로드에 실패하였습니다. 잠시 후 시도해주세요.");
           }
         })
         .catch((err) => {

@@ -1397,12 +1397,12 @@ table.dashboard-table input {
   background-color: rgb(255, 99, 71) !important;
 }
 .schedule-header.mini {
+  cursor: pointer;
   width: 42px;
   padding-left: 0.25em !important;
+  border-top-left-radius: 12px;
+  border-top-right-radius: 12px;
   transition: width 0.35s;
-}
-.schedule-header.mini {
-  cursor: pointer;
 }
 .schedule-header .left {
   float: left;
@@ -1506,6 +1506,8 @@ table.dashboard-table input {
   max-width: 720px;
   height: calc((var(--vh, 1vh) * 100) - 93px);
   box-shadow: 1px 1px 8px rgba(157, 157, 157, 0.5);
+  border-top-left-radius: 12px;
+  border-top-right-radius: 12px;
 }
 .talk-main-board::-webkit-scrollbar {
   display: block !important;
