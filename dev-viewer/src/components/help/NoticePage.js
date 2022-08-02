@@ -80,13 +80,15 @@ function NoticePage(props) {
             </Table.Row>
         </Table.Body>
     </Table>
-    <Pagination className='notice-pagination' 
-        defaultActivePage={1}
-        firstItem={null}
-        lastItem={null}
-        onPageChange={handlePaginationChange}
-        totalPages={3}
-    />
+    <div className='notice-pagination'>
+        <Pagination pointing secondary
+            defaultActivePage={1}
+            firstItem={null}
+            lastItem={null}
+            onPageChange={handlePaginationChange}
+            totalPages={3}
+        />
+    </div>
     </>
     )
   };

@@ -125,6 +125,21 @@ h1, h2, h3, h4, h5, div, a, button {
   width: 100% !important;
   height: 240px !important;
 }
+.pagination {
+  margin-bottom: 35px !important;
+  border-bottom: none !important;
+}
+.pagination .item {
+  color: rgba(0, 0, 0, 0.8) !important;
+  border-bottom: none !important;
+  opacity: 0.8;
+}
+.pagination .item:hover {
+  opacity: 1;
+}
+.pagination .active.item {
+  color: rgba(0, 0, 0) !important;
+}
 
 .body-segment {
   border-radius: 0px !important;
@@ -451,11 +466,8 @@ hr {
   border-top: #52525210 1px solid !important;
   display: block;
 }
-.dashboard-pagination-box {
-  text-align: center;
-}
 .dashboard-pagination {
-  box-shadow: none !important;
+  text-align: center;
 }
 .dashboard-dnd li {
   float: left;
@@ -2095,21 +2107,6 @@ table.dashboard-table input {
   border-radius: 2em !important;
   font-size: 0.9em !important;
 }
-.shopmodal-pagination {
-  margin-bottom: 35px !important;
-  border-bottom: none !important;
-}
-.shopmodal-pagination .item {
-  color: rgba(0, 0, 0, 0.8) !important;
-  border-bottom: none !important;
-  opacity: 0.8;
-}
-.shopmodal-pagination .item:hover {
-  opacity: 1;
-}
-.shopmodal-pagination .active.item {
-  color: rgba(0, 0, 0) !important;
-}
 
 /* booking page */
 .booking-btn {
@@ -2894,8 +2891,7 @@ div.stretched.fourteen.wide.column.help-contents {
   text-align: center !important;
 }
 .notice-pagination {
-  margin-top: -6px !important;
-  box-shadow: none !important;
+  text-align: center;
 }
 
 /* NoticeDetail */

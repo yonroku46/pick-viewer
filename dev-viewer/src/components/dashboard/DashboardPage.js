@@ -676,8 +676,8 @@ export default function DashboardPage(props) {
                         }
                         </Table.Body>
                     </Table>
-                    <div className='dashboard-pagination-box'>
-                        <Pagination className='dashboard-pagination' 
+                    <div className='dashboard-pagination'>
+                        <Pagination pointing secondary
                             defaultActivePage={1}
                             firstItem={null}
                             lastItem={null}
@@ -727,8 +727,8 @@ export default function DashboardPage(props) {
                     ))}
                     </>
                     }
-                    <div className='dashboard-pagination-box'>
-                        <Pagination className='dashboard-pagination' 
+                    <div className='dashboard-pagination'>
+                        <Pagination pointing secondary
                             defaultActivePage={1}
                             firstItem={null}
                             lastItem={null}

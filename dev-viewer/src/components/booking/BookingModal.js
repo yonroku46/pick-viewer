@@ -149,13 +149,12 @@ export default class BookingModal extends Component {
                     </div>
                 </div>
                 {shops.length !== 0 && !isLoading &&
-                    <Pagination className='shopmodal-pagination' 
+                    <Pagination pointing secondary
                         defaultActivePage={1} 
                         firstItem={null} 
                         lastItem={null} 
                         onPageChange={this.handlePaginationChange}
                         totalPages={Math.ceil(shops.length / perPage)}
-                        pointing secondary
                     />
                 }
             </div>
