@@ -36,7 +36,9 @@ function NoticeWritePage(props) {
     <>
     <div className='notice-main'>
         <div className='notice-editor'>
-            <Header as='h4'><Icon name='write square'/>게시글 작성</Header>
+            <Header as='h4'>
+                <Icon name='write square'/>게시글 작성 {!activate && ' (비공개)'}
+            </Header>
             <div className='notice-editor-title'>
                 <Dropdown 
                     selection

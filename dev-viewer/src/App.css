@@ -1403,7 +1403,6 @@ table.dashboard-table input {
   color: #fff;
   font-size: 18px;
   z-index: 1;
-  transition: width 0.35s;
 }
 .schedule-header.warning {
   background-color: rgb(255, 99, 71) !important;
@@ -1414,7 +1413,8 @@ table.dashboard-table input {
   padding-left: 0.25em !important;
   border-top-left-radius: 12px;
   border-top-right-radius: 12px;
-  transition: width 0.35s;
+  margin-top: -37px;
+  margin-left: 670px;
 }
 .schedule-header .left {
   float: left;
@@ -1451,6 +1451,12 @@ table.dashboard-table input {
 }
 .schedule-content .talk-btn:hover {
   opacity: 0.8;
+}
+/* sp */
+@media only screen and (max-width: 767px) {
+  .schedule-header.mini {
+    margin-left: 87%;
+  }
 }
 
 /* TalkPage */
@@ -1711,6 +1717,10 @@ table.dashboard-table input {
   margin-right: auto;
   display: flex;
   align-items: center;
+}
+.home-main-scroll {
+  user-select: none;
+  cursor: pointer;
 }
 .home-main-title-top img {
   width: 32px;

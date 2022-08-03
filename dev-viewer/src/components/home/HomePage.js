@@ -139,7 +139,7 @@ export default function HomePage(props) {
           <input onKeyPress={searching}/>
         </Input>
         <Scroll to='main' offset={-56} spy={true} smooth={true}>
-          <a href=""><span/><span/>Scroll</a>
+          <a className='home-main-scroll'><span/><span/>Scroll</a>
         </Scroll>
       </div>
 
