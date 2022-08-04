@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useReducer } from "react";
+import React, { useEffect, useState, useReducer } from 'react';
 import * as api from '../../rest/api'
 import about from '../../img/about.png'
 import axios from 'axios';
@@ -8,7 +8,7 @@ export default function AboutPage(props) {
 
     return(
     <>
-    <Header className="about-title">
+    <Header className='about-title'>
         About Pick
     </Header>
     <Grid container stackable columns={2} className='about-intro'>
@@ -18,83 +18,69 @@ export default function AboutPage(props) {
         <Grid.Column>
             <Container>
                 <p>
-                Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo
-                ligula eget dolor. Aenean massa strong. Cum sociis natoque penatibus et
-                magnis dis parturient montes, nascetur ridiculus mus. Donec quam felis,
-                ultricies nec, pellentesque eu, pretium quis, sem. Nulla consequat massa
-                quis enim.
+                원하는 매장을 찾는 일은<br/>
+                항상 어렵게 느껴집니다.<br/>
+                저희 <span className='pcolor'>Pick</span>에서는 그 어려움을 해결드리고자 합니다.<br/>
+                각종 통계 데이터 기반으로<br/>
+                고객님의 주변 매장 및 장소를<br/>
+                똑똑하게 추천해드립니다.
                 </p>
             </Container>
         </Grid.Column>
     </Grid>
     <hr/>
-    <Header>
-        <Icon name='angle right'/>Manage Flow1
+    <Header className='about-title'>
+        Guide
     </Header>
-    <Step.Group widths={3}>
-        <Step active>
-        <Icon name='truck' />
-        <Step.Content>
-            <Step.Title>Shipping</Step.Title>
-        </Step.Content>
-        </Step>
+    <Header className='about-sub-title'>
+        {'1. 매장 선택 & 예약신청'}
+    </Header>
+    <Step.Group widths={1}>
         <Step>
-        <Icon name='credit card' />
+        <Icon name='search'/>
         <Step.Content>
-            <Step.Title>Billing</Step.Title>
-        </Step.Content>
-        </Step>
-        <Step>
-        <Icon name='info' />
-        <Step.Content>
-            <Step.Title>Confirm Order</Step.Title>
+            <Step.Title>매장찾기</Step.Title>
+            <Step.Description>프로모션을 노려보는것도 좋아요!</Step.Description>
         </Step.Content>
         </Step>
     </Step.Group>
     <Container>
         <p>
-        Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo
-        ligula eget dolor. Aenean massa strong. Cum sociis natoque penatibus et
-        magnis dis parturient montes, nascetur ridiculus mus. Donec quam felis,
-        ultricies nec, pellentesque eu, pretium quis, sem. Nulla consequat massa
-        quis enim. Donec pede justo, fringilla vel, aliquet nec, vulputate eget,
-        arcu. In enim justo, rhoncus ut, imperdiet a, venenatis vitae, justo.
-        Nullam dictum felis eu pede link mollis pretium. Integer tincidunt. Cras
-        dapibus. Vivamus elementum semper nisi. Aenean vulputate eleifend tellus.
-        Aenean leo ligula, porttitor eu, consequat vitae, eleifend ac, enim.
+        (설명란)
         </p>
     </Container>
-    <Header>
-        <Icon name='angle right'/>Manage Flow2
+    <Header className='about-sub-title'>
+        {'2. 예약완료'}
     </Header>
-    <Step.Group widths={3}>
+    <Step.Group widths={1}>
         <Step>
-        <Icon name='truck' />
+        <Icon name='calendar check outline'/>
         <Step.Content>
-            <Step.Title>Shipping</Step.Title>
-        </Step.Content>
-        </Step>
-        <Step active>
-        <Icon name='credit card' />
-        <Step.Content>
-            <Step.Title>Billing</Step.Title>
-        </Step.Content>
-        </Step>
-        <Step>
-        <Icon name='info' />
-        <Step.Content>
-            <Step.Title>Confirm Order</Step.Title>
+            <Step.Title>스케쥴 확인</Step.Title>
+            <Step.Description>문의사항은 가게와 바로바로 연락해요!</Step.Description>
         </Step.Content>
         </Step>
     </Step.Group>
     <Container>
         <p>
-        Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo
-        ligula eget dolor. Aenean massa strong. Cum sociis natoque penatibus et
-        magnis dis parturient montes, nascetur ridiculus mus. Donec quam felis,
-        ultricies nec, pellentesque eu, pretium quis, sem. Nulla consequat massa
-        quis enim. Donec pede justo, fringilla vel, aliquet nec, vulputate eget,
-        arcu. In enim justo, rhoncus ut, imperdiet a, venenatis vitae, justo.
+        (설명란)
+        </p>
+    </Container>
+    <Header className='about-sub-title'>
+        {'3. 방문'}
+    </Header>
+    <Step.Group widths={1}>
+        <Step>
+        <Icon name='rocket'/>
+        <Step.Content>
+            <Step.Title>다음에 또 봐요</Step.Title>
+            <Step.Description>후기를 남겨 매장을 응원하고, 정보를 공유해요!</Step.Description>
+        </Step.Content>
+        </Step>
+    </Step.Group>
+    <Container>
+        <p>
+        (설명란)
         </p>
     </Container>
     </>

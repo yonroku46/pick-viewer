@@ -22,7 +22,7 @@ function NoticeWritePage(props) {
     const editorRef = useRef();
 
     function noticeSubmit() {
-        if (window.confirm(activate ? "본 내용을 저장 후 공개 하시겠습니까?" : "비공개 상태입니다. 본 내용을 저장하시겠습니까?")) {
+        if (window.confirm(activate ? "본 내용을 저장 및 공개 하시겠습니까?" : "비공개 상태입니다. 본 내용을 저장하시겠습니까?")) {
             const contentHTML = editorRef.current?.getInstance().getHTML();
             const contentMarkDown = editorRef.current?.getInstance().getMarkdown();
             console.log(category, title, activate)

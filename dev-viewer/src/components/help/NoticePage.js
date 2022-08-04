@@ -78,6 +78,18 @@ function NoticePage(props) {
                     2022.03.08
                 </Table.Cell>
             </Table.Row>
+            <Table.Row onClick={() => noticeInfo('4')}>
+                <Table.Cell>
+                    <Label color='black' horizontal>{'비공개'}</Label>
+                    Pick이 오픈하였습니다!
+                </Table.Cell>
+                <Table.Cell className={props.sp ? 'notice-table-sp' : 'notice-table-writer'}>
+                    관리자
+                </Table.Cell>
+                <Table.Cell className='notice-table-time'>
+                    2022.03.08
+                </Table.Cell>
+            </Table.Row>
         </Table.Body>
     </Table>
     <div className='notice-pagination'>

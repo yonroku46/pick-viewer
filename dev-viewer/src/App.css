@@ -2824,6 +2824,9 @@ div.stretched.fourteen.wide.column.help-contents {
   overflow: scroll !important;
   height: calc(99vh - 81px) !important;
 }
+.help-contents-active .step {
+  justify-content: left !important;
+}
 /* pc */
 @media only screen and (min-width: 766px) {
   .help-menu {
@@ -2849,11 +2852,12 @@ div.stretched.fourteen.wide.column.help-contents {
 .about-title {
   margin-top: 0.5em !important;
 }
-.about-title i {
-  margin-right: 0.25em !important;
+.about-sub-title {
+  margin-left: 0.5em !important;
 }
 .about-intro div.column {
   align-self: center !important;
+  font-size: 1.3em;
 }
 
 /* NoticePage */
