@@ -25,8 +25,32 @@ function NoticeWritePage(props) {
         if (window.confirm(activate ? "본 내용을 저장 및 공개 하시겠습니까?" : "비공개 상태입니다. 본 내용을 저장하시겠습니까?")) {
             const contentHTML = editorRef.current?.getInstance().getHTML();
             const contentMarkDown = editorRef.current?.getInstance().getMarkdown();
-            console.log(category, title, activate)
-            console.log(contentHTML)
+            if (category === "" || title === "" || contentHTML === "") {
+                alert("미입력된 항목이 존재합니다.");
+                return;
+            }
+            const params = {
+                'category': category,
+                'title': title,
+                'content': contentHTML
+              };
+              return new Promise(function(resolve, reject) {
+                axios
+                  .post(api.noticeSave, params)
+                  .then(response => resolve(response.data))
+                  .catch(error => reject(error.response))
+            })
+            .then(data => {
+                const result = data.data.result;
+                if (result.success) {
+                    props.history.push('/help/notice/' + result.noticeCd);
+                } else {
+                    alert('저장에 실패하였습니다. 잠시 후 다시 시도하여 주세요.')
+                }
+            })
+            .catch(err => {
+                alert('저장에 실패하였습니다. 잠시 후 다시 시도하여 주세요.')
+            })
         } else {
             return;
         }

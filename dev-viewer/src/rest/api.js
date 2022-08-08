@@ -65,3 +65,8 @@ export const search = "/api/shop/search";
 
 // ContactPage
 export const contact = "/api/contact/save";
+
+// NoticePage
+export const noticeSave = "/api/notice/save";
+export const noticeInfo = "/api/notice/info";
+export const noticeList = "/api/notice/list";
