@@ -6,9 +6,41 @@ import { Table, Icon, Label, Button, Input, Header, Container } from 'semantic-u
 
 function NoticeDetail(props) {
 
+    const noticeCd = 3;
+    const [category, setCategory] = useState(null);
+    const [title, setTitle] = useState(null);
+    const [content, setContent] = useState(null);
+    const [loading, setLoading] = useState(true);
+
+    useEffect(() => {
+        return new Promise(function(resolve, reject) {
+          axios
+            .get(api.noticeInfo, {
+                params: {
+                    'noticeCd': noticeCd
+                }
+              })
+            .then(response => resolve(response.data))
+            .catch(error => reject(error.response))
+        })
+        .then(res => {
+          if (res.success) {
+            setCategory(res.category);
+            setTitle(res.title);
+            setContent(res.content);
+          }
+          setLoading(false);
+        })
+        .catch(err => {
+          alert("메세지 내역을 불러올 수 없습니다. 지속시 문의 바랍니다.");
+          setLoading(false);
+        })
+      }, [])
+
     return(
     <>
     <div className='notice-main'>
+        {loading && <>
         <div className='notice-contents-background'>
         </div>
         <div className='notice-contents'>
@@ -98,6 +130,8 @@ function NoticeDetail(props) {
                 <Header.Subheader>자기소개</Header.Subheader>
             </Header>
         </div>
+        </>
+        }
     </div>
     </>
     )

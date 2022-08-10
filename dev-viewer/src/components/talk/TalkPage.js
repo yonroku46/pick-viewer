@@ -48,8 +48,6 @@ export default function TalkPage(props) {
         .then(res => {
           if (res.success) {
             setTalkList(talkTimeRender(res.dataList));
-          } else {
-            alert("채팅내역 불러오기에 실패하였습니다.");
           }
           setLoading(false);
           scrollToBotton();
@@ -93,8 +91,6 @@ export default function TalkPage(props) {
           if (0 < updateList.length) {
             setTalkList(talkList.concat(talkTimeRender(updateList)));
           }
-        } else {
-          alert("채팅내역 불러오기에 실패하였습니다.");
         }
       })
       .catch(err => {

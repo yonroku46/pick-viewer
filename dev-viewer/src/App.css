@@ -1474,6 +1474,7 @@ table.dashboard-table input {
   font-size: 11px;
   width: 320px;
   border-radius: 12px;
+  line-height: normal;
   white-space: pre-wrap;
 }
 .talk-day {

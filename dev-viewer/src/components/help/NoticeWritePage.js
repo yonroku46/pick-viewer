@@ -40,10 +40,9 @@ function NoticeWritePage(props) {
                   .then(response => resolve(response.data))
                   .catch(error => reject(error.response))
             })
-            .then(data => {
-                const result = data.data.result;
-                if (result.success) {
-                    props.history.push('/help/notice/' + result.noticeCd);
+            .then(res => {
+                if (res.success) {
+                    props.history.push('/help/notice/' + res.data.noticeCd);
                 } else {
                     alert('저장에 실패하였습니다. 잠시 후 다시 시도하여 주세요.')
                 }

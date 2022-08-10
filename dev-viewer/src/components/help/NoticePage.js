@@ -10,6 +10,9 @@ function NoticePage(props) {
     const [activePage, setActivePage] = useState(1);
     const categoryList = ['공지사항', '패치노트', '이벤트'];
 
+    const userInfo = JSON.parse(sessionStorage.getItem('userInfo'));
+    const role = userInfo ? userInfo.role : null;
+
     function handlePaginationChange (e, { activePage }) {
         setActivePage(activePage);
     }
@@ -28,9 +31,11 @@ function NoticePage(props) {
             <Icon className='search-btn' name='search'/>
             <input className='search-input'/>
         </Input>
+        {role === 9 &&
         <Button className='notice-add' basic icon onClick={() => props.history.push('/help/notice/write')}>
             <Icon name='plus'/>
         </Button>
+        }
     </div>
     <Table unstackable singleLine selectable>
         <Table.Header>
