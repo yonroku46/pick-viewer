@@ -2882,7 +2882,7 @@ div.stretched.fourteen.wide.column.help-contents {
   margin-right: 0.25em !important;
 }
 .notice-table-body .ui.horizontal.label {
-  width: 68px !important;
+  width: 52px !important;
   margin-right: 1em;
 }
 .notice-table-body td {
@@ -2897,10 +2897,6 @@ div.stretched.fourteen.wide.column.help-contents {
 .notice-table-sp {
   display: none;
 }
-.notice-table-writer {
-  width: 100px;
-  text-align: center !important;
-}
 .notice-table-time {
   width: 100px;
   text-align: center !important;
@@ -2909,7 +2905,7 @@ div.stretched.fourteen.wide.column.help-contents {
   text-align: center;
 }
 
-/* NoticeDetail */
+/* NoticeViewer */
 .notice-main {
   margin-top: 49px;
   min-height: calc(100vh - 81px);
@@ -2961,7 +2957,7 @@ div.stretched.fourteen.wide.column.help-contents {
   box-shadow: none !important;
 }
 .notice-contents-background {
-  min-height: calc(30vh + 81px);
+  min-height: calc(20vh + 81px);
   background-position: center center;
   background-image: linear-gradient(rgba(0, 0, 0, 0.25), rgba(220, 220, 220, 0.8)), url('./img/home.jpg');
   background-repeat: no-repeat;
@@ -2969,6 +2965,9 @@ div.stretched.fourteen.wide.column.help-contents {
   border-bottom-left-radius: 48px;
   border-bottom-right-radius: 48px;
   margin-bottom: -10vh;
+}
+.notice-contents .toastui-editor-contents {
+  min-height: 291px;
 }
 .notice-contents p {
   text-align: left;

@@ -32,7 +32,8 @@ function NoticeWritePage(props) {
             const params = {
                 'category': category,
                 'title': title,
-                'content': contentHTML
+                'content': contentHTML,
+                'activeFlag': activate ? 1 : 0
               };
               return new Promise(function(resolve, reject) {
                 axios
