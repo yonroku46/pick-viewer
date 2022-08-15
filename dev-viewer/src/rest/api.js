@@ -70,3 +70,6 @@ export const contact = "/api/contact/save";
 export const noticeSave = "/api/notice/save";
 export const noticeInfo = "/api/notice/info";
 export const noticeList = "/api/notice/list";
+export const noticeEdit = "/api/notice/edit";
+export const noticeEditActive = "/api/notice/editActive";
+export const noticeDelete = "/api/notice/delete";

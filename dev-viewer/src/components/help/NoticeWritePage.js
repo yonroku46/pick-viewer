@@ -12,9 +12,9 @@ import '@toast-ui/editor-plugin-color-syntax/dist/toastui-editor-plugin-color-sy
 function NoticeWritePage(props) {
 
     const categoryOptions = [
-        { key: 'n', text: '공지사항', value: 'notice' },
-        { key: 'p', text: '패치노트', value: 'patch' },
-        { key: 'e', text: '이벤트', value: 'event' },
+        { text: '공지사항', value: 'notice' },
+        { text: '패치노트', value: 'patch' },
+        { text: '이벤트', value: 'event' },
     ]
     const [category, setCategory] = useState(categoryOptions[0].value);
     const [title, setTitle] = useState('');
@@ -25,7 +25,7 @@ function NoticeWritePage(props) {
         if (window.confirm(activate ? "본 내용을 저장 및 공개 하시겠습니까?" : "비공개 상태입니다. 본 내용을 저장하시겠습니까?")) {
             const contentHTML = editorRef.current?.getInstance().getHTML();
             const contentMarkDown = editorRef.current?.getInstance().getMarkdown();
-            if (category === "" || title === "" || contentHTML === "") {
+            if (title === "" || contentHTML === "") {
                 alert("미입력된 항목이 존재합니다.");
                 return;
             }

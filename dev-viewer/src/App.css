@@ -2883,7 +2883,7 @@ div.stretched.fourteen.wide.column.help-contents {
 }
 .notice-table-body .ui.horizontal.label {
   width: 52px !important;
-  margin-right: 1em;
+  margin-right: 0.75em;
 }
 .notice-table-body td {
   overflow:hidden;
@@ -2894,12 +2894,21 @@ div.stretched.fourteen.wide.column.help-contents {
 .notice-table-body td:hover {
   cursor: pointer;
 }
-.notice-table-sp {
-  display: none;
+.notice-table-unactive {
+  border-left: solid 4px rgba(180, 180, 180, 0.5) !important;
+  background-color: rgba(180, 180, 180, 0.25);
+}
+.notice-table-unactive .ui.horizontal.label {
+  margin-left: -4px;
 }
 .notice-table-time {
   width: 100px;
   text-align: center !important;
+}
+.notice-table-time-unactive {
+  width: 100px;
+  text-align: center !important;
+  background-color: rgba(180, 180, 180, 0.25);
 }
 .notice-pagination {
   text-align: center;
@@ -2957,24 +2966,38 @@ div.stretched.fourteen.wide.column.help-contents {
   box-shadow: none !important;
 }
 .notice-contents-background {
-  min-height: calc(20vh + 81px);
+  height: 220px;
   background-position: center center;
   background-image: linear-gradient(rgba(0, 0, 0, 0.25), rgba(220, 220, 220, 0.8)), url('./img/home.jpg');
   background-repeat: no-repeat;
   background-size: cover;
   border-bottom-left-radius: 48px;
   border-bottom-right-radius: 48px;
-  margin-bottom: -10vh;
+}
+.notice-contents-title {
+  position: fixed;
+  margin-top: 135px;
+  width: 100%;
+}
+.notice-contents-title-edit {
+  position: fixed;
+  margin-top: 79px;
+  width: 100%;
+}
+.notice-contents-title-edit button {
+  margin-bottom: 20px !important;
 }
 .notice-contents .toastui-editor-contents {
-  min-height: 291px;
+  min-height: calc(100vh - 109px - 220px - 180px - 30px);
+  width: 60vw;
+  margin: 30px auto !important;
 }
 .notice-contents p {
   text-align: left;
 }
 .notice-contents h1.ui.header {
   font-size: 2em !important;
-  margin-bottom: 10vh !important;
+  margin-bottom: 40px !important;
 }
 .notice-contents h2.ui.header {
   margin: 10vh 0 !important;
@@ -2985,16 +3008,15 @@ div.stretched.fourteen.wide.column.help-contents {
 .notice-contents-arrow {
   width: 20px;
   height: 20px;
-  position: absolute;
+  position: fixed;
   background: #fff;
   transform: rotate(45deg);
-  bottom: 169px;
+  bottom: 199px;
   left: 50%;
   margin-left: -10px;
 }
 .notice-contents-footer {
   padding: 3vh 0 !important;
-  margin-top: 6vh !important;
   margin-bottom: 0 !important;
   background-color: #000;
   color: #fff !important;
@@ -3014,6 +3036,11 @@ div.stretched.fourteen.wide.column.help-contents {
   }
   .notice-editor .title {
     width: 96vw;
+  }
+  .notice-contents .toastui-editor-contents {
+    min-height: calc(100vh - 109px - 220px - 180px - 30px);
+    width: 86vw;
+    margin: 30px auto !important;
   }
   .notice-contents-background {
     min-height: calc(14vh + 81px);

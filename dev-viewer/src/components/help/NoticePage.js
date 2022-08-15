@@ -14,34 +14,42 @@ function NoticePage(props) {
     const [noticeList, setNoticeList] = useState([]);
     const [loading, setLoading] = useState(true);
     const categoryList = {
-        notice: '공 지',
+        notice: '알 림',
         patch: '패 치',
         event: '이벤트'
     };
     const categoryColor = {
-        notice: 'blue',
+        notice: 'pink',
         patch: 'teal',
-        event: 'purple'
+        event: 'violet'
     };
 
     useEffect(() => {
+        getNoticeList();
+    }, [])
+
+    function getNoticeList() {
         return new Promise(function(resolve, reject) {
-          axios
-            .get(api.noticeList)
-            .then(response => resolve(response.data))
-            .catch(error => reject(error.response))
-        })
-        .then(res => {
-          if (res.success) {
-            setNoticeList(res.dataList);
-          }
-          setLoading(false);
-        })
-        .catch(err => {
-          alert("현재 공지사항을 불러올 수 없습니다. 지속시 문의 바랍니다.");
-          setLoading(false);
-        })
-      }, [])
+            axios
+              .get(api.noticeList, {
+                params: {
+                  'search': search,
+                }
+              })
+              .then(response => resolve(response.data))
+              .catch(error => reject(error.response))
+          })
+          .then(res => {
+            if (res.success) {
+              setNoticeList(res.dataList);
+            }
+            setLoading(false);
+          })
+          .catch(err => {
+            alert("현재 공지사항을 불러올 수 없습니다. 지속시 문의 바랍니다.");
+            setLoading(false);
+          })
+    }
 
     function handlePaginationChange (e, { activePage }) {
         setActivePage(activePage);
@@ -57,7 +65,7 @@ function NoticePage(props) {
         공지사항
     </Header>
     <div>
-        <Input className='notice-search' iconPosition='left' placeholder='공지사항 검색' value={search} onChange={(e) => setSearch(e.target.value)}>
+        <Input className='notice-search' iconPosition='left' placeholder='공지사항 검색' value={search} onChange={(e) => setSearch(e.target.value)} onKeyPress={getNoticeList}>
             <Icon className='search-btn' name='search'/>
             <input className='search-input'/>
         </Input>
@@ -70,25 +78,33 @@ function NoticePage(props) {
     <Table unstackable singleLine selectable>
         <Table.Header>
             <Table.Row>
-                <Table.HeaderCell>타이틀</Table.HeaderCell>
+                <Table.HeaderCell>제목</Table.HeaderCell>
                 <Table.HeaderCell className='notice-table-time'>등록일</Table.HeaderCell>
             </Table.Row>
         </Table.Header>
 
         <Table.Body className='notice-table-body'>
-            {noticeList.map(notice => 
-            <Table.Row onClick={() => noticeInfo(notice.noticeCd)}>
-                <Table.Cell>
-                    <Label color={notice.activeFlag ? categoryColor[notice.category] : 'black'} horizontal>
-                        {notice.activeFlag ? categoryList[notice.category] : '비공개'}
-                    </Label>
-                    {notice.noticeTitle}
-                </Table.Cell>
-                <Table.Cell className='notice-table-time'>
-                    {notice.updateTime}
-                </Table.Cell>
-            </Table.Row>
-            )}
+            {!loading && noticeList.length == 0 ? 
+                <Table.Row>
+                    <Table.Cell>
+                        찾으시는 공지사항이 존재하지 않습니다
+                    </Table.Cell>
+                </Table.Row>
+            :
+            noticeList.map(notice => 
+                <Table.Row onClick={() => noticeInfo(notice.noticeCd)}>
+                    <Table.Cell className={!notice.activeFlag && 'notice-table-unactive'}>
+                        <Label basic={notice.activeFlag} horizontal color={notice.activeFlag ? categoryColor[notice.category] : 'black'}>
+                            {notice.activeFlag ? categoryList[notice.category] : '비공개'}
+                        </Label>
+                        {notice.noticeTitle}
+                    </Table.Cell>
+                    <Table.Cell className={!notice.activeFlag ? 'notice-table-time-unactive' : 'notice-table-time'}>
+                        {notice.updateTime}
+                    </Table.Cell>
+                </Table.Row>
+                )
+            }
         </Table.Body>
     </Table>
 
