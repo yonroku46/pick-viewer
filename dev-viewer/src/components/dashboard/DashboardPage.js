@@ -384,8 +384,8 @@ export default function DashboardPage(props) {
                 .then(response => resolve(response.data))
                 .catch(error => reject(error.response))
             })
-            .then(data => {
-                const result = data.data.result;
+            .then(res => {
+                const result = res.data.result;
                 if (result) {
                     alert('저장이 완료되었습니다.')
                     setEditMode(false)

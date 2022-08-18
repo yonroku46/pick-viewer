@@ -34,8 +34,9 @@ export default function HelpPwdPage(props) {
     if (reg.test(email)) {
       setError(null);
       setApiload(true);
-      mailCheck(email).then(data => {
-        const result = data.data.result;
+      mailCheck(email)
+      .then(res => {
+        const result = res.data.result;
         if (result) {
           setError(null);
           alert("인증 이메일을 전송하였습니다. 인증번호를 확인해주세요");
@@ -55,8 +56,9 @@ export default function HelpPwdPage(props) {
 
   function submitCertification() {
     setApiload(true);
-    certification(email, pin).then(data => {
-      const result = data.data.result;
+    certification(email, pin)
+    .then(res => {
+      const result = res.data.result;
       if (result) {
         setError(null);
         setApiload(false);
@@ -82,8 +84,9 @@ export default function HelpPwdPage(props) {
 
     setError(null);
     setApiload(true);
-    resetPwd(email, pw).then(data => {
-      const result = data.data.result;
+    resetPwd(email, pw)
+    .then(res => {
+      const result = res.data.result;
       if (result) {
         setError(null);
         setApiload(false);

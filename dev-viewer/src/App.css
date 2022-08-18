@@ -1853,6 +1853,17 @@ table.dashboard-table input {
   position: inherit;
   padding: 1em 0 !important;
 }
+.content1 div.column {
+  padding-left: 1em !important;
+  padding-right: 1em !important;
+}
+.content1 .circular.image {
+  border: 3px solid rgba(150, 150, 150, 0.5);
+}
+.content1 span {
+  display: block;
+  margin-top: 8px !important;
+}
 .content2 {
   padding: 0 !important;
   margin-top: 0 !important;
@@ -1948,6 +1959,10 @@ table.dashboard-table input {
     text-align: center;
     height: 36vh;
     padding: 1em 0px !important;
+  }
+  .content1 div.column {
+    padding-left: 4px !important;
+    padding-right: 4px !important;
   }
   .content4-right {
     width: 100% !important;

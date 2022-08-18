@@ -67,7 +67,7 @@ function MyTalk(props) {
       const target = targetId;
       props.history.push({
           pathname: '/talk',
-          state: { talkRoomCd: target}
+          state: { talkRoomCd: target }
       })
     }
 

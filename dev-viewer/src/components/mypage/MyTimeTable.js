@@ -18,7 +18,7 @@ function MyTimeTable(props) {
         const target = bookingList.filter(booking => booking.bookingCd === targetId);
         props.history.push({
             pathname: '/mypage/schedule',
-            state: { bookingCd: target[0].bookingCd}
+            state: { bookingCd: target[0].bookingCd }
         })
     }
 

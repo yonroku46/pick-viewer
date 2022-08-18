@@ -70,7 +70,7 @@ export default function App() {
         .then(response => resolve(response.data))
         .catch(error => reject(error.response))
     })
-    .then(data => {
+    .then(res => {
       sessionStorage.clear();
       location.href="/";
     })

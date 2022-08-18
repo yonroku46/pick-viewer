@@ -27,6 +27,14 @@ export default function HomePage(props) {
       SetActiveIndex(newIndex);
     }
 
+    const contentList = [
+      { "title": "a", "image": "https://react.semantic-ui.com/images/wireframe/square-image.png" },
+      { "title": "b", "image": "https://react.semantic-ui.com/images/wireframe/square-image.png" },
+      { "title": "c", "image": "https://react.semantic-ui.com/images/wireframe/square-image.png" },
+      { "title": "d", "image": "https://react.semantic-ui.com/images/wireframe/square-image.png" },
+      { "title": "e", "image": "https://react.semantic-ui.com/images/wireframe/square-image.png" }
+    ]
+
     useEffect(() => {
       getNearShop();
     }, [])
@@ -123,7 +131,7 @@ export default function HomePage(props) {
       if (e.key === 'Enter') {
         props.history.push({
           pathname: '/search',
-          state: { searchValue: e.target.value}
+          state: { searchValue: e.target.value }
         })
       }
     }
@@ -176,6 +184,17 @@ export default function HomePage(props) {
           </div>
         </Grid>
 
+      </Grid>
+
+      <Grid container className='home-content-main content1' relaxed unstackable>
+        <Grid.Row columns={contentList.length}>
+          {contentList.map(content => 
+            <Grid.Column>
+              <Image circular src={content.image}/>
+              <span>{content.title}</span>
+            </Grid.Column>
+          )}
+        </Grid.Row>
       </Grid>
 
       <Grid container columns={2} className='home-content-main' divided relaxed stackable>

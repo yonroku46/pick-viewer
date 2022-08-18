@@ -210,9 +210,9 @@ export default function MyPage(props) {
           .then(response => resolve(response.data))
           .catch(error => reject(error.response))
       })
-      .then((data) => {
-        if (data.success) {
-          if (data.data.result) {
+      .then(res => {
+        if (res.success) {
+          if (res.data.result) {
             userInfo['employment'] = submitSerial;
             sessionStorage.setItem('userInfo', JSON.stringify(userInfo));
             alert("소속 신청이 완료되었습니다.");

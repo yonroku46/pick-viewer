@@ -46,7 +46,7 @@ export default function AboutPage(props) {
     </Step.Group>
     <Container>
         <p>
-        (설명란)
+        {/* (설명란) */}
         </p>
     </Container>
     <Header className='about-sub-title'>
@@ -63,24 +63,24 @@ export default function AboutPage(props) {
     </Step.Group>
     <Container>
         <p>
-        (설명란)
+        {/* (설명란) */}
         </p>
     </Container>
     <Header className='about-sub-title'>
-        {'3. 방문'}
+        {'3. 방문 및 후기작성'}
     </Header>
     <Step.Group widths={1}>
         <Step>
         <Icon name='rocket'/>
         <Step.Content>
-            <Step.Title>다음에 또 봐요</Step.Title>
+            <Step.Title>감사합니다</Step.Title>
             <Step.Description>후기를 남겨 매장을 응원하고, 정보를 공유해요!</Step.Description>
         </Step.Content>
         </Step>
     </Step.Group>
     <Container>
         <p>
-        (설명란)
+        {/* (설명란) */}
         </p>
     </Container>
     </>

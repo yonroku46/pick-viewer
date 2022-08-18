@@ -256,9 +256,9 @@ export default function ReviewPage(props) {
         .then(response => resolve(response.data))
         .catch(error => reject(error.response))
     })
-    .then(data => {
-      if (data.success) {
-        const result = data.data.result;
+    .then(res => {
+      if (res.success) {
+        const result = res.data.result;
         setIsFavorite(result);
         if (result) {
           shop.favoriteNum = shop.favoriteNum + 1;

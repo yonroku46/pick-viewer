@@ -64,8 +64,9 @@ export default function SignupPage(props) {
     if (reg.test(email)) {
       setError(null);
       setApiload(true);
-      mailService(email).then(data => {
-        const result = data.data.result;
+      mailService(email)
+      .then(res => {
+        const result = res.data.result;
         if (result) {
           alert("인증 이메일을 전송하였습니다. 인증번호를 확인해주세요")
           setApiload(false);
@@ -86,8 +87,9 @@ export default function SignupPage(props) {
     toggleVisibility();
 
     setApiload(true);
-    certifiService(pin, email).then(data => {
-      const result = data.data.result;
+    certifiService(pin, email)
+    .then(res => {
+      const result = res.data.result;
       if (result) {
         setError(null);
         setApiload(false);

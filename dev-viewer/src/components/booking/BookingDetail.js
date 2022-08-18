@@ -163,8 +163,8 @@ export default function BookingDetail(props) {
         .then(response => resolve(response.data))
         .catch(error => reject(error.response))
     })
-    .then(data => {
-      const result = data.data.result;
+    .then(res => {
+      const result = res.data.result;
       if (!result) {
         alert("해당 시간에 고객님의 다른 일정이 확인되었습니다.\n일정 확인 후 시도해주세요.");
         setModalLoading(false);
@@ -194,15 +194,17 @@ export default function BookingDetail(props) {
             .then(response => resolve(response.data))
             .catch(error => reject(error.response))
         })
-        .then(data => {
-          const result = data.data.result;
-          if (result && data.success) {
-            dispatch({ type: 'CLOSE_MODAL' })
-            setModalLoading(false);
-            setModalFinal(true)
-          } else {
-            alert("예약에 실패하였습니다. 잠시 후 시도해주세요.")
-            setModalLoading(false);
+        .then(res => {
+          const result = res.data.result;
+          if (res.success) {
+            if (result) {
+              dispatch({ type: 'CLOSE_MODAL' })
+              setModalLoading(false);
+              setModalFinal(true)
+            } else {
+              alert("예약에 실패하였습니다. 잠시 후 시도해주세요.")
+              setModalLoading(false);
+            }
           }
         })
       }
@@ -373,9 +375,9 @@ export default function BookingDetail(props) {
         .then(response => resolve(response.data))
         .catch(error => reject(error.response))
     })
-    .then(data => {
-      if (data.success) {
-        const result = data.data.result;
+    .then(res => {
+      if (res.success) {
+        const result = res.data.result;
         setIsFavorite(result);
         if (result) {
           shop.favoriteNum = shop.favoriteNum + 1;

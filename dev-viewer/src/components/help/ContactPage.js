@@ -36,8 +36,8 @@ function ContactPage(props) {
               .then(response => resolve(response.data))
               .catch(error => reject(error.response))
         })
-        .then(data => {
-            const result = data.data.result;
+        .then(res => {
+            const result = res.data.result;
             if (result) {
                 setName('');
                 setEmail('');
