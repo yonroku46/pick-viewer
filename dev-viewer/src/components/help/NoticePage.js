@@ -86,7 +86,7 @@ function NoticePage(props) {
         <Table.Body className='notice-table-body'>
             {!loading && noticeList.length == 0 ? 
                 <Table.Row>
-                    <Table.Cell>
+                    <Table.Cell colSpan='2'>
                         찾으시는 공지사항이 존재하지 않습니다
                     </Table.Cell>
                 </Table.Row>

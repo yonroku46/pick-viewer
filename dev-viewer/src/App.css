@@ -1088,7 +1088,7 @@ table.dashboard-table input {
 }
 .mypage-user-mail {
   margin-left: 3px !important;
-  margin-top: -2px !important;
+  margin-top: 0px !important;
 }
 .mypage-user-intro {
   margin-bottom: 20px;
@@ -2967,21 +2967,32 @@ div.stretched.fourteen.wide.column.help-contents {
 }
 .notice-contents-background {
   height: 220px;
-  background-position: center center;
-  background-image: linear-gradient(rgba(0, 0, 0, 0.25), rgba(220, 220, 220, 0.8)), url('./img/home.jpg');
-  background-repeat: no-repeat;
-  background-size: cover;
   border-bottom-left-radius: 48px;
   border-bottom-right-radius: 48px;
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center center;
+}
+.notice-contents-background.notice {
+  background-image: linear-gradient(rgba(0, 0, 0, 0.25), rgba(75, 30, 165, 0.75)), url('./img/noticeBackground.png');
+}
+.notice-contents-background.event {
+  background-image: linear-gradient(rgba(0, 0, 0, 0.25), rgba(75, 30, 165, 0.75)), url('./img/eventBackground.png');
+}
+.notice-contents-background.patch {
+  background-image: linear-gradient(rgba(0, 0, 0, 0.25), rgba(75, 30, 165, 0.75)), url('./img/patchBackground.png');
 }
 .notice-contents-title {
   position: fixed;
-  margin-top: 135px;
+  margin-top: 105px;
   width: 100%;
+}
+.notice-contents-title h1, .notice-contents-title h5, .notice-contents-title-edit h1, .notice-contents-title-edit h5 {
+  color: #fff !important;
 }
 .notice-contents-title-edit {
   position: fixed;
-  margin-top: 79px;
+  margin-top: 49px;
   width: 100%;
 }
 .notice-contents-title-edit button {

@@ -50,8 +50,8 @@ function NoticeViewer(props) {
               .then(response => resolve(response.data))
               .catch(error => reject(error.response))
         })
-        .then(data => {
-          const result = data.data.result;
+        .then(res => {
+          const result = res.data.result;
           if (result) {
             alert('변경이 완료되었습니다.')
             props.history.goBack(1);
@@ -68,7 +68,18 @@ function NoticeViewer(props) {
     }
 
     function editClick() {
-      console.log(api.noticeEdit);
+      props.history.push({
+        pathname: '/help/notice/write',
+        state: { 
+          notice: {
+            'noticeCd': notice.noticeCd,
+            'noticeTitle': notice.noticeTitle,
+            'category': notice.category,
+            'activeFlag': notice.activeFlag,
+            'noticeContent': notice.noticeContent
+         }
+        }
+      })
     }
 
     function deleteClick() {
@@ -102,13 +113,13 @@ function NoticeViewer(props) {
     <>
     <div className='notice-main'>
         {!loading && notice && <>
-        <div className='notice-contents-background'>
+        <div className={'notice-contents-background ' + notice.category}>
           <div className={edit ? 'notice-contents-title-edit' : 'notice-contents-title'}>
             {edit && 
             <>
-              <Button basic icon={notice.activeFlag ? 'eye' : 'eye slash'} onClick={activeClick}/>
-              <Button basic icon='edit' onClick={editClick}/>
-              <Button basic icon='trash' onClick={deleteClick}/>
+              <Button basic inverted icon={notice.activeFlag ? 'eye' : 'eye slash'} onClick={activeClick}/>
+              <Button basic inverted icon='edit' onClick={editClick}/>
+              <Button basic inverted icon='trash' onClick={deleteClick}/>
             </>
             }
             <Container text fluid>
