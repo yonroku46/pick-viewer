@@ -28,11 +28,11 @@ export default function HomePage(props) {
     }
 
     const contentList = [
-      { "title": "a", "image": "https://react.semantic-ui.com/images/wireframe/square-image.png" },
-      { "title": "b", "image": "https://react.semantic-ui.com/images/wireframe/square-image.png" },
-      { "title": "c", "image": "https://react.semantic-ui.com/images/wireframe/square-image.png" },
-      { "title": "d", "image": "https://react.semantic-ui.com/images/wireframe/square-image.png" },
-      { "title": "e", "image": "https://react.semantic-ui.com/images/wireframe/square-image.png" }
+      { "title": "핫플", "color": "red", "icon": "hotjar" },
+      { "title": "주변맛집", "color": "yellow", "icon": "utensils" },
+      { "title": "빠른예약", "color": "green", "icon": "bolt" },
+      { "title": "추천매장", "color": "blue", "icon": "photo" },
+      { "title": "추천픽", "color": "purple", "icon": "calendar check outline" }
     ]
 
     useEffect(() => {
@@ -186,11 +186,11 @@ export default function HomePage(props) {
 
       </Grid>
 
-      <Grid container className='home-content-main content1' relaxed unstackable>
+      <Grid container className='content1' relaxed unstackable>
         <Grid.Row columns={contentList.length}>
           {contentList.map(content => 
             <Grid.Column>
-              <Image circular src={content.image}/>
+              <Icon inverted size='big' color={content.color} name={content.icon}/>
               <span>{content.title}</span>
             </Grid.Column>
           )}
