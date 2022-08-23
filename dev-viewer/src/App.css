@@ -678,12 +678,24 @@ hr {
   text-overflow: ellipsis;
   text-align: center !important;
 }
+.dashboard-table-name i.icon {
+  margin-right: -4px !important;
+}
+.dashboard-table-name i.icon:hover {
+  cursor: pointer;
+}
 .dashboard-table-career {
-  width: 6em !important;
-  max-width: 6em !important;
+  width: 8em !important;
+  max-width: 8em !important;
   overflow: hidden;
   text-overflow: ellipsis;
   text-align: center !important;
+}
+.dashboard-table-career i.icon {
+  margin-right: -4px;
+}
+.dashboard-table-career i.icon:hover {
+  cursor: pointer;
 }
 .dashboard-table-career input {
   width: 5.5em !important;
@@ -897,8 +909,8 @@ table.dashboard-table input {
     font-size: 0.9em !important;
   }
   .dashboard-table th.dashboard-table-career,td.dashboard-table-career {
-    width: 5em !important;
-    max-width: 5em !important;
+    width: 6em !important;
+    max-width: 6em !important;
     padding: 0.4em 0.15em !important;
     font-size: 0.9em !important;
   }

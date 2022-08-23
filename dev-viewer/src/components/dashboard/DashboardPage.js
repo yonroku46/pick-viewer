@@ -34,6 +34,8 @@ export default function DashboardPage(props) {
     const [modalCategoryList, setModalCategoryList] = useState([]);
     const [shopImages, setShopImages] = useState([]);
     const [shopImageIndex, setShopImageIndex] = useState([]);
+    const [nameFilter, setNameFilter] = useState(undefined);
+    const [careerFilter, setCareerFilter] = useState(undefined);
     const shopCd = userInfo ? userInfo.employment : null;
     
     const [category, setCategory] = useState('all');
@@ -630,8 +632,8 @@ export default function DashboardPage(props) {
                         <Table.Header>
                         <Table.Row>
                             <Table.HeaderCell className='dashboard-table-no'>No</Table.HeaderCell>
-                            <Table.HeaderCell className='dashboard-table-name'>이름</Table.HeaderCell>
-                            <Table.HeaderCell className='dashboard-table-career'>경력/직급</Table.HeaderCell>
+                            <Table.HeaderCell className='dashboard-table-name'>이름<Icon name={nameFilter === undefined ? 'sort' : nameFilter ? 'sort down' : 'sort up'} onClick={() => staffFilter('name')}/></Table.HeaderCell>
+                            <Table.HeaderCell className='dashboard-table-career'>경력/직급<Icon name={careerFilter === undefined ? 'sort' : careerFilter ? 'sort down' : 'sort up'} onClick={() => staffFilter('career')}/></Table.HeaderCell>
                             <Table.HeaderCell className='dashboard-table-info' colSpan={editMode ? '2' : '1'}>직원소개</Table.HeaderCell>
                         </Table.Row>
                         </Table.Header>
@@ -845,6 +847,26 @@ export default function DashboardPage(props) {
         } else {
             return;
         }
+    }
+
+    function staffFilter(sortBy) {
+        let result = []
+        if (sortBy === 'name') {
+            if (nameFilter) {
+                result = staffList.sort((a, b) => (a.userName.toLowerCase() < b.userName.toLowerCase()) ? -1 : ((b.userName.toLowerCase() > a.userName.toLowerCase()) ? 1 : 0));
+            } else {
+                result = staffList.sort((b, a) => (a.userName.toLowerCase() < b.userName.toLowerCase()) ? -1 : ((b.userName.toLowerCase() > a.userName.toLowerCase()) ? 1 : 0));
+            }
+            setNameFilter(!nameFilter);
+        } else if (sortBy === 'career') {
+            if (careerFilter) {
+                result = staffList.sort((a, b) => (a.career.toLowerCase() < b.career.toLowerCase()) ? -1 : ((b.career.toLowerCase() > a.career.toLowerCase()) ? 1 : 0));
+            } else {
+                result = staffList.sort((b, a) => (a.career.toLowerCase() < b.career.toLowerCase()) ? -1 : ((b.career.toLowerCase() > a.career.toLowerCase()) ? 1 : 0));
+            }
+            setCareerFilter(!careerFilter);
+        }
+        setStaffList(result);
     }
 
     function selectCategory (e, { value }) {
