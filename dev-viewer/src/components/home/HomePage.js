@@ -27,14 +27,6 @@ export default function HomePage(props) {
       SetActiveIndex(newIndex);
     }
 
-    const contentList = [
-      { "title": "핫플", "color": "red", "icon": "hotjar" },
-      { "title": "주변맛집", "color": "yellow", "icon": "utensils" },
-      { "title": "빠른예약", "color": "green", "icon": "bolt" },
-      { "title": "추천매장", "color": "blue", "icon": "photo" },
-      { "title": "추천픽", "color": "purple", "icon": "calendar check outline" }
-    ]
-
     useEffect(() => {
       getNearShop();
     }, [])
@@ -184,17 +176,6 @@ export default function HomePage(props) {
           </div>
         </Grid>
 
-      </Grid>
-
-      <Grid container className='content1' relaxed unstackable>
-        <Grid.Row columns={contentList.length}>
-          {contentList.map(content => 
-            <Grid.Column>
-              <Icon inverted size='big' color={content.color} name={content.icon}/>
-              <span>{content.title}</span>
-            </Grid.Column>
-          )}
-        </Grid.Row>
       </Grid>
 
       <Grid container columns={2} className='home-content-main' divided relaxed stackable>

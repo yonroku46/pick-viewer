@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useReducer } from "react";
-import { Menu, Form, Input, Loader, Icon } from 'semantic-ui-react'
+import { Menu, Form, Input, Loader, Icon, Grid } from 'semantic-ui-react'
 import StackGrid from 'react-stack-grid';
 import * as api from '../../rest/api'
 import axios from 'axios';
@@ -8,27 +8,20 @@ export default function CommonPage(props) {
 
     const [consents, setConsents] = useState(false);
     const [sp, setSp] = useState(false);
-    const [search, setSearch] = useState('');
+
+    const contentList = [
+        { "title": "핫플", "color": "red", "icon": "hotjar" },
+        { "title": "주변맛집", "color": "yellow", "icon": "utensils" },
+        { "title": "빠른예약", "color": "green", "icon": "bolt" },
+        { "title": "추천매장", "color": "blue", "icon": "photo" },
+        { "title": "검색", "color": "purple", "icon": "search" }
+    ]
 
     useEffect(() => {
         setSp(window.innerWidth < 767);
         window.scrollTo({ top: 4, behavior: 'smooth' });
         window.scrollTo({ top: 0, behavior: 'smooth' });
     }, [window.innerWidth])
-
-    function onCheckEnter(e) {
-        if (e.key === 'Enter') {
-            searching();
-        }
-    }
-
-    function delSearch() {
-        setSearch('');
-    }
-
-    function searching() {
-        console.log(search);
-    }
 
     function render() {
         const result = [];
@@ -52,15 +45,18 @@ export default function CommonPage(props) {
     return(
         <>
         <div className='common-main'>
-            <Menu.Item className='common-search'>
-                <Form onKeyPress={onCheckEnter}>
-                    <Input iconPosition='left' autoFocus={true} placeholder='검색' value={search} onChange={(e) => setSearch(e.target.value)}>
-                        {0 < search.length && <Icon className='search-del' name='times circle' onClick={delSearch}/>}
-                        <input className='search-input'/>
-                        <Icon className='search-btn' name='search' onClick={searching}/>
-                    </Input>
-                </Form>
-            </Menu.Item>
+            
+            <Grid container className='content-menu' relaxed unstackable>
+                <Grid.Row columns={contentList.length}>
+                {contentList.map(content => 
+                    <Grid.Column>
+                    <Icon inverted size='big' color={content.color} name={content.icon}/>
+                    <span>{content.title}</span>
+                    </Grid.Column>
+                )}
+                </Grid.Row>
+            </Grid>
+
             <div className='common-posts'>
                 <StackGrid
                 columnWidth={sp ? 380 : 260} gutterWidth={8} gutterHeight={8}>

@@ -13,35 +13,34 @@ export default function BookingPage(props) {
     const [favoriteList, setFavoriteList] = useState([]);
     const categoryList = ['hairshop', 'restaurant', 'cafe'];
 
-    if (!categoryList.includes(category)) {
+    useEffect(() => {
+      if (!categoryList.includes(category)) {
         alert('잘못된 접근입니다.')
         props.history.goBack(1);
-    };
-
-    useEffect(() => {
-        return new Promise(function(resolve, reject) {
-          axios
-          .get(api.myFavorites, {
-            params: {
-              'userCd': userCd
-            }
-          })
-          .then(response => resolve(response.data))
-          .catch(error => reject(error.response))
-        })
-        .then(res => {
-          if (res.success) {
-              const tmp = [];
-              res.dataList.forEach(shop => {
-                  tmp.push(shop.shopCd);
-              })
-              setFavoriteList(tmp);
+      };
+      return new Promise(function(resolve, reject) {
+        axios
+        .get(api.myFavorites, {
+          params: {
+            'userCd': userCd
           }
         })
-        .catch(err => {
-          alert("현재 서버와의 연결이 원활하지 않습니다. 관리자에게 문의해주세요.");
-        })
-      }, []); 
+        .then(response => resolve(response.data))
+        .catch(error => reject(error.response))
+      })
+      .then(res => {
+        if (res.success) {
+            const tmp = [];
+            res.dataList.forEach(shop => {
+                tmp.push(shop.shopCd);
+            })
+            setFavoriteList(tmp);
+        }
+      })
+      .catch(err => {
+        alert("현재 서버와의 연결이 원활하지 않습니다. 관리자에게 문의해주세요.");
+      })
+    }, []); 
 
     return(
     <>
