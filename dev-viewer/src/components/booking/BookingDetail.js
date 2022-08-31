@@ -653,16 +653,19 @@ export default function BookingDetail(props) {
             Array(7).fill(0).map((_data, index) => {
             let days = today.clone().startOf('year').week(week).startOf('week').add(index, 'day');
 
+            // normal - 80% OK / active - 40% OK / nonactive - 0%
             if (getMoment.format('YYYYMMDD') === days.format('YYYYMMDD')) {
               return(
                 <Table.Cell onClick={dayClick} className='mypage-table-active table-today'>
                   <span>{days.format('D')}</span>
+                  <Button disabled className='table-booking-date nonactive' size='mini' icon='minus circle'/>
                 </Table.Cell>
               );
             } else if (days.format('MM') !== today.format('MM')) {
               return(
                 <Table.Cell className='table-other-month'>
                   <span>{days.format('D')}</span>
+                  <Button disabled className='table-booking-date active' size='mini' icon='check circle'/>
                 </Table.Cell>
               );
             } else {
@@ -676,6 +679,7 @@ export default function BookingDetail(props) {
                 return(
                   <Table.Cell onClick={dayClick} className='mypage-table-active'>
                     <span>{days.format('D')}</span>
+                    <Button disabled className='table-booking-date' size='mini' icon='check circle'/>
                   </Table.Cell>
                 );
               }
@@ -761,7 +765,7 @@ export default function BookingDetail(props) {
             && timeArr.map(time => (
               (parseInt(time.substring(0,2)) <= 12)
               ? (originToday === dbDate && (parseInt(time.substring(0,2)) <= thisHour))
-                ? <Button disabled className='timetable-btn'>{time}</Button>
+                ? <Button disabled className='timetable-btn nonactive'>{time}</Button>
                 : <Button className={dbTime == time ? 'timetable-btn-selected' : 'timetable-btn'} value={time} onClick={timeClick}>{time}</Button>
               : <></>
             ))
@@ -774,7 +778,7 @@ export default function BookingDetail(props) {
             (parseInt(time.substring(0,2)) <= 12)
             ? <></>
             : (originToday === dbDate && (parseInt(time.substring(0,2)) <= thisHour))
-              ? <Button disabled className='timetable-btn'>{time}</Button>
+              ? <Button disabled className='timetable-btn nonactive'>{time}</Button>
               : <Button className={dbTime == time ? 'timetable-btn-selected' : 'timetable-btn'} value={time} onClick={timeClick}>{time}</Button>
           ))
         }

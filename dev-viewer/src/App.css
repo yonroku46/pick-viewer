@@ -1186,11 +1186,9 @@ table.dashboard-table input {
   cursor: pointer;
   font-weight: bold !important;
   color: #A291FB;
-  background-color: rgba(161, 51, 204, 0.05);
   width: calc(100% / 7);
 }
 .table-today {
-  background-color: rgba(161, 51, 204, 0.05);
   color: #A291FB;
   font-weight: bold;
   width: calc(100% / 7);
@@ -1199,6 +1197,22 @@ table.dashboard-table input {
   background-color: rgb(125, 125, 125, 0.1);
   color: rgb(125, 125, 125, 0.15);
   width: calc(100% / 7);
+}
+.table-booking-date {
+  width: auto !important;
+  position: absolute;
+  background-color: #ffffff00 !important;
+  color: #36d428 !important;
+  padding: 1px !important;
+  padding-right: 2px !important;
+  padding-bottom: 2px !important;
+  transform: translateY(-25%)
+}
+.table-booking-date.active {
+  color: #ffcc56 !important;
+}
+.table-booking-date.nonactive {
+  color: #a0a0a0 !important;
 }
 .mypage-table-month {
   background-color: #fff !important;
@@ -2669,6 +2683,9 @@ a.detailpage-tel:hover {
   border-width: 1px;
   border-color: lightgray ;
   margin: 2px;
+}
+.ui.button.timetable-btn.nonactive {
+  background-color: #d0d0d0be !important;
 }
 .ui.button.timetable-btn-selected {
   border-style: solid;
