@@ -90,6 +90,7 @@ h1, h2, h3, h4, h5, div, a, button {
   display: table;
   box-shadow: inset 0 -0.3em 0 rgba(0, 153, 255, 0.5);
 }
+
 .empty {
   color: rgb(202, 202, 202, 0.5);
 }
@@ -206,6 +207,15 @@ h1, h2, h3, h4, h5, div, a, button {
 
 .menu-user {
   padding: 60px 0px !important;
+}
+.menu-booking i.calendar {
+  font-size: 25px !important;
+}
+.menu-booking i.check {
+  font-size: 11px !important;
+}
+.menu-booking div {
+  margin-top: 0.5rem !important;
 }
 
 .menu-language {
@@ -742,9 +752,10 @@ hr {
 .dashboard-table-career i.icon:hover {
   cursor: pointer;
 }
-.dashboard-table-career input {
+.dashboard-table-career .ui.input {
   width: 5.5em !important;
   max-width: 5.5em !important;
+  justify-content: center !important;
 }
 .dashboard-table-info {
   overflow: hidden;

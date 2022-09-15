@@ -142,22 +142,25 @@ export default function App() {
             <Icon name='home'/>
             홈
           </Menu.Item>
-          {isAuthorized &&
-          <Menu.Item as={Link} to='/mypage' onClick={menuClose}>
-            <Icon name='user'/>
-            마이페이지
-          </Menu.Item>
-          }
           {isAuthorized && (role === 3) &&
           <Menu.Item as={Link} to='/dashboard' onClick={menuClose}>
             <Icon name='sitemap'/>
             매장관리
           </Menu.Item>
           }
-          <Menu.Item as={Link} to='/booking/hairshop' onClick={menuClose}>
-            <Icon name='inbox'/>
-            예약하기
+          <Menu.Item as={Link} className='menu-booking' to='/booking/hairshop' onClick={menuClose}>
+            <Icon.Group>
+              <Icon name='calendar outline'/>
+              <Icon corner className='pcolor' name='check circle'/>
+            </Icon.Group>
+            <div>예약하기</div>
           </Menu.Item>
+          {isAuthorized &&
+          <Menu.Item as={Link} to='/mypage' onClick={menuClose}>
+            <Icon name='user'/>
+            마이페이지
+          </Menu.Item>
+          }
           <Menu.Item as={Link} to='/common' onClick={menuClose}>
             <Icon name='talk'/>
             커뮤니티
