@@ -839,13 +839,22 @@ table.dashboard-table input {
 }
 .dashboard-modal-category {
   margin-bottom: 0.5em;
-  width: 67% !important;
+  width: 54% !important;
 }
 .dashboard-modal-category-select {
   margin-bottom: 0.5em;
   margin-right: 1%;
-  width: 32% !important;
-  min-width: 32% !important;
+  width: 22% !important;
+  min-width: 22% !important;
+}
+.dashboard-modal-time-select {
+  margin-bottom: 0.5em;
+  margin-left: 1%;
+  width: 22% !important;
+  min-width: 22% !important;
+}
+.dashboard-modal-time-select .default {
+  margin-left: 0 !important;
 }
 .dashboard-modal-name {
   margin-bottom: 0.5em;
@@ -2618,6 +2627,19 @@ a.detailpage-tel:hover {
 }
 .detailpage-service {
   text-align: left;
+  position: relative;
+}
+.detailpage-service div.menu-time i {
+  margin-right: 0.25em !important;
+}
+.detailpage-service div.menu-time {
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  font-weight: 100 !important;
+  background-color: #ffffff00 !important;
+  color: grey !important;
+  border: none !important;
 }
 .detailpage-service div.content {
   margin-top: 10px !important;

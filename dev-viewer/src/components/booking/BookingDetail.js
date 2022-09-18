@@ -4,7 +4,7 @@ import person1 from '../../img/person1.png'
 import person2 from '../../img/person2.png'
 import person3 from '../../img/person3.png'
 import person5 from '../../img/person5.png'
-import { Dimmer, Button, Item, Grid, Segment, Image, Icon, Loader, Modal, Header, Table, Statistic, Card } from 'semantic-ui-react'
+import { Dimmer, Button, Item, Grid, Segment, Image, Icon, Loader, Modal, Header, Table, Statistic, Card, Label } from 'semantic-ui-react'
 import { Link as Scroll } from "react-scroll";
 import moment from "moment";
 import MapContainer from "../public/MapContainer";
@@ -480,7 +480,9 @@ export default function BookingDetail(props) {
     <Item.Group unstackable className={dbDesigner === staff.userCd ? 'detailpage-service-menu detailpage-selected' : 'detailpage-service-menu'} key={staff.userCd} onClick={() => DesignerBtnClick(staff.userCd)}>
       <Item className='detailpage-service'>
         <Item.Image className='detailpage-service-img' src={api.imgRender(staff.userImg === null ? staffDefault : staff.userImg)}/>
-        <Item.Content header={staff.career ? staff.userName + ' (' + staff.career +') ' : staff.userName} meta={staff.info}/>
+        <Item.Content
+         header={staff.career ? staff.userName + ' (' + staff.career +') ' : staff.userName} 
+         meta={staff.info}/>
       </Item>
     </Item.Group>
     {dbDesigner === staff.userCd &&
@@ -503,7 +505,11 @@ export default function BookingDetail(props) {
       <Item.Group unstackable className={0 < menu.num ? 'detailpage-service-menu detailpage-selected' : 'detailpage-service-menu'} key={menu.menuCd}>
         <Item className='detailpage-service' onClick={() => hairShopMenuBtnClick(menu.menuCd)}>
           <Item.Image className='detailpage-service-img' src={api.imgRender(menu.menuImg === null ? menuDefault : menu.menuImg)}/>
-          <Item.Content header={menu.menuName} meta={comma(menu.menuPrice) + '원'} description={menu.menuDescription === null ? '' : menu.menuDescription}/>
+          <Item.Content 
+            header={menu.menuName} 
+            meta={comma(menu.menuPrice) + '원'} 
+            description={menu.menuDescription === null ? '' : menu.menuDescription}
+            extra={menu.menuTime && <Label basic className='menu-time' icon='time' content={menu.menuTime}/>}/>
         </Item>
       </Item.Group>
       {0 < menu.num &&
@@ -542,7 +548,11 @@ export default function BookingDetail(props) {
         <Item.Group unstackable className={0 < menu.num ? 'detailpage-service-menu detailpage-selected' : 'detailpage-service-menu'} key={menu.menuCd}>
           <Item className='detailpage-service' onClick={() => shopMenuBtnClick(menu.menuCd)}>
             <Item.Image className='detailpage-service-img' src={api.imgRender(menu.menuImg === null ? menuDefault : menu.menuImg)}/>
-            <Item.Content header={menu.menuName} meta={comma(menu.menuPrice) + '원'} description={menu.menuDescription === null ? '' : menu.menuDescription}/>
+            <Item.Content 
+              header={menu.menuName}
+              meta={comma(menu.menuPrice) + '원'}
+              description={menu.menuDescription === null ? '' : menu.menuDescription}
+              extra={menu.menuTime && <Label basic className='menu-time' icon='time' content={menu.menuTime}/>}/>
           </Item>
         </Item.Group>
         {0 < menu.num &&

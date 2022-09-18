@@ -32,6 +32,7 @@ export default function DashboardPage(props) {
     const [categoryList, setCategoryList] = useState([]);
     const [modalMenu, setModalMenu] = useState(null);
     const [modalCategoryList, setModalCategoryList] = useState([]);
+    const [modalTimeList, setModalTimeList] = useState([]);
     const [shopImages, setShopImages] = useState([]);
     const [shopImageIndex, setShopImageIndex] = useState([]);
     const [nameFilter, setNameFilter] = useState(undefined);
@@ -126,6 +127,7 @@ export default function DashboardPage(props) {
             makeCategoryList(res.data.menuCategories);
             makeShopInfo(res.data);
             getRequestList(shopCd);
+            makeTimeList();
           }
         })
         .catch(err => {
@@ -150,6 +152,23 @@ export default function DashboardPage(props) {
         });
         setCategoryList(result);
         setModalCategoryList(modalResult);
+    }
+
+    function makeTimeList() {
+        const result = [];
+        for (let i = 0; i < 12; i++) {
+            for (let j = 0; j < 2; j++) {
+                const HH = i;
+                const mm = j === 0 ? '00' : j*30;
+                const time = HH + ':' + mm;
+                if (time === '0:00') {
+                    result.push({ key: '', value: '', text: '미설정' });
+                } else {
+                    result.push({ key: time, value: time, text: time });
+                }
+            }
+        }
+        setModalTimeList(result);
     }
     
     function makeShopInfo(data) {
@@ -714,14 +733,15 @@ export default function DashboardPage(props) {
                     {menuList.map(menu => (
                     <Item.Group unstackable className='dashboard-viewer-menu' key={menu.menuCd}>
                         <Item className='detailpage-service'>
-                        <Label className='dashboard-menu-label'>
-                            {menuList.indexOf(menu) + 1}
-                        </Label>
+                            <Label className='dashboard-menu-label'>
+                                {menuList.indexOf(menu) + 1}
+                            </Label>
                             <Item.Image className='dashboard-viewer-menu-img' src={api.imgRender(menu.menuImg === null ? menuDefault : menu.menuImg)}/>
                             <Item.Content
                                 header={menu.menuName ? menu.menuName : '메뉴명 미입력'}
                                 meta={menu.menuPrice ? comma(menu.menuPrice) + '원' : '가격 미입력'}
                                 description={menu.menuDescription ? menu.menuDescription : <span className='empty'>설명 미입력</span>}
+                                extra={menu.menuTime && <Label basic className='menu-time' icon='time' content={menu.menuTime}/>}
                             />
                             {editMode && <Item className='dashboard-content-icon'><Icon name='edit' onClick={() => modalOpen(menu.menuCd)}/></Item>}
                         </Item>
@@ -752,6 +772,7 @@ export default function DashboardPage(props) {
                         <Form.Group>
                             <Select placeholder='카테고리 선택' className='dashboard-modal-category-select' defaultValue={modalMenu.menuCategory ? modalMenu.menuCategory : 'direct'} options={modalCategoryList} onChange={selectModalCategory}/>
                             <Input placeholder='카테고리 입력' className='dashboard-modal-category' value={modalMenu.menuCategory ? modalMenu.menuCategory : ''} onChange={changeMenuCategory}/>
+                            <Select placeholder='소요시간' className='dashboard-modal-time-select' defaultValue={modalMenu.menuTime ? modalMenu.menuTime : modalTimeList[0]} options={modalTimeList} onChange={selectModalTime}/>
                         </Form.Group>
                         <Form.Group>
                             <Input placeholder='메뉴 이름' className='dashboard-modal-name' value={modalMenu.menuName ? modalMenu.menuName : ''} onChange={changeMenuName}/>
@@ -889,6 +910,12 @@ export default function DashboardPage(props) {
                 { ...modalMenu, menuCategory: value }
             )
         }
+    }
+
+    function selectModalTime (e, { value }) {
+        setModalMenu(
+            { ...modalMenu, menuTime: value }
+        )
     }
 
     function menuDelete(targetId) {
