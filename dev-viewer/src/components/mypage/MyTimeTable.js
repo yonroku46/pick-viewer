@@ -42,50 +42,68 @@ function MyTimeTable(props) {
         setTableStat(!tableStat)
     }
 
+    function includeTime(target, time) {
+        const result = target.filter(t => t.bookingTime.substr(11).split(":")[0].match(time.split(":")[0])).length !== 0;
+        return result;
+    }
+
+    function calcTimeSpan(start, end) {
+        if (start === end) {
+            return 1;
+        } else {
+            const endTime = moment(end);
+            const startTime = moment(start);
+            const result = endTime.diff(startTime, 'hours') + 1;
+            return result;   
+        }
+    }
+
     function timeRender() {
         let result = [];
-
-        const target = bookingList.filter(booking => booking.bookingTime.match(props.today));
-        const cnt = target.length;
-        if (cnt !== 0) {
+        const targetList = bookingList.filter(booking => booking.bookingTime.match(props.today));
+        if (targetList.length !== 0) {
             result = result.concat(
                 timeArr.map(time => (
-                target.map(booking => booking.bookingTime.substr(11).split(":")[0] === time.split(":")[0] ?
-                    <Table.Row className='center'>
-                        <Table.Cell className='mypage-tt-time'>
-                            <span>{time}</span>
-                        </Table.Cell>
-                        <Table.Cell className='mypage-tt-schedule'>
-                            {booking.bookingCategory === categoryList[0] &&
-                            <span>
-                                <Icon className='mypage-tt-icon' name='cut'/>
-                                {booking.shopName}
-                            </span>
-                            }
-                            {booking.bookingCategory === categoryList[1] &&
-                            <span>
-                                <Icon className='mypage-tt-icon' name='food'/>
-                                {booking.shopName} ({booking.customers}명)
-                            </span>
-                            }
-                            {booking.bookingCategory === categoryList[2] &&
-                            <span>
-                                <Icon className='mypage-tt-icon' name='coffee'/>
-                                {booking.shopName} ({booking.customers}명)
-                            </span>
-                            }
-                            <Icon name='angle double right' className='mypage-tt-info' onClick={() => bookingInfo(booking.bookingCd)}/>
-                        </Table.Cell>
-                    </Table.Row> 
+                    includeTime(targetList, time) ?
+                        // 해당 시간대에 예약 있음
+                        targetList.filter(target => target.bookingTime.substr(11).split(":")[0].match(time.split(":")[0])).map(booking => 
+                        <Table.Row className='center'>
+                            <Table.Cell className='mypage-tt-time'>
+                                <span>{time}</span>
+                            </Table.Cell>
+                            <Table.Cell className='mypage-tt-schedule' rowspan={calcTimeSpan(booking.bookingTime, booking.bookingEndTime)}>
+                                {booking.bookingCategory === categoryList[0] &&
+                                <span>
+                                    <Icon className='mypage-tt-icon' name='cut'/>
+                                    {booking.shopName}
+                                </span>
+                                }
+                                {booking.bookingCategory === categoryList[1] &&
+                                <span>
+                                    <Icon className='mypage-tt-icon' name='food'/>
+                                    {booking.shopName} ({booking.customers}명)
+                                </span>
+                                }
+                                {booking.bookingCategory === categoryList[2] &&
+                                <span>
+                                    <Icon className='mypage-tt-icon' name='coffee'/>
+                                    {booking.shopName} ({booking.customers}명)
+                                </span>
+                                }
+                                <Icon name='angle double right' className='mypage-tt-info' onClick={() => bookingInfo(booking.bookingCd)}/>
+                            </Table.Cell>
+                        </Table.Row>
+                        )
                     :
-                    <Table.Row className='center'>
-                        <Table.Cell className={tableStat ? 'mypage-tt-time none' : 'mypage-tt-time'}>
-                            <span>{time}</span>
-                        </Table.Cell>
-                        <Table.Cell className={tableStat ? 'mypage-tt-empty none' : 'mypage-tt-empty'}>
-                        </Table.Cell> 
-                    </Table.Row>
-                )))
+                        // 해당 시간대에 예약 없음
+                        <Table.Row className='center'>
+                            <Table.Cell className={tableStat ? 'none' : 'mypage-tt-time'}>
+                                <span>{time}</span>
+                            </Table.Cell>
+                            <Table.Cell className={tableStat ? 'none' : 'mypage-tt-empty'}>
+                            </Table.Cell> 
+                        </Table.Row>
+                ))
             );
         } else {
             result = result.concat(

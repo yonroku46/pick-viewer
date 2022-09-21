@@ -146,11 +146,37 @@ export default function BookingDetail(props) {
   const shopCustomersTitle = '방문하실 인원수를 알려 주시겠어요?';
   const shopMenuTitle = '어떤 메뉴를 원하시나요?';
 
+  function getEndTime(bookingTime) {
+    const result = moment.utc(bookingTime);
+    let tmpTime = null;
+    orderList.map(order => {
+      if (tmpTime === null) {
+        tmpTime = order.menuTime;
+      } else {
+        if (order.menuTime !== null) {
+          if (tmpTime.replace(":", "") < order.menuTime.replace(":", "")) {
+            tmpTime = order.menuTime;
+          }
+        }
+      }
+    })
+    if (tmpTime) {
+      const hour = tmpTime.split(":")[0];
+      const minutes = tmpTime.split(":")[1];
+      result.add(hour,'hour');
+      result.add(minutes,'minutes');
+    }
+    return result;
+  }
+
   function sendBooking() {
     setModalLoading(true);
     const bookingTime = dbDate + " " + dbTime + ":00";
+    const bookingEndTime =  getEndTime(bookingTime);
     const checkingTimeContury = moment.utc(bookingTime).local().format('YYYY-MM-DD HH:mm:ss');
+    const checkingEndTimeContury = moment.utc(bookingEndTime).local().format('YYYY-MM-DD HH:mm:ss');
     const bookingTimeContury = moment.utc(bookingTime);
+    const bookingEndTimeContury = moment.utc(bookingEndTime);
     const bookingDetail = {};
     new Promise(function(resolve, reject) {
       axios
@@ -158,6 +184,7 @@ export default function BookingDetail(props) {
           params: {
             'userCd': userCd,
             'bookingTime': checkingTimeContury,
+            'bookingEndTime': checkingEndTimeContury
           }
         })
         .then(response => resolve(response.data))
@@ -184,6 +211,7 @@ export default function BookingDetail(props) {
           'userCd': userCd,
           'shopCd': shopCd,
           'bookingTime': bookingTimeContury,
+          'bookingEndTime': bookingEndTimeContury,
           'bookingPrice': resultPrice,
           'category': category,
           'bookingDetail': bookingDetail
@@ -458,10 +486,23 @@ export default function BookingDetail(props) {
     const target = weeks.filter(day => day.key.match(key));
     const result = target[0].text;
     return result;
-}
+  }
 
   function dateConvert(date) {
     return moment(date).format("YYYY년 MM월 DD일");
+  }
+
+  function convertMenuTime(time) {
+    let result = '';
+    const hour = time.split(":")[0];
+    const minutes = time.split(":")[1];
+    if (parseInt(hour) !== 0) {
+      result = hour + '시간';
+    }
+    if (parseInt(minutes) !== 0) {
+      result += ' ' + minutes + '분';
+    }
+    return result;
   }
     
   const [state, dispatch] = useReducer(reducer, {
@@ -509,7 +550,7 @@ export default function BookingDetail(props) {
             header={menu.menuName} 
             meta={comma(menu.menuPrice) + '원'} 
             description={menu.menuDescription === null ? '' : menu.menuDescription}
-            extra={menu.menuTime && <Label basic className='menu-time' icon='time' content={menu.menuTime}/>}/>
+            extra={menu.menuTime && <Label basic className='menu-time' icon='time' content={convertMenuTime(menu.menuTime)}/>}/>
         </Item>
       </Item.Group>
       {0 < menu.num &&
@@ -552,7 +593,7 @@ export default function BookingDetail(props) {
               header={menu.menuName}
               meta={comma(menu.menuPrice) + '원'}
               description={menu.menuDescription === null ? '' : menu.menuDescription}
-              extra={menu.menuTime && <Label basic className='menu-time' icon='time' content={menu.menuTime}/>}/>
+              extra={menu.menuTime && <Label basic className='menu-time' icon='time' content={convertMenuTime(menu.menuTime)}/>}/>
           </Item>
         </Item.Group>
         {0 < menu.num &&
@@ -1042,7 +1083,7 @@ export default function BookingDetail(props) {
                 <Icon name='home'/> 홈으로
               </Button>
             </Link>
-            <Link to='/search'>
+            <Link to={'/booking/' + category}>
               <Button inverted>
                 <Icon name='search'/> 둘러보기
               </Button>

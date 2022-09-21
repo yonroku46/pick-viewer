@@ -156,7 +156,7 @@ export default function DashboardPage(props) {
 
     function makeTimeList() {
         const result = [];
-        for (let i = 0; i < 12; i++) {
+        for (let i = 0; i < 6; i++) {
             for (let j = 0; j < 2; j++) {
                 const HH = i;
                 const mm = j === 0 ? '00' : j*30;
@@ -741,7 +741,7 @@ export default function DashboardPage(props) {
                                 header={menu.menuName ? menu.menuName : '메뉴명 미입력'}
                                 meta={menu.menuPrice ? comma(menu.menuPrice) + '원' : '가격 미입력'}
                                 description={menu.menuDescription ? menu.menuDescription : <span className='empty'>설명 미입력</span>}
-                                extra={menu.menuTime && <Label basic className='menu-time' icon='time' content={menu.menuTime}/>}
+                                extra={menu.menuTime && <Label basic className='menu-time' icon='time' content={convertMenuTime(menu.menuTime)}/>}
                             />
                             {editMode && <Item className='dashboard-content-icon'><Icon name='edit' onClick={() => modalOpen(menu.menuCd)}/></Item>}
                         </Item>
@@ -916,6 +916,19 @@ export default function DashboardPage(props) {
         setModalMenu(
             { ...modalMenu, menuTime: value }
         )
+    }
+
+    function convertMenuTime(time) {
+        let result = '';
+        const hour = time.split(":")[0];
+        const minutes = time.split(":")[1];
+        if (parseInt(hour) !== 0) {
+          result = hour + '시간';
+        }
+        if (parseInt(minutes) !== 0) {
+          result += ' ' + minutes + '분';
+        }
+        return result;
     }
 
     function menuDelete(targetId) {

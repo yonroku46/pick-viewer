@@ -143,9 +143,12 @@ export default function App() {
             홈
           </Menu.Item>
           {isAuthorized && (role === 3) &&
-          <Menu.Item as={Link} to='/dashboard' onClick={menuClose}>
-            <Icon name='sitemap'/>
-            매장관리
+          <Menu.Item as={Link} className='menu-dashboard' to='/dashboard' onClick={menuClose}>
+            <Icon.Group>
+              <Icon name='laptop'/>
+              <Icon corner color='violet' name='folder open'/>
+            </Icon.Group>
+            <div>매장관리</div>
           </Menu.Item>
           }
           <Menu.Item as={Link} className='menu-booking' to='/booking/hairshop' onClick={menuClose}>

@@ -3,7 +3,6 @@ import { useParams, Link } from "react-router-dom";
 import { Button, Dropdown, Icon } from 'semantic-ui-react'
 import * as api from '../../rest/api'
 import axios from 'axios';
-import TalkPage from "../talk/TalkPage";
 
 export default function SchedulePage(props) {
     const isAuthorized = sessionStorage.getItem('isAuthorized');
