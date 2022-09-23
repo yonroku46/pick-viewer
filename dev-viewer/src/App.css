@@ -1284,12 +1284,13 @@ table.dashboard-table input {
 .mypage-tt-icon {
   margin-left: -0.5em !important;
   margin-right: -0.5em !important;
+  font-size: 16px !important;
+  opacity: 0.3 !important;
+  color: #a391fb;
   transform: translateY(-0.5em);
-  opacity: 0.1 !important;
 }
 .mypage-tt-time {
   width: 160px !important;
-  font-weight: bold;
   border-right: rgb(80, 80, 80, 0.1) 1px solid;
 }
 .mypage-tt-header {
@@ -1306,10 +1307,9 @@ table.dashboard-table input {
 }
 .mypage-tt-schedule {
   text-align: left !important;
-  font-weight: bold;
 }
-.mypage-tt-empty {
-  background-color: rgba(34,36,38,.1);
+.mypage-tt-schedule.todays {
+  border-left: #a391fbaa 2px solid;
 }
 .mypage-content-table {
   width: 70vw !important;
