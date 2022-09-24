@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useReducer } from "react";
+import React, { useEffect, useState } from "react";
 import { useParams, Link } from "react-router-dom";
 import { Button, Dropdown, Icon } from 'semantic-ui-react'
 import * as api from '../../rest/api'

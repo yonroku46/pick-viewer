@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Link, withRouter } from "react-router-dom";
 import { Link as Scroll } from "react-scroll";
 import { Icon, Table, Segment, Button, Header } from 'semantic-ui-react'
@@ -15,6 +15,10 @@ function MyTimeTable(props) {
     
     const categoryList = ['hairshop', 'restaurant', 'cafe'];
     const bookingList = props.bookingList;
+
+    useEffect(() => {
+        setSpanList([]);
+    }, [props.today])
     
     function bookingInfo(targetId) {
         const target = bookingList.filter(booking => booking.bookingCd === targetId);
@@ -41,7 +45,7 @@ function MyTimeTable(props) {
     }
 
     function emptySort() {
-        setTableStat(!tableStat)
+        setTableStat(!tableStat);
     }
 
     function includeTime(target, time) {
@@ -57,10 +61,12 @@ function MyTimeTable(props) {
             const startTime = moment(start);
             const result = endTime.diff(startTime, 'minutes') / 30;
             if (result > 1) {
-                const spanTarget = moment(end).subtract(30, 'minute').format('hh:mm');
-                if (spanList.indexOf(spanTarget) == -1) {
-                    spanList.push(spanTarget);
-                    setSpanList(spanList);
+                for (let i = 1; i < result; i++) {
+                    const spanTarget = moment(end).subtract(30 * i, 'minute').format('HH:mm');
+                    if (spanList.indexOf(spanTarget) == -1) {
+                        spanList.push(spanTarget);
+                        setSpanList(spanList);
+                    }
                 }
             }
             return result;   
@@ -82,7 +88,7 @@ function MyTimeTable(props) {
                         // 해당 시간대에 예약 있음
                         targetList.filter(target => target.bookingTime.substr(11,5).match(time)).map(booking => 
                         <Table.Row className='center'>
-                            <Table.Cell className='mypage-tt-time'>
+                            <Table.Cell className={tableStat ? 'mypage-tt-time' : 'mypage-tt-time stat'}>
                                 <span>{tableStat ? reservationTime(time, booking.bookingEndTime.substr(11,5)) : time}</span>
                             </Table.Cell>
                             <Table.Cell verticalAlign='top' className='mypage-tt-schedule todays' rowspan={calcTimeSpan(booking.bookingTime, booking.bookingEndTime)}>
@@ -108,7 +114,7 @@ function MyTimeTable(props) {
                     :
                         // 해당 시간대에 예약 없음
                         <Table.Row className='center'>
-                            <Table.Cell className={tableStat ? 'none' : 'mypage-tt-time'}>
+                            <Table.Cell className={tableStat ? 'none' : 'mypage-tt-time stat'}>
                                 <span>{time}</span>
                             </Table.Cell>
                             {tableStat ?

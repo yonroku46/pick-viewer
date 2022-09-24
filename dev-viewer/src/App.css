@@ -1366,6 +1366,13 @@ table.dashboard-table input {
     margin-left: auto !important;
     margin-right: auto !important;
   }
+  .mypage-tt-time {
+    text-align: left !important;
+    padding: 10px 37px !important;
+  }
+  .mypage-tt-time.stat {
+    text-align: center !important;
+  }
 }
 
 /* sp */
