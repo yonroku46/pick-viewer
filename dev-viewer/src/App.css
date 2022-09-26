@@ -614,6 +614,10 @@ hr {
   border-bottom-left-radius: 6px;
   transition: 0.25s;
 }
+.dashboard-menu-pic {
+  margin-right: -0.35em !important;
+  float: left;
+}
 .dashboard-viewer {
   min-height: calc(100vh - 83px) !important;
   max-height: 89vh;
@@ -2611,6 +2615,19 @@ a.detailpage-tel:hover {
   border: 1px lightgray solid;
   border-radius: 6px;
 }
+.detailpage-service-menu:hover {
+  cursor: pointer;
+  background-color: rgb(200, 200, 200, 0.1) !important;
+  opacity: 0.8;
+}
+.detailpage-service-menu.nonactive {
+  opacity: 0.25;
+}
+.detailpage-service-menu.nonactive:hover {
+  cursor: auto;
+  background-color: rgb(200, 200, 200, 0) !important;
+  opacity: none;
+}
 .detailpage-service-menu div.meta {
   margin-top: 3px !important;
 }
@@ -2664,11 +2681,6 @@ a.detailpage-tel:hover {
 }
 .detailpage-service div.content {
   margin-top: 10px !important;
-}
-.detailpage-service-menu:hover {
-  cursor: pointer;
-  background-color: rgb(200, 200, 200, 0.1) !important;
-  opacity: 0.8;
 }
 .detailpage-service-img {
   width: 125px !important;
