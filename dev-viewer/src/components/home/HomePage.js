@@ -191,7 +191,7 @@ export default function HomePage(props) {
               하나부터 열까지 똑똑하게 추천해드립니다.
             </p>
             <Link to='/booking/hairshop'>
-              <Button inverted color='blue'>추천 매장보기<Icon name='angle double right'/></Button>
+              <Button className='pcolor-button'>추천 매장보기<Icon name='angle double right'/></Button>
             </Link>
           </Segment>
         </Grid.Column>
