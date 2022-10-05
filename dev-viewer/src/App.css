@@ -10,7 +10,7 @@
 
 /* animation */
 @keyframes zoom-out {
-  0%   { background-size: 105% auto;}
+  0%  { background-size: 105% auto;}
   20% { background-size: 100% auto;}
   100% { background-size: 100% auto;}
 }
@@ -276,6 +276,9 @@ h1, h2, h3, h4, h5, div, a, button {
   color: var(--p-color);
   font-weight: bold;
 }
+.pcolor-accent {
+  color: var(--p-accent-color);
+}
 .pcolor-button {
   color: var(--p-color) !important;
   border: var(--p-color) 2px solid !important;
@@ -286,6 +289,18 @@ h1, h2, h3, h4, h5, div, a, button {
   color: #fff !important;
   border: var(--p-sub-color) 2px solid !important;
   background-color: var(--p-color) !important;
+  transition: .2s ease-in-out !important;
+}
+.pcolor-accent-button {
+  color: var(--p-accent-color) !important;
+  border: var(--p-accent-color) 2px solid !important;
+  background-color: #fff !important;
+  transition: .2s ease-in-out !important;
+}
+.pcolor-accent-button:hover {
+  color: #fff !important;
+  border: var(--p-accent-color) 2px solid !important;
+  background-color: var(--p-accent-color) !important;
   transition: .2s ease-in-out !important;
 }
 .pcolor-cancle-button {
@@ -732,7 +747,11 @@ h1, h2, h3, h4, h5, div, a, button {
 }
 .dashboard-menu-pic {
   margin-right: -0.35em !important;
+  border-color: #000 !important;
   float: left;
+}
+.dashboard-menu-pic:hover {
+  color: #000!important;
 }
 .dashboard-viewer {
   min-height: calc(100vh - 83px) !important;
@@ -1035,7 +1054,7 @@ table.dashboard-table input {
 }
 .dashboard-booking-selected {
   background-color: #a391fb2f !important;
-  color: #A291FB !important;
+  color: var(--p-accent-color) !important;
 }
 /* DashboardPage - pc */
 @media only screen and (min-width: 766px) {
@@ -1277,7 +1296,7 @@ table.dashboard-table input {
 .mypage-booking-date {
   position: absolute;
   background-color: #ffffff00 !important;
-  color: #A291FB !important;
+  color: var(--p-accent-color) !important;
   padding: 1px !important;
   padding-right: 2px !important;
   padding-bottom: 2px !important;
@@ -1350,11 +1369,11 @@ table.dashboard-table input {
 .mypage-table-active:hover {
   cursor: pointer;
   font-weight: bold !important;
-  color: #A291FB;
+  color: var(--p-accent-color);
   width: calc(100% / 7);
 }
 .table-today {
-  color: #A291FB;
+  color: var(--p-accent-color);
   font-weight: bold;
   width: calc(100% / 7);
 }
@@ -1366,8 +1385,8 @@ table.dashboard-table input {
 .table-booking-date {
   width: auto !important;
   position: absolute;
-  background-color: #ffffff00 !important;
   color: #36d428 !important;
+  background-color: #ffffff00 !important;
   padding: 1px !important;
   padding-right: 2px !important;
   padding-bottom: 2px !important;
@@ -1375,9 +1394,11 @@ table.dashboard-table input {
 }
 .table-booking-date.active {
   color: #ffcc56 !important;
+  background-color: #ffffff00 !important;
 }
 .table-booking-date.nonactive {
   color: #a0a0a0 !important;
+  background-color: #ffffff00 !important;
 }
 .mypage-table-month {
   background-color: #fff !important;
@@ -1962,7 +1983,7 @@ table.dashboard-table input {
 .home-main-title-top {
   font-size: 1.1em;
   margin-bottom: 0em;
-  color: #A291FB;
+  color: var(--p-accent-color);
   letter-spacing: 0.4em;
 }
 .home-main-title {
@@ -2641,12 +2662,14 @@ table.dashboard-table input {
 }
 .detailpage-call a {
   margin: 5px;
-  color: #A291FB;
+  color: var(--p-accent-color);
   opacity: 0.3;
+  transition: .2s;
 }
 .detailpage-call:hover a {
-  color: #A291FB;
+  color: var(--p-accent-color);
   opacity: 1;
+  transition: .2s;
 }
 .detailpage-location {
   margin: 6px 12px 6px 34px;
@@ -2716,8 +2739,8 @@ a.detailpage-tel:hover {
   margin-bottom: 11px;
 }
 .detailpage-selected {
-  border: #A291FB 1px solid !important;
-  background-image: linear-gradient(rgba(255, 255, 255, 0.7), rgba(216, 178, 225, 0.1)) !important;
+  border: var(--p-accent-color) 1px solid !important;
+  background-image: linear-gradient(rgba(255, 255, 255, 0.8), rgba(9, 8, 78, 0.05)) !important;
 }
 .detailpage-service-menu {
   padding: 12px !important;
@@ -2782,7 +2805,7 @@ a.detailpage-tel:hover {
   padding-bottom: 0;
   font-weight: 100 !important;
   background-color: #ffffff00 !important;
-  color: grey !important;
+  /* color: grey !important; */
   border: none !important;
 }
 .detailpage-service-menu .detailpage-service div.menu-time {
@@ -2867,8 +2890,8 @@ a.detailpage-tel:hover {
   width: 31%;
   max-width: 100px;
   border-width: 1px;
-  color: #A291FB !important;
-  border-color: #A291FB;
+  color: var(--p-accent-color) !important;
+  border-color: var(--p-accent-color);
   margin: 2px;
   transition: .25s;
 }
@@ -2933,7 +2956,7 @@ a.detailpage-tel:hover {
   margin-top: -14px !important;
   margin-bottom: 28px !important;
   border-radius: 0px 0px 14px 14px !important;
-  background-color: #A291FB !important;
+  background-color: var(--p-accent-color) !important;
 }
 .review-comment-area {
   text-align: left;

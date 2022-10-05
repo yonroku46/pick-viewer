@@ -391,7 +391,7 @@ export default function ReviewPage(props) {
             </span>
             <span className='detailpage-review'>
               <Link to={`/booking/${category}/${shopCd}`}>
-                <Button className='detailpage-link-btn' color='violet'>예약하기 <Icon name='angle double right'/></Button>
+                <Button inverted className='detailpage-link-btn pcolor-accent-button'>예약하기 <Icon name='angle double right'/></Button>
               </Link>
             </span>
           </p>

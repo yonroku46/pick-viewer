@@ -146,7 +146,7 @@ export default function App() {
           <Menu.Item as={Link} className='menu-dashboard' to='/dashboard' onClick={menuClose}>
             <Icon.Group>
               <Icon name='laptop'/>
-              <Icon corner color='violet' name='folder open'/>
+              <Icon corner className='pcolor-accent' name='folder open'/>
             </Icon.Group>
             <div>매장관리</div>
           </Menu.Item>
