@@ -481,11 +481,20 @@ export default function BookingDetail(props) {
     { key: 'sat', value: 'sat', text: '토요일' },
     { key: 'sun', value: 'sun', text: '일요일' },
   ];
+  const weekDaySorter = { 'mon':1 , 'tue':2 , 'wed':3 , 'thu':4 , 'fri':5 , 'sat':6 ,'sun':7 };
 
-  function convertWeek(key) {
-    const target = weeks.filter(day => day.key.match(key));
-    const result = target[0].text;
-    return result;
+  function convertWeek(dayList) {
+    let result = '';
+    if (Array.isArray(dayList)) {
+      dayList.sort(function sortByWeekDay(a, b) {
+          return weekDaySorter[a] - weekDaySorter[b];
+      });
+      dayList.forEach(day => {
+          const dayText = weeks.filter(w => w.key.match(day))[0].text.substring(0, 1) + ',';
+          result = result + dayText;
+      })
+      return result.slice(0, result.length - 1);
+    }
   }
 
   function dateConvert(date) {
@@ -528,7 +537,7 @@ export default function BookingDetail(props) {
     </Item.Group>
     {dbDesigner === staff.userCd &&
       <Item className='detailpage-service-num'>
-        <Icon color='violet' className='detailpage-service-minus' name='check circle'/>
+        <Icon className='detailpage-service-minus pcolor-accent' name='check circle'/>
       </Item>
     }
     </>
@@ -555,7 +564,7 @@ export default function BookingDetail(props) {
       </Item.Group>
       {0 < menu.num &&
         <Item className='detailpage-service-num'>
-          <Icon color='violet' className='detailpage-service-minus' name='check circle'/>
+          <Icon className='detailpage-service-minus pcolor-accent' name='check circle'/>
         </Item>
       }
       </>
@@ -598,9 +607,9 @@ export default function BookingDetail(props) {
         </Item.Group>
         {0 < menu.num &&
         <Item className='detailpage-service-num'>
-          <Icon color='violet' className='detailpage-service-minus' name='minus circle' onClick={() => shopMenuBtnMinusClick(menu.menuCd)}/>
+          <Icon className='detailpage-service-minus pcolor-accent' name='minus circle' onClick={() => shopMenuBtnMinusClick(menu.menuCd)}/>
           {menu.num}
-          <Icon color='violet' className='detailpage-service-plus' name='plus circle' onClick={() => shopMenuBtnClick(menu.menuCd)}/>
+          <Icon className='detailpage-service-plus pcolor-accent' name='plus circle' onClick={() => shopMenuBtnClick(menu.menuCd)}/>
         </Item>
         }
         </>
@@ -918,12 +927,12 @@ export default function BookingDetail(props) {
           </span>
           <span className='detailpage-review'>
             <Link to={`/review/${category}/${shopCd}`}>
-              <Button className='detailpage-link-btn' inverted color='violet'>리뷰보기 <Icon name='angle double right'/></Button>
+              <Button inverted className='detailpage-link-btn pcolor-accent-button'>리뷰보기 <Icon name='angle double right'/></Button>
             </Link>
           </span>
         </p>
         <p className='detailpage-time'><Icon name='clock outline'/>{shop.shopOpen}~{shop.shopClose} 
-          <span className='detailpage-holiday'>({shop.shopHoliday === 'none' ? '휴무일 없음' : convertWeek(shop.shopHoliday) + ' 휴무'})</span>
+          <span> ({shop.shopHoliday === '' ? '휴무일 없음' : convertWeek(shop.shopHolidayList) + '요일 휴무'})</span>
         </p>
         <p className='detailpage-info'><Icon name='list alternate outline'/>{shop.shopInfo}</p>
         <p className='detailpage-location'><Icon name='map outline'/>{shop.shopLocation}
