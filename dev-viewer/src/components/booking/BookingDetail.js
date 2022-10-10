@@ -4,7 +4,7 @@ import person1 from '../../img/person1.png'
 import person2 from '../../img/person2.png'
 import person3 from '../../img/person3.png'
 import person5 from '../../img/person5.png'
-import { Dimmer, Button, Item, Grid, Segment, Image, Icon, Loader, Modal, Header, Table, Statistic, Card, Label } from 'semantic-ui-react'
+import { Dimmer, Button, Item, Grid, Segment, Image, Icon, Loader, Modal, Header, Table, Statistic, Card, Label, Sidebar } from 'semantic-ui-react'
 import { Link as Scroll } from "react-scroll";
 import moment from "moment";
 import MapContainer from "../public/MapContainer";
@@ -65,8 +65,9 @@ export default function BookingDetail(props) {
   const [isFavorite, setIsFavorite] = useState(false);
   const [clickFavorite, setClickFavorite] = useState(false);
 
-  const [modalOpen, setModalOpen] = useState(false)
+  const [visible, setVisible] = useState(false);
   const [modalLoading, setModalLoading] = useState(false)
+  const [modalOpen, setModalOpen] = useState(false)
   const [modalFinal, setModalFinal] = useState(false)
 
   const [mapOpen, setMapOpen] = useState(false)
@@ -869,7 +870,7 @@ export default function BookingDetail(props) {
           :
           <Card.Group className='detailpage-coupon-list' itemsPerRow={2}>
             {couponList.map(coupon =>
-              <Card color='violet'
+              <Card
                 onClick={() => CouponClick(coupon.couponCd)}
                 header={{content: useCouponList.indexOf(coupon.couponCd) !== -1 ? comma(coupon.couponDiscount) + '원 할인' : coupon.couponName}}
                 meta={useCouponList.indexOf(coupon.couponCd) !== -1 ? <Icon name='checkmark'/> : comma(coupon.couponDiscount) + '원'}
@@ -1007,10 +1008,30 @@ export default function BookingDetail(props) {
           <h4>예약 내용을 다시 확인해주세요</h4>
         </Modal.Content>
         <Modal.Actions>
-          <Button negative onClick={() => dispatch({ type: 'CLOSE_MODAL' })}>확인</Button>
+          <Button positive onClick={() => dispatch({ type: 'CLOSE_MODAL' })}>확인</Button>
         </Modal.Actions>
       </Modal>
       :
+      // <Sidebar as={Segment} animation='overlay' direction='bottom' visible={open} onHide={() => setVisible(false)}>
+      //   <Grid textAlign='center'>
+      //     <Grid.Row columns={1}>
+      //       <Grid.Column>
+      //         <Header as='h3'>New Content Awaits</Header>
+      //       </Grid.Column>
+      //     </Grid.Row>
+      //     <Grid.Row columns={3}>
+      //       <Grid.Column>
+      //         <Image src='https://react.semantic-ui.com/images/wireframe/media-paragraph.png' />
+      //       </Grid.Column>
+      //       <Grid.Column>
+      //         <Image src='https://react.semantic-ui.com/images/wireframe/media-paragraph.png' />
+      //       </Grid.Column>
+      //       <Grid.Column>
+      //         <Image src='https://react.semantic-ui.com/images/wireframe/media-paragraph.png' />
+      //       </Grid.Column>
+      //     </Grid.Row>
+      //   </Grid>
+      // </Sidebar>
       <Modal className='booking-modal' dimmer={dimmer} open={open} onClose={() => dispatch({ type: 'CLOSE_MODAL' })}>
         <Modal.Content>
           <div className='booking-modal-title'>
@@ -1061,7 +1082,7 @@ export default function BookingDetail(props) {
         <Modal.Actions className='booking-modal-bottom'>
             <p>상세내역을 확인하신 후 예약을 눌러주세요</p>
             {finalCheck ? 
-            <Button color='violet' onClick={sendBooking}>예약하기</Button>
+            <Button color='black' onClick={sendBooking}>예약하기</Button>
             :
             <Button secondary className='booking-modal-btn' onClick={() => {setFinalCheck(true)}}>
                <Icon name='checkmark'/> 확인하였습니다

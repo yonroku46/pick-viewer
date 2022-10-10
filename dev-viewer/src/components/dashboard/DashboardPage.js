@@ -1,5 +1,5 @@
 import { useEffect, useState, useRef } from 'react';
-import { Label, Modal, Image, Menu, Icon, Dropdown, Form, Segment, Input, TextArea,  Button, Table, List, Item, Dimmer, Loader, Select, Pagination } from 'semantic-ui-react'
+import { Label, Modal, Image, Menu, Icon, Dropdown, Form, Segment, Input, TextArea,  Button, Table, List, Item, Dimmer, Loader, Select, Pagination, Checkbox } from 'semantic-ui-react'
 import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd";
 import * as api from '../../rest/api'
 import MapContainer from "../public/MapContainer";
@@ -21,7 +21,7 @@ export default function DashboardPage(props) {
     const [loading, setLoading] = useState(false);
     const [open, setOpen] = useState(false);
     const [activePage, setActivePage] = useState(1);
-
+    
     const [count, setCount] = useState(0);
     const [locationSearch, setLocationSearch] = useState(null);
     const [shop, setShop] = useState([]);
@@ -37,6 +37,7 @@ export default function DashboardPage(props) {
     const [shopImageIndex, setShopImageIndex] = useState([]);
     const [nameFilter, setNameFilter] = useState(undefined);
     const [careerFilter, setCareerFilter] = useState(undefined);
+    const [breakStat, setBreakStat] = useState(false);
     const shopCd = userInfo ? userInfo.employment : null;
     
     const [category, setCategory] = useState('all');
@@ -60,9 +61,8 @@ export default function DashboardPage(props) {
     function handlePaginationChange (e, { activePage }) {
         setActivePage(activePage);
     }
-
+    
     const weeks = [
-        { key: 'none', value: 'none', text: '휴무없음' },
         { key: 'mon', value: 'mon', text: '월요일' },
         { key: 'tue', value: 'tue', text: '화요일' },
         { key: 'wed', value: 'wed', text: '수요일' },
@@ -71,12 +71,15 @@ export default function DashboardPage(props) {
         { key: 'sat', value: 'sat', text: '토요일' },
         { key: 'sun', value: 'sun', text: '일요일' },
     ];
+    const weekDaySorter = { 'mon':1 , 'tue':2 , 'wed':3 , 'thu':4 , 'fri':5 , 'sat':6 ,'sun':7 };
 
     const hours = [];
     new Array(24).fill().forEach((acc, index) => {
         const time = moment( {hour: index} ).format('HH:mm');
-        hours.push({ key: time, value: time, text: time });
-        // hours.push(moment({ hour: index, minute: 30 }).format('HH:mm'));
+        const time30 = moment( {hour: index, minute: 30} ).format('HH:mm');
+        const extra = Number(time.substring(0, 2)) < 12 ? 'AM ' : 'PM ';
+        hours.push({ key: time, value: time, text: extra + time });
+        hours.push({ key: time30, value: time30, text: extra + time30 });
     })
     const startHour = 0;
     const endHour = 24;
@@ -126,6 +129,7 @@ export default function DashboardPage(props) {
             makeMenuList(res.data.menuList)
             makeCategoryList(res.data.menuCategories);
             makeShopInfo(res.data);
+            setBreakStat(res.data.shopBreakStart);
             getRequestList(shopCd);
             makeTimeList();
           }
@@ -253,9 +257,64 @@ export default function DashboardPage(props) {
             { ...shop, shopClose: value }
         );
     }
-    function changeHoliday(e, { value }) {
+    function changeBreakStat(e) {
+        setBreakStat(!breakStat);
         setShop(
-            { ...shop, shopHoliday: value }
+            { ...shop, shopBreakStart: null, shopBreakEnd: null }
+        );
+    }
+    function changeBreakStart(e, { value }) {
+        if (breakCheck(value, 'shopBreakStart')) {
+            setShop(
+                { ...shop, shopBreakStart: value }
+            );
+        }
+    }
+    function changeBreakEnd(e, { value }) {
+        if (breakCheck(value, 'shopBreakEnd')) {
+            setShop(
+                { ...shop, shopBreakEnd: value }
+            );
+        }
+    }
+    function breakCheck(value, type) {
+        if (value === '00:00') {
+            return false;
+        }
+        const monthDummy = '2020-12-25 ';
+        const valueMoment = moment(monthDummy + value);
+        const shopOpen = moment(monthDummy + shop.shopOpen);
+        const shopClose = moment(monthDummy + shop.shopClose);
+        const shopBreakStart = moment(monthDummy + shop.shopBreakStart);
+
+        if (type === 'shopBreakStart') {
+            if (valueMoment.diff(shopOpen, 'minutes') > 0 && shopClose.diff(valueMoment, 'minutes') > 0) {
+                return true;
+            } else {
+                alert("매장 운영시간 혹은 휴식시간을 다시 한번 확인해 주세요.")
+                return false;
+            }
+        } else if (type === 'shopBreakEnd') {
+            if (valueMoment.diff(shopOpen, 'minutes') > 0 && shopClose.diff(valueMoment, 'minutes') > 0 && valueMoment.diff(shopBreakStart, 'minutes') > 0) {
+                return true;
+            } else {
+                alert("매장 운영시간 혹은 휴식시간을 다시 한번 확인해 주세요.")
+                return false;
+            }
+        }
+    }
+    function changeHoliday(e, { value }) {
+        let shopHoliday = '';
+        value.sort(function sortByWeekDay(a, b) {
+            return weekDaySorter[a] - weekDaySorter[b];
+        });
+        value.forEach(day => {
+            const dayText = weeks.filter(w => w.key.match(day))[0].key + ',';
+            shopHoliday = shopHoliday + dayText;
+        })
+        shopHoliday = shopHoliday.slice(0, shopHoliday.length - 1);
+        setShop(
+            { ...shop, shopHolidayList: value, shopHoliday: shopHoliday }
         );
     }
     function changeShopInfo(e) {
@@ -426,10 +485,18 @@ export default function DashboardPage(props) {
         }
     }
 
-    function convertWeek(key) {
-        const target = weeks.filter(day => day.key.match(key));
-        const result = target[0].text;
-        return result;
+    function convertWeek(dayList) {
+        let result = '';
+        if (Array.isArray(dayList)) {
+            dayList.sort(function sortByWeekDay(a, b) {
+                return weekDaySorter[a] - weekDaySorter[b];
+            });
+            dayList.forEach(day => {
+                const dayText = weeks.filter(w => w.key.match(day))[0].text.substring(0, 1) + ',';
+                result = result + dayText;
+            })
+            return result.slice(0, result.length - 1);
+        }
     }
 
     function getPrivateCode(key) {
@@ -554,12 +621,14 @@ export default function DashboardPage(props) {
                     </DragDropContext>
                 </Form.Field>
                 <Form.Group>
-                    <Form.Field>
+                    <Form.Field className='dashboard-shopinfo-tel-form'>
                         <label><Icon name='angle right'/>매장 전화번호</label>
                         {editMode ? 
                         <>
                         <Input className='dashboard-shopinfo-tel' placeholder='000' value={shop.shopTel.split('-')[0]} tabIndex='0' onChange={changeTel}/>
+                        <Icon name='minus'/>
                         <Input className='dashboard-shopinfo-tel' placeholder='000' value={shop.shopTel.split('-')[1]} tabIndex='1' onChange={changeTel}/>
+                        <Icon name='minus'/>
                         <Input className='dashboard-shopinfo-tel' placeholder='0000' value={shop.shopTel.split('-')[2]} tabIndex='2' onChange={changeTel}/>
                         </>
                         :
@@ -567,41 +636,63 @@ export default function DashboardPage(props) {
                         }
                     </Form.Field>
                 </Form.Group>
-                <Form.Group>
+                <Form.Group className='dashboard-timeset'>
                     {editMode ? 
                     <>
                     <Form.Field className='form-interval'>
-                        <label><Icon name='angle right'/>오픈시간</label>
-                        <Select className='dashboard-shopinfo-hours' placeholder='09:00' value={shop.shopOpen} options={hours} onChange={changeOpen}/>
+                        <label><Icon name='angle right'/>매장 운영시간</label>
+                        <Select className='hours' placeholder='09:00' value={shop.shopOpen} options={hours} onChange={changeOpen}/>
+                        <Icon name='arrow right'/>
+                        <Select className='hours' placeholder='18:00' value={shop.shopClose} options={hours} onChange={changeClose}/>
                     </Form.Field>
                     <Form.Field className='form-interval'>
-                        <label><Icon name='angle right'/>마감시간</label>
-                        <Select className='dashboard-shopinfo-hours' placeholder='18:00' value={shop.shopClose} options={hours} onChange={changeClose}/>
-                    </Form.Field>
-                    <Form.Field className='form-interval'>
-                        <label><Icon name='angle right'/>휴무일</label>
-                        <Select className='dashboard-shopinfo-hours' placeholder='휴무없음' value={shop.shopHoliday} options={weeks} onChange={changeHoliday}/>
+                        <label><Icon name='angle right'/>매장 휴식시간
+                            <Icon className='dashboard-shopinfo-breaktime' name={breakStat ? 'check square' : 'square outline'} onClick={changeBreakStat}/>
+                        </label>
+                        <Dropdown className='hours' placeholder='휴식 시작시간' selection value={shop.shopBreakStart} options={hours} disabled={!breakStat} onChange={changeBreakStart}/>
+                        <Icon name='arrow right'/>
+                        <Dropdown className='hours' placeholder='휴식 종료시간' selection value={shop.shopBreakEnd} options={hours} disabled={!breakStat} onChange={changeBreakEnd}/>
                     </Form.Field>
                     </>
                     :
                     <Form.Field className='form-interval'>
                         <label><Icon name='angle right'/>매장 운영시간</label>
                         <p className='dashboard-shopinfo-text'>{shop.shopOpen} ~ {shop.shopClose}
-                            <span className='detailpage-holiday'>({shop.shopHoliday === 'none' ? '휴무일 없음' : convertWeek(shop.shopHoliday) + ' 휴무'})</span>
+                            {shop.shopBreakStart && shop.shopBreakEnd &&
+                            <span className='detailpage-breaktime'>
+                                (휴식시간 : {shop.shopBreakStart} ~ {shop.shopBreakEnd} )
+                            </span>
+                            }
                         </p>
                     </Form.Field>
                     }
                 </Form.Group>
                 {editMode ? 
+                <>
+                <Form.Field className='form-interval'>
+                    <label><Icon name='angle right'/>휴무일</label>
+                    <Dropdown placeholder='휴무없음' fluid multiple selection value={shop.shopHolidayList} options={weeks} onChange={changeHoliday}/>
+                </Form.Field>
                 <Form.Field className='form-interval'>
                     <label><Icon name='angle right'/>매장 소개</label>
                     <TextArea placeholder='매장 소개를 입력해보세요. (최대 100자)' value={shop.shopInfo} onChange={changeShopInfo}/>
                 </Form.Field>
+                </>
                 :
+                <>
+                <Form.Group>
+                    <Form.Field className='form-interval'>
+                        <label><Icon name='angle right'/>정기휴무일</label>
+                        <p className='dashboard-shopinfo-text'>
+                            {shop.shopHoliday === '' ? '휴무일 없음' : convertWeek(shop.shopHolidayList) + '요일 휴무'}
+                        </p>
+                    </Form.Field>
+                </Form.Group>
                 <Form.Field className='form-interval'>
                     <label><Icon name='angle right'/>매장 소개</label>
                     <p className='dashboard-shopinfo-text'>{shop.shopInfo}</p>
                 </Form.Field>
+                </>
                 }
                 <div className='dashboard-content-final-empty'> </div>
             </Form>
@@ -632,8 +723,8 @@ export default function DashboardPage(props) {
                                     </List.Header>
                                 </List.Content>
                                 <List.Content floated='right'>
-                                    <Button inverted color='red' onClick={() => requestConfirm(2, request.requestCd)}>거절</Button>
-                                    <Button inverted color='green' onClick={() => requestConfirm(1, request.requestCd)}>승인</Button>
+                                    <Button className='pcolor-cancle-button' onClick={() => requestConfirm(2, request.requestCd)}>거절</Button>
+                                    <Button className='pcolor-button' onClick={() => requestConfirm(1, request.requestCd)}>승인</Button>
                                 </List.Content>
                             </List.Item>
                         ))}
@@ -764,7 +855,9 @@ export default function DashboardPage(props) {
             </>}
             {modalMenu &&
             <Modal closeIcon closeOnDimmerClick={false} onClose={() => setOpen(false)} open={open}>
-                <Modal.Header><Icon name='angle right'/>메뉴작성/편집</Modal.Header>
+                <Modal.Header>
+                    <Icon name='angle right'/>메뉴작성/편집
+                </Modal.Header>
                 <Modal.Content image>
                     <input hidden type='file' ref={inputRef} accept=".png, .jpg, .jpeg" onChange={imgUpload}/>
                     <Image className='dashboard-modal-img' src={modalMenu.menuImg ? modalMenu.menuImg : sampleImg} onClick={setImg} wrapped/>
@@ -784,8 +877,11 @@ export default function DashboardPage(props) {
                     </Modal.Description>
                 </Modal.Content>
                 <Modal.Actions>
-                    <Button onClick={() => menuDelete(modalMenu.menuCd)} color='red'>삭제</Button>
-                    <Button onClick={() => menuEdit(modalMenu.menuCd)} color='blue'>수정 / 등록</Button>
+                    <Label basic as='a' size='large' className='dashboard-menu-pic'>
+                        <Icon name='id badge outline'/>담당자 설정 (8)
+                    </Label>
+                    <Button className='pcolor-cancle-button' onClick={() => menuDelete(modalMenu.menuCd)}>삭제</Button>
+                    <Button className='pcolor-button' onClick={() => menuEdit(modalMenu.menuCd)}>수정 / 등록</Button>
                 </Modal.Actions>
             </Modal>
             }

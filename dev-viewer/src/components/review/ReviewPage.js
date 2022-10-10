@@ -507,10 +507,10 @@ export default function ReviewPage(props) {
                 reply.userName !== null ?
                 <Comment.Group className='reply-style-outline'>
                   <Comment className='reply-style'>
+                    <Icon name='reply'/>
                     <Comment.Avatar src={api.imgRender(reply.userImg === null ? userimgDefault : reply.userImg)}/>
                     <Comment.Content>
                       <Comment.Author as='a'>{reply.userName}</Comment.Author>
-                      <Label className='review-comment-label' color='violet' size='mini' horizontal>STAFF</Label>
                       <Comment.Metadata>{timeForToday(reply.reviewTime)}</Comment.Metadata>
                       {mypostJudge(reply.userCd) && 
                         <Label className='review-comment-label-setting' onClick={() => reviewEdit(reply.reviewCd)}>

@@ -19,9 +19,9 @@ function NoticePage(props) {
         event: '이벤트'
     };
     const categoryColor = {
-        notice: 'pink',
-        patch: 'teal',
-        event: 'violet'
+        notice: 'violet',
+        patch: 'black',
+        event: 'purple'
     };
 
     useEffect(() => {
@@ -94,7 +94,7 @@ function NoticePage(props) {
             noticeList.map(notice => 
                 <Table.Row onClick={() => noticeInfo(notice.noticeCd)}>
                     <Table.Cell className={!notice.activeFlag && 'notice-table-unactive'}>
-                        <Label basic={notice.activeFlag} horizontal color={notice.activeFlag ? categoryColor[notice.category] : 'black'}>
+                        <Label horizontal color={notice.activeFlag ? categoryColor[notice.category] : 'grey'}>
                             {notice.activeFlag ? categoryList[notice.category] : '비공개'}
                         </Label>
                         {notice.noticeTitle}

@@ -353,6 +353,9 @@ h1, h2, h3, h4, h5, div, a, button {
   width: 100% !important;
   height: 240px !important;
 }
+.map-container .search {
+  color: #fff;
+}
 .pagination {
   margin-bottom: 35px !important;
   border-bottom: none !important;
@@ -845,6 +848,9 @@ h1, h2, h3, h4, h5, div, a, button {
   border-radius: 6px !important;
   border: 2px solid rgb(90, 90, 90) !important;
 }
+.dashboard-shopinfo-tel-form .icon {
+  margin-left: -4px !important;
+}
 .dashboard-shopinfo-tel {
   max-width: 100px;
   margin-right: 8px;
@@ -854,20 +860,25 @@ h1, h2, h3, h4, h5, div, a, button {
   margin-bottom: 8px !important;
 }
 .dashboard-timeset .form-interval {
-  width: 280px;
+  width: 490px;
+}
+.form-interval .label {
+  background-color: #fff !important;
+  border: var(--p-color) 0.5px solid !important;
+  color: var(--p-color)!important;
 }
 .dashboard-timeset .hours {
   max-width: 220px;
   margin-bottom: 6px;
+  margin-right: 5px;
 }
 .dashboard-shopinfo-breaktime {
-  display: inline;
+  margin-left: 4px !important;
+  opacity: 0.8 !important;
 }
-.dashboard-shopinfo-breaktime .checkbox {
-  display: inline-flex !important;
-  position: relative !important;
-  top: -5px;
-  left: 3px;
+.dashboard-shopinfo-breaktime:hover {
+  cursor: pointer;
+  opacity: 1 !important;
 }
 .dashboard-shopinfo-text {
   margin-top: 0px !important;
@@ -1053,8 +1064,8 @@ table.dashboard-table input {
   border: 1px solid rgba(34, 36, 38, 0.15);
 }
 .dashboard-booking-selected {
-  background-color: #a391fb2f !important;
-  color: var(--p-accent-color) !important;
+  border-color: var(--p-color) !important;
+  color: var(--p-color) !important;
 }
 /* DashboardPage - pc */
 @media only screen and (min-width: 766px) {
@@ -1441,7 +1452,7 @@ table.dashboard-table input {
   margin-right: -0.5em !important;
   font-size: 16px !important;
   opacity: 0.3 !important;
-  color: #a391fb;
+  color: var(--p-color);
   transform: translateY(-0.5em);
 }
 .mypage-tt-time {
@@ -1464,7 +1475,7 @@ table.dashboard-table input {
   text-align: left !important;
 }
 .mypage-tt-schedule.todays {
-  border-left: #a391fbaa 2px solid;
+  border-left: var(--p-color) 2px solid;
 }
 .mypage-content-table {
   width: 70vw !important;
@@ -2394,8 +2405,7 @@ table.dashboard-table input {
 }
 .booking-modal {
   max-width: 420px;
-  top: 74px;
-  padding-bottom: 14px !important;
+  top: auto;
 }
 .booking-modal h3 {
   margin-top: 5px;
@@ -2965,7 +2975,7 @@ a.detailpage-tel:hover {
 }
 .review-write-area {
   text-align: left !important;
-  margin-top: 1em;
+  margin-top: 1.75em;
   padding: 1.75em;
   border-top: rgb(0, 0, 0, 0.2) 1px solid;
 }
@@ -2977,11 +2987,6 @@ a.detailpage-tel:hover {
 .review-no-comment {
   margin: 10vw 0;
   opacity: 0.4;
-}
-.review-comment-label {
-  margin-left: 0.5em !important;
-  margin-bottom: -1em !important;
-  opacity: 0.2;
 }
 .review-comment-label-setting {
   background-color: rgb(0, 0, 0, 0) !important;
@@ -3037,9 +3042,15 @@ a.detailpage-tel:hover {
   padding: 0.5em 1em !important;
   margin-right: 0.2em !important;
   margin-left: 1.4em !important;
-  border-left: rgb(0, 0, 0, 0.1) 1px dotted !important;
   min-width: 28vw;
   white-space: pre-line;
+}
+.reply-style .icon.reply {
+  float: left;
+  transform: rotate(181deg);
+  margin-left: -25px;
+  margin-top: 12px;
+  opacity: 0.25;
 }
 .review-style-replyview {
   padding-top: 0.4em !important;
@@ -3049,7 +3060,6 @@ a.detailpage-tel:hover {
   margin-bottom: -0.45em !important;
   border: rgb(0, 0, 0, 0.1) 1px solid !important;
   border-bottom: rgb(0, 0, 0, 0.1) 0.3em solid !important;
-  background-color: rgb(0, 0, 0, 0.03)!important;
   border-radius: 1em;
   white-space: pre-line;
 }
