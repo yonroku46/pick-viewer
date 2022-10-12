@@ -123,7 +123,7 @@ export class MapContainer extends Component {
             {this.props.editMode &&
             <Input 
                 placeholder='핀을 움직이거나 주소를 검색해주세요'
-                className='dashboard-location-search'
+                className='search-bar'
                 iconPosition='left'
                 icon='point'
                 action={{ icon: 'search', onClick: () => this.addressSearch(this.props.locationSearch) }}
