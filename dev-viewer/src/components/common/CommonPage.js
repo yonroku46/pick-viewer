@@ -10,11 +10,11 @@ export default function CommonPage(props) {
     const [sp, setSp] = useState(false);
 
     const contentList = [
-        { "title": "핫플", "color": "red", "icon": "hotjar" },
-        { "title": "주변맛집", "color": "yellow", "icon": "utensils" },
-        { "title": "빠른예약", "color": "green", "icon": "bolt" },
-        { "title": "추천매장", "color": "blue", "icon": "photo" },
-        { "title": "검색", "color": "purple", "icon": "search" }
+        { "title": "핫플", "color": "red", "icon": "hotjar", "func": "hotplace" },
+        { "title": "주변맛집", "color": "yellow", "icon": "utensils", "func": "nearby" },
+        { "title": "빠른예약", "color": "green", "icon": "bolt", "func": "pick" },
+        { "title": "추천매장", "color": "blue", "icon": "photo", "func": "recommend" },
+        { "title": "검색", "color": "purple", "icon": "search", "func": "search" }
     ]
 
     useEffect(() => {
@@ -42,25 +42,30 @@ export default function CommonPage(props) {
         return result;
     }
 
+    function menuClick(func) {
+        if (func === 'search') {
+            console.log(func)
+        }
+    }
+
     return(
         <>
         <div className='common-main'>
             
             <Grid container className='content-menu' relaxed unstackable>
-                <Grid.Row columns={contentList.length}>
+                <Grid.Row>
                 {contentList.map(content => 
-                    <Grid.Column>
-                    <Icon inverted size='big' color={content.color} name={content.icon}/>
-                    <span>{content.title}</span>
+                    <Grid.Column className='content-menu-button' onClick={() => menuClick(content.func)}>
+                        <Icon inverted size='big' color={content.color} name={content.icon}/>
+                        <span>{content.title}</span>
                     </Grid.Column>
                 )}
                 </Grid.Row>
             </Grid>
 
             <div className='common-posts'>
-                <StackGrid
-                columnWidth={sp ? 380 : 260} gutterWidth={8} gutterHeight={8}>
-                {render()}
+                <StackGrid columnWidth={sp ? 380 : 260} gutterWidth={8} gutterHeight={8}>
+                    {render()}
                 </StackGrid>
                 <Loader active={true} inline='centered' size='small' className='common-loader'/>
                 <div className='common-content-final-empty'> </div>

@@ -253,31 +253,31 @@ function Iphone() {
   return(
     <>
     <div className="iphonex-container">
-    <div className="iphonex">
-      <div className="iphonex__case">
-        <div className="iphonex__top">
-          <div className="iphonex__time">10:30</div>
-          <Icon name='battery full' className="iphonex__battery"/>
+      <div className="iphonex">
+        <div className="iphonex__case">
+          <div className="iphonex__top">
+            <div className="iphonex__time">10:30</div>
+            <Icon name='battery full' className="iphonex__battery"/>
+          </div>
+          <div className="iphonex__notch">
+          <div className="iphonex__speaker"></div>
+          <div className="iphonex__camera"></div>
+          </div>
+          <div className="iphonex__screen">
+            <Reveal animated='fade'>
+              <Reveal.Content visible>
+                <Image src={page1} className='iphone-screen-img'/>
+              </Reveal.Content>
+              <Reveal.Content hidden>
+                <Image src={page2} className='iphone-screen-img'/>
+              </Reveal.Content>
+            </Reveal>
+          </div>
         </div>
-        <div className="iphonex__notch">
-         <div className="iphonex__speaker"></div>
-         <div className="iphonex__camera"></div>
-        </div>
-        <div className="iphonex__screen">
-          <Reveal animated='fade'>
-            <Reveal.Content visible>
-              <Image src={page1} className='iphone-screen-img'/>
-            </Reveal.Content>
-            <Reveal.Content hidden>
-              <Image src={page2} className='iphone-screen-img'/>
-            </Reveal.Content>
-          </Reveal>
-        </div>
+        <div className="iphonex__power"></div>
+        <div className="iphonex__volume iphonex__volume--up"></div>
+        <div className="iphonex__volume iphonex__volume--down"></div>
       </div>
-      <div className="iphonex__power"></div>
-      <div className="iphonex__volume iphonex__volume--up"></div>
-      <div className="iphonex__volume iphonex__volume--down"></div>
-    </div>
     </div>
     </>
   )

@@ -130,6 +130,11 @@
   align-items: center;
   height: 70vh;
   margin: 0;
+  background: url('./img/iphoneBackground.png');
+  background-position: center center;
+  background-repeat: no-repeat;
+  background-size: 180%;
+  position: relative;
 }
 .iphonex {
   height: 500px;
@@ -142,6 +147,7 @@
   width: 235px;
   height: 475px;
   border: 11px solid black;
+  background-color: white;
   box-sizing: border-box;
   border-radius: 35px;
   box-shadow: 8px 5px 5px rgb(200, 200,200, 0.8);
@@ -384,6 +390,7 @@ h1, h2, h3, h4, h5, div, a, button {
   z-index: 100;
   background-color: rgb(255, 255, 255);
   border-bottom: #52525210 1px solid;
+  box-shadow: 1px 1px 8px rgba(157, 157, 157, 0.5);
   width: 100%;
   display: flex;
   color: #000;
@@ -396,6 +403,7 @@ h1, h2, h3, h4, h5, div, a, button {
 .invisible {
   background-color: rgb(255, 255, 255, 0) !important;
   border-bottom: #52525200 1px solid !important;
+  box-shadow: none;
 }
 .app-body {
   position: relative;
@@ -501,8 +509,13 @@ h1, h2, h3, h4, h5, div, a, button {
   cursor: pointer;
 }
 .content-menu {
-  margin-top: 1em !important;
-  margin-bottom: 1em !important;
+  margin-top: 0.5em !important;
+  margin-bottom: 0.5em !important;
+}
+.ui.relaxed.grid.content-menu .row {
+  max-width: 1000px !important;
+  margin-left: auto;
+  margin-right: auto;
 }
 .content-menu .icon {
   width: 85px;
@@ -516,15 +529,22 @@ h1, h2, h3, h4, h5, div, a, button {
   cursor: pointer;
   opacity: 0.8;
 }
-.content-menu div.column {
-  padding-left: 4em !important;
-  padding-right: 4em !important;
-}
 .content-menu span {
   display: block;
   margin-top: 8px !important;
   color: grey;
   letter-spacing: 2px;
+}
+.content-menu div.column {
+  padding-left: 0 !important;
+  padding-right: 0 !important;
+}
+.content-menu-button {
+  cursor: pointer;
+  opacity: 0.8;
+  width: fit-content !important;
+  margin-left: auto !important;
+  margin-right: auto!important;
 }
 /* publicMenu - sp */
 @media only screen and (max-width: 767px) {
@@ -532,14 +552,13 @@ h1, h2, h3, h4, h5, div, a, button {
     margin-left: 4px !important;
     margin-right: 4px !important;
   }
+  .ui.relaxed.grid.content-menu .row {
+    max-width: none !important;
+  }
   .content-menu .icon {
     width: 60px;
     height: 55px;
     padding: 14px;
-  }
-  .content-menu div.column {
-    padding-left: 0 !important;
-    padding-right: 0 !important;
   }
   .content-menu span {
     font-size: 12px;
@@ -1187,11 +1206,6 @@ table.dashboard-table input {
 .common-posts figure:hover {
   cursor: pointer;
 }
-.common-posts figure:hover > figcaption, .common-posts figure:hover > img {
-  color: #fff;
-  filter: grayscale(0.4);
-  transition: 0.5s;
-}
 .common-posts img {
   width: 100%;
   height: auto;
@@ -1205,6 +1219,15 @@ table.dashboard-table input {
   margin-left: 0.5em;
   margin-top: -1.75em;
   color: #ffffff00;
+  transition: 0.5s;
+}
+.common-posts figure:hover > figcaption, .common-posts figure:hover > img {
+  filter: brightness(0.55);
+  transition: 0.5s;
+}
+.common-posts figure:hover > figcaption {
+  filter: brightness(1);
+  color: #fff;
   transition: 0.5s;
 }
 .common-post {
@@ -1955,8 +1978,7 @@ table.dashboard-table input {
   background-image: linear-gradient(rgba(0, 0, 0, 0.25), rgba(0, 0, 0, 0.8)),url('./img/home.jpg');
   background-repeat: no-repeat;
   background-size: cover;
-  border-bottom-left-radius: 48px;
-  border-bottom-right-radius: 48px;
+  box-shadow: 1px 1px 8px rgba(157, 157, 157, 0.5);
   display: block;
   color: #fff;
   min-height: 105vh;
@@ -1967,7 +1989,8 @@ table.dashboard-table input {
   position: relative;
 }
 .home-menu {
-  margin-top: -14px !important;
+  margin-top: -10px !important;
+  margin-bottom: 4px !important;
   margin-left: auto!important;
   margin-right: auto!important;
   border-bottom: none !important;
@@ -2145,6 +2168,8 @@ table.dashboard-table input {
 .content2-quick {
   flex: 2;
   display: flex;
+  align-items: center;
+  height: 148px;
 }
 .content2-quick-content {
   flex: 1;
@@ -2152,7 +2177,7 @@ table.dashboard-table input {
   width: 370px;
   height: 140px;
   padding: 14px 10px 14px 20px;
-  box-shadow: 1px 1px 6px rgb(157, 157, 157, 0.5);
+  box-shadow: 1px 1px 8px rgb(157, 157, 157, 0.5);
   background-color: #fff;
   border: rgb(220, 220, 220, 0.7) solid 1px;
   border-radius: 0.5em;
@@ -2183,9 +2208,9 @@ table.dashboard-table input {
 }
 .content2-quick img {
   z-index: 1;
-  width: 160px;
-  height: 140px;
-  margin-top: -15px;
+  width: 216px;
+  height: 138px;
+  margin-top: -14px;
   margin-left: -20px;
   margin-right: 15px;
   float: left;
@@ -2232,10 +2257,6 @@ table.dashboard-table input {
 }
 /* HomePage - sp */
 @media only screen and (max-width: 767px) {
-  .home-main {
-    border-bottom-left-radius: 24px;
-    border-bottom-right-radius: 24px;
-  }
   .home-main-search {
     width: 84vw;
   }
