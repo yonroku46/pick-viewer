@@ -3292,8 +3292,7 @@ div.stretched.fourteen.wide.column.help-contents {
 }
 .notice-contents-background {
   height: 220px;
-  border-bottom-left-radius: 48px;
-  border-bottom-right-radius: 48px;
+  box-shadow: 1px 1px 8px rgba(157, 157, 157, 0.5);
   background-size: cover;
   background-repeat: no-repeat;
   background-position: center center;
