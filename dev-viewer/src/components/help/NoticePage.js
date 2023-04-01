@@ -2,7 +2,7 @@ import React, { useEffect, useState, useReducer } from "react";
 import * as api from '../../rest/api'
 import axios from 'axios';
 import { Link, withRouter } from "react-router-dom";
-import { Table, Icon, Label, Button, Input, Header, Pagination } from 'semantic-ui-react';
+import { Table, Icon, Label, Button, Input, Header, Pagination, Dimmer, Loader } from 'semantic-ui-react';
 
 function NoticePage(props) {
 
@@ -84,7 +84,12 @@ function NoticePage(props) {
         </Table.Header>
 
         <Table.Body className='notice-table-body'>
-            {!loading && noticeList.length == 0 ? 
+            {loading ? 
+            <Dimmer active inverted>
+                <Loader size='large'></Loader>
+            </Dimmer>
+            :
+            noticeList.length == 0 ? 
                 <Table.Row>
                     <Table.Cell colSpan='2'>
                         찾으시는 공지사항이 존재하지 않습니다

@@ -248,6 +248,7 @@
   --p-accent-color: rgb(9, 8, 78);
   --p-opp-color:  rgb(202, 39, 33);
   --p-opp-sub-color:  rgb(172, 32, 27);
+  --menu-color: rgb(160, 160, 160, 0.25);
 }
 ::-webkit-scrollbar {
   display: none;
@@ -389,7 +390,7 @@ h1, h2, h3, h4, h5, div, a, button {
   top: 0;
   z-index: 100;
   background-color: rgb(255, 255, 255);
-  border-bottom: #52525210 1px solid;
+  border-bottom: var(--menu-color) 1px solid;
   box-shadow: 1px 1px 8px rgba(157, 157, 157, 0.5);
   width: 100%;
   display: flex;
@@ -412,13 +413,13 @@ h1, h2, h3, h4, h5, div, a, button {
 }
 .app-footer {
   width: 100%;
-  color: rgb(160, 160, 160, 0.4);
+  color: var(--menu-color);
   padding: 5px 10px;
   font-size: 12px;
   user-select: none;
 }
 .footer-border {
-  border-top: #52525210 1px solid !important;
+  border-top: var(--menu-color) 1px solid !important;
 }
 /* publicMenu */
 .menu-left {
@@ -569,7 +570,7 @@ h1, h2, h3, h4, h5, div, a, button {
 .login-main {
   margin-top: 49px;
   min-height: calc(100vh - 81px);
-  border-top: #52525210 1px solid !important;
+  border-top: var(--menu-color) 1px solid !important;
   border-radius: 12px;
   padding-left: 30vw;
   padding-right: 30vw;
@@ -619,7 +620,7 @@ h1, h2, h3, h4, h5, div, a, button {
 .signup-main {
   margin-top: 49px;
   min-height: calc(100vh - 81px);
-  border-top: #52525210 1px solid !important;
+  border-top: var(--menu-color) 1px solid !important;
   padding: 0.5em 0.5em;
   margin-left: 30vw;
   margin-right: 30vw;
@@ -684,7 +685,7 @@ h1, h2, h3, h4, h5, div, a, button {
 .dashboard-main {
   margin-top: 49px !important;
   min-height: calc(100vh - 81px);
-  border-top: #52525210 1px solid !important;
+  border-top: var(--menu-color) 1px solid !important;
   display: block;
 }
 .dashboard-pagination {
@@ -1192,7 +1193,7 @@ table.dashboard-table input {
 .common-main {
   margin-top: 49px;
   min-height: calc(100vh - 77px);
-  border-top: #52525210 1px solid !important;
+  border-top: var(--menu-color) 1px solid !important;
   padding-left: 5vw;
   padding-right: 5vw;
 }
@@ -1289,7 +1290,7 @@ table.dashboard-table input {
 .post-main {
   margin-top: 49px;
   min-height: calc(100vh - 81px);
-  border-top: #52525210 1px solid !important;
+  border-top: var(--menu-color) 1px solid !important;
   padding-left: 25vw;
   padding-right: 25vw;
 }
@@ -1298,7 +1299,7 @@ table.dashboard-table input {
 .empty-main {
   margin-top: 49px;
   min-height: calc(100vh - 81px);
-  border-top: #52525210 1px solid !important;
+  border-top: var(--menu-color) 1px solid !important;
 }
 .empty-main-img {
   margin-left: auto;
@@ -1321,7 +1322,7 @@ table.dashboard-table input {
 .mypage-main {
   margin-top: 49px;
   min-height: calc(100vh - 81px);
-  border-top: #52525210 1px solid !important;
+  border-top: var(--menu-color) 1px solid !important;
 }
 .mypage-nodata {
   margin-left: auto !important;
@@ -1674,7 +1675,7 @@ table.dashboard-table input {
 .schedule-main {
   margin-top: 49px;
   min-height: calc((var(--vh, 1vh) * 100) - 81px);
-  border-top: #52525210 1px solid !important;
+  border-top: var(--menu-color) 1px solid !important;
   margin-left: auto;
   margin-right: auto;
 }
@@ -1755,7 +1756,7 @@ table.dashboard-table input {
 .talk-main {
   margin-top: 49px;
   min-height: calc((var(--vh, 1vh) * 100) - 81px);
-  border-top: #52525210 1px solid !important;
+  border-top: var(--menu-color) 1px solid !important;
   margin-left: auto;
   margin-right: auto;
 }
@@ -1987,6 +1988,7 @@ table.dashboard-table input {
   padding-bottom: 2vh;
   margin-top: 0px;
   position: relative;
+  user-select: none;
 }
 .home-menu {
   margin-top: -10px !important;
@@ -2019,6 +2021,7 @@ table.dashboard-table input {
   margin-left: 260px;
   margin-bottom: -12px;
   filter: invert(1);
+  -webkit-user-drag: none;
 }
 .home-main-title-top {
   font-size: 1.1em;
@@ -2182,6 +2185,7 @@ table.dashboard-table input {
   border: rgb(220, 220, 220, 0.7) solid 1px;
   border-radius: 0.5em;
   margin-right: 14px;
+  user-select: none;
 }
 .content2-quick-content:hover {
   box-shadow: 1px 1px 8px rgba(81, 81, 81, 0.5);
@@ -2300,7 +2304,7 @@ table.dashboard-table input {
 .booking-main {
   margin-top: 49px;
   min-height: calc(100vh - 81px);
-  border-top: #52525210 1px solid !important;
+  border-top: var(--menu-color) 1px solid !important;
 }
 .booking-main-category {
   height: 75px;
@@ -2592,7 +2596,7 @@ table.dashboard-table input {
 .detail-main {
   margin-top: 49px;
   min-height: calc(100vh - 81px);
-  border-top: #52525210 1px solid !important;
+  border-top: var(--menu-color) 1px solid !important;
 }
 .detail-content {
   margin-bottom: 14px;
@@ -3104,16 +3108,19 @@ a.detailpage-tel:hover {
 .help-main {
   margin-top: 49px;
   min-height: calc(100vh - 81px);
-  border-top: #52525210 1px solid !important;
+  border-top: var(--menu-color) 1px solid !important;
 }
 .help-menu {
   margin-top: 14px !important;
-  border-right: 1px solid #d4d4d5 !important;
+  border-right: 1px solid var(--menu-color)!important;
   padding-right: 0px !important;
   max-width: 124px !important;
 }
 .help-menu-item {
   border-right: none !important;
+}
+.help-menu-item .active.item {
+  border-color: var(--menu-color) !important;
 }
 .help-menu-item a {
   padding: 1em 0 !important;
@@ -3178,8 +3185,14 @@ div.stretched.fourteen.wide.column.help-contents {
 .about-title {
   margin-top: 0.5em !important;
 }
-.about-sub-title {
-  margin-left: 0.5em !important;
+.help-contents .ui.steps {
+  margin: 0.75em 0;
+  min-height: 90px;
+}
+.help-contents .down-icon {
+  margin-left: auto;
+  margin-right: auto;
+  display: block;
 }
 .about-intro div.column {
   align-self: center !important;
@@ -3243,7 +3256,7 @@ div.stretched.fourteen.wide.column.help-contents {
 .notice-main {
   margin-top: 49px;
   min-height: calc(100vh - 81px);
-  border-top: #52525210 1px solid !important;
+  border-top: var(--menu-color) 1px solid !important;
 }
 .notice-editor {
   margin: 2em auto;
@@ -3415,7 +3428,7 @@ div.stretched.fourteen.wide.column.help-contents {
 .search-main {
   margin-top: 49px;
   min-height: calc(100vh - 81px);
-  border-top: #52525210 1px solid !important;
+  border-top: var(--menu-color) 1px solid !important;
 }
 .search-input {
   border: 1px solid rgb(34, 36, 38) !important;
@@ -3538,7 +3551,7 @@ div.stretched.fourteen.wide.column.help-contents {
 .wiki {
   margin-top: 49px;
   min-height: calc(100vh - 81px);
-  border-top: #52525210 1px solid !important;
+  border-top: var(--menu-color) 1px solid !important;
   text-align: left;
   padding-left: 20vw;
   padding-right: 20vw;
