@@ -1,26 +1,26 @@
 /* eslint-disable */
 
-import React, { useEffect, useReducer, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import logo from "./img/app-icon.png";
-import HomePage from './components/home/HomePage'
-import SearchPage from './components/search/SearchPage'
-import BookingPage from './components/booking/BookingPage'
-import BookingDetail from './components/booking/BookingDetail';
-import ReviewPage from './components/review/ReviewPage';
-import CommonPage from './components/common/CommonPage'
-import PostPage from './components/common/PostPage'
-import LoginPage from './components/login/LoginPage'
-import SignupPage from './components/login/SignupPage'
-import HelpPage from './components/help/HelpPage'
-import NoticeWritePage from './components/help/NoticeWritePage'
-import NoticeViewer from './components/help/NoticeViewer'
-import HelpPwdPage from './components/help/HelpPwdPage'
-import MyPage from './components/mypage/MyPage'
-import SchedulePage from './components/mypage/SchedulePage';
-import TalkPage from './components/talk/TalkPage';
-import DashboardPage from './components/dashboard/DashboardPage'
-import WikiPage from './components/WikiPage'
-import EmptyPage from './components/EmptyPage'
+import HomePage from './pages/home/HomePage'
+import SearchPage from './pages/search/SearchPage'
+import BookingPage from './pages/booking/BookingPage'
+import BookingDetail from './pages/booking/BookingDetail';
+import ReviewPage from './pages/review/ReviewPage';
+import CommonPage from './pages/common/CommonPage'
+import PostPage from './pages/common/PostPage'
+import LoginPage from './pages/login/LoginPage'
+import SignupPage from './pages/login/SignupPage'
+import HelpPage from './pages/help/HelpPage'
+import NoticeWritePage from './pages/help/NoticeWritePage'
+import NoticeViewer from './pages/help/NoticeViewer'
+import HelpPwdPage from './pages/help/HelpPwdPage'
+import MyPage from './pages/mypage/MyPage'
+import SchedulePage from './pages/mypage/SchedulePage';
+import TalkPage from './pages/talk/TalkPage';
+import DashboardPage from './pages/dashboard/DashboardPage'
+import WikiPage from './pages/WikiPage'
+import EmptyPage from './pages/EmptyPage'
 import { Link, Route, Switch } from "react-router-dom"
 import { Button, Icon, Menu, Modal, Segment, Sidebar } from 'semantic-ui-react';
 import * as api from './rest/api'
